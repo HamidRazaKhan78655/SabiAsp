@@ -1,0 +1,78 @@
+﻿
+
+
+
+/*///////////////////////////////////////layout////////////////////////////////////////*/
+.fa-snowflake {
+    position: relative;
+    top: -1px;
+    font-size: 16px;
+    -webkit-animation: spin 4s linear infinite;
+    -moz-animation: spin 4s linear infinite;
+    animation: spin 4s linear infinite;
+}
+
+@-moz-keyframes spin {
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.wrap a {
+    color: #fff;
+}
+
+.hover-fx {
+    transition: 300ms;
+}
+
+    .hover-fx:after {
+        transition: 300ms;
+    }
+
+    .hover-fx:hover {
+        font-size: 20px !important;
+        transform: rotate(45deg);
+    }
+
+        .hover-fx:hover:after {
+            opacity: 1;
+            transform: scale(1.15);
+        }
+
+/*second-navbar*/
+.second-navbar {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: -15px;
+    transition: 300ms;
+}
+
+    .second-navbar > div {
+        background-color: #f1f1f1;
+        width: 20%;
+        margin: 10px;
+        text-align: center;
+        line-height: 45px;
+        font-size: 20px;
+        color: #130347;
+        font-weight: 500;
+    }
+
+
+/*second-navbar end*/
+/*///////////////////////////////////////layout End////////////////////////////////////////*/

@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @* Hello *@  @* Hello *@
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - sabi</title>
+    <link rel="stylesheet" href="~/Content/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/wwwroot/css/site.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3" style="background: #130347 !important">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white"><i class="far fa-snowflake"></i> Sabi <i class="far fa-snowflake"></i></a>
+                <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon" style="color:white"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <ul class="navbar-nav flex-grow-1 wrap">
+                        <!--<-->@*li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>*@
+
+                        <li class="nav-item" style="margin:auto">
+                            <a class="nav-link text-light">
+                                Categories<i class="fas fa-chevron-circle-down text-light" style="position: relative; left: 5px; top: 1px;"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item" style="margin:auto">
+                            <a class="nav-link text-light" style="display:flex">
+                                <input class="form-control" type="text" placeholder="Search" style="height: 24px;" />
+                                <i class="fas fa-search text-dark hover-fx" style="position: relative; left: -25px; top: 4px;"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item" style="margin:auto">
+                            <a class="nav-link text-light">
+                                HRE<i class="fas fa-map-marker-alt text-light hover-fx" style="position: relative; left: 5px; top: 1px;"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item " style="margin:auto">
+                            <a class="nav-link text-light">
+                                <i class="fas fa-shopping-basket text-light hover-fx" style=" position: relative;left: 5px;top: 1px;font-size: 25px;"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item " style="margin:auto">
+                            <a class="nav-link text-light">
+                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn" type="button" />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="second-navbar">
+        <div>Our Story</div>
+        <div>Why Sabi?</div>
+        <div>Cummunity</div>
+        <div>Support</div>
+    </div>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2021 - sabi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
