@@ -8,8 +8,122 @@
     <link rel="stylesheet" href="~/Content/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Content/wwwroot/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type="text/javascript">
+        var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
+        var VALIDURL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
+        var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+        var CLIENTID = '797473363020-up2pqdgnus0pjauk6k4r0lpqmg7ednqd.apps.googleusercontent.com';
+        var REDIRECT = 'https://localhost:44317/Home/Index';
+        var LOGOUT = 'http://localhost:56623/Home/Index';
+        var TYPE = 'token';
+        var _url = OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
+        var acToken;
+        var tokenType;
+        var expiresIn;
+        var user;
+        var loggedIn = false;
 
+        function login() {
+
+            var win = window.open(_url, "windowname1", 'width=800, height=600');
+            var pollTimer = window.setInterval(function () {
+                try {
+                    console.log(win.document.URL);
+                    if (win.document.URL.indexOf(REDIRECT) != -1) {
+                        window.clearInterval(pollTimer);
+                        var url = win.document.URL;
+                        acToken = gup(url, 'access_token');
+                        tokenType = gup(url, 'token_type');
+                        expiresIn = gup(url, 'expires_in');
+
+                        win.close();
+                        debugger;
+                        validateToken(acToken);
+                    }
+                }
+                catch (e) {
+
+                }
+            }, 500);
+        }
+
+        function gup(url, name) {
+            namename = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\#&]" + name + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(url);
+            if (results == null)
+                return "";
+            else
+                return results[1];
+        }
+
+        function validateToken(token) {
+
+            getUserInfo();
+            $.ajax(
+
+                {
+
+                    url: VALIDURL + token,
+                    data: null,
+                    success: function (responseText) {
+
+
+                    },
+
+                });
+
+        }
+
+        function getUserInfo() {
+
+
+            $.ajax({
+
+                url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
+                data: null,
+                success: function (resp) {
+                    user = resp;
+                    console.log(user);
+                    $('#uname').html('Welcome ' + user.name);
+                    $('#uemail').html('Email: ' + user.email)
+                    $('#imgHolder').attr('src', user.picture);
+
+
+                },
+
+
+            }),
+
+                $.ajax({
+
+                    url: '/Home/GoogleLogin/',
+
+                    type: 'POST',
+                    data: {
+                        email: user.email,
+                        name: user.name,
+                        gender: user.gender,
+                        lastname: user.lastname,
+                        location: user.location
+                    },
+                    success: function () {
+                        window.location.href = "/Home/Index/";
+                    },
+
+                    //dataType: "jsonp"
+
+                });
+        }
+
+    </script>
 </head>
+
+
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3" style="background: #130347 !important">
@@ -51,7 +165,13 @@
                         </li>
                         <li class="nav-item " style="margin:auto">
                             <a class="nav-link text-light">
-                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn" type="button" />
+                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
+                            </a>
+                        </li>
+
+                        <li class="nav-item " style="margin:auto">
+                            <a class="nav-link text-light">
+                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Home/Facebook','_self')" />
                             </a>
                         </li>
                     </ul>
@@ -65,11 +185,19 @@
         <div>Cummunity</div>
         <div>Support</div>
     </div>
+
+    <div style="text-align:center;">
+        <div id="uname"></div>
+        <div id="uemail"></div><br />
+        <div><img id="imgHolder" style="height:120px;width:120px;" /></div>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
+
+
 
     <footer class="border-top footer text-muted">
         <div class="container">
