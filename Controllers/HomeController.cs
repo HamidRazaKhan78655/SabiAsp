@@ -36,9 +36,7 @@ namespace SabiAsp.Controllers
         [AllowAnonymous]
 
         public ActionResult Facebook()
-
         {
-
             var fb = new FacebookClient();
             var loginUrl = fb.GetLoginUrl(new
             {
