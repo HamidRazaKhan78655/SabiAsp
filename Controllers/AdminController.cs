@@ -6,8 +6,10 @@ using System.Web.Mvc;
 
 namespace SabiAsp.Controllers
 {
+ 
     public class AdminController : Controller
     {
+        sabiShopEntities1 Db = new sabiShopEntities1();
         // GET: Admin
         public ActionResult Index()
         {
@@ -15,6 +17,8 @@ namespace SabiAsp.Controllers
         }
         public ActionResult Admin()
         {
+            var categories = Db.Categories.ToList();
+            ViewBag.categories = categories;
             return View();
         }
         // GET: Admin
@@ -25,6 +29,7 @@ namespace SabiAsp.Controllers
             string pass = admin["pass"].ToString();
             if (user.Equals("sabi") && pass.Equals("1234"))
             {
+                
                 return RedirectToAction("Admin");
             }
             else

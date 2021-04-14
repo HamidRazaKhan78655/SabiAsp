@@ -24,10 +24,7 @@ namespace SabiAsp
         public string DeliveryFee { get; set; }
         public string minOrder { get; set; }
         public string isDeleted { get; set; }
-        public Nullable<int> SCid { get; set; }
         public Nullable<int> itemAvailible { get; set; }
         public Nullable<int> SoldItems { get; set; }
-    
-        public virtual SubCategory SubCategory { get; set; }
     }
 }

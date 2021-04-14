@@ -150,11 +150,17 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Category.cs">
+      <DependentUpon>sabiDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="item.cs">
+      <DependentUpon>sabiDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Login.cs" />
@@ -164,10 +170,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>sabiDb.Context.tt</DependentUpon>
     </Compile>
+    <Compile Include="sabiDb.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>sabiDb.tt</DependentUpon>
+    </Compile>
     <Compile Include="sabiDb.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>sabiDb.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="SubCategory.cs">
+      <DependentUpon>sabiDb.tt</DependentUpon>
+    </Compile>
+    <Compile Include="user.cs">
+      <DependentUpon>sabiDb.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -250,7 +267,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="sabiDb.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>sabiDb.edmx</DependentUpon>
       <LastGenOutput>sabiDb.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="sabiDb.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>sabiDb.edmx</DependentUpon>
+      <LastGenOutput>sabiDb.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -344,9 +367,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>sabiDb.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="sabiDb.edmx.diagram">
+    <Content Include="sabiDb.edmx.diagram">
       <DependentUpon>sabiDb.edmx</DependentUpon>
-    </None>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -20,11 +20,19 @@
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white"><i class="far fa-snowflake"></i> Sabi | Admin Panel <i class="far fa-snowflake"></i></a>
             </div>
-            <div class="MainDivAdmin">
-
-            </div>
         </nav>
     </header>
+    <div class="MainDivAdmin">
+        @{
+            foreach (var category in ViewBag.categories)
+            {
+                <div>
+                    @category.id
+                    @category.CName
+                </div>
+            }
+        }
+    </div>
     <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>

@@ -4,14 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="df6c93821ae245a89a5902106dbb45f6" Name="Diagram1">
-        <EntityTypeShape EntityType="sabiShopModel.Category" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.item" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.SubCategory" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.sysdiagram" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.user" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
-        <AssociationConnector Association="sabiShopModel.FK__SubCategori__Cid__29572725" ManuallyRouted="false" />
-        <AssociationConnector Association="sabiShopModel.FK__items__SCid__38996AB5" />
+      <Diagram DiagramId="dea53fe7a2ee415a9c71b39cb0bafde1" Name="Diagram1">
+        <EntityTypeShape EntityType="sabiShopModel.Category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.item" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.SubCategory" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.user" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
