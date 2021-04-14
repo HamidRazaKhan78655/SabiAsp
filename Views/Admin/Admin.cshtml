@@ -23,16 +23,29 @@
         </nav>
     </header>
     <div class="MainDivAdmin">
-        @{
-            foreach (var category in ViewBag.categories)
-            {
-                <div>
-                    @category.id
-                    @category.CName
-                </div>
+
+
+        <div class="Categories-Container container">
+            @{
+                foreach (var category in ViewBag.categories)
+                {
+                    <div class="Categories card">
+                        <div class="card-body">
+                            @category.id
+                            @category.CName
+                        </div>
+                    </div>
+                }
             }
-        }
-    </div>
+            <div class="Categories card">
+                <div class="card-body" style="text-align:center">
+                    <i class="fas fa-plus" style=" font-size: 60px; color: #d0d0d0;"></i>
+                </div>
+            </div>
+        </div>
+            
+        </div>
+        
     <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
