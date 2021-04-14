@@ -1,6 +1,7 @@
-﻿using FireSharp.Config;
+﻿  using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
+using SabiAsp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,8 @@ namespace SabiAsp.Controllers
 
         IFirebaseConfig config = new FirebaseConfig
         {
-            AuthSecret = "369127745f2fcaf1abfda30eb08383bf9b6d254c",
-            BasePath = "https://accounts.google.com/o/oauth2/auth"
+            AuthSecret = "QkEBWuXalB1NSe1MBeZwJ59um3hNkXZqOFJUJ6gi",
+            BasePath = "https://sabi-27ae5-default-rtdb.firebaseio.com/"
         };
 
         IFirebaseClient client; 
@@ -31,7 +32,7 @@ namespace SabiAsp.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(Login login)
+        public ActionResult Create(FireBaseLogin login)
         {
             
             try
@@ -47,15 +48,20 @@ namespace SabiAsp.Controllers
             return View();
         }
 
-        private void addLoginDateiFirebase(Login login)
+        private void addLoginDateiFirebase(FireBaseLogin login)
         {
             client = new FireSharp.FirebaseClient(config);
             var data = login;
+           SetResponse setResponse = client.Set(@"Login/" + data.UserID, data);  //Insert Query and set user id
+           // PushResponse response = client.Push(@"Login/"+data.UserID, data);  //push Auto id 
+          //  data.Email = response.Result.name;
 
-            PushResponse response = client.Push("Login/", data);
+            var res=setResponse.StatusCode; //if StutasCode return Ok means data Save Succsessfully
 
-            data.UserName = response.Result.name;
-            SetResponse setResponse = client.Set("Login/"+data.UserName,data);
+         //  var getcall = client.Get(@"Login/" + data.UserID);   //Select Query With Where
+
+            //client.Update(@"Login/" + data.UserID, data);  //Update Query
+            //client.Delete(@"Login/" + data.UserID);  //Delete Query
         }
     }
 }
