@@ -110,7 +110,8 @@
                         lastname: user.lastname,
                         location: user.location
                     },
-                    success: function () {
+                    success: function ()
+                    {
                         window.location.href = "/Home/Index/";
                     },
 
@@ -121,8 +122,6 @@
 
     </script>
 </head>
-
-
 
 <body>
     <header>
@@ -163,18 +162,14 @@
                                 <i class="fas fa-shopping-basket text-light hover-fx" style=" position: relative;left: 5px;top: 1px;font-size: 25px;"></i>
                             </a>
                         </li>
-                        <li class="nav-item " style="margin:auto">
-                            <a class="nav-link text-light">
-                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
-                            </a>
-                        </li>
+
 
                         <li class="nav-item " style="margin:auto">
                             <a class="nav-link text-light">
-                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Home/Facebook','_self')" />
+                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn" type="button" data-target="#MyModal" data-toggle="modal" />
                             </a>
                         </li>
-                        <li class="nav-item " style="margin:auto">
+                        <li class="nav-item " style="margin:auto;display:none;">
                             <a class="nav-link text-light">
                                 <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Fire Base" type="button" onclick="window.open('https://localhost:44317/FireBase/Create','_blank')" />
                             </a>
@@ -189,12 +184,6 @@
         <div>Why Sabi?</div>
         <div>Cummunity</div>
         <div>Support</div>
-    </div>
-
-    <div style="text-align:center;">
-        <div id="uname"></div>
-        <div id="uemail"></div><br />
-        <div><img id="imgHolder" style="height:120px;width:120px;" /></div>
     </div>
     <div class="container">
         <main role="main" class="pb-3">
@@ -213,5 +202,58 @@
     <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+    @*Modal start*@
+    <style>
+        .abtn {
+            border: 2px solid #17a2b8;
+            border-radius: 15px;
+            margin: 30px;
+        }
+        .flex1 {
+            display: flex;
+            justify-content: center;
+        }
+        .signinimg {
+            height: 20px;
+            margin: 4px;
+        }
+    </style>
+
+<div class="modal fade " id="MyModal">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header" style="background: #130347;height: 60px;">
+                <h4 class="title" style="color:white;">Sign In</h4>
+                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times" style="color:white;"></i>
+                </button>
+            </div>
+            <div style="width:100%; overflow:auto" class="ModelTrack">
+                <div class="modal-body" style="width:100%">
+                    <div style="display: block;">
+                        <a class="nav-link text-light abtn">
+                            <div class="flex1">
+                                <img src="~/Images/FacebookIcon.png" class="signinimg"/>
+                                <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Home/Facebook','_self')" />
+                            </div>
+                        </a>
+                        <a class="nav-link text-light abtn" >
+                            <div class="flex1">
+                                <img src="~/Images/GoogleIcon.png" class="signinimg"/>
+                                <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
+                            </div>
+                         
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    @*Modal End*@
+
+
 </body>
 </html>

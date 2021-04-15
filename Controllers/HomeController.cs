@@ -64,9 +64,9 @@ namespace SabiAsp.Controllers
             var accessToken = result.access_token;
             Session["AccessToken"] = accessToken;
             fb.AccessToken = accessToken;
-            dynamic me = fb.Get("me?fields=link,first_name,currency,last_name,email,gender,locale,timezone,verified,picture,age_range");
+            dynamic me = fb.Get("me?fields=link,id,first_name,currency,last_name,email,gender,locale,timezone,verified,picture,age_range");
             string email = me.email;
-            TempData["email"] = me.email;
+            TempData["email"] = me.id;
             TempData["first_name"] = me.first_name;
             TempData["lastname"] = me.last_name;
             TempData["picture"] = me.picture.data.url;
