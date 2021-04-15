@@ -14,7 +14,8 @@ namespace SabiAsp
     
     public partial class item
     {
-        public int id { get; set; }
+        public int ItemId { get; set; }
+        public Nullable<int> SubCategorieId { get; set; }
         public string name { get; set; }
         public string image { get; set; }
         public string rating { get; set; }
@@ -23,8 +24,14 @@ namespace SabiAsp
         public string Price { get; set; }
         public string DeliveryFee { get; set; }
         public string minOrder { get; set; }
-        public string isDeleted { get; set; }
         public Nullable<int> itemAvailible { get; set; }
         public Nullable<int> SoldItems { get; set; }
+        public string isDeleted { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+    
+        public virtual SubCategory SubCategory { get; set; }
     }
 }

@@ -13,10 +13,10 @@ namespace SabiAsp
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class sabiShopEntities1 : DbContext
+    public partial class sabiShopEntities : DbContext
     {
-        public sabiShopEntities1()
-            : base("name=sabiShopEntities1")
+        public sabiShopEntities()
+            : base("name=sabiShopEntities")
         {
         }
     
@@ -27,7 +27,9 @@ namespace SabiAsp
     
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<item> items { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SubCategory> SubCategories { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<user> users { get; set; }
     }
 }

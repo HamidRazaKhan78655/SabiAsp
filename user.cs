@@ -15,6 +15,7 @@ namespace SabiAsp
     public partial class user
     {
         public int id { get; set; }
+        public Nullable<int> RoleID { get; set; }
         public string name { get; set; }
         public string username { get; set; }
         public string password { get; set; }
@@ -23,5 +24,11 @@ namespace SabiAsp
         public string itemsBuyed { get; set; }
         public string lastLogin { get; set; }
         public string isDeleted { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
+    
+        public virtual Role Role { get; set; }
     }
 }

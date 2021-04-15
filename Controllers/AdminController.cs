@@ -9,7 +9,7 @@ namespace SabiAsp.Controllers
  
     public class AdminController : Controller
     {
-        sabiShopEntities1 Db = new sabiShopEntities1();
+        sabiShopEntities Db = new sabiShopEntities();
         // GET: Admin
         public ActionResult Index()
         {
