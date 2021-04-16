@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="sabiShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="sabiShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -39,6 +39,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="vendorid" Type="int" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -91,6 +92,15 @@
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="vendor">
+          <Key>
+            <PropertyRef Name="vendorid" />
+          </Key>
+          <Property Name="vendorid" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
+        </EntityType>
         <Association Name="FK_items_SubCategories">
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="0..1" />
           <End Role="items" Type="Self.items" Multiplicity="*" />
@@ -127,6 +137,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_vendor">
+          <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
+          <End Role="items" Type="Self.items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendor">
+              <PropertyRef Name="vendorid" />
+            </Principal>
+            <Dependent Role="items">
+              <PropertyRef Name="vendorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="sabiShopModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />
@@ -134,6 +156,7 @@
           <EntitySet Name="SubCategories" EntityType="Self.SubCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vendor" EntityType="Self.vendor" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_items_SubCategories" Association="Self.FK_items_SubCategories">
             <End Role="SubCategories" EntitySet="SubCategories" />
             <End Role="items" EntitySet="items" />
@@ -146,9 +169,12 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
+          <AssociationSet Name="FK_vendor" Association="Self.FK_vendor">
+            <End Role="vendor" EntitySet="vendor" />
+            <End Role="items" EntitySet="items" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sabiShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -188,6 +214,8 @@
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="SubCategory" Relationship="Self.FK_items_SubCategories" FromRole="items" ToRole="SubCategories" />
+          <Property Name="vendorid" Type="Int32" />
+          <NavigationProperty Name="vendor" Relationship="sabiShopModel.FK_vendor" FromRole="item" ToRole="vendor" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -299,7 +327,34 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
+          <EntitySet Name="vendors" EntityType="sabiShopModel.vendor" />
+          <AssociationSet Name="FK_vendor" Association="sabiShopModel.FK_vendor">
+            <End Role="vendor" EntitySet="vendors" />
+            <End Role="item" EntitySet="items" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="vendor">
+          <Key>
+            <PropertyRef Name="vendorid" />
+          </Key>
+          <Property Name="vendorid" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="items" Relationship="sabiShopModel.FK_vendor" FromRole="vendor" ToRole="item" />
+        </EntityType>
+        <Association Name="FK_vendor">
+          <End Type="sabiShopModel.vendor" Role="vendor" Multiplicity="0..1" />
+          <End Type="sabiShopModel.item" Role="item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendor">
+              <PropertyRef Name="vendorid" />
+            </Principal>
+            <Dependent Role="item">
+              <PropertyRef Name="vendorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -323,6 +378,7 @@
           <EntitySetMapping Name="items">
             <EntityTypeMapping TypeName="sabiShopModel.item">
               <MappingFragment StoreEntitySet="items">
+                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="SubCategorieId" ColumnName="SubCategorieId" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -395,6 +451,16 @@
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vendors">
+            <EntityTypeMapping TypeName="sabiShopModel.vendor">
+              <MappingFragment StoreEntitySet="vendor">
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

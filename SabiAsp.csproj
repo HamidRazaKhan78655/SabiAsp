@@ -192,6 +192,9 @@
     <Compile Include="user.cs">
       <DependentUpon>sabiDb.tt</DependentUpon>
     </Compile>
+    <Compile Include="vendor.cs">
+      <DependentUpon>sabiDb.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\css\main.css" />
