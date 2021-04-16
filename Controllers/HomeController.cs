@@ -10,9 +10,8 @@ namespace SabiAsp.Controllers
 {
     public class HomeController : Controller
     {
-
+        sabiShopEntities Db = new sabiShopEntities();
         private Uri RediredtUri
-
         {
             get
             {
@@ -26,15 +25,22 @@ namespace SabiAsp.Controllers
 
         public ActionResult Index()
         {
+            try
+            {
+                ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
+            }
+            catch (Exception)
+            {
+
+                
+            }
+           
+
             return View();
         }
 
 
-
-
-
         [AllowAnonymous]
-
         public ActionResult Facebook()
         {
             var fb = new FacebookClient();
@@ -49,8 +55,6 @@ namespace SabiAsp.Controllers
 
             return Redirect(loginUrl.AbsoluteUri);
         }
-
-
         public ActionResult FacebookCallback(string code)
         {
             var fb = new FacebookClient();
@@ -73,21 +77,31 @@ namespace SabiAsp.Controllers
             FormsAuthentication.SetAuthCookie(email, false);
             return RedirectToAction("Index", "Home");
         }
-
-
-
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
-
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }
+
+        //private Methods
+
+        [HttpGet]
+        public ActionResult GetCategories(int id)
+        {
+            using (var db = new sabiShopEntities())
+            {
+                var data = db.Categories.Where(d => d.CategoryId == id).Select(d => new { Text = d.CategoryName, Value = d.CategoryId.ToString() }).ToList();
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
     }
 }

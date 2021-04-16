@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    @* Hello *@  @* Hello *@
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - sabi</title>
@@ -79,8 +79,6 @@
         }
 
         function getUserInfo() {
-
-
             $.ajax({
 
                 url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
@@ -91,11 +89,7 @@
                     $('#uname').html('Welcome ' + user.name);
                     $('#uemail').html('Email: ' + user.email)
                     $('#imgHolder').attr('src', user.picture);
-
-
                 },
-
-
             }),
 
                 $.ajax({
@@ -110,8 +104,7 @@
                         lastname: user.lastname,
                         location: user.location
                     },
-                    success: function ()
-                    {
+                    success: function () {
                         window.location.href = "/Home/Index/";
                     },
 
@@ -120,140 +113,170 @@
                 });
         }
 
+        function loadCategories(obj)
+        {
+            debugger;
+            $.ajax({
+                url: "/Home/GetCategories",
+                data: { id: $(obj).val() },
+                contentType: "application/json",
+                success: function (responce)
+                {
+                    debugger;
+                    var html = ''; @*<option value="0">Select City</option>*@
+                    $(responce).each(function ()
+                    {
+                       // html += '<option value="' + this.Value + '">' + this.Text + '</option>'
+
+                        html += '<tr><td>Data Successfully Get</td></tr>'
+                    });
+                    $("#allcategories").html(html);
+                }
+            });
+        }
+
+
     </script>
+    
 </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3" style="background: #130347 !important">
+                <div class="container">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white"><i class="far fa-snowflake"></i> Sabi <i class="far fa-snowflake"></i></a>
+                    <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon" style="color:white"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav flex-grow-1 wrap">
+                            <!--<-->@*li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                </li>*@
 
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3" style="background: #130347 !important">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white"><i class="far fa-snowflake"></i> Sabi <i class="far fa-snowflake"></i></a>
-                <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon" style="color:white"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1 wrap">
-                        <!--<-->@*li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <li class="nav-item" style="margin:auto">
+                                <a class="nav-link text-light">
+                                    @*  Categories<i class="fas fa-chevron-circle-down text-light" style="position: relative; left: 5px; top: 1px;"></i>*@
+
+                                    @Html.DropDownList("ddlcategories", ViewBag.Customercategories as IEnumerable<SelectListItem>, "Categories", new { onchange = "loadCategories(this)", @class = "form-control",@style= "height: 25px;padding: 0px; " })
+                                </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>*@
-
-                        <li class="nav-item" style="margin:auto">
-                            <a class="nav-link text-light">
-                                Categories<i class="fas fa-chevron-circle-down text-light" style="position: relative; left: 5px; top: 1px;"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item" style="margin:auto">
-                            <a class="nav-link text-light" style="display:flex">
-                                <input class="form-control" type="text" placeholder="Search" style="height: 24px;" />
-                                <i class="fas fa-search text-dark hover-fx" style="position: relative; left: -25px; top: 4px;"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item" style="margin:auto">
-                            <a class="nav-link text-light">
-                                HRE<i class="fas fa-map-marker-alt text-light hover-fx" style="position: relative; left: 5px; top: 1px;"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item " style="margin:auto">
-                            <a class="nav-link text-light">
-                                <i class="fas fa-shopping-basket text-light hover-fx" style=" position: relative;left: 5px;top: 1px;font-size: 25px;"></i>
-                            </a>
-                        </li>
+                            <li class="nav-item" style="margin:auto">
+                                <a class="nav-link text-light" style="display:flex">
+                                    <input class="form-control" type="text" placeholder="Search" style="height: 24px;" />
+                                    <i class="fas fa-search text-dark hover-fx" style="position: relative; left: -25px; top: 4px;"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item" style="margin:auto">
+                                <a class="nav-link text-light">
+                                    HRE<i class="fas fa-map-marker-alt text-light hover-fx" style="position: relative; left: 5px; top: 1px;"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item " style="margin:auto">
+                                <a class="nav-link text-light">
+                                    <i class="fas fa-shopping-basket text-light hover-fx" style=" position: relative;left: 5px;top: 1px;font-size: 25px;"></i>
+                                </a>
+                            </li>
 
 
-                        <li class="nav-item " style="margin:auto">
-                            <a class="nav-link text-light">
-                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn" type="button" data-target="#MyModal" data-toggle="modal" />
-                            </a>
-                        </li>
-                        <li class="nav-item " style="margin:auto;display:none;">
-                            <a class="nav-link text-light">
-                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Fire Base" type="button" onclick="window.open('https://localhost:44317/FireBase/Create','_blank')" />
-                            </a>
-                        </li>
-                    </ul>
+                            <li class="nav-item " style="margin:auto">
+                                <a class="nav-link text-light">
+                                    <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn" type="button" data-target="#MyModal" data-toggle="modal" />
+                                </a>
+                            </li>
+                            <li class="nav-item " style="margin:auto;display:none;">
+                                <a class="nav-link text-light">
+                                    <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Fire Base" type="button" onclick="window.open('https://localhost:44317/FireBase/Create','_blank')" />
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div class="second-navbar">
-        <div>Our Story</div>
-        <div>Why Sabi?</div>
-        <div>Cummunity</div>
-        <div>Support</div>
-    </div>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - sabi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </nav>
+        </header>
+        <div class="second-navbar">
+            <div>Our Story</div>
+            <div>Why Sabi?</div>
+            <div>Cummunity</div>
+            <div>Support</div>
         </div>
-    </footer>
-    <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
-    @*Modal start*@
-    <style>
-        .abtn {
-            border: 2px solid #17a2b8;
-            border-radius: 15px;
-            margin: 30px;
-        }
-        .flex1 {
-            display: flex;
-            justify-content: center;
-        }
-        .signinimg {
-            height: 20px;
-            margin: 4px;
-        }
-    </style>
+        <div class="container">
+            <main role="main" class="pb-3">
+                <table id="allcategories">
+                    
+                </table>
+                @RenderBody()
+            </main>
+        </div>
 
-<div class="modal fade " id="MyModal">
-    <div class="modal-dialog" >
-        <div class="modal-content">
-            <!--Header-->
-            <div class="modal-header" style="background: #130347;height: 60px;">
-                <h4 class="title" style="color:white;">Sign In</h4>
-                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times" style="color:white;"></i>
-                </button>
+
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - sabi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
-            <div style="width:100%; overflow:auto" class="ModelTrack">
-                <div class="modal-body" style="width:100%">
-                    <div style="display: block;">
-                        <a class="nav-link text-light abtn">
-                            <div class="flex1">
-                                <img src="~/Images/FacebookIcon.png" class="signinimg"/>
-                                <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Home/Facebook','_self')" />
+        </footer>
+        <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+        @*Modal start*@
+        <style>
+            .abtn {
+                border: 2px solid #17a2b8;
+                border-radius: 15px;
+                margin: 30px;
+            }
+
+            .flex1 {
+                display: flex;
+                justify-content: center;
+            }
+
+            .signinimg {
+                height: 20px;
+                margin: 4px;
+            }
+        </style>
+
+        <div class="modal fade " id="MyModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header" style="background: #130347;height: 60px;">
+                        <h4 class="title" style="color:white;">Sign In</h4>
+                        <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times" style="color:white;"></i>
+                        </button>
+                    </div>
+                    <div style="width:100%; overflow:auto" class="ModelTrack">
+                        <div class="modal-body" style="width:100%">
+                            <div style="display: block;">
+                                <a class="nav-link text-light abtn">
+                                    <div class="flex1">
+                                        <img src="~/Images/FacebookIcon.png" class="signinimg" />
+                                        <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Home/Facebook','_self')" />
+                                    </div>
+                                </a>
+                                <a class="nav-link text-light abtn">
+                                    <div class="flex1">
+                                        <img src="~/Images/GoogleIcon.png" class="signinimg" />
+                                        <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
+                                    </div>
+
+                                </a>
                             </div>
-                        </a>
-                        <a class="nav-link text-light abtn" >
-                            <div class="flex1">
-                                <img src="~/Images/GoogleIcon.png" class="signinimg"/>
-                                <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
-                            </div>
-                         
-                        </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-    
-    @*Modal End*@
+
+        @*Modal End*@
 
 
-</body>
+    </body>
 </html>
