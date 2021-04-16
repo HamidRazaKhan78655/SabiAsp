@@ -156,6 +156,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -182,6 +184,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>sabiDb.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Shop.cs">
+      <DependentUpon>sabiDb.tt</DependentUpon>
     </Compile>
     <Compile Include="SubCategory.cs">
       <DependentUpon>sabiDb.tt</DependentUpon>
@@ -409,6 +414,11 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\Admin.cshtml" />
     <Content Include="Views\FireBase\Create.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\Vendor\Categories.cshtml" />
+    <Content Include="Views\Vendor\SubCategories.cshtml" />
+    <Content Include="Views\Vendor\showVendorItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

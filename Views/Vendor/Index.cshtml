@@ -1,0 +1,8 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>As Vendor</h2>
+<div style="background-color:aqua; height:auto ; width:100px;padding:10px;  border-radius:5px">@ViewBag.LoginName</div>
+<input type="button" class="btn btn-warning" style="margin-top:10px;" value="Open Categories" onclick="location.href = '../vendor/Categories?id='+@ViewBag.Login" />

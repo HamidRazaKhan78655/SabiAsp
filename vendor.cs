@@ -18,6 +18,7 @@ namespace SabiAsp
         public vendor()
         {
             this.items = new HashSet<item>();
+            this.Shops = new HashSet<Shop>();
         }
     
         public int vendorid { get; set; }
@@ -27,5 +28,7 @@ namespace SabiAsp
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<item> items { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Shop> Shops { get; set; }
     }
 }

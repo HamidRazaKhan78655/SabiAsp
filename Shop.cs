@@ -12,28 +12,22 @@ namespace SabiAsp
     using System;
     using System.Collections.Generic;
     
-    public partial class SubCategory
+    public partial class Shop
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SubCategory()
+        public Shop()
         {
-            this.items = new HashSet<item>();
+            this.SubCategories = new HashSet<SubCategory>();
         }
     
-        public int SubCategorieId { get; set; }
-        public Nullable<int> CategoryId { get; set; }
-        public string image { get; set; }
-        public string name { get; set; }
+        public int Shopid { get; set; }
+        public string shopname { get; set; }
+        public Nullable<int> vendorid { get; set; }
+        public string createdOn { get; set; }
         public string isDeleted { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> shopid { get; set; }
     
-        public virtual Category Category { get; set; }
+        public virtual vendor vendor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<item> items { get; set; }
-        public virtual Shop Shop { get; set; }
+        public virtual ICollection<SubCategory> SubCategories { get; set; }
     }
 }

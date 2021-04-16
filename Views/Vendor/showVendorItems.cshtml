@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "showVendorItems";
+}
+
+<h2>showVendorItems</h2>
+
+
+<div style="display:flex">
+    @{
+        foreach (var item in ViewBag.items)
+        {
+            <div @*onclick="location.href='../vendor/showVendorItems?vendorid='+@ViewBag.vendorid+'&&sCateID='+subcat.SubCategorieId"*@ style="height:100px; min-width:100px;margin:10px; text-align:center;padding:10px;border:1px solid black; background-color:blueviolet;">
+                <h4>
+                    @item.name
+                </h4>
+            </div>
+        }
+    }
+    <input type="button" class="btn btn-warning" value="add item" />
+    <div id="addCategories">
+        @{
+            using (Html.BeginForm("AddVendorItem", "Vendor", FormMethod.Post))
+            {
+                <label>
+                    name :
+                </label>
+                <input type="text" class="form-control" name="itemname" />
+                <input type="hidden" value="@ViewBag.sCateID" name="sCateID" />
+                <input type="hidden" value="@ViewBag.vendorid" name="vendorid" />
+                <input type="submit" class="btn btn-info" value="add" />
+            }
+        }
+    </div>
+</div>

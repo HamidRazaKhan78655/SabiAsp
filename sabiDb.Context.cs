@@ -32,5 +32,6 @@ namespace SabiAsp
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<vendor> vendors { get; set; }
+        public virtual DbSet<Shop> Shops { get; set; }
     }
 }
