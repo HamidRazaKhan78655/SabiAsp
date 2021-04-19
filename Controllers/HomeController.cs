@@ -95,11 +95,18 @@ namespace SabiAsp.Controllers
         [HttpGet]
         public ActionResult GetCategories(int id)
         {
-            using (var db = new sabiShopEntities())
+            if (id.ToString()=="")
             {
-                var data = db.SubCategories.Where(d => d.CategoryId == id).Select(d => new { name = d.name, id = d.SubCategorieId.ToString(), image = d.image }).ToList();
-                return Json(data, JsonRequestBehavior.AllowGet);
+                return Json(ShowAllItems(), JsonRequestBehavior.AllowGet);
             }
+            
+                using (var db = new sabiShopEntities())
+                {
+                    var data = db.SubCategories.Where(d => d.CategoryId == id).Select(d => new { name = d.name, id = d.SubCategorieId.ToString(), image = d.image }).ToList();
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
+            
+            
         }
         
         [HttpGet]

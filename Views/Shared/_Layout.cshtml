@@ -25,7 +25,13 @@
         var user;
         var loggedIn = false;
 
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
+            ShowAllItems();
+        });
+
+        function ShowAllItems()
+        {
             debugger;
             $.ajax({
                 url: "/Home/ShowAllItems",
@@ -33,7 +39,8 @@
                 success: function (responce) {
                     debugger;
                     var html = '';
-                    $(responce).each(function (index, value) {
+                    $(responce).each(function (index, value)
+                    {
                         debugger;
 
                         html += '<div style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
@@ -42,7 +49,8 @@
                     $("#allcategories").html(html);
                 }
             });
-        });
+
+        }
 
         function login() {
             var win = window.open(_url, "windowname1", 'width=800, height=600');
@@ -123,8 +131,16 @@
                 });
         }
 
-        function loadCategories(obj) {
+        function loadCategories(obj)
+        {
+
             debugger;
+            var s = $(obj).val();
+            if (s == "")
+            {
+                ShowAllItems();
+                return;
+            }
             $.ajax({
                 url: "/Home/GetCategories",
                 data: { id: $(obj).val() },
@@ -132,7 +148,8 @@
                 success: function (responce) {
                     debugger;
                     var html = '';
-                    $(responce).each(function (index, value) {
+                    $(responce).each(function (index, value)
+                    {
                         debugger;
                         html += '<div onclick="ShowItem(' + value["id"] + ')" style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;">'
                             + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
