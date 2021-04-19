@@ -2,24 +2,29 @@
 @{
     ViewBag.Title = "SubCategories";
 }
-<script>
-    function vendoritems(id, cate) {
-        debugger;
-        location.href = '../vendor/showVendorItems?vendorid=' + id + '&&sCateID=' + cate;
-    }
-</script>
+
 <h2>Sub Categories</h2>
 
-<div style="display:flex">
-    @{
-        foreach (var subcat in ViewBag.subcats)
-        {
-        <div onclick="vendoritems(@ViewBag.vendorid ,@subcat.SubCategorieId)" style="height:100px; min-width:100px;margin:10px; text-align:center;padding:10px;border:1px solid black; background-color:blueviolet;">
-            <h4>@subcat.name</h4>
-        </div>
+<div>
+    <div class="row">
+        @{
+            foreach (var subcat in ViewBag.subcats)
+            {
+                <div class="col-md-2">
+                    <div onclick="vendoritems(@ViewBag.vendorid ,@subcat.SubCategorieId)" class="w-subCat-card-div">
+                        <h4>@subcat.name</h4>
+                    </div>
+                    <i class="fa fa-edit w-edit-subCat-btn" id="editbtn" onclick="UpdateSubCategory(@subcat.SubCategorieId, '@subcat.name');"></i>
+                    <i class="fa fa-trash w-delete-subCat-btn" id="deletebtn" onclick="DeleteSubCategory(@subcat.SubCategorieId, @ViewBag.vendorid, @ViewBag.categoryid);"></i>
+                </div>
+
+            }
         }
-    }
-    <input type="button" class="btn btn-warning" value="add SubCategories" data-target="#subCategoryBootstrapModal" data-toggle="modal"/>
+        <div class="col-md-2">
+            <input type="button" class="btn btn-warning" value="add SubCategories" data-target="#subCategoryBootstrapModal" data-toggle="modal" />
+        </div>
+    </div>
+
     <div id="addCategories">
         @{
             using (Html.BeginForm("AddSubCategories", "Vendor", FormMethod.Post))
@@ -60,4 +65,93 @@
             }
         }
     </div>
+
+    <input type="hidden" id="openSubCategoryModal" data-target="#updateSubCategoryBootstrapModal" data-toggle="modal" />
+    <div id="addCategories">
+        @{
+            using (Html.BeginForm("UpdateSubCategory", "Vendor", FormMethod.Post))
+            {
+
+                @*subCategory strat*@
+                <div class="modal fade " id="updateSubCategoryBootstrapModal">
+                    <div class="modal-dialog w-subCategory-modal-dialog">
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                <h4 class="title" style="color:white;">Update Sub Category</h4>
+
+                                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times" style="color:white;"></i>
+                                </button>
+                            </div>
+                            <div style="width:100%; overflow:auto" class="ModelTrack">
+                                <div class="modal-body" style="width:100%">
+                                    <div id="UpdateSubCategoryDiv">
+                                        <input type="hidden" value="@ViewBag.categoryid" name="categoryid" />
+                                        <input type="hidden" value="" name="updateSubCategoryId" id="updateSubCategoryId" />
+                                        <input type="hidden" value="@ViewBag.vendorid" name="vendorid" />
+                                        <input type="hidden" value="@ViewBag.shopid" name="shopid" />
+
+                                        <label>Name :</label>
+                                        <input type="text" class="form-control" name="subCategoryName" id="subCategoryName" required />
+
+                                        <input type="submit" class="btn btn-info" value="Update" style="float:right;margin:10px 0;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*subCategory end*@
+
+
+            }
+        }
+    </div>
 </div>
+
+
+<style>
+    .w-subCat-card-div {
+        height: 100px;
+        min-width: 100px;
+        margin: 10px;
+        text-align: center;
+        padding: 10px;
+        border: 1px solid black;
+        background-color: blueviolet;
+        color: white;
+    }
+
+    .w-edit-subCat-btn {
+        margin-top: -28px;
+        margin-right: 36px;
+        float: right;
+        color: white;
+    }
+
+    .w-delete-subCat-btn {
+        margin-top: -28px;
+        margin-right: 15px;
+        float: right;
+        color: white;
+    }
+</style>
+<script>
+    function vendoritems(id, cate) {
+        debugger;
+        location.href = '../vendor/showVendorItems?vendorid=' + id + '&&sCateID=' + cate;
+    }
+
+    function UpdateSubCategory(subCategoryId, name) {
+        debugger;
+        $("#updateSubCategoryId").val(subCategoryId);
+        $("#subCategoryName").val(name);
+        $("#openSubCategoryModal").trigger("click");
+    }
+
+    function DeleteSubCategory(subCategoryId, vendorId, categoryId) {
+        debugger;
+        location.href = '../vendor/DeleteSubCategory?subCategoryId=' + subCategoryId + '&&vendorId=' + vendorId + '&&categoryId=' + categoryId;
+    }
+</script>

@@ -5,21 +5,29 @@
 
 <h2>Items</h2>
 
-
-<div style="display:flex">
-    @{
-        foreach (var item in ViewBag.items)
-        {
-        <div @*onclick="location.href='../vendor/showVendorItems?vendorid='+@ViewBag.vendorid+'&&sCateID='+subcat.SubCategorieId"*@ style="height:100px; min-width:100px;margin:10px; text-align:center;padding:10px;border:1px solid black; background-color:blueviolet;">
-            <h4>@item.name</h4>
-            <div>@item.image</div>
-            <div>Per @item.Weight KG</div>
-            <div>Rs. @item.Price </div>
-        </div>
+<div>
+    <div class="row">
+        @{
+            foreach (var item in ViewBag.items)
+            {
+                <div class="col-md-2">
+                    <div class="w-item-card-div">
+                        <h4>@item.name</h4>
+                        <div>@item.image</div>
+                        <div>Per @item.Weight KG</div>
+                        <div>Rs. @item.Price </div>
+                    </div>
+                    <i class="fa fa-edit w-edit-item-btn" id="editbtn" onclick="GetUpdateItem(@item.ItemId, '@item.name', '@item.Weight', '@item.Price', '@item.image');"></i>
+                    <i class="fa fa-trash w-delete-item-btn" id="deletebtn" onclick="DeleteItem(@item.ItemId, @ViewBag.vendorid, @ViewBag.sCateID);"></i>
+                </div>
+            }
         }
-    }
-    <input type="button" class="btn btn-warning" value="add item" data-target="#itemBootstrapModal" data-toggle="modal" />
-    <div id="addCategories">
+        <div class="col-md-2">
+            <input type="button" class="btn btn-warning" value="add item" data-target="#itemBootstrapModal" data-toggle="modal" />
+        </div>
+    </div>
+    
+    <div id="addItemDiv">
         @{
             using (Html.BeginForm("AddVendorItem", "Vendor", FormMethod.Post, new { id = "mainForm" }))
             {
@@ -43,7 +51,7 @@
                                         <input type="hidden" value="@ViewBag.vendorid" name="vendorid" />
 
                                         <label>Name :</label>
-                                        <input type="text" class="form-control" name="itemName" required/>
+                                        <input type="text" class="form-control" name="itemName" required />
                                         <label>Weight :</label>
                                         <input type="text" class="form-control" name="itemWeight" required />
                                         <label>Price :</label>
@@ -51,7 +59,53 @@
                                         <label>Image :</label>
                                         <input type="file" class="form-control" name="itemImage" multiple />
 
-                                        <input type="button" class="btn btn-info" value="Add" onclick="SaveInfo();" style="float:right;margin:10px 0;"/>
+                                        <input type="button" class="btn btn-info" value="Add" onclick="SaveItemInfo();" style="float:right;margin:10px 0;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*item end*@
+
+            }
+        }
+    </div>
+    <input type="hidden" id="openUpdateItemModal" data-target="#updateItemBootstrapModal" data-toggle="modal" />
+    <div id="updateItemDiv">
+        @{
+            using (Html.BeginForm("UpdateVendorItem", "Vendor", FormMethod.Post, new { id = "updateItemForm" }))
+            {
+
+                @*item strat*@
+                <div class="modal fade " id="updateItemBootstrapModal">
+                    <div class="modal-dialog w-item-modal-dialog">
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                <h4 class="title" style="color:white;">Update Item</h4>
+
+                                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times" style="color:white;"></i>
+                                </button>
+                            </div>
+                            <div style="width:100%; overflow:auto" class="ModelTrack">
+                                <div class="modal-body" style="width:100%">
+                                    <div id="UpdateItemDiv">
+                                        <input type="hidden" value="@ViewBag.sCateID" name="sCateID" />
+                                        <input type="hidden" value="@ViewBag.vendorid" name="vendorid" />
+                                        <input type="hidden" value="" name="updateItemId" id="updateItemId" />
+
+                                        <label>Name :</label>
+                                        <input type="text" class="form-control" name="updateItemName" id="updateItemName" required />
+                                        <label>Weight :</label>
+                                        <input type="text" class="form-control" name="updateItemWeight" id="updateItemWeight" required />
+                                        <label>Price :</label>
+                                        <input type="text" class="form-control" name="updateItemPrice" id="updateItemPrice" required />
+                                        <label>Image :</label>
+                                        <input type="file" class="form-control" name="updateItemImage" id="updateItemImage" multiple />
+
+                                        <input type="button" class="btn btn-info" value="Update" onclick="UpdateItemInfo();" style="float:right;margin:10px 0;" />
                                     </div>
                                 </div>
                             </div>
@@ -66,8 +120,34 @@
 </div>
 
 
+<style>
+    .w-item-card-div {
+        height: 100px;
+        min-width: 100px;
+        margin: 10px;
+        text-align: center;
+        padding: 10px;
+        border: 1px solid black;
+        background-color: blueviolet;
+    }
+
+    .w-edit-item-btn {
+        margin-top: -28px;
+        margin-right: 36px;
+        float: right;
+        color: white;
+    }
+
+    .w-delete-item-btn {
+        margin-top: -28px;
+        margin-right: 15px;
+        float: right;
+        color: white;
+    }
+</style>
+
 <script>
-    function SaveInfo() {
+    function SaveItemInfo() {
         debugger;
         f = new FormData($("#mainForm")[0]);
 
@@ -85,7 +165,40 @@
                     console.log(response);
                 }
             });
+    }
 
-        //location.href = '../vendor/showVendorItems?vendorid=' + id + '&&sCateID=' + cate;
+    function GetUpdateItem(itemId, itemName, itemWeight, itemPrice, itemImage) {
+        debugger;
+        $("#updateItemId").val(itemId);
+        $("#updateItemName").val(itemName);
+        $("#updateItemWeight").val(itemWeight);
+        $("#updateItemPrice").val(itemPrice);
+        $("#updateItemImage").val(itemImage);
+        $("#openUpdateItemModal").trigger("click");
+    }
+
+    function UpdateItemInfo() {
+        debugger;
+        f = new FormData($("#updateItemForm")[0]);
+
+        $.ajax({
+            url: '/Vendor/UpdateVendorItem',
+            type: 'POST',
+            data: f,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                debugger;
+                window.location.reload();
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    }
+
+    function DeleteItem(itemId, vendorId, subCategoryId) {
+        debugger;
+        location.href = '../vendor/DeleteVendorItem?itemId=' + itemId + '&&vendorId=' + vendorId + '&&subCategoryId=' + subCategoryId;
     }
 </script>
