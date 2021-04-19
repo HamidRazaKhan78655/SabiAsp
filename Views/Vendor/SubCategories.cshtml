@@ -8,33 +8,56 @@
         location.href = '../vendor/showVendorItems?vendorid=' + id + '&&sCateID=' + cate;
     }
 </script>
-<h2>SubCategories</h2>
+<h2>Sub Categories</h2>
 
 <div style="display:flex">
     @{
         foreach (var subcat in ViewBag.subcats)
         {
-            <div onclick="vendoritems(@ViewBag.vendorid ,@subcat.SubCategorieId )" style="height:100px; min-width:100px;margin:10px; text-align:center;padding:10px;border:1px solid black; background-color:blueviolet;">
-                <h4>
-                    @subcat.name
-                </h4>
-            </div>
+        <div onclick="vendoritems(@ViewBag.vendorid ,@subcat.SubCategorieId)" style="height:100px; min-width:100px;margin:10px; text-align:center;padding:10px;border:1px solid black; background-color:blueviolet;">
+            <h4>@subcat.name</h4>
+        </div>
         }
     }
-    <input type="button" class="btn btn-warning" value="add SubCategories"/>
+    <input type="button" class="btn btn-warning" value="add SubCategories" data-target="#subCategoryBootstrapModal" data-toggle="modal"/>
     <div id="addCategories">
         @{
-            using(Html.BeginForm("AddSubCategories", "Vendor", FormMethod.Post))
+            using (Html.BeginForm("AddSubCategories", "Vendor", FormMethod.Post))
             {
-                <label>
-                    name :
-                </label>
-                <input type="text" class="form-control" name="SCateName"/>
-                <input type="hidden" value="@ViewBag.categoryid" name="categoryid"/>
-                <input type="hidden" value="@ViewBag.vendorid" name="vendorid"/>
-                <input type="hidden" value="@ViewBag.shopid" name="shopid"/>
-                <input type="submit" class="btn btn-info" value="add"/>
+
+                @*subCategory strat*@
+                <div class="modal fade " id="subCategoryBootstrapModal">
+                    <div class="modal-dialog w-subCategory-modal-dialog">
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                <h4 class="title" style="color:white;">Add Sub Category</h4>
+
+                                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times" style="color:white;"></i>
+                                </button>
+                            </div>
+                            <div style="width:100%; overflow:auto" class="ModelTrack">
+                                <div class="modal-body" style="width:100%">
+                                    <div id="SubCategoriesDiv">
+                                        <input type="hidden" value="@ViewBag.categoryid" name="categoryid" />
+                                        <input type="hidden" value="@ViewBag.vendorid" name="vendorid" />
+                                        <input type="hidden" value="@ViewBag.shopid" name="shopid" />
+
+                                        <label>Name :</label>
+                                        <input type="text" class="form-control" name="SCateName" required />
+
+                                        <input type="submit" class="btn btn-info" value="Add" style="float:right;margin:10px 0;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*subCategory end*@
+
+
             }
         }
-        </div>
+    </div>
 </div>

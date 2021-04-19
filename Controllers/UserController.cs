@@ -16,9 +16,8 @@ namespace SabiAsp.Controllers
             {
                 ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
 
             }
             return View();

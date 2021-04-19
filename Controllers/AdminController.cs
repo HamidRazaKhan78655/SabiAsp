@@ -28,8 +28,7 @@ namespace SabiAsp.Controllers
             string user = admin["username"].ToString();
             string pass = admin["pass"].ToString();
             if (user.Equals("sabi") && pass.Equals("1234"))
-            {
-                
+            {   
                 return RedirectToAction("Admin");
             }
             else
