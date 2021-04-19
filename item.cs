@@ -32,6 +32,7 @@ namespace SabiAsp
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> vendorid { get; set; }
+        public string Weight { get; set; }
     
         public virtual SubCategory SubCategory { get; set; }
         public virtual vendor vendor { get; set; }

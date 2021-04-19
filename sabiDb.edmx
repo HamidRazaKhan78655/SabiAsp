@@ -24,10 +24,12 @@
           </Key>
           <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubCategorieId" Type="int" />
+          <Property Name="vendorid" Type="int" />
           <Property Name="name" Type="nvarchar" MaxLength="400" />
           <Property Name="image" Type="nvarchar(max)" />
           <Property Name="rating" Type="nvarchar" MaxLength="50" />
           <Property Name="location" Type="nvarchar(max)" />
+          <Property Name="Weight" Type="nvarchar(max)" />
           <Property Name="Time" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="nvarchar" MaxLength="50" />
           <Property Name="DeliveryFee" Type="nvarchar" MaxLength="50" />
@@ -39,7 +41,6 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="vendorid" Type="int" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -260,6 +261,7 @@
           <NavigationProperty Name="SubCategory" Relationship="Self.FK_items_SubCategories" FromRole="items" ToRole="SubCategories" />
           <Property Name="vendorid" Type="Int32" />
           <NavigationProperty Name="vendor" Relationship="sabiShopModel.FK_vendor" FromRole="item" ToRole="vendor" />
+          <Property Name="Weight" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -470,6 +472,7 @@
           <EntitySetMapping Name="items">
             <EntityTypeMapping TypeName="sabiShopModel.item">
               <MappingFragment StoreEntitySet="items">
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="vendorid" ColumnName="vendorid" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="SubCategorieId" ColumnName="SubCategorieId" />

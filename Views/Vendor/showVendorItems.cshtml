@@ -3,33 +3,89 @@
     ViewBag.Title = "showVendorItems";
 }
 
-<h2>showVendorItems</h2>
+<h2>Items</h2>
 
 
 <div style="display:flex">
     @{
         foreach (var item in ViewBag.items)
         {
-            <div @*onclick="location.href='../vendor/showVendorItems?vendorid='+@ViewBag.vendorid+'&&sCateID='+subcat.SubCategorieId"*@ style="height:100px; min-width:100px;margin:10px; text-align:center;padding:10px;border:1px solid black; background-color:blueviolet;">
-                <h4>
-                    @item.name
-                </h4>
-            </div>
+        <div @*onclick="location.href='../vendor/showVendorItems?vendorid='+@ViewBag.vendorid+'&&sCateID='+subcat.SubCategorieId"*@ style="height:100px; min-width:100px;margin:10px; text-align:center;padding:10px;border:1px solid black; background-color:blueviolet;">
+            <h4>@item.name</h4>
+            <div>@item.image</div>
+            <div>Per @item.Weight KG</div>
+            <div>Rs. @item.Price </div>
+        </div>
         }
     }
-    <input type="button" class="btn btn-warning" value="add item" />
+    <input type="button" class="btn btn-warning" value="add item" data-target="#itemBootstrapModal" data-toggle="modal" />
     <div id="addCategories">
         @{
-            using (Html.BeginForm("AddVendorItem", "Vendor", FormMethod.Post))
+            using (Html.BeginForm("AddVendorItem", "Vendor", FormMethod.Post, new { id = "mainForm" }))
             {
-                <label>
-                    name :
-                </label>
-                <input type="text" class="form-control" name="itemname" />
-                <input type="hidden" value="@ViewBag.sCateID" name="sCateID" />
-                <input type="hidden" value="@ViewBag.vendorid" name="vendorid" />
-                <input type="submit" class="btn btn-info" value="add" />
+
+                @*item strat*@
+                <div class="modal fade " id="itemBootstrapModal">
+                    <div class="modal-dialog w-item-modal-dialog">
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                <h4 class="title" style="color:white;">Add Item</h4>
+
+                                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times" style="color:white;"></i>
+                                </button>
+                            </div>
+                            <div style="width:100%; overflow:auto" class="ModelTrack">
+                                <div class="modal-body" style="width:100%">
+                                    <div id="ItemDiv">
+                                        <input type="hidden" value="@ViewBag.sCateID" name="sCateID" />
+                                        <input type="hidden" value="@ViewBag.vendorid" name="vendorid" />
+
+                                        <label>Name :</label>
+                                        <input type="text" class="form-control" name="itemName" required/>
+                                        <label>Weight :</label>
+                                        <input type="text" class="form-control" name="itemWeight" required />
+                                        <label>Price :</label>
+                                        <input type="text" class="form-control" name="itemPrice" required />
+                                        <label>Image :</label>
+                                        <input type="file" class="form-control" name="itemImage" multiple />
+
+                                        <input type="button" class="btn btn-info" value="Add" onclick="SaveInfo();" style="float:right;margin:10px 0;"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*item end*@
+
             }
         }
     </div>
 </div>
+
+
+<script>
+    function SaveInfo() {
+        debugger;
+        f = new FormData($("#mainForm")[0]);
+
+        $.ajax({
+            url: '/Vendor/AddVendorItem',
+            type: 'POST',
+            data: f,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                debugger;
+                    window.location.reload();
+                },
+                error: function (response) {
+                    console.log(response);
+                }
+            });
+
+        //location.href = '../vendor/showVendorItems?vendorid=' + id + '&&sCateID=' + cate;
+    }
+</script>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,15 +22,11 @@ namespace SabiAsp.Controllers
                 ViewBag.Login = "none";
             }
             else {
-                var query = Db.vendors.ToList();
-                foreach (vendor ven in query) {
-                    if (ven.vendorid.ToString().Trim().Equals(loginID.ToString())) {
-                        ViewBag.Login = ven.vendorid.ToString(); ;
-                        ViewBag.LoginName = ven.name.ToString(); ;
-                    }
-                }
+                int vId = int.Parse(loginID);
+                var query = Db.vendors.Where(x=> x.vendorid == vId).SingleOrDefault();
+                ViewBag.Login = query.vendorid.ToString();
+                ViewBag.LoginName = query.name.ToString();
             }
-
             return View();
         }
         public ActionResult Categories(string id)
@@ -53,52 +51,66 @@ namespace SabiAsp.Controllers
         }
         public ActionResult SubCategories(string vendorid , string cate)
         {
-            var shops = Db.Shops.ToList();
-            var subcats = Db.SubCategories.ToList();
-            Shop shop1 = new Shop() ;
-            List<SubCategory> subs = new List<SubCategory>();
-            foreach (var shop in shops) {
-                if (shop.vendorid.ToString().Equals(vendorid)) {
-                    shop1 = shop;
-                }
-            }
-            foreach (var subcat in subcats) {
-                if (subcat.shopid.ToString().Equals(shop1.Shopid.ToString()) && subcat.CategoryId.ToString().Equals(cate.ToString())) {
-                    subs.Add(subcat);
-                }
-            }
-            ViewBag.subcats = subs;
+            int? vId = int.Parse(vendorid);
+            int? cId = int.Parse(cate);
+            var shop = Db.Shops.Where(x=> x.vendorid == vId).SingleOrDefault();
+            var subCategories = Db.SubCategories.Where(x=> x.shopid == shop.Shopid && x.CategoryId == cId).ToList();
+            ViewBag.subcats = subCategories;
             ViewBag.categoryid = cate;
             ViewBag.vendorid = vendorid;
-            ViewBag.shopid = shop1.Shopid;
+            ViewBag.shopid = shop.Shopid;
             return View();
         }
         public ActionResult showVendorItems(string vendorid, string sCateID)
         {
-            List<item> items = new List<item>();
-
-            var allitems = Db.items.ToList();
-            foreach (var item in allitems) {
-                if (vendorid.Equals(item.vendorid.ToString()) && sCateID.Equals(item.SubCategorieId.ToString())) {
-                    items.Add(item);
-                }
-            }
-            ViewBag.items = items;
+            int? vId = int.Parse(vendorid);
+            int? subId = int.Parse(sCateID);
+            var allitems = Db.items.Where(x=> x.vendorid == vId && x.SubCategorieId == subId).ToList();
+            ViewBag.items = allitems;
             ViewBag.sCateID = sCateID;
             ViewBag.vendorid = vendorid;
-
             return View();
         }
-        public ActionResult AddVendorItem(FormCollection fm)
+        public ActionResult AddVendorItem(IEnumerable<HttpPostedFileBase> files, FormCollection fm)
         {
-            string name = fm["itemname"].ToString();
+            string name = fm["itemName"].ToString();
+            string weight = fm["itemWeight"].ToString();
+            string price = fm["itemPrice"].ToString();
             string venid = fm["vendorid"].ToString();
             string sCateID = fm["sCateID"].ToString();
 
             item item = new item();
+
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                try
+                {
+                    var file = Request.Files[i];
+                    string namefile = string.Empty;
+                    namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                    if (string.IsNullOrEmpty(namefile) == false)
+                    {
+                        Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                        var path = Server.MapPath("~/CompanyImages/");
+                        string SavePath = path + namefile;
+                        b.Save(SavePath, ImageFormat.Png);
+                        item.image = file.FileName;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
             item.name = name;
+            item.Weight = weight;
+            item.Price = price;
             item.vendorid = int.Parse(venid);
             item.SubCategorieId = int.Parse(sCateID);
+            item.isDeleted = "false";
+            item.CreatedDate = DateTime.Now;
+            item.CreatedBy = int.Parse(venid);
             Db.items.Add(item);
             Db.SaveChanges();
             return RedirectToAction("showVendorItems", new { vendorid = venid, sCateID = sCateID });
