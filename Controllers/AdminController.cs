@@ -10,9 +10,11 @@ namespace SabiAsp.Controllers
     public class AdminController : Controller
     {
         sabiShopEntities Db = new sabiShopEntities();
+
         // GET: Admin
         public ActionResult Index()
         {
+            ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
             return View();
         }
         public ActionResult Admin()

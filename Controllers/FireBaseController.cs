@@ -14,6 +14,7 @@ namespace SabiAsp.Controllers
     public class FireBaseController : Controller
     {
         // GET: FireBase
+        sabiShopEntities Db = new sabiShopEntities();
 
         IFirebaseConfig config = new FirebaseConfig
         {
@@ -22,8 +23,10 @@ namespace SabiAsp.Controllers
         };
 
         IFirebaseClient client; 
+
         public ActionResult Index()
         {
+            ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
             return View();
         }
         [HttpGet]

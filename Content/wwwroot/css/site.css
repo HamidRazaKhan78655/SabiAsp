@@ -156,3 +156,28 @@ body {
     margin: 10px;
 }
 /*///////////////////////////////////////Admin End////////////////////////////////////////*/
+
+
+
+/*////////////////////////////////Login Modal CSS start///////////////////////*/
+
+.abtn {
+    border: 2px solid #17a2b8;
+    border-radius: 15px;
+    margin: 30px;
+}
+
+.flex1 {
+    display: flex;
+    justify-content: center;
+}
+
+.signinimg {
+    height: 20px;
+    margin: 4px;
+}
+
+
+/*////////////////////////////////Login Modal CSS End///////////////////////*/
+
+
