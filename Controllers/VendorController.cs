@@ -14,6 +14,7 @@ namespace SabiAsp.Controllers
         // GET: Vendor
         public ActionResult Index()
         {
+            ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
             if (login == "none")
             {
                 ViewBag.Login = "none";
