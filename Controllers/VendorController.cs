@@ -183,7 +183,7 @@ namespace SabiAsp.Controllers
                         var path = Server.MapPath("~/CompanyImages/");
                         string SavePath = path + _fileName;
                         b.Save(SavePath, ImageFormat.Png);
-                        item.image = file.FileName;
+                        item.image = _fileName;
                     }
                 }
                 catch (Exception ex)
