@@ -1,9 +1,61 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<script>
+    function loadCategories(obj) {
 
+        debugger;
+        var s = $(obj).val();
+        if (s == "") {
+            ShowAllItems();
+            return;
+        }
+        $.ajax({
+            url: "/Items/GetCategories",
+            data: { id: $(obj).val() },
+            contentType: "application/json",
+            success: function (responce) {
+                debugger;
+                var html = '';
+                $(responce).each(function (index, value) {
+                    debugger;
+                    html += '<div onclick="ShowItem(' + value["id"] + ')" style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;">'
+                        + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
+                });
+                $("#allcategories").html(html);
+            }
+        });
+    }
+
+
+    function ShowItem(obj) {
+        debugger;
+        $.ajax({
+            url: "/Items/GetSubCategoriesItem",
+            data: { id: obj },
+            contentType: "application/json",
+            success: function (responce) {
+                debugger;
+                var html = '';
+                $(responce).each(function (index, value) {
+                    debugger;
+
+                    html += '<div style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
+                        + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
+                });
+                $("#allcategories").html(html);
+            }
+        });
+    }
+</script>
 
 <div class="jumbotron">
+
+    <div class="container-fluid">
+        <div id="allcategories" class="row">
+
+        </div>
+    </div>
     <div>
         @*@Html.ActionLink("Login with facebook", "Facebook", "Home")*@
         <table>

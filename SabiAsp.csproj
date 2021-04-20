@@ -156,6 +156,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Global.asax.cs">
@@ -423,6 +424,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CompanyImages\" />
+    <Folder Include="Views\Items\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

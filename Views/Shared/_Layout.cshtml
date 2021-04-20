@@ -25,15 +25,21 @@
         var user;
         var loggedIn = false;
 
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
+            ShowAllItems();
+        });
+        function ShowAllItems()
+        {
             debugger;
             $.ajax({
-                url: "/Home/ShowAllItems",
+                url: "/Items/ShowAllItems",
                 contentType: "application/json",
                 success: function (responce) {
                     debugger;
                     var html = '';
-                    $(responce).each(function (index, value) {
+                    $(responce).each(function (index, value)
+                    {
                         debugger;
 
                         html += '<div style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
@@ -42,7 +48,8 @@
                     $("#allcategories").html(html);
                 }
             });
-        });
+
+        }
 
         function login() {
             var win = window.open(_url, "windowname1", 'width=800, height=600');
@@ -123,45 +130,7 @@
                 });
         }
 
-        function loadCategories(obj) {
-            debugger;
-            $.ajax({
-                url: "/Home/GetCategories",
-                data: { id: $(obj).val() },
-                contentType: "application/json",
-                success: function (responce) {
-                    debugger;
-                    var html = '';
-                    $(responce).each(function (index, value) {
-                        debugger;
-                        html += '<div onclick="ShowItem(' + value["id"] + ')" style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;">'
-                            + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
-                    });
-                    $("#allcategories").html(html);
-                }
-            });
-        }
 
-
-        function ShowItem(obj) {
-            debugger;
-            $.ajax({
-                url: "/Home/GetSubCategoriesItem",
-                data: { id: obj },
-                contentType: "application/json",
-                success: function (responce) {
-                    debugger;
-                    var html = '';
-                    $(responce).each(function (index, value) {
-                        debugger;
-
-                        html += '<div style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
-                            + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
-                    });
-                    $("#allcategories").html(html);
-                }
-            });
-        }
 
 
 
@@ -238,11 +207,6 @@
     <div class="container">
         <main role="main" class="pb-3">
             @*@Html.DropDownList("Subcategories", ViewBag.Subcategories as IEnumerable<SelectListItem>, "Categories", new { onchange = "loadSubCategories(this)", @class = "form-control", @style = "height: 25px;padding: 0px;display:none; " })*@
-            <div class="container-fluid">
-                <div id="allcategories" class="row">
-
-                </div>
-            </div>
             @RenderBody()
         </main>
     </div>
