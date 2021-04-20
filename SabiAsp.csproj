@@ -255,6 +255,7 @@
     <Content Include="Content\wwwroot\css\site.css" />
     <Content Include="Content\wwwroot\favicon.ico" />
     <Content Include="Content\wwwroot\img\gif\ecom-cart.gif" />
+    <Content Include="Content\wwwroot\js\script.js" />
     <Content Include="Content\wwwroot\js\site.js" />
     <Content Include="Content\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css" />
     <Content Include="Content\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css" />
