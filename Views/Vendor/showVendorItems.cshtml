@@ -13,7 +13,10 @@
                 <div class="col-md-2">
                     <div class="w-item-card-div">
                         <h4>@item.name</h4>
-                        <div>@item.image</div>
+                        <div>
+                            <img src="@string.Format("/CompanyImages/", item.image)" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                            @*@item.image*@
+                        </div>
                         <div>Per @item.Weight KG</div>
                         <div>Rs. @item.Price </div>
                     </div>
