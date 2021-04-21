@@ -126,12 +126,25 @@
 
                 });
         }
+        function openSignModal(id)
+        {
+            if (id == 1)
+            {
+                $('#changeheader').text('Sign In as Vendor');
+                $('#SignInType').val(1);
+            } else
+            {
+                $('#changeheader').text('Sign In as Buyer');
+                $('#SignInType').val(2);
+            }
+            $('#Signinmodal').trigger('click');
+
+        }
     </script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3sVPIXZ27uIfBDViZdbpNHMUoAV_4sEU"></script>
 </head>
 <body>
     <header>
-
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3" style="background: #130347 !important">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white"><i class="far fa-snowflake"></i> Sabi <i class="far fa-snowflake"></i></a>
@@ -142,15 +155,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1 wrap">
                         <!--<-->@*li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>*@
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </li>*@
 
                         <li class="nav-item" style="margin:auto">
                             <a class="nav-link text-light" id="Expand">
-                                  Categories<i  class="fas fa-chevron-circle-down text-light" style="position: relative; left: 5px; top: 1px;"></i>
+                                Categories<i class="fas fa-chevron-circle-down text-light" style="position: relative; left: 5px; top: 1px;"></i>
                                 @*@Html.DropDownList("ddlcategories", ViewBag.Customercategories as IEnumerable<SelectListItem>, "Categories", new { onchange = "loadCategories(this)", @class = "form-control", @style = "height: 25px;padding: 0px; " })*@
                                 <div id="dropdown" style="display:none;" class="dropdownStyle">
                                     <ul>
@@ -179,11 +192,17 @@
                                 <i class="fas fa-shopping-basket text-light hover-fx" style=" position: relative;left: 5px;top: 1px;font-size: 25px;"></i>
                             </a>
                         </li>
-
+                        
 
                         <li class="nav-item " style="margin:auto">
                             <a class="nav-link text-light">
-                                <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn" type="button" data-target="#MyModal" data-toggle="modal" />
+                                <input id="SignInbtn" class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn" type="button" />
+                                <div id="SignIn" style="display:none;" class="dropdownStyle">
+                                    <ul>
+                                        <li onclick="openSignModal(1)">Sign In as Vendor</li>
+                                        <li onclick="openSignModal(2)">Sign In as Buyer</li>
+                                    </ul>
+                                </div>
                             </a>
                         </li>
                         <li class="nav-item " style="margin:auto;display:none;">
@@ -222,23 +241,6 @@
     <script src="~/Content/wwwroot/js/script.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
     @*Modal start*@
-    <style>
-        .abtn {
-            border: 2px solid #17a2b8;
-            border-radius: 15px;
-            margin: 30px;
-        }
-
-        .flex1 {
-            display: flex;
-            justify-content: center;
-        }
-
-        .signinimg {
-            height: 20px;
-            margin: 4px;
-        }
-    </style>
 
     <div class="modal fade " id="GoogleMapsModal">
         <div class="modal-dialog" style="max-width:80%">
@@ -257,12 +259,16 @@
         </div>
     </div>
     </div>
+    <input type="hidden" id="Signinmodal" data-target="#MyModal" data-toggle="modal"/>
+
+    <input type="hidden" id="SignInType" value=""/>
+
     <div class="modal fade " id="MyModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!--Header-->
                 <div class="modal-header" style="background: #130347;height: 60px;">
-                    <h4 class="title" style="color:white;">Sign In</h4>
+                    <h4 id="changeheader" class="title" style="color:white;"></h4>
                     <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="fas fa-times" style="color:white;"></i>
                     </button>
@@ -273,7 +279,7 @@
                             <a class="nav-link text-light abtn">
                                 <div class="flex1">
                                     <img src="~/Images/FacebookIcon.png" class="signinimg" />
-                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Login/Facebook','_self')" />
+                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Login/Facebook', '_self')" />
                                 </div>
                             </a>
                             <a class="nav-link text-light abtn">
@@ -281,7 +287,6 @@
                                     <img src="~/Images/GoogleIcon.png" class="signinimg" />
                                     <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
                                 </div>
-
                             </a>
                         </div>
                     </div>

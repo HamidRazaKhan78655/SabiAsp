@@ -7,9 +7,16 @@
 $(document).ready(function ()
 {
     ShowAllItems();
-    $("#Expand").click(function () {
+    $("#Expand").click(function ()
+    {
         debugger;
         $("#dropdown").slideToggle();
+    });
+
+    $("#SignInbtn").click(function ()
+    {
+        debugger;
+        $("#SignIn").slideToggle();
     });
 
     $("#Subcategories").change(function ()

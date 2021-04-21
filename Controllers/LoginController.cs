@@ -11,7 +11,7 @@ namespace SabiAsp.Controllers
     public class LoginController : Controller
     {
         // GET: Login
-
+        private int UserTypeId = 0;
         private Uri RediredtUri
         {
             get
@@ -31,8 +31,9 @@ namespace SabiAsp.Controllers
 
 
         [AllowAnonymous]
-        public ActionResult Facebook()
+        public ActionResult Facebook(int UserType)
         {
+            UserTypeId = UserType;
             var fb = new FacebookClient();
             var loginUrl = fb.GetLoginUrl(new
             {
@@ -66,6 +67,15 @@ namespace SabiAsp.Controllers
             TempData["lastname"] = me.last_name;
             TempData["picture"] = me.picture.data.url;
             FormsAuthentication.SetAuthCookie(email, false);
+            if (UserTypeId==1)
+            {
+                //Vendor
+            }
+            else if (UserTypeId==2)
+            {
+                //Buyer
+            }
+
             return RedirectToAction("Index", "Home");
         }
 
