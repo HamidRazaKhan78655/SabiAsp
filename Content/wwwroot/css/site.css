@@ -180,4 +180,18 @@ body {
 
 /*////////////////////////////////Login Modal CSS End///////////////////////*/
 
+.dropdownStyle {
+    position: absolute;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: -15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+    .dropdownStyle ul 
+    {
+        list-style: none;
+        padding: 10px;
+    }
 

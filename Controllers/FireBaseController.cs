@@ -26,7 +26,6 @@ namespace SabiAsp.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
             return View();
         }
         [HttpGet]

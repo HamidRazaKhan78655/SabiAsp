@@ -12,13 +12,6 @@ namespace SabiAsp.Controllers
         // GET: Items
         public ActionResult Index()
         {
-            try
-            {
-                ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
-            }
-            catch (Exception)
-            {
-            }
             return View();
         }
 
@@ -44,12 +37,18 @@ namespace SabiAsp.Controllers
         [HttpGet]
         public ActionResult GetSubCategoriesItem(int id)
         {
+            /*if (Session["Login"] == null)
+            {
+                var data =new { text=""};
+                return Json(data, JsonRequestBehavior.AllowGet);
+            }*/
             using (var db = new sabiShopEntities())
             {
 
-                var data = db.items.Where(d => d.SubCategorieId == id).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
+               var  data = db.items.Where(d => d.SubCategorieId == id).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
+
         }
 
         [HttpGet]
@@ -60,6 +59,24 @@ namespace SabiAsp.Controllers
                 var data = db.items.Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
+        } 
+        
+        [HttpGet]
+        public ActionResult GetSortList(int id)
+        {
+            using (var db = new sabiShopEntities())
+            {
+                
+                if (id==1)
+                {
+                    var data= db.items.OrderBy(x => x.CreatedDate).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
+                    return Json(data, JsonRequestBehavior.AllowGet);
+                }
+                
+                    var data1 = db.items.OrderBy(x => x.Price).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
+                    return Json(data1, JsonRequestBehavior.AllowGet); 
+            }
         }
+       
     }
 }

@@ -25,10 +25,6 @@
         var user;
         var loggedIn = false;
 
-        $(document).ready(function ()
-        {
-            ShowAllItems();
-        });
         function ShowAllItems()
         {
             debugger;
@@ -41,8 +37,7 @@
                     $(responce).each(function (index, value)
                     {
                         debugger;
-
-                        html += '<div style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
+                        html += '<div onclick="buy('+value["id"]+');" style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
                             + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
                     });
                     $("#allcategories").html(html);
@@ -51,12 +46,15 @@
 
         }
 
-        function login() {
+        function login()
+        {
             var win = window.open(_url, "windowname1", 'width=800, height=600');
-            var pollTimer = window.setInterval(function () {
+            var pollTimer = window.setInterval(function ()
+            {
                 try {
                     console.log(win.document.URL);
-                    if (win.document.URL.indexOf(REDIRECT) != -1) {
+                    if (win.document.URL.indexOf(REDIRECT) != -1)
+                    {
                         window.clearInterval(pollTimer);
                         var url = win.document.URL;
                         acToken = gup(url, 'access_token');
@@ -129,13 +127,6 @@
 
                 });
         }
-
-
-
-
-
-
-
     </script>
 
 </head>
@@ -159,10 +150,18 @@
                             </li>*@
 
                         <li class="nav-item" style="margin:auto">
-                            <a class="nav-link text-light">
-                                @*  Categories<i class="fas fa-chevron-circle-down text-light" style="position: relative; left: 5px; top: 1px;"></i>*@
+                            <a class="nav-link text-light" id="Expand">
+                                  Categories<i  class="fas fa-chevron-circle-down text-light" style="position: relative; left: 5px; top: 1px;"></i>
+                                @*@Html.DropDownList("ddlcategories", ViewBag.Customercategories as IEnumerable<SelectListItem>, "Categories", new { onchange = "loadCategories(this)", @class = "form-control", @style = "height: 25px;padding: 0px; " })*@
+                                <div id="dropdown" style="display:none;" class="dropdownStyle">
+                                    <ul>
+                                        <li onclick="loadCategories(1)">Groceries</li>
+                                        <li onclick="loadCategories(2)">Pharmacy</li>
+                                        <li onclick="loadCategories(3)">Bakery</li>
+                                        <li onclick="loadCategories(4)">Hampers+Gifts</li>
+                                    </ul>
+                                </div>
 
-                                @Html.DropDownList("ddlcategories", ViewBag.Customercategories as IEnumerable<SelectListItem>, "Categories", new { onchange = "loadCategories(this)", @class = "form-control", @style = "height: 25px;padding: 0px; " })
                             </a>
                         </li>
                         <li class="nav-item" style="margin:auto">
@@ -257,7 +256,7 @@
                             <a class="nav-link text-light abtn">
                                 <div class="flex1">
                                     <img src="~/Images/FacebookIcon.png" class="signinimg" />
-                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Home/Facebook','_self')" />
+                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Login/Facebook','_self')" />
                                 </div>
                             </a>
                             <a class="nav-link text-light abtn">

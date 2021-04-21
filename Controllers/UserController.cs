@@ -12,14 +12,6 @@ namespace SabiAsp.Controllers
         // GET: User
         public ActionResult Index()
         {
-            try
-            {
-                ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
-            }
-            catch (Exception ex)
-            {
-
-            }
             return View();
         }
     }

@@ -2,55 +2,98 @@
     ViewBag.Title = "Home Page";
 }
 <script>
-    function loadCategories(obj) {
-
+    function loadCategories(obj)
+    {
         debugger;
-        var s = $(obj).val();
+    @*    var s = $(obj).val();
         if (s == "") {
             ShowAllItems();
             return;
-        }
+        }*@
         $.ajax({
             url: "/Items/GetCategories",
-            data: { id: $(obj).val() },
-            contentType: "application/json",
-            success: function (responce) {
-                debugger;
-                var html = '';
-                $(responce).each(function (index, value) {
-                    debugger;
-                    html += '<div onclick="ShowItem(' + value["id"] + ')" style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;">'
-                        + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
-                });
-                $("#allcategories").html(html);
-            }
-        });
-    }
-
-
-    function ShowItem(obj) {
-        debugger;
-        $.ajax({
-            url: "/Items/GetSubCategoriesItem",
+            //data: { id: $(obj).val() },
             data: { id: obj },
             contentType: "application/json",
+            success: function (responce)
+            {
+                $('#Subcategoriesdiv').show();
+                $("#Subcategories").html('');
+                debugger;
+                var flag = true;
+                $(responce).each(function (index, value)
+                {
+                    debugger;
+                    if (flag)
+                    {
+                        $("#Subcategories").append($("<option></option>").val("0").html('All'));
+                        flag = false;
+                    }
+                    $("#Subcategories").append($("<option></option>").val(value["id"]).html(value["name"]));
+                });
+            }
+        });
+    }
+    function SortListChange(obj)
+    {
+        debugger;
+        $.ajax({
+            url: "/Items/GetSortList",
+            data: { id: $(obj).val },
+            contentType: "application/json",
             success: function (responce) {
                 debugger;
                 var html = '';
-                $(responce).each(function (index, value) {
+                $(responce).each(function (index, value)
+                {
                     debugger;
-
-                    html += '<div style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
-                        + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
+                        html += '<div style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
+                            + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
                 });
                 $("#allcategories").html(html);
             }
         });
     }
+
+
+    function buy(obj)
+    {
+        $.ajax({
+            url: "/Home/BuyItem",
+            //data: { id: $(obj).val() },
+            data: { id: obj },
+            contentType: "application/json",
+            success: function (responce)
+            {
+                debugger;
+                $(responce).each(function (index, value)
+                {
+                    debugger;
+                   // alert("Already Login");
+
+                });
+            }
+        });
+    }
+
+@*    @if(Session["UserName"] != null) { < text >
+        Welcome @Session["UserName"].ToString() < /text>
+}*@
 </script>
 
-<div class="jumbotron">
-
+<div class="jumbotron" style="padding: 20px;display:grid;">
+    <div>
+        <div style="float:left;">
+            <span>Sort By :</span>
+            @Html.DropDownList("SortList", new List<SelectListItem>{
+       new SelectListItem{ Text="Date", Value = "1" },
+       new SelectListItem{ Text="Price", Value = "2" },
+       }, "All", new { onchange = "SortListChange(this)" })
+        </div>
+        <div style="float:right;display:none;" id="Subcategoriesdiv" >
+            <span>Sub Categories : </span>@Html.DropDownList("Subcategories", new SelectList(Enumerable.Empty<SelectListItem>()),"All")
+        </div>
+    </div>
     <div class="container-fluid">
         <div id="allcategories" class="row">
 
@@ -58,17 +101,17 @@
     </div>
     <div>
         @*@Html.ActionLink("Login with facebook", "Facebook", "Home")*@
-        <table>
-            <tr><td>Email:</td><td><b>@TempData["email"]</b></td></tr>
-            <tr><td>First Name:</td><td><b>@TempData["first_name"]</b></td></tr>
-            <tr><td>Last Name:</td><td><b>@TempData["lastname"]</b></td></tr>
-            <tr><td>Picture:</td><td><b><img src="@TempData["picture"]" /></b></td></tr>
-        </table>
+        @*  <table>
+                <tr><td>Email:</td><td><b>@TempData["email"]</b></td></tr>
+                <tr><td>First Name:</td><td><b>@TempData["first_name"]</b></td></tr>
+                <tr><td>Last Name:</td><td><b>@TempData["lastname"]</b></td></tr>
+                <tr><td>Picture:</td><td><b><img src="@TempData["picture"]" /></b></td></tr>
+            </table>
 
-        <div style="text-align:center;">
-            <div id="uname"></div>
-            <div id="uemail"></div><br />
-            <div><img id="imgHolder" style="height:120px;width:120px;" /></div>
-        </div>
+            <div style="text-align:center;">
+                <div id="uname"></div>
+                <div id="uemail"></div><br />
+                <div><img id="imgHolder" style="height:120px;width:120px;" /></div>
+            </div>*@
     </div>
 </div>
