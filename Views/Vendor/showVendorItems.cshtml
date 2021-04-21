@@ -12,8 +12,18 @@
             {
                 <div class="col-md-2">
                     <div class="w-item-card-div">
+                                <div>
+                                    @if (item.image == null)
+                                    {
+                                        <img src="~/Images/noimage.jpg" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="@string.Format("/CompanyImages/{0}", item.image)" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                                    }
+                                </div>
                         <h4>@item.name</h4>
-                        <div>@item.image</div>
+
                         <div>Per @item.Weight KG</div>
                         <div>Rs. @item.Price </div>
                     </div>
@@ -122,7 +132,7 @@
 
 <style>
     .w-item-card-div {
-        height: 100px;
+        height: auto;
         min-width: 100px;
         margin: 10px;
         text-align: center;
