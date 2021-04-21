@@ -38,4 +38,13 @@ $(document).ready(function ()
             }
         });
     });
+    $("#itemSearchResult").keyup(function () {
+        debugger;
+        if ($(this).val().trim() == "") {
+            $("#searchResultID").hide();
+        } else {
+            $("#searchResultID").show();
+        }
+        
+    });
 });

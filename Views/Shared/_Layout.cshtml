@@ -178,9 +178,10 @@
                         </li>
                         <li class="nav-item" style="margin:auto">
                             <a class="nav-link text-light" style="display:flex">
-                                <input class="form-control" type="text" placeholder="Search" style="height: 24px;" />
+                                <input id="itemSearchResult" class="form-control" type="text" placeholder="Search" style="height: 24px;" />
                                 <i class="fas fa-search text-dark hover-fx" style="position: relative; left: -25px; top: 4px;"></i>
                             </a>
+                            <div class="searchResult" id="searchResultID"></div>
                         </li>
                         <li class="nav-item" style="margin:auto" data-target="#GoogleMapsModal" data-toggle="modal" onclick="loadMaps();">
                             <a class="nav-link text-light">
