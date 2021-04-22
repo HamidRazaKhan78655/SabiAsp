@@ -50,6 +50,10 @@ $(document).ready(function ()
             $("#searchResultID").hide();
         } else {
             $("#searchResultID").show();
+            $.get("/Home/SearchItems?Name=" + $(this).val(), function (r) {
+                //update ui with results
+                $("#searchResultID").html(r);
+            });
         }
         
     });

@@ -26,7 +26,17 @@ namespace SabiAsp.Controllers
             }
             return View();
         }
-
+        public ActionResult SearchItems(string Name)
+        {
+            var SearchList = new List<item>();
+            if (!String.IsNullOrEmpty(Name))
+            {
+                 SearchList = Db.items.Where(s => s.name.Contains(Name)).ToList();
+            }
+            
+            ViewBag.SearchList = SearchList;
+            return PartialView();
+        }
         [HttpGet]
         public ActionResult BuyItem(int id)
         {
