@@ -28,6 +28,19 @@ namespace SabiAsp.Controllers
         {
             
             return View();
+        }  
+        
+        public ActionResult SabiLogin(string type)
+        {
+            if (type=="1")
+            {
+                //vendor
+            }
+            else if (type=="2")
+            {
+                //Buyer
+            }
+            return View();
         }
 
 
