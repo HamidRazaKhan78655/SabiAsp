@@ -11,7 +11,8 @@ namespace SabiAsp.Controllers
     public class LoginController : Controller
     {
         // GET: Login
-        private int UserTypeId = 0;
+        private static int UserTypeId = 0;
+        sabiShopEntities Db = new sabiShopEntities();
         private Uri RediredtUri
         {
             get
@@ -70,10 +71,41 @@ namespace SabiAsp.Controllers
             if (UserTypeId==1)
             {
                 //Vendor
+                try
+                {
+                    vendor v = new vendor();
+                    v.name = me.first_name+me.last_name;
+                    v.password = me.email;
+                    v.isDeleted = "false";
+                    Db.vendors.Add(v);
+                    Db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    var r = e;
+                    
+                }
+
+
             }
             else if (UserTypeId==2)
             {
                 //Buyer
+                try
+                {
+                    user u = new  user();
+                    u.name = me.first_name + me.last_name;
+                    u.password = me.email;
+                    u.RoleID = 1;
+                    u.isDeleted = "false";
+                    Db.users.Add(u);
+                    Db.SaveChanges();
+                }
+                catch (Exception)
+                {
+
+                    
+                }
             }
 
             return RedirectToAction("Index", "Home");

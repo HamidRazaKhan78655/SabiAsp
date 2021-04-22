@@ -140,6 +140,22 @@
             $('#Signinmodal').trigger('click');
 
         }
+        function facebooklogin()
+        {
+            debugger;
+
+            var fbid = document.getElementById("SignInType").value;
+
+            if (fbid==1)
+            {
+                window.open('https://localhost:44317/Login/Facebook?UserType=1','_self')
+            } else
+            {
+                window.open('https://localhost:44317/Login/Facebook?UserType=2', '_self')
+            }
+            
+        }
+
     </script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3sVPIXZ27uIfBDViZdbpNHMUoAV_4sEU"></script>
 </head>
@@ -193,7 +209,7 @@
                                 <i class="fas fa-shopping-basket text-light hover-fx" style=" position: relative;left: 5px;top: 1px;font-size: 25px;"></i>
                             </a>
                         </li>
-                        
+
 
                         <li class="nav-item " style="margin:auto">
                             <a class="nav-link text-light">
@@ -211,6 +227,37 @@
                                 <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Fire Base" type="button" onclick="window.open('https://localhost:44317/FireBase/Create','_blank')" />
                             </a>
                         </li>
+
+                        <li class="nav-item " style="margin:auto;">
+                            <a class="nav-link text-light">
+                                <img src="~/Images/noimage.jpg" style=" height: 30px; width: 30px; border-radius: 15px;" id="profilebtn" />
+                            </a>
+                            <div id="profile" class="dropdownStyle" style=" right: 5px; width: 360px; padding-bottom: 5px; padding-right: 5px; display: none;">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-sm-12" style="text-align:center">
+                                            <img src="@TempData["picture"]" style="height: 80px; width: 80px; border-radius: 15px; margin: 15px;" />
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <span>Name :</span>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <span>@TempData["first_name"] @TempData["lastname"]</span>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-4"><span>Email or ID : </span></div>
+                                        <div class="col-sm-8"> <span>@TempData["email"]</span></div>
+                                    </div>
+                                </div> 
+                            </div>
+                        </li>
+                   
                     </ul>
                 </div>
             </div>
@@ -280,7 +327,7 @@
                             <a class="nav-link text-light abtn">
                                 <div class="flex1">
                                     <img src="~/Images/FacebookIcon.png" class="signinimg" />
-                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="window.open('https://localhost:44317/Login/Facebook', '_self')" />
+                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="facebooklogin();" />
                                 </div>
                             </a>
                             <a class="nav-link text-light abtn">

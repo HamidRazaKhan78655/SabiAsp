@@ -19,6 +19,12 @@ $(document).ready(function ()
         $("#SignIn").slideToggle();
     });
 
+    $("#profilebtn").click(function ()
+    {
+        debugger;
+        $("#profile").slideToggle();
+    });
+
     $("#Subcategories").change(function ()
     {
         debugger;
