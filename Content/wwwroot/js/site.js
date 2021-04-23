@@ -37,8 +37,13 @@ $(document).ready(function ()
                 var html = '';
                 $(responce).each(function (index, value) {
                     debugger;
-                    html += '<div onclick="buy(1);" style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
-                        + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
+                    html += '<div onclick="buy('+value["id"]+');"  class="col-sm-3 cardstyle" id=' + value["id"] + '>'
+                        + '<table>'
+                        + '<tr><td style="padding-left: 50px;"><img src=' + value["image"] + '/></td></tr>'
+                        + '<tr><td><b>Item Name :</b></td><td>' + value["name"] + '</td></tr>'
+                        + '<tr><td>Weight : </td><td>' + value["weight"] + '</td></tr>'
+                        + '<tr><td>Price : </td><td>' + value["price"] + '</td></tr>'
+                        + '</table></div>'
                 });
                 $("#allcategories").html(html);
             }

@@ -43,6 +43,39 @@ namespace SabiAsp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public string  GoogleLogin(string email, string name, string gender, string lastname, string location,int id)
+        {
+            try
+            {
+                if (id==1)
+                {
+                    //vendor
+                    vendor v = new vendor();
+                    v.vendorid = 6;
+                    v.name = name;
+                    v.password = email;
+                    v.isDeleted = "false";
+                    Db.vendors.Add(v);
+                    Db.SaveChanges();
+                    return "Ok";
+                }
+                else if (id==2)
+                {
+                    //Buyer
+                    return "Ok";
+                }
+                return "";
+            }
+            catch (Exception)
+            {
+
+               
+            }
+
+            return "";
+        }
+
 
         [AllowAnonymous]
         public ActionResult Facebook(int UserType)
@@ -75,6 +108,7 @@ namespace SabiAsp.Controllers
             fb.AccessToken = accessToken;
             dynamic me = fb.Get("me?fields=link,id,first_name,currency,last_name,email,gender,locale,timezone,verified,picture,age_range");
             string email = me.email;
+            string id = me.id;
             TempData["email"] = me.id;
             Session["Login"] = me.id;
             TempData["first_name"] = me.first_name;
@@ -87,7 +121,8 @@ namespace SabiAsp.Controllers
                 try
                 {
                     vendor v = new vendor();
-                    v.name = me.first_name+me.last_name;
+                    v.vendorid =5;
+                    v.name = me.first_name+" "+me.last_name;
                     v.password = me.email;
                     v.isDeleted = "false";
                     Db.vendors.Add(v);
@@ -107,6 +142,7 @@ namespace SabiAsp.Controllers
                 try
                 {
                     user u = new  user();
+                    u.id = 1;
                     u.name = me.first_name + me.last_name;
                     u.password = me.email;
                     u.RoleID = 1;

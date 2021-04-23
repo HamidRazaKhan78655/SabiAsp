@@ -45,7 +45,7 @@ namespace SabiAsp.Controllers
             using (var db = new sabiShopEntities())
             {
 
-               var  data = db.items.Where(d => d.SubCategorieId == id).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
+               var  data = db.items.Where(d => d.SubCategorieId == id).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
 
@@ -56,7 +56,7 @@ namespace SabiAsp.Controllers
         {
             using (var db = new sabiShopEntities())
             {
-                var data = db.items.Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
+                var data = db.items.Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image ,weight=d.Weight,price=d.Price }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
         } 
@@ -69,11 +69,11 @@ namespace SabiAsp.Controllers
                 
                 if (id==1)
                 {
-                    var data= db.items.OrderBy(x => x.CreatedDate).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
+                    var data= db.items.OrderBy(x => x.CreatedDate).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
                 
-                    var data1 = db.items.OrderBy(x => x.Price).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
+                    var data1 = db.items.OrderBy(x => x.Price).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
                     return Json(data1, JsonRequestBehavior.AllowGet); 
             }
         }

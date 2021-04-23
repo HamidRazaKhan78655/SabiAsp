@@ -34,10 +34,16 @@
                 success: function (responce) {
                     debugger;
                     var html = '';
-                    $(responce).each(function (index, value) {
+                    $(responce).each(function (index, value)
+                    {
                         debugger;
-                        html += '<div onclick="buy('+value["id"]+');" style="margin:5px;text-align:center;display: grid;cursor: pointer;" class="col-sm-2" style="background-color:lavender;" id=' + value["id"] + '>'
-                            + '<img src=' + value["image"] + '/><b>' + value["name"] + '</b></div >'
+                        html += '<div onclick="buy(' + value["id"] + ');"  class="col-sm-3 cardstyle" id='+value["id"]+'>'
+                            +'<table>'
+                            +'<tr><td style="padding-left: 50px;"><img src='+ value["image"]+'/></td></tr>'
+                            +'<tr><td><b>Item Name :</b></td><td>'+value["name"]+'</td></tr>'
+                            +'<tr><td>Weight : </td><td>' + value["weight"]+'</td></tr>'
+                            +'<tr><td>Price : </td><td>' + value["price"]+'</td></tr>'
+                            +'</table></div>'
                     });
                     $("#allcategories").html(html);
                 }
@@ -82,43 +88,55 @@
                 return results[1];
         }
 
-        function validateToken(token) {
+        function validateToken(token)
+        {
             getUserInfo();
             $.ajax(
                 {
                     url: VALIDURL + token,
                     data: null,
-                    success: function (responseText) {
+                    success: function (responseText)
+                    {
+
                     },
                 });
         }
 
-        function getUserInfo() {
+        function getUserInfo()
+        {
+            debugger;
             $.ajax({
                 url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
                 data: null,
-                success: function (resp) {
+                success: function (resp)
+                {
+                    debugger;
                     user = resp;
                     console.log(user);
                     $('#uname').html('Welcome ' + user.name);
                     $('#uemail').html('Email: ' + user.email)
                     $('#imgHolder').attr('src', user.picture);
+
+
+                    $('#profileImg').attr('src', user.picture);
+                    $('#profilebtn').attr('src', user.picture);
                 },
             }),
-
                 $.ajax({
 
-                    url: '/Home/GoogleLogin/',
-
+                    url: '/Login/GoogleLogin/',
                     type: 'POST',
                     data: {
                         email: user.email,
                         name: user.name,
                         gender: user.gender,
                         lastname: user.lastname,
-                        location: user.location
+                        location: user.location,
+                        id: document.getElementById('SignInType').value,
                     },
-                    success: function () {
+                    success: function ()
+                    {
+                        debugger;
                         window.location.href = "/Home/Index/";
                     },
 
@@ -236,7 +254,7 @@
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-sm-12" style="text-align:center">
-                                            <img src="@TempData["picture"]" style="height: 80px; width: 80px; border-radius: 15px; margin: 15px;" />
+                                            <img id="profileImg" src="@TempData["picture"]" style="height: 80px; width: 80px; border-radius: 15px; margin: 15px;" />
                                         </div>
                                     </div>
                                     
