@@ -112,6 +112,7 @@
           <Property Name="name" Type="nvarchar" MaxLength="100" />
           <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
+          <Property Name="vIDSocial" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_items_SubCategories">
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="0..1" />
@@ -400,6 +401,7 @@
           <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="items" Relationship="sabiShopModel.FK_vendor" FromRole="vendor" ToRole="item" />
           <NavigationProperty Name="Shops" Relationship="sabiShopModel.FK_Shops_vendor" FromRole="vendor" ToRole="Shop" />
+          <Property Name="vIDSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_vendor">
           <End Type="sabiShopModel.vendor" Role="vendor" Multiplicity="0..1" />
@@ -553,6 +555,7 @@
           <EntitySetMapping Name="vendors">
             <EntityTypeMapping TypeName="sabiShopModel.vendor">
               <MappingFragment StoreEntitySet="vendor">
+                <ScalarProperty Name="vIDSocial" ColumnName="vIDSocial" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="name" ColumnName="name" />
