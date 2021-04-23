@@ -34,13 +34,33 @@ namespace SabiAsp.Controllers
         {
             if (type=="1")
             {
-                //vendor
+                ViewBag.type = "vendor";
             }
             else if (type=="2")
             {
-                //Buyer
+                ViewBag.type = "Buyer";
             }
             return View();
+        }
+        public ActionResult SabiRegister(string type)
+        {
+            if (type== "vendor")
+            {
+                ViewBag.type = "vendor";
+            }
+            else
+            {
+                ViewBag.type = "Buyer";
+            }
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SabiRegister(FormCollection formCollection)
+        {
+            if (true)
+            {
+                return RedirectToAction("index" , "Home");
+            }
         }
 
         [HttpPost]

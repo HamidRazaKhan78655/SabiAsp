@@ -424,12 +424,13 @@
     <Content Include="Views\Vendor\SubCategories.cshtml" />
     <Content Include="Views\Vendor\showVendorItems.cshtml" />
     <Content Include="Views\Home\SearchItems.cshtml" />
+    <Content Include="Views\Login\SabiLogin.cshtml" />
+    <Content Include="Views\Login\SabiRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CompanyImages\" />
     <Folder Include="Views\Items\" />
-    <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
