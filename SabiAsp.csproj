@@ -154,6 +154,7 @@
       <DependentUpon>sabiDb.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
@@ -253,6 +254,50 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Template\css\animate.min.css" />
+    <Content Include="Content\Template\css\bootstrap.min.css" />
+    <Content Include="Content\Template\css\jquery-ui.css" />
+    <Content Include="Content\Template\css\jquery.mCustomScrollbar.min.css" />
+    <Content Include="Content\Template\css\meanmenu.css" />
+    <Content Include="Content\Template\css\nice-select.css" />
+    <Content Include="Content\Template\css\normalize.css" />
+    <Content Include="Content\Template\css\owl.carousel.min.css" />
+    <Content Include="Content\Template\css\responsive.css" />
+    <Content Include="Content\Template\css\slick.css" />
+    <Content Include="Content\Template\css\style.css" />
+    <Content Include="Content\Template\images\about-img2.png" />
+    <Content Include="Content\Template\images\banner.png" />
+    <Content Include="Content\Template\images\email-icon.png" />
+    <Content Include="Content\Template\images\fb-icon.png" />
+    <Content Include="Content\Template\images\footer-logo.png" />
+    <Content Include="Content\Template\images\google-icon.png" />
+    <Content Include="Content\Template\images\in-icon.png" />
+    <Content Include="Content\Template\images\logo.png" />
+    <Content Include="Content\Template\images\map-icon.png" />
+    <Content Include="Content\Template\images\phone-icon.png" />
+    <Content Include="Content\Template\images\running-shoes.png" />
+    <Content Include="Content\Template\images\search_icon.png" />
+    <Content Include="Content\Template\images\shoes-img1.png" />
+    <Content Include="Content\Template\images\shoes-img2.png" />
+    <Content Include="Content\Template\images\shoes-img3.png" />
+    <Content Include="Content\Template\images\shoes-img4.png" />
+    <Content Include="Content\Template\images\shoes-img5.png" />
+    <Content Include="Content\Template\images\shoes-img6.png" />
+    <Content Include="Content\Template\images\shoes-img7.png" />
+    <Content Include="Content\Template\images\shoes-img8.png" />
+    <Content Include="Content\Template\images\shoes-img9.png" />
+    <Content Include="Content\Template\images\shop-banner.png" />
+    <Content Include="Content\Template\images\shop_icon.png" />
+    <Content Include="Content\Template\images\star-icon.png" />
+    <Content Include="Content\Template\images\twitter-icon.png" />
+    <Content Include="Content\Template\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\Template\js\custom.js" />
+    <Content Include="Content\Template\js\jquery-3.0.0.min.js" />
+    <Content Include="Content\Template\js\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Content\Template\js\jquery.min.js" />
+    <Content Include="Content\Template\js\jquery.validate.js" />
+    <Content Include="Content\Template\js\plugin.js" />
+    <Content Include="Content\Template\js\popper.min.js" />
     <Content Include="Content\wwwroot\css\site.css" />
     <Content Include="Content\wwwroot\favicon.ico" />
     <Content Include="Content\wwwroot\img\gif\ecom-cart.gif" />
@@ -426,6 +471,9 @@
     <Content Include="Views\Home\SearchItems.cshtml" />
     <Content Include="Views\Login\SabiLogin.cshtml" />
     <Content Include="Views\Login\SabiRegister.cshtml" />
+    <Content Include="Views\Categories\GetSubCategories.cshtml" />
+    <Content Include="Views\Shared\LayoutSub.cshtml" />
+    <Content Include="Views\Categories\getItemsByCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
