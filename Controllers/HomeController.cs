@@ -33,8 +33,7 @@ namespace SabiAsp.Controllers
             {
                  SearchList = Db.items.Where(s => s.name.Contains(Name)).ToList();
             }
-            
-            ViewBag.SearchList = SearchList;
+            ViewBag.items = SearchList;
             return PartialView();
         }
         [HttpGet]

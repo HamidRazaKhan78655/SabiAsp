@@ -64,7 +64,21 @@
                                 <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>
                                 <a class="nav-item nav-link" href="racing boots.html">Sign In</a>
                                 <a class="nav-item nav-link" href="contact.html">Contact</a>
-                                <a class="nav-item nav-link last" href="#"><img src="~/Content/Template/images/search_icon.png"></a>
+                                <a class="nav-item nav-link last" href="#" id="SearchBtnLa"><img src="~/Content/Template/images/search_icon.png"></a>
+                                <div id="Search_View" class="container" style="overflow:auto;position: absolute;display:none; z-index: 1; background: white; border-radius: 10px;top:55px; height: 84vh;left:0px">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div style="text-align:center">
+                                                <input id="itemSearchResult" type="text" placeholder="Search Items.." style="border: 1px solid #ff4e5b; border-radius: 9px; padding: 10px; margin: 10px;height:45px;width:90%" />
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin:10px;">
+                                            <div id="LoadSearchedItems">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>
                             </div>
                         </div>

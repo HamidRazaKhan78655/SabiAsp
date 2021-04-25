@@ -49,19 +49,19 @@ $(document).ready(function ()
     //        }
     //    });
     //});
-    //$("#itemSearchResult").keyup(function () {
-    //    debugger;
-    //    if ($(this).val().trim() == "") {
-    //        $("#searchResultID").hide();
-    //    } else {
-    //        $("#searchResultID").show();
-    //        $.get("/Home/SearchItems?Name=" + $(this).val(), function (r) {
-    //            //update ui with results
-    //            $("#searchResultID").html(r);
-    //        });
-    //    }
+    $("#itemSearchResult").keyup(function () {
+        debugger;
+        if ($(this).val().trim() == "") {
+           // $("#searchResultID").hide();
+        } else {
+           // $("#searchResultID").show();
+            $.get("/Home/SearchItems?Name=" + $(this).val(), function (r) {
+                //update ui with results
+                $("#LoadSearchedItems").html(r);
+            });
+        }
         
-    //});
+    });
     var categoriesFlag = 0;
     $("#Categories").click(function () {
         debugger;
@@ -71,6 +71,17 @@ $(document).ready(function ()
         } else {
             categoriesFlag = 0
             $("#categoriesDropDiv").hide(100);
+        }
+    });
+    var SearchbtnFlag = 0;
+    $("#SearchBtnLa").click(function () {
+        debugger;
+        if (SearchbtnFlag == 0) {
+            $("#Search_View").show(100);
+            SearchbtnFlag = 1;
+        } else {
+            SearchbtnFlag = 0
+            $("#Search_View").hide(100);
         }
     });
     $('.showItemsOfSubCategories').click(function () {
