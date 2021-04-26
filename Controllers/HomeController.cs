@@ -18,6 +18,17 @@ namespace SabiAsp.Controllers
             {
                 Session["Login"] = "";
                 //  ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
+              /*  var query = Db.SubCategories.ToList();
+                List<SubCategory> subCategories = new List<SubCategory>();
+                    foreach (var SCate in query)
+                    {
+                        subCategories.Add(SCate);
+
+                    }
+                    ViewBag.Category = "All Items";
+                    ViewBag.SCats = subCategories;
+                    return View("GetSubCategories");*/
+                
             }
             catch (Exception)
             {

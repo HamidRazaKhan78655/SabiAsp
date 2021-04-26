@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <!-- site metas -->
-    <title>Pullshoes</title>
+    <title>Sabi</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -33,6 +33,180 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="~/Content/wwwroot/css/site.css" rel="stylesheet" />
+    <script>
+        function openSignModal(id)
+        {
+            if (id == 1)
+            {
+                $('#changeheader').text('Sign In as Vendor');
+                $('#SignInType').val(1);
+            } else
+            {
+                $('#changeheader').text('Sign In as Buyer');
+                $('#SignInType').val(2);
+            }
+            //$('#Signinmodal').trigger('click');
+            $("#LoginList").show(100);
+            $("#SignIn").hide(100);
+        }
+
+        function facebooklogin() {
+            debugger;
+
+            var fbid = document.getElementById("SignInType").value;
+
+            if (fbid == 1) {
+                window.open('https://localhost:44317/Login/Facebook?UserType=1', '_self')
+            } else {
+                window.open('https://localhost:44317/Login/Facebook?UserType=2', '_self')
+            }
+
+        }
+
+        function login()
+        {
+            var win = window.open(_url, "windowname1", 'width=800, height=600');
+            var pollTimer = window.setInterval(function () {
+                try {
+                    console.log(win.document.URL);
+                    if (win.document.URL.indexOf(REDIRECT) != -1)
+                    {
+                        window.clearInterval(pollTimer);
+                        var url = win.document.URL;
+                        acToken = gup(url, 'access_token');
+                        tokenType = gup(url, 'token_type');
+                        expiresIn = gup(url, 'expires_in');
+
+                        win.close();
+                        debugger;
+                        validateToken(acToken);
+                    }
+                }
+                catch (e) {
+
+                }
+            }, 500);
+        }
+
+        function gup(url, name) {
+            namename = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+            var regexS = "[\\#&]" + name + "=([^&#]*)";
+            var regex = new RegExp(regexS);
+            var results = regex.exec(url);
+            if (results == null)
+                return "";
+            else
+                return results[1];
+        }
+
+        function validateToken(token) {
+            getUserInfo();
+            $.ajax(
+                {
+                    url: VALIDURL + token,
+                    data: null,
+                    success: function (responseText) {
+
+                    },
+                });
+        }
+
+        function getUserInfo() {
+            debugger;
+            $.ajax({
+                url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
+                data: null,
+                success: function (resp) {
+                    debugger;
+                    user = resp;
+                    console.log(user);
+                    $('#uname').html('Welcome ' + user.name);
+                    $('#uemail').html('Email: ' + user.email)
+                    $('#imgHolder').attr('src', user.picture);
+
+
+                    $('#profileImg').attr('src', user.picture);
+                    $('#profilebtn').attr('src', user.picture);
+                },
+            }),
+                $.ajax({
+
+                    url: '/Login/GoogleLogin/',
+                    type: 'POST',
+                    data: {
+                        email: user.email,
+                        name: user.name,
+                        gender: user.gender,
+                        lastname: user.lastname,
+                        location: user.location,
+                        id: document.getElementById('SignInType').value,
+                    },
+                    success: function () {
+                        debugger;
+                        window.location.href = "/Home/Index/";
+                    },
+
+                    //dataType: "jsonp"
+
+                });
+        }
+
+        function ShowAllItems() {
+            debugger;
+            $.ajax({
+                url: "/Items/ShowAllItems",
+                contentType: "application/json",
+                success: function (responce) {
+                    debugger;
+                    var html = '';
+                    $(responce).each(function (index, value) {
+                        debugger;
+                        html += '<div class="col-sm-4" onclick="buy(' + value["id"] +');">'
+                            + '<div class="best_shoes">'
+                            + '<p class="best_text">' + value["name"] + '</p>'
+                            + '<div class="shoes_icon"><img src=' + value["image"] + '/></div>'
+                            + '<div class="star_text">'
+                            + '<div class="left_part">'
+                            + '<ul>'
+                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                            + '</ul>'
+                            + '</div>'
+                            + '<div class="right_part">'
+                            + '<div class="shoes_price">$ <span style="color: #ff4e5b;">' + value["price"] + '</span></div>'
+                            + '</div>'
+                            + '</div>'
+                            + '</div>'
+                            + '</div>'
+
+
+                    });
+                    $("#allcategories").html(html);
+                }
+            });
+
+        }
+        function buy(obj) {
+            $.ajax({
+                url: "/Home/BuyItem",
+                //data: { id: $(obj).val() },
+                data: { id: obj },
+                contentType: "application/json",
+                success: function (responce) {
+                    debugger;
+                    $(responce).each(function (index, value) {
+                        debugger;
+                        // alert("Already Login");
+
+                    });
+                }
+            });
+        }
+    </script>
 </head>
 <!-- body -->
 <body class="main-layout">
@@ -62,10 +236,62 @@
                                     </div>
                                 </a>
                                 <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>
-                                <a class="nav-item nav-link" href="racing boots.html">Sign In</a>
-                                <a class="nav-item nav-link" href="contact.html">Contact</a>
+                                <a id="SignInbtn" class="nav-item nav-link">
+                                    Sign In
+                                    <div id="SignIn" style="display:none;" class="dropdownStyle">
+                                        <ul>
+                                            <li onclick="openSignModal(1)">Sign In as Vendor</li>
+                                            <li onclick="openSignModal(2)">Sign In as Buyer</li>
+                                        </ul>
+                                    </div>
+                                    <div id="LoginList" style="display:none;" class="dropdownStyle">
+                                        <ul>
+                                            <li onclick="login()">
+                                                <div class="flex1">
+                                                    <img src="~/Images/GoogleIcon.png" class="signinimg" />
+                                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin"  />
+                                                </div>
+                                            </li>
+                                            <li onclick="facebooklogin();">
+                                                <div class="flex1">
+                                                    <img src="~/Images/FacebookIcon.png" class="signinimg" />
+                                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button"  />
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </a>
+
+                                @*<a class="nav-item nav-link" href="contact.html">Contact</a>*@
                                 <a class="nav-item nav-link last" href="#"><img src="~/Content/Template/images/search_icon.png"></a>
                                 <a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>
+                                <a class="nav-item nav-link last">
+                                    <img src="~/Images/noimage.jpg" style=" height: 30px; width: 30px; border-radius: 15px;" id="profilebtn" />
+                                    <div id="profile" class="dropdownStyle" style=" right: 5px; width: 360px; padding-bottom: 5px; padding-right: 5px; display: none;">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-sm-12" style="text-align:center">
+                                                    <img id="profileImg" src="@TempData["picture"]" style="height: 80px; width: 80px; border-radius: 15px; margin: 15px;" />
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <span>Name :</span>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <span>@TempData["first_name"] @TempData["lastname"]</span>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-4"><span>Email or ID : </span></div>
+                                                <div class="col-sm-8"> <span>@TempData["email"]</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </nav>
@@ -75,6 +301,7 @@
     </div>
 
     @RenderBody();
+
     <!-- section footer start -->
     <div class="section_footer">
         <div class="container">
@@ -147,8 +374,46 @@
         </div>
     </div>
     <!-- section footer end -->
-   
+    @*Modal Start*@
+    <input type="hidden" id="Signinmodal" data-target="#MyModal" data-toggle="modal" />
 
+    <input type="hidden" id="SignInType" value="" />
+
+    <div class="modal fade " id="MyModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;"></h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div style="display: block;">
+                            <a class="nav-link text-light abtn">
+                                <div class="flex1">
+                                    <img src="~/Images/FacebookIcon.png" class="signinimg" />
+                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="facebooklogin();" />
+                                </div>
+                            </a>
+                            <a class="nav-link text-light abtn">
+                                <div class="flex1">
+                                    <img src="~/Images/GoogleIcon.png" class="signinimg" />
+                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
+                                </div>
+                            </a>
+
+                            <input type="button" value="Login From Sabi" onclick="location.href='Login/SabiLogin?type='+document.getElementById('SignInType').value" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*Modal End*@
 
     <!-- Javascript files-->
     <script src="~/Content/Template/js/jquery.min.js"></script>
@@ -163,7 +428,8 @@
     <script src="~/Content/Template/js/owl.carousel.js"></script>
     <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function ()
+        {
             $(".fancybox").fancybox({
                 openEffect: "none",
                 closeEffect: "none"
@@ -177,7 +443,6 @@
             //scroll slides on swipe for touch enabled devices
 
             $("#myCarousel").on("touchstart", function (event) {
-
                 var yClick = event.originalEvent.touches[0].pageY;
                 $(this).one("touchmove", function (event) {
 
@@ -193,6 +458,9 @@
                     $(this).off("touchmove");
                 });
             });
+        }
+
+
     </script>
 
     <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>

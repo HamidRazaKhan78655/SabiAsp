@@ -10,6 +10,8 @@ namespace SabiAsp.Controllers
     {
 
         sabiShopEntities Db = new sabiShopEntities();
+
+        private static List<SelectListItem> list;
         // GET: Categories
         public ActionResult Index()
         {
@@ -17,19 +19,37 @@ namespace SabiAsp.Controllers
         }
         public ActionResult GetSubCategories(int id, string name)
         {
-            var query = Db.SubCategories.ToList();
-            List<SubCategory> subCategories = new List<SubCategory>();
-            foreach (var SCate in query ) {
-                if (SCate.CategoryId == id) {
-                    subCategories.Add(SCate);
-                }
-                
+            var query = Db.items.ToList();
+            List<item> items = new List<item>();            
+            foreach (var SCate in query )
+            {
+                items.Add(SCate);   
             }
             ViewBag.Category = name;
-            ViewBag.SCats = subCategories;
+            ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.CategoryId == id).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
+            list = ViewBag.SubCategorylist;
+            ViewBag.SCats = items;
 
             return View();
+        } 
+        public ActionResult GetSubCategoriesItem(int id, string name)
+        {
+            var query = Db.items.Where(d => d.SubCategorieId == id).Select(d => d).ToList();
+            List<item> items = new List<item>();            
+            foreach (var SCate in query)
+            {
+                items.Add(SCate);   
+            }
+            ViewBag.Category = name;
+                //Db.SubCategories.Where(d => d.SubCategorieId == id).Select(t=>t.name).FirstOrDefault().ToString();
+            ViewBag.SubCategorylist = list;
+            
+            ViewBag.SCats = items;
+            return View("GetSubCategories");
         }
+
+
+
         public ActionResult getItemsByCategories(int id , string name)
         {
             var query = Db.items.ToList();
