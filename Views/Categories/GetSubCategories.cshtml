@@ -9,13 +9,28 @@
 <div class="layout_padding gallery_section">
     <div class="container">
         <div class="row">
+            <div class="col-sm-6">
+                <span style="color:white;font-size:large;">Sort By :</span>
+                @Html.DropDownList("SortList", new List<SelectListItem>{
+           new SelectListItem{ Text="Date", Value = "1" },
+           new SelectListItem{ Text="Price", Value = "2" },
+           }, "All", new { onchange = "SortListChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
+            </div>
+            <div class="col-sm-6" id="Subcategoriesdiv" style="text-align:end">
+                <span style="color:white;font-size:large;">Sub Categories : </span>
+                @*@Html.DropDownList("Subcategories", new SelectList(Enumerable.Empty<SelectListItem>()), "All", new { @class = "form-control", @style = "display:initial;width:30%;" })*@
+                @Html.DropDownList("Subcategories", ViewBag.SubCategorylist as IEnumerable<SelectListItem>, "All", new { @class = "form-control", @style = "display:initial;width:auto;" })
+            </div>
+        </div>
+        <div class="row">
+
             @foreach (var subCate in ViewBag.SCats)
             {
 
                 <div class="col-sm-4 showItemsOfSubCategories">
-                    <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId"/>
-                    <input type="hidden" value="@subCate.name" class="GetSubCategorieName"/>
-                  
+                    <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
+                    <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
+
                     <div class="best_shoes">
 
                         <p class="best_text">@subCate.name</p>
@@ -23,11 +38,11 @@
                         <div class="star_text">
                             <div class="left_part">
                                 <ul>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
                                 </ul>
                             </div>
                             <div class="right_part">
@@ -37,10 +52,10 @@
                     </div>
                 </div>
             }
-            </div>
-        <div id="item_View" style="">
-
         </div>
+@*        <div id="item_View" style="">
+
+        </div>*@
     </div>
 </div>
 <!-- New Arrivals section end -->

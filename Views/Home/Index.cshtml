@@ -1,82 +1,166 @@
 ﻿<!--@{
     ViewBag.Title = "Home Page";
 }
+
     <!-- new collection section start -->
-    <div class="layout_padding collection_section">
-        <div class="container">
-            <h1 class="new_text"><strong>New  Collection</strong></h1>
-            <p class="consectetur_text">consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-            <div class="collection_section_2">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="about-img">
-                            <button class="new_bt">New</button>
-                            <div class="shoes-img"><img src="~/Content/Template/images/shoes-img1.png"></div>
-                            <p class="sport_text">Men Sports</p>
-                            <div class="dolar_text">$<strong style="color: #f12a47;">90</strong> </div>
-                            <div class="star_icon">
-                                <ul>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                </ul>
-                            </div>
+<script>
+    function SortListChange(obj)
+    {
+        debugger;
+        $.ajax({
+            url: "/Items/GetSortList",
+            data: { id: $(obj).val },
+            contentType: "application/json",
+            success: function (responce) {
+                debugger;
+                var html = '';
+                $(responce).each(function (index, value)
+                {
+                    debugger;
+                  @*  html += '<div onclick="buy(' + value["id"] + ');"  class="col-sm-3 cardstyle" id=' + value["id"] + '>'
+                        + '<table>'
+                        + '<tr><td style="padding-left: 50px;"><img src=' + value["image"] + '/></td></tr>'
+                        + '<tr><td><b>Item Name :</b></td><td>' + value["name"] + '</td></tr>'
+                        + '<tr><td>Weight : </td><td>' + value["weight"] + '</td></tr>'
+                        + '<tr><td>Price : </td><td>' + value["price"] + '</td></tr>'
+                        + '</table></div>'*@
+
+                    html += '<div class="col-sm-4">'
+                        + '<div class="best_shoes">'
+                        + '<p class="best_text">' + value["name"] + '</p>'
+                        + '<div class="shoes_icon"><img src=' + value["image"] + '/></div>'
+                        + '<div class="star_text">'
+                        + '<div class="left_part">'
+                        + '<ul>'
+                        + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                        + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                        + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                        + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                        + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                        + '</ul>'
+                        + '</div>'
+                        + '<div class="right_part">'
+                        + '<div class="shoes_price">$ <span style="color: #ff4e5b;">' + value["price"] + '</span></div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                });
+                $("#allcategories").html(html);
+            }
+        });
+    }
+</script>
+<div class="layout_padding collection_section">
+    <div class="container">
+        <h1 class="new_text"><strong>New  Collection</strong></h1>
+        <p class="consectetur_text">consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+        <div class="collection_section_2">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="about-img">
+                        <button class="new_bt">New</button>
+                        <div class="shoes-img"><img src="~/Content/Template/images/shoes-img1.png"></div>
+                        <p class="sport_text">Men Sports</p>
+                        <div class="dolar_text">$<strong style="color: #f12a47;">90</strong> </div>
+                        <div class="star_icon">
+                            <ul>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            </ul>
                         </div>
-                        <button class="seemore_bt">See More</button>
                     </div>
-                    <div class="col-md-6">
-                        <div class="about-img2">
-                            <div class="shoes-img2"><img src="~/Content/Template/images/shoes-img2.png"></div>
-                            <p class="sport_text">Men Sports</p>
-                            <div class="dolar_text">$<strong style="color: #f12a47;">90</strong> </div>
-                            <div class="star_icon">
-                                <ul>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                                </ul>
-                            </div>
+                    <button class="seemore_bt">See More</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="about-img2">
+                        <div class="shoes-img2"><img src="~/Content/Template/images/shoes-img2.png"></div>
+                        <p class="sport_text">Men Sports</p>
+                        <div class="dolar_text">$<strong style="color: #f12a47;">90</strong> </div>
+                        <div class="star_icon">
+                            <ul>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="collection_section">
-        <div class="container">
-            <h1 class="new_text"><strong>Racing Boots</strong></h1>
-            <p class="consectetur_text">consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
-        </div>
+</div>
+<div class="collection_section">
+    <div class="container">
+        <h1 class="new_text"><strong>Racing Boots</strong></h1>
+        <p class="consectetur_text">consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
     </div>
-    <div class="collectipn_section_3 layuot_padding">
-        <div class="container">
-            <div class="racing_shoes">
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="shoes-img3"><img src="~/Content/Template/images/shoes-img3.png"></div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="sale_text"><strong>Sale <br><span style="color: #0a0506;">JOGING</span> <br>SHOES</strong></div>
-                        <div class="number_text"><strong>$ <span style="color: #0a0506">100</span></strong></div>
-                        <button class="seemore">See More</button>
-                    </div>
+</div>
+<div class="collectipn_section_3 layuot_padding">
+    <div class="container">
+        <div class="racing_shoes">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="shoes-img3"><img src="~/Content/Template/images/shoes-img3.png"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="sale_text"><strong>Sale <br><span style="color: #0a0506;">JOGING</span> <br>SHOES</strong></div>
+                    <div class="number_text"><strong>$ <span style="color: #0a0506">100</span></strong></div>
+                    <button class="seemore">See More</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="collection_section layout_padding">
-        <div class="container">
-            <h1 class="new_text"><strong>New Arrivals Products</strong></h1>
-            <p class="consectetur_text">consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+</div>
+<div class="collection_section layout_padding">
+    <div class="container">
+        <h1 class="new_text"><strong>New Arrivals Products</strong></h1>
+        <p class="consectetur_text">consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation</p>
+    </div>
+</div>
+<!-- new collection section end -->
+<!-- New Arrivals section start -->
+
+
+
+<div class="layout_padding gallery_section">
+    <div class="container">
+        <div>
+            <span style="color:white;font-size:large;">Sort By :</span>
+            @Html.DropDownList("SortList", new List<SelectListItem>{
+       new SelectListItem{ Text="Date", Value = "1" },
+       new SelectListItem{ Text="Price", Value = "2" },
+       }, "All", new { onchange = "SortListChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
         </div>
     </div>
-    <!-- new collection section end -->
-    <!-- New Arrivals section start -->
-    <div class="layout_padding gallery_section">
+    <div class="container">
+        <div id="allcategories" class="row">
+
+        </div>
+    </div>
+</div>
+<div>
+    @*@Html.ActionLink("Login with facebook", "Facebook", "Home")*@
+    <table>
+        <tr><td>Email:</td><td><b>@TempData["email"]</b></td></tr>
+        <tr><td>First Name:</td><td><b>@TempData["first_name"]</b></td></tr>
+        <tr><td>Last Name:</td><td><b>@TempData["lastname"]</b></td></tr>
+        <tr><td>Picture:</td><td><b><img src="@TempData["picture"]" /></b></td></tr>
+    </table>
+
+    <div style="text-align:center;">
+        <div id="uname"></div>
+        <div id="uemail"></div><br />
+        <div><img id="imgHolder" style="height:120px;width:120px;" /></div>
+    </div>
+</div>
+
+@*<div class="layout_padding gallery_section">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
@@ -206,49 +290,49 @@
                 <button class="buy_text">Buy Now</button>
             </div>
         </div>
+    </div>*@
+<!-- New Arrivals section end -->
+<!-- contact section start -->
+<div class="layout_padding contact_section">
+    <div class="container">
+        <h1 class="new_text"><strong>Contact Now</strong></h1>
     </div>
-    <!-- New Arrivals section end -->
-    <!-- contact section start -->
-    <div class="layout_padding contact_section">
-        <div class="container">
-            <h1 class="new_text"><strong>Contact Now</strong></h1>
-        </div>
-        <div class="container-fluid ram">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="email_box">
-                        <div class="input_main">
-                            <div class="container">
-                                <form action="/action_page.php">
-                                    <div class="form-group">
-                                        <input type="text" class="email-bt" placeholder="Name" name="Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="email-bt" placeholder="Phone Numbar" name="Name">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="email-bt" placeholder="Email" name="Email">
-                                    </div>
+    <div class="container-fluid ram">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="email_box">
+                    <div class="input_main">
+                        <div class="container">
+                            <form action="/action_page.php">
+                                <div class="form-group">
+                                    <input type="text" class="email-bt" placeholder="Name" name="Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="email-bt" placeholder="Phone Numbar" name="Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="email-bt" placeholder="Email" name="Email">
+                                </div>
 
-                                    <div class="form-group">
-                                        <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="Massage"></textarea>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="send_btn">
-                                <button class="main_bt">Send</button>
-                            </div>
+                                <div class="form-group">
+                                    <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="Massage"></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="send_btn">
+                            <button class="main_bt">Send</button>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="shop_banner">
-                        <div class="our_shop">
-                            <button class="out_shop_bt">Our Shop</button>
-                        </div>
+            </div>
+            <div class="col-md-6">
+                <div class="shop_banner">
+                    <div class="our_shop">
+                        <button class="out_shop_bt">Our Shop</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- contact section end -->
+</div>
+<!-- contact section end -->
