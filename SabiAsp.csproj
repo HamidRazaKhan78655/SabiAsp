@@ -161,6 +161,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
+    <Compile Include="Encryption\Encrypto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -474,6 +475,7 @@
     <Content Include="Views\Categories\GetSubCategories.cshtml" />
     <Content Include="Views\Shared\LayoutSub.cshtml" />
     <Content Include="Views\Categories\getItemsByCategories.cshtml" />
+    <Content Include="Views\Vendor\GetAllVendor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

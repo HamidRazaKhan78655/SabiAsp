@@ -89,11 +89,14 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="int" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
           <Property Name="username" Type="nvarchar" MaxLength="50" />
           <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
           <Property Name="image" Type="nvarchar(max)" />
           <Property Name="location" Type="nvarchar" MaxLength="100" />
           <Property Name="itemsBuyed" Type="nvarchar(max)" />
@@ -109,10 +112,19 @@
             <PropertyRef Name="vendorid" />
           </Key>
           <Property Name="vendorid" Type="int" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="100" />
-          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
           <Property Name="vIDSocial" Type="varchar" MaxLength="50" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Contact" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <Association Name="FK_items_SubCategories">
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="0..1" />
@@ -320,6 +332,9 @@
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Role" Relationship="Self.FK_users_Role" FromRole="users" ToRole="Role" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_SubCategories_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
@@ -402,6 +417,15 @@
           <NavigationProperty Name="items" Relationship="sabiShopModel.FK_vendor" FromRole="vendor" ToRole="item" />
           <NavigationProperty Name="Shops" Relationship="sabiShopModel.FK_Shops_vendor" FromRole="vendor" ToRole="Shop" />
           <Property Name="vIDSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_vendor">
           <End Type="sabiShopModel.vendor" Role="vendor" Multiplicity="0..1" />
@@ -535,6 +559,9 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="sabiShopModel.user">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -555,6 +582,15 @@
           <EntitySetMapping Name="vendors">
             <EntityTypeMapping TypeName="sabiShopModel.vendor">
               <MappingFragment StoreEntitySet="vendor">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="vIDSocial" ColumnName="vIDSocial" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
                 <ScalarProperty Name="password" ColumnName="password" />

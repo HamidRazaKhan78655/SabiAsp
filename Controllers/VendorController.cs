@@ -220,5 +220,79 @@ namespace SabiAsp.Controllers
             }
             return RedirectToAction("showVendorItems", new { vendorid = vendorId, sCateID = subCategoryId });
         }
+
+        #region CRUD for Vendor
+        public ActionResult GetAllVendor()
+        {
+            ViewBag.vendors = Db.vendors.ToList();
+            return View();
+        }
+
+        public ActionResult AddVendor(FormCollection fm)
+        {
+            string firstName = fm["FirstName"].ToString();
+            string lastName = fm["LastName"].ToString();
+            //string adminId = fm["adminId"].ToString();
+            string username = fm["Username"].ToString();
+            string emailAddress = fm["EmailAddress"].ToString();
+            string contact = fm["Contact"].ToString();
+            string address = fm["Address"].ToString();
+            string password = fm["Password"].ToString();
+            vendor v = new vendor();
+            v.name = firstName + " " + lastName;
+            v.EmailAddress = emailAddress;
+            v.Contact = contact;
+            v.username = username;
+            v.password = Encryption.Encrypto.EncryptString(password.Trim());
+            v.Address = address;
+            //u.RoleID = 2;
+            v.CreatedBy = 1;
+            v.CreatedDate = DateTime.Now;
+            v.isDeleted = "false";
+            Db.vendors.Add(v);
+            Db.SaveChanges();
+            return RedirectToAction("GetAllVendor");
+        }
+        public ActionResult UpdateVendor(FormCollection fm)
+        {
+            string name = fm["UpdateVendorName"].ToString();
+            string emailAddress = fm["UpdateVendorEmailAddress"].ToString();
+            string contact = fm["UpdateVendorContact"].ToString();
+            string address = fm["UpdateVendorAddress"].ToString();
+            string userName = fm["UpdateVendorUsername"].ToString();
+            string updateVendorId = fm["UpdateVendorId"].ToString();
+            int vendorId = int.Parse(updateVendorId);
+
+            var vendor = Db.vendors.Where(x => x.vendorid == vendorId).SingleOrDefault();
+            if (vendor != null)
+            {
+                vendor.name = name;
+                vendor.EmailAddress = emailAddress;
+                vendor.Contact = contact;
+                vendor.Address = address;
+                vendor.username = userName;
+                vendor.ModifiedBy = 1;
+                vendor.ModifiedDate = DateTime.Now;
+                vendor.isDeleted = "false";
+                Db.Entry(vendor).State = EntityState.Modified;
+                Db.SaveChanges();
+            }
+            return RedirectToAction("GetAllVendor");
+        }
+        public ActionResult DeleteVendor(string vendorId)
+        {
+            int vId = int.Parse(vendorId);
+            var vendor = Db.vendors.Where(x => x.vendorid == vId && x.isDeleted != "true").SingleOrDefault();
+            if (vendor != null)
+            {
+                vendor.ModifiedBy = 1;
+                vendor.ModifiedDate = DateTime.Now;
+                vendor.isDeleted = "true";
+                Db.Entry(vendor).State = EntityState.Modified;
+                Db.SaveChanges();
+            }
+            return RedirectToAction("GetAllVendor");
+        }
+        #endregion
     }
 }

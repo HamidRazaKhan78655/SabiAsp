@@ -3,6 +3,253 @@
     ViewBag.Title = "Index";
 }
 
-<h2>As Vendor</h2>
-<div style="background-color:aqua; height:auto ; width:100px;padding:10px;  border-radius:5px">@ViewBag.LoginName</div>
-<input type="button" class="btn btn-warning" style="margin-top:10px;" value="Open Categories" onclick="location.href = '../vendor/Categories?id='+@ViewBag.Login" />
+@*<h2>As Vendor</h2>
+    <div style="background-color:aqua; height:auto ; width:100px;padding:10px;  border-radius:5px">@ViewBag.LoginName</div>
+    <input type="button" class="btn btn-warning" style="margin-top:10px;" value="Open Categories" onclick="location.href = '../vendor/Categories?id='+@ViewBag.Login" />*@
+
+<div>
+
+    <div class="jumbotron">
+        <h2>Users</h2>
+        <div>
+            <div class="w-margin-bottom-10 w-height-35">
+                <input type="button" class="btn btn-primary w-pull-right" value="Add User" data-target="#userBootstrapModal" data-toggle="modal" />
+                <input type="text" class="form-control w-pull-right w-width-200" placeholder="Search" id="searchName" onkeyup="SearchUsersByName();" />
+            </div>
+            <table class="table table-hover">
+                <thead class="w-thead-bg">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Username</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="filterUser">
+                    @{
+                        if (ViewBag.Users.Count > 0)
+                        {
+                            foreach (var user in ViewBag.Users)
+                            {
+                                <tr>
+                                    <td>@user.id</td>
+                                    <td>@user.name</td>
+                                    <td>@user.EmailAddress</td>
+                                    <td>@user.Contact</td>
+                                    <td>@user.username</td>
+                                    <td>
+                                        @if (user.isDeleted == "true")
+                                        {
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        <input type="button" id="editUser" value="Edit" onclick="UpdateUser(@user.id, '@user.name', '@user.EmailAddress', '@user.Contact', '@user.username', '@user.Address');" />
+                                        <input type="button" id="deleteUser" value="Delete" onclick="DeleteUser(@user.id);" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="7">
+                                    <div class="w-empty-list">Record Not Found</div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="addUser">
+    @{
+        using (Html.BeginForm("AddUser", "User", FormMethod.Post))
+        {
+
+            @*user strat*@
+            <div class="modal fade " id="userBootstrapModal">
+                <div class="modal-dialog w-user-modal-dialog">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                            <h4 class="title" style="color:white;">Add User</h4>
+
+                            <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-times" style="color:white;"></i>
+                            </button>
+                        </div>
+                        <div style="width:100%; overflow:auto" class="ModelTrack">
+                            <div class="modal-body" style="width:100%">
+                                <div id="UserDiv">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>First Name :</label>
+                                            <input type="text" class="form-control" id="FirstName" name="FirstName" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Last Name :</label>
+                                            <input type="text" class="form-control" id="LastName" name="LastName" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Email Address :</label>
+                                            <input type="email" class="form-control" id="EmailAddress" name="EmailAddress" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Contact :</label>
+                                            <input type="text" class="form-control" id="Contact" name="Contact" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Username :</label>
+                                            <input type="text" class="form-control" id="Username" name="Username" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Password :</label>
+                                            <input type="password" class="form-control" id="Password" name="Password" required />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Address :</label>
+                                            <input type="text" class="form-control" id="Address" name="Address" />
+                                        </div>
+                                    </div>
+
+                                    <input type="submit" class="btn btn-info" value="Add" style="float:right;margin:10px 0;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*user end*@
+
+
+        }
+    }
+</div>
+
+<input type="hidden" id="openUserModal" data-target="#updateUserBootstrapModal" data-toggle="modal" />
+
+<div id="editUser">
+    @{
+        using (Html.BeginForm("UpdateUser", "User", FormMethod.Post))
+        {
+            @*user strat*@
+            <div class="modal fade " id="updateUserBootstrapModal">
+                <div class="modal-dialog w-user-modal-dialog">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                            <h4 class="title" style="color:white;">Update User</h4>
+
+                            <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-times" style="color:white;"></i>
+                            </button>
+                        </div>
+                        <div style="width:100%; overflow:auto" class="ModelTrack">
+                            <div class="modal-body" style="width:100%">
+                                <div id="UserDiv">
+                                    <input type="hidden" id="UpdateUserId" name="UpdateUserId" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Name :</label>
+                                            <input type="text" class="form-control" id="UpdateUserName" name="UpdateUserName" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Email Address :</label>
+                                            <input type="email" class="form-control" id="UpdateUserEmailAddress" name="UpdateUserEmailAddress" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Contact :</label>
+                                            <input type="text" class="form-control" id="UpdateUserContact" name="UpdateUserContact" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Username :</label>
+                                            <input type="text" class="form-control" id="UpdateUserUsername" name="UpdateUserUsername" required />
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Address :</label>
+                                            <input type="text" class="form-control" id="UpdateUserAddress" name="UpdateUserAddress" />
+                                        </div>
+                                    </div>
+
+                                    <input type="submit" class="btn btn-info" value="Update" style="float:right;margin:10px 0;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*user end*@
+
+
+        }
+    }
+</div>
+
+<style>
+    .w-width-200 {
+        width: 200px;
+    }
+
+    .w-height-35 {
+        height: 35px;
+    }
+
+    .w-pull-right {
+        float: right;
+    }
+
+    .w-pull-left {
+        float: left;
+    }
+
+    .w-thead-bg {
+        background-color: rgb(25, 126, 89);
+        color: #ffffff;
+    }
+
+    .w-empty-list {
+        text-align: center;
+        color: red;
+        width: 100%;
+    }
+
+    .w-margin-bottom-10 {
+        margin-bottom: 10px;
+    }
+</style>
+
+<script>
+
+    function UpdateUser(userId, name, email, contact, username, address) {
+        $("#UpdateUserId").val(userId);
+        $("#UpdateUserName").val(name);
+        $("#UpdateUserEmailAddress").val(email);
+        $("#UpdateUserContact").val(contact);
+        $("#UpdateUserUsername").val(username);
+        $("#UpdateUserAddress").val(address);
+        $("#openUserModal").trigger("click");
+    }
+
+    function DeleteUser(userId) {
+        location.href = '../User/DeleteUser?userId=' + userId;
+    }
+
+    function SearchUsersByName() {
+        var name = document.getElementById("searchName").value;
+        $("#filterUser tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(name) > -1)
+        });
+    }
+
+</script>

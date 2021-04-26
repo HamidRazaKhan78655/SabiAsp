@@ -1,16 +1,17 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Vendors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div>
 
     <div class="jumbotron">
-        <h2>Users</h2>
+        <h2>Vendors</h2>
         <div>
             <div class="w-margin-bottom-10 w-height-35">
-                <input type="button" class="btn btn-primary w-pull-right" value="Add User" data-target="#userBootstrapModal" data-toggle="modal" />
-                <input type="text" class="form-control w-pull-right w-width-200" placeholder="Search" id="searchName" onkeyup="SearchUsersByName();" />
+                <input type="button" class="btn btn-primary w-pull-right" value="Add Vendor" data-target="#vendorBootstrapModal" data-toggle="modal" />
+                <input type="text" class="form-control w-pull-right w-width-200" placeholder="Search" id="searchName" onkeyup="SearchVendorsByName();" />
             </div>
             <table class="table table-hover">
                 <thead class="w-thead-bg">
@@ -24,20 +25,20 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="filterUser">
+                <tbody id="filterVendor">
                     @{
-                        if (ViewBag.Users.Count > 0)
+                        if (ViewBag.vendors.Count > 0)
                         {
-                            foreach (var user in ViewBag.Users)
+                            foreach (var vendor in ViewBag.vendors)
                             {
                                 <tr>
-                                    <td>@user.id</td>
-                                    <td>@user.name</td>
-                                    <td>@user.EmailAddress</td>
-                                    <td>@user.Contact</td>
-                                    <td>@user.username</td>
+                                    <td>@vendor.id</td>
+                                    <td>@vendor.name</td>
+                                    <td>@vendor.EmailAddress</td>
+                                    <td>@vendor.Contact</td>
+                                    <td>@vendor.username</td>
                                     <td>
-                                        @if (user.isDeleted == "true")
+                                        @if (vendor.isDeleted == "true")
                                         {
                                             <i class="fa fa-times" aria-hidden="true"></i>
                                         }
@@ -47,8 +48,8 @@
                                         }
                                     </td>
                                     <td>
-                                        <input type="button" id="editUser" value="Edit" onclick="UpdateUser(@user.id, '@user.name', '@user.EmailAddress', '@user.Contact', '@user.username', '@user.Address');" />
-                                        <input type="button" id="deleteUser" value="Delete" onclick="DeleteUser(@user.id);" />
+                                        <input type="button" id="editUser" value="Edit" onclick="UpdateVendor(@vendor.vendorid, '@vendor.name', '@vendor.EmailAddress', '@vendor.Contact', '@vendor.username', '@vendor.Address');" />
+                                        <input type="button" id="deleteUser" value="Delete" onclick="DeleteVendor(@vendor.vendorid);" />
                                     </td>
                                 </tr>
                             }
@@ -68,18 +69,18 @@
     </div>
 </div>
 
-<div id="addUser">
+<div id="addVendor">
     @{
-        using (Html.BeginForm("AddUser", "User", FormMethod.Post))
+        using (Html.BeginForm("AddVendor", "Vendor", FormMethod.Post))
         {
 
             @*user strat*@
-            <div class="modal fade " id="userBootstrapModal">
-                <div class="modal-dialog w-user-modal-dialog">
+            <div class="modal fade " id="vendorBootstrapModal">
+                <div class="modal-dialog w-vendor-modal-dialog">
                     <div class="modal-content">
                         <!--Header-->
                         <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
-                            <h4 class="title" style="color:white;">Add User</h4>
+                            <h4 class="title" style="color:white;">Add Vendor</h4>
 
                             <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <i class="fas fa-times" style="color:white;"></i>
@@ -87,7 +88,7 @@
                         </div>
                         <div style="width:100%; overflow:auto" class="ModelTrack">
                             <div class="modal-body" style="width:100%">
-                                <div id="UserDiv">
+                                <div id="AddVendorDiv">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>First Name :</label>
@@ -133,19 +134,19 @@
     }
 </div>
 
-<input type="hidden" id="openUserModal" data-target="#updateUserBootstrapModal" data-toggle="modal" />
+<input type="hidden" id="openVendorModal" data-target="#updateVendorBootstrapModal" data-toggle="modal" />
 
-<div id="editUser">
+<div id="editVendor">
     @{
-        using (Html.BeginForm("UpdateUser", "User", FormMethod.Post))
+        using (Html.BeginForm("UpdateVendor", "Vendor", FormMethod.Post))
         {
             @*user strat*@
-            <div class="modal fade " id="updateUserBootstrapModal">
-                <div class="modal-dialog w-user-modal-dialog">
+            <div class="modal fade " id="updateVendorBootstrapModal">
+                <div class="modal-dialog w-vendor-modal-dialog">
                     <div class="modal-content">
                         <!--Header-->
                         <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
-                            <h4 class="title" style="color:white;">Update User</h4>
+                            <h4 class="title" style="color:white;">Update Vendor</h4>
 
                             <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <i class="fas fa-times" style="color:white;"></i>
@@ -153,28 +154,28 @@
                         </div>
                         <div style="width:100%; overflow:auto" class="ModelTrack">
                             <div class="modal-body" style="width:100%">
-                                <div id="UserDiv">
-                                    <input type="hidden" id="UpdateUserId" name="UpdateUserId" />
+                                <div id="EditVendorDiv">
+                                    <input type="hidden" id="UpdateVendorId" name="UpdateVendorId" />
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Name :</label>
-                                            <input type="text" class="form-control" id="UpdateUserName" name="UpdateUserName" required />
+                                            <input type="text" class="form-control" id="UpdateVendorName" name="UpdateVendorName" required />
                                         </div>
                                         <div class="col-md-6">
                                             <label>Email Address :</label>
-                                            <input type="email" class="form-control" id="UpdateUserEmailAddress" name="UpdateUserEmailAddress" required />
+                                            <input type="email" class="form-control" id="UpdateVendorEmailAddress" name="UpdateVendorEmailAddress" required />
                                         </div>
                                         <div class="col-md-6">
                                             <label>Contact :</label>
-                                            <input type="text" class="form-control" id="UpdateUserContact" name="UpdateUserContact" />
+                                            <input type="text" class="form-control" id="UpdateVendorContact" name="UpdateVendorContact" />
                                         </div>
                                         <div class="col-md-6">
                                             <label>Username :</label>
-                                            <input type="text" class="form-control" id="UpdateUserUsername" name="UpdateUserUsername" required />
+                                            <input type="text" class="form-control" id="UpdateVendorUsername" name="UpdateVendorUsername" required />
                                         </div>
                                         <div class="col-md-12">
                                             <label>Address :</label>
-                                            <input type="text" class="form-control" id="UpdateUserAddress" name="UpdateUserAddress" />
+                                            <input type="text" class="form-control" id="UpdateVendorAddress" name="UpdateVendorAddress" />
                                         </div>
                                     </div>
 
@@ -196,53 +197,57 @@
     .w-width-200 {
         width: 200px;
     }
+
     .w-height-35 {
-        height:35px;
+        height: 35px;
     }
+
     .w-pull-right {
         float: right;
     }
+
     .w-pull-left {
-        float:left;
+        float: left;
     }
+
     .w-thead-bg {
         background-color: rgb(25, 126, 89);
-        color:#ffffff;
+        color: #ffffff;
     }
+
     .w-empty-list {
-        text-align:center;
+        text-align: center;
         color: red;
-        width:100%;
+        width: 100%;
     }
+
     .w-margin-bottom-10 {
         margin-bottom: 10px;
     }
-
 </style>
 
 <script>
 
-    function UpdateUser(userId, name, email, contact, username, address) {
-        $("#UpdateUserId").val(userId);
-        $("#UpdateUserName").val(name);
-        $("#UpdateUserEmailAddress").val(email);
-        $("#UpdateUserContact").val(contact);
-        $("#UpdateUserUsername").val(username);
-        $("#UpdateUserAddress").val(address);
-        $("#openUserModal").trigger("click");
+    function UpdateVendor(vendorId, name, email, contact, username, address) {
+        $("#UpdateVendorId").val(vendorId);
+        $("#UpdateVendorName").val(name);
+        $("#UpdateVendorEmailAddress").val(email);
+        $("#UpdateVendorContact").val(contact);
+        $("#UpdateVendorUsername").val(username);
+        $("#UpdateVendorAddress").val(address);
+        $("#openVendorModal").trigger("click");
     }
 
-    function DeleteUser(userId) {
-        location.href = '../User/DeleteUser?userId=' + userId;
+    function DeleteVendor(vendorId) {
+        location.href = '../Vendor/DeleteVendor?vendorId=' + vendorId;
     }
 
-    function SearchUsersByName() {
+    function SearchVendorsByName() {
         var name = document.getElementById("searchName").value;
-        $("#filterUser tr").filter(function () {
+        $("#filterVendor tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(name) > -1)
         });
     }
 
 </script>
-
 
