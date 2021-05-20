@@ -57,6 +57,7 @@ namespace SabiAsp.Controllers
                 string DecryptPassword = Encrypto.DecryptString(User.password);
                 if (password == DecryptPassword)
                 {
+                    Session["UserId"] = User.UserId.ToString();
                     Session["Username"] = User.username.ToString();
                     Session["Name"] = User.name.ToString();
                     Session["RoleType"] = User.RoleType.ToString();
