@@ -1,4 +1,5 @@
 ﻿using SabiAsp.Encryption;
+using SabiAsp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ namespace SabiAsp.Controllers
                 u.password = Encryption.Encrypto.EncryptString("test1234");
                 u.Address = "test admin isb";
                 u.RoleID = 1;
+                u.RoleType = "Admin";
                 u.CreatedBy = 1;
                 u.CreatedDate = DateTime.Now;
                 u.isDeleted = "false";
@@ -57,6 +59,7 @@ namespace SabiAsp.Controllers
                 {
                     Session["Username"] = User.username.ToString();
                     Session["Name"] = User.name.ToString();
+                    Session["RoleType"] = User.RoleType.ToString();
                     Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                     Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
 

@@ -10,6 +10,7 @@
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Shopid" Type="int" />
           <Property Name="CategoryName" Type="nvarchar" MaxLength="100" />
           <Property Name="image" Type="nvarchar(max)" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
@@ -24,7 +25,6 @@
           </Key>
           <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubCategorieId" Type="int" />
-          <Property Name="vendorid" Type="int" />
           <Property Name="name" Type="nvarchar" MaxLength="400" />
           <Property Name="image" Type="nvarchar(max)" />
           <Property Name="rating" Type="nvarchar" MaxLength="50" />
@@ -55,10 +55,14 @@
             <PropertyRef Name="Shopid" />
           </Key>
           <Property Name="Shopid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="shopname" Type="nvarchar" MaxLength="50" />
           <Property Name="vendorid" Type="int" />
-          <Property Name="createdOn" Type="nvarchar" MaxLength="50" />
+          <Property Name="shopname" Type="nvarchar" MaxLength="50" />
+          <Property Name="image" Type="nvarchar(max)" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="SubCategories">
           <Key>
@@ -66,14 +70,13 @@
           </Key>
           <Property Name="SubCategorieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryId" Type="int" />
-          <Property Name="image" Type="nvarchar(max)" />
           <Property Name="name" Type="nvarchar" MaxLength="100" />
+          <Property Name="image" Type="nvarchar(max)" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="shopid" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -87,9 +90,9 @@
         </EntityType>
         <EntityType Name="users">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="int" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
@@ -98,6 +101,7 @@
           <Property Name="Contact" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar" MaxLength="50" />
           <Property Name="image" Type="nvarchar(max)" />
+          <Property Name="RoleType" Type="nvarchar" MaxLength="100" />
           <Property Name="location" Type="nvarchar" MaxLength="100" />
           <Property Name="itemsBuyed" Type="nvarchar(max)" />
           <Property Name="lastLogin" Type="nvarchar" MaxLength="50" />
@@ -112,20 +116,26 @@
             <PropertyRef Name="vendorid" />
           </Key>
           <Property Name="vendorid" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" />
           <Property Name="vIDSocial" Type="varchar" MaxLength="50" />
-          <Property Name="name" Type="nvarchar" MaxLength="100" />
-          <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
-          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="username" Type="nvarchar" MaxLength="50" />
-          <Property Name="Contact" Type="nvarchar" MaxLength="50" />
-          <Property Name="Address" Type="nvarchar" MaxLength="50" />
-          <Property Name="image" Type="nvarchar(max)" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <Association Name="FK_Categories_Shops">
+          <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="Shopid" />
+            </Principal>
+            <Dependent Role="Categories">
+              <PropertyRef Name="Shopid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_items_SubCategories">
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="0..1" />
           <End Role="items" Type="Self.items" Multiplicity="*" />
@@ -162,18 +172,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SubCategories_Shops">
-          <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
-          <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shops">
-              <PropertyRef Name="Shopid" />
-            </Principal>
-            <Dependent Role="SubCategories">
-              <PropertyRef Name="shopid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_users_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -186,18 +184,49 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_vendor">
-          <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
-          <End Role="items" Type="Self.items" Multiplicity="*" />
+        <Association Name="FK_vendor_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="vendor" Type="Self.vendor" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="vendor">
-              <PropertyRef Name="vendorid" />
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
             </Principal>
-            <Dependent Role="items">
-              <PropertyRef Name="vendorid" />
+            <Dependent Role="vendor">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="sabiShopModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />
@@ -207,6 +236,10 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vendor" EntityType="Self.vendor" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Categories_Shops" Association="Self.FK_Categories_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Categories" EntitySet="Categories" />
+          </AssociationSet>
           <AssociationSet Name="FK_items_SubCategories" Association="Self.FK_items_SubCategories">
             <End Role="SubCategories" EntitySet="SubCategories" />
             <End Role="items" EntitySet="items" />
@@ -219,17 +252,13 @@
             <End Role="Categories" EntitySet="Categories" />
             <End Role="SubCategories" EntitySet="SubCategories" />
           </AssociationSet>
-          <AssociationSet Name="FK_SubCategories_Shops" Association="Self.FK_SubCategories_Shops">
-            <End Role="Shops" EntitySet="Shops" />
-            <End Role="SubCategories" EntitySet="SubCategories" />
-          </AssociationSet>
           <AssociationSet Name="FK_users_Role" Association="Self.FK_users_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
-          <AssociationSet Name="FK_vendor" Association="Self.FK_vendor">
+          <AssociationSet Name="FK_vendor_users" Association="Self.FK_vendor_users">
+            <End Role="users" EntitySet="users" />
             <End Role="vendor" EntitySet="vendor" />
-            <End Role="items" EntitySet="items" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -241,6 +270,7 @@
             <PropertyRef Name="CategoryId" />
           </Key>
           <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Shopid" Type="Int32" />
           <Property Name="CategoryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
@@ -248,6 +278,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Shop" Relationship="Self.FK_Categories_Shops" FromRole="Categories" ToRole="Shops" />
           <NavigationProperty Name="SubCategories" Relationship="Self.FK_SubCategories_Categories" FromRole="Categories" ToRole="SubCategories" />
         </EntityType>
         <EntityType Name="item">
@@ -260,6 +291,7 @@
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="rating" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Time" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DeliveryFee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -271,10 +303,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="SubCategory" Relationship="Self.FK_items_SubCategories" FromRole="items" ToRole="SubCategories" />
-          <Property Name="vendorid" Type="Int32" />
-          <NavigationProperty Name="vendor" Relationship="sabiShopModel.FK_vendor" FromRole="item" ToRole="vendor" />
-          <Property Name="Weight" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SubCategory" Relationship="sabiShopModel.FK_items_SubCategories" FromRole="item" ToRole="SubCategory" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -285,23 +314,37 @@
           <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="users" Relationship="Self.FK_users_Role" FromRole="Role" ToRole="users" />
         </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Shopid" />
+          </Key>
+          <Property Name="Shopid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vendorid" Type="Int32" />
+          <Property Name="shopname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK_Categories_Shops" FromRole="Shops" ToRole="Categories" />
+          <NavigationProperty Name="vendor" Relationship="Self.FK_Shops_vendor" FromRole="Shops" ToRole="vendor" />
+        </EntityType>
         <EntityType Name="SubCategory">
           <Key>
             <PropertyRef Name="SubCategorieId" />
           </Key>
           <Property Name="SubCategorieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CategoryId" Type="Int32" />
-          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Category" Relationship="Self.FK_SubCategories_Categories" FromRole="SubCategories" ToRole="Categories" />
-          <NavigationProperty Name="items" Relationship="Self.FK_items_SubCategories" FromRole="SubCategories" ToRole="items" />
-          <Property Name="shopid" Type="Int32" />
-          <NavigationProperty Name="Shop" Relationship="sabiShopModel.FK_SubCategories_Shops" FromRole="SubCategory" ToRole="Shop" />
+          <NavigationProperty Name="items" Relationship="sabiShopModel.FK_items_SubCategories" FromRole="SubCategory" ToRole="item" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -315,14 +358,18 @@
         </EntityType>
         <EntityType Name="user">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="Int32" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RoleType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="itemsBuyed" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="lastLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -332,10 +379,35 @@
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Role" Relationship="Self.FK_users_Role" FromRole="users" ToRole="Role" />
-          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="vendors" Relationship="Self.FK_vendor_users" FromRole="users" ToRole="vendor" />
         </EntityType>
+        <EntityType Name="vendor">
+          <Key>
+            <PropertyRef Name="vendorid" />
+          </Key>
+          <Property Name="vendorid" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="vIDSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Shops" Relationship="Self.FK_Shops_vendor" FromRole="vendor" ToRole="Shops" />
+          <NavigationProperty Name="user" Relationship="Self.FK_vendor_users" FromRole="vendor" ToRole="users" />
+        </EntityType>
+        <Association Name="FK_Categories_Shops">
+          <End Role="Shops" Type="Self.Shop" Multiplicity="0..1" />
+          <End Role="Categories" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="Shopid" />
+            </Principal>
+            <Dependent Role="Categories">
+              <PropertyRef Name="Shopid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SubCategories_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
           <End Role="SubCategories" Type="Self.SubCategory" Multiplicity="*" />
@@ -345,18 +417,6 @@
             </Principal>
             <Dependent Role="SubCategories">
               <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_items_SubCategories">
-          <End Role="SubCategories" Type="Self.SubCategory" Multiplicity="0..1" />
-          <End Role="items" Type="Self.item" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SubCategories">
-              <PropertyRef Name="SubCategorieId" />
-            </Principal>
-            <Dependent Role="items">
-              <PropertyRef Name="SubCategorieId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -372,106 +432,103 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Shops_vendor">
+          <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
+          <End Role="Shops" Type="Self.Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendor">
+              <PropertyRef Name="vendorid" />
+            </Principal>
+            <Dependent Role="Shops">
+              <PropertyRef Name="vendorid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vendor_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="vendor" Type="Self.vendor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="vendor">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="sabiShopEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
           <EntitySet Name="items" EntityType="Self.item" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Shops" EntityType="Self.Shop" />
           <EntitySet Name="SubCategories" EntityType="Self.SubCategory" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="vendors" EntityType="Self.vendor" />
+          <AssociationSet Name="FK_Categories_Shops" Association="Self.FK_Categories_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="Categories" EntitySet="Categories" />
+          </AssociationSet>
           <AssociationSet Name="FK_SubCategories_Categories" Association="Self.FK_SubCategories_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="SubCategories" EntitySet="SubCategories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_items_SubCategories" Association="Self.FK_items_SubCategories">
-            <End Role="SubCategories" EntitySet="SubCategories" />
-            <End Role="items" EntitySet="items" />
           </AssociationSet>
           <AssociationSet Name="FK_users_Role" Association="Self.FK_users_Role">
             <End Role="Role" EntitySet="Roles" />
             <End Role="users" EntitySet="users" />
           </AssociationSet>
-          <EntitySet Name="vendors" EntityType="sabiShopModel.vendor" />
-          <AssociationSet Name="FK_vendor" Association="sabiShopModel.FK_vendor">
+          <AssociationSet Name="FK_Shops_vendor" Association="Self.FK_Shops_vendor">
             <End Role="vendor" EntitySet="vendors" />
+            <End Role="Shops" EntitySet="Shops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vendor_users" Association="Self.FK_vendor_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="vendor" EntitySet="vendors" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK_items_SubCategories" Association="sabiShopModel.FK_items_SubCategories">
+            <End Role="SubCategory" EntitySet="SubCategories" />
             <End Role="item" EntitySet="items" />
           </AssociationSet>
-          <EntitySet Name="Shops" EntityType="sabiShopModel.Shop" />
-          <AssociationSet Name="FK_Shops_vendor" Association="sabiShopModel.FK_Shops_vendor">
-            <End Role="vendor" EntitySet="vendors" />
-            <End Role="Shop" EntitySet="Shops" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SubCategories_Shops" Association="sabiShopModel.FK_SubCategories_Shops">
-            <End Role="Shop" EntitySet="Shops" />
-            <End Role="SubCategory" EntitySet="SubCategories" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="vendor">
-          <Key>
-            <PropertyRef Name="vendorid" />
-          </Key>
-          <Property Name="vendorid" Type="Int32" Nullable="false" />
-          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="items" Relationship="sabiShopModel.FK_vendor" FromRole="vendor" ToRole="item" />
-          <NavigationProperty Name="Shops" Relationship="sabiShopModel.FK_Shops_vendor" FromRole="vendor" ToRole="Shop" />
-          <Property Name="vIDSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Contact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <Association Name="FK_vendor">
-          <End Type="sabiShopModel.vendor" Role="vendor" Multiplicity="0..1" />
+        <Association Name="FK_items_SubCategories">
+          <End Type="sabiShopModel.SubCategory" Role="SubCategory" Multiplicity="0..1" />
           <End Type="sabiShopModel.item" Role="item" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="vendor">
-              <PropertyRef Name="vendorid" />
+            <Principal Role="SubCategory">
+              <PropertyRef Name="SubCategorieId" />
             </Principal>
             <Dependent Role="item">
-              <PropertyRef Name="vendorid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Shop">
-          <Key>
-            <PropertyRef Name="Shopid" />
-          </Key>
-          <Property Name="Shopid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="shopname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="vendorid" Type="Int32" />
-          <Property Name="createdOn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="vendor" Relationship="sabiShopModel.FK_Shops_vendor" FromRole="Shop" ToRole="vendor" />
-          <NavigationProperty Name="SubCategories" Relationship="sabiShopModel.FK_SubCategories_Shops" FromRole="Shop" ToRole="SubCategory" />
-        </EntityType>
-        <Association Name="FK_Shops_vendor">
-          <End Type="sabiShopModel.vendor" Role="vendor" Multiplicity="0..1" />
-          <End Type="sabiShopModel.Shop" Role="Shop" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="vendor">
-              <PropertyRef Name="vendorid" />
-            </Principal>
-            <Dependent Role="Shop">
-              <PropertyRef Name="vendorid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SubCategories_Shops">
-          <End Type="sabiShopModel.Shop" Role="Shop" Multiplicity="0..1" />
-          <End Type="sabiShopModel.SubCategory" Role="SubCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shop">
-              <PropertyRef Name="Shopid" />
-            </Principal>
-            <Dependent Role="SubCategory">
-              <PropertyRef Name="shopid" />
+              <PropertyRef Name="SubCategorieId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -485,6 +542,7 @@
             <EntityTypeMapping TypeName="sabiShopModel.Category">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="Shopid" ColumnName="Shopid" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
@@ -498,14 +556,13 @@
           <EntitySetMapping Name="items">
             <EntityTypeMapping TypeName="sabiShopModel.item">
               <MappingFragment StoreEntitySet="items">
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="SubCategorieId" ColumnName="SubCategorieId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="rating" ColumnName="rating" />
                 <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="DeliveryFee" ColumnName="DeliveryFee" />
@@ -529,14 +586,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Shops">
+            <EntityTypeMapping TypeName="sabiShopModel.Shop">
+              <MappingFragment StoreEntitySet="Shops">
+                <ScalarProperty Name="Shopid" ColumnName="Shopid" />
+                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
+                <ScalarProperty Name="shopname" ColumnName="shopname" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SubCategories">
             <EntityTypeMapping TypeName="sabiShopModel.SubCategory">
               <MappingFragment StoreEntitySet="SubCategories">
-                <ScalarProperty Name="shopid" ColumnName="shopid" />
                 <ScalarProperty Name="SubCategorieId" ColumnName="SubCategorieId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -559,15 +630,16 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="sabiShopModel.user">
               <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
-                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="RoleType" ColumnName="RoleType" />
                 <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="itemsBuyed" ColumnName="itemsBuyed" />
                 <ScalarProperty Name="lastLogin" ColumnName="lastLogin" />
@@ -582,34 +654,24 @@
           <EntitySetMapping Name="vendors">
             <EntityTypeMapping TypeName="sabiShopModel.vendor">
               <MappingFragment StoreEntitySet="vendor">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="image" ColumnName="image" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="vIDSocial" ColumnName="vIDSocial" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Shops">
-            <EntityTypeMapping TypeName="sabiShopModel.Shop">
-              <MappingFragment StoreEntitySet="Shops">
-                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
-                <ScalarProperty Name="createdOn" ColumnName="createdOn" />
-                <ScalarProperty Name="vendorid" ColumnName="vendorid" />
-                <ScalarProperty Name="shopname" ColumnName="shopname" />
-                <ScalarProperty Name="Shopid" ColumnName="Shopid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="sabiShopModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="sabiShopModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="sabiShopModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="sabiShopModel.Store.sp_helpdiagramdefinition" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="sabiShopModel.Store.sp_helpdiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="sabiShopModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="sabiShopModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -7,31 +7,32 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SabiAsp
+namespace SabiAsp.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class item
     {
-        public int id { get; set; }
-        public Nullable<int> RoleID { get; set; }
+        public int ItemId { get; set; }
+        public Nullable<int> SubCategorieId { get; set; }
         public string name { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
         public string image { get; set; }
+        public string rating { get; set; }
         public string location { get; set; }
-        public string itemsBuyed { get; set; }
-        public string lastLogin { get; set; }
+        public string Weight { get; set; }
+        public string Time { get; set; }
+        public string Price { get; set; }
+        public string DeliveryFee { get; set; }
+        public string minOrder { get; set; }
+        public Nullable<int> itemAvailible { get; set; }
+        public Nullable<int> SoldItems { get; set; }
         public string isDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string EmailAddress { get; set; }
-        public string Address { get; set; }
-        public string Contact { get; set; }
     
-        public virtual Role Role { get; set; }
+        public virtual SubCategory SubCategory { get; set; }
     }
 }

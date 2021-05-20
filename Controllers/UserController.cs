@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SabiAsp.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace SabiAsp.Controllers
         public ActionResult GetUserById(string userId)
         {
             int? uId = int.Parse(userId);
-            var user = Db.users.Where(x => x.id == uId && x.isDeleted != "true").SingleOrDefault();
+            var user = Db.users.Where(x => x.UserId == uId && x.isDeleted != "true").SingleOrDefault();
             ViewBag.User = user;
             return View();
         }
@@ -69,7 +70,7 @@ namespace SabiAsp.Controllers
             string updateUserId = fm["UpdateUserId"].ToString();
             int userId = int.Parse(updateUserId);
 
-            var user = Db.users.Where(x => x.id == userId).SingleOrDefault();
+            var user = Db.users.Where(x => x.UserId == userId).SingleOrDefault();
             if (user != null)
             {
                 user.name = name;
@@ -88,7 +89,7 @@ namespace SabiAsp.Controllers
         public ActionResult DeleteUser(string userId)
         {
             int uId = int.Parse(userId);
-            var user = Db.users.Where(x => x.id == uId && x.isDeleted != "true").SingleOrDefault();
+            var user = Db.users.Where(x => x.UserId == uId && x.isDeleted != "true").SingleOrDefault();
             if (user != null)
             {
                 user.ModifiedBy = 1;

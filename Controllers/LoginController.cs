@@ -1,4 +1,5 @@
 ﻿using Facebook;
+using SabiAsp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,12 +73,30 @@ namespace SabiAsp.Controllers
                 {
                     //vendor
                     vendor v = new vendor();
-                    v.vendorid = 6;
-                    v.name = name;
-                    v.password = email;
-                    v.isDeleted = "false";
-                    Db.vendors.Add(v);
-                    Db.SaveChanges();
+                    user u = new user();
+                    //v.vendorid = 6;
+                    var User = Db.users.Where(x => x.username.ToLower() == name.ToLower()).FirstOrDefault();
+                    if (User == null)
+                    {
+                        u.name = name; //firstname + " " + lastname
+                        u.username = name;
+                        u.password = email;
+                        u.RoleID = 3;
+                        u.RoleType = "Vendor";
+                        u.isDeleted = "false";
+                        u.CreatedBy = 1;
+                        u.CreatedDate = DateTime.Now;
+                        Db.users.Add(u);
+                        Db.SaveChanges();
+
+                        v.UserId = u.UserId;
+                        v.isDeleted = "false";
+                        v.CreatedBy = 1;
+                        v.CreatedDate = DateTime.Now;
+                        Db.vendors.Add(v);
+                        Db.SaveChanges();
+                    }
+
                     return "Ok";
                 }
                 else if (id==2)
@@ -135,18 +154,31 @@ namespace SabiAsp.Controllers
             TempData["lastname"] = me.last_name;
             TempData["picture"] = me.picture.data.url;
             FormsAuthentication.SetAuthCookie(email, false);
+            user u = new user();
             if (UserTypeId==1)
             {
                 //Vendor
                 try
                 {
                     vendor v = new vendor();
-                    v.vendorid =5;
-                    v.name = me.first_name+" "+me.last_name;
-                    v.password = me.email;
+                    u.name = me.first_name + " " + me.last_name;
+                    u.username = me.first_name + " " + me.last_name;
+                    u.password = me.email;
+                    u.RoleID = 3;
+                    u.RoleType = "Vendor";
+                    u.isDeleted = "false";
+                    u.CreatedBy = 1;
+                    u.CreatedDate = DateTime.Now;
+                    Db.users.Add(u);
+                    Db.SaveChanges();
+
+                    v.UserId = u.UserId;
                     v.isDeleted = "false";
+                    v.CreatedBy = 1;
+                    v.CreatedDate = DateTime.Now;
                     Db.vendors.Add(v);
                     Db.SaveChanges();
+
                 }
                 catch (Exception e)
                 {
@@ -161,12 +193,14 @@ namespace SabiAsp.Controllers
                 //Buyer
                 try
                 {
-                    user u = new  user();
-                    u.id = 1;
+                    u.UserId = 1;
                     u.name = me.first_name + me.last_name;
                     u.password = me.email;
-                    u.RoleID = 1;
+                    u.RoleID = 2;
+                    u.RoleType = "User";
                     u.isDeleted = "false";
+                    u.CreatedBy = 1;
+                    u.CreatedDate = DateTime.Now;
                     Db.users.Add(u);
                     Db.SaveChanges();
                 }

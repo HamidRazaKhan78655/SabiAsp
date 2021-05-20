@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SabiAsp
+namespace SabiAsp.Models
 {
     using System;
     using System.Collections.Generic;

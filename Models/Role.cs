@@ -7,29 +7,24 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SabiAsp
+namespace SabiAsp.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Category
+    public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Category()
+        public Role()
         {
-            this.SubCategories = new HashSet<SubCategory>();
+            this.users = new HashSet<user>();
         }
     
-        public int CategoryId { get; set; }
-        public string CategoryName { get; set; }
-        public string image { get; set; }
-        public string isDeleted { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public int RoleID { get; set; }
+        public string RoleType { get; set; }
+        public string RoleName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SubCategory> SubCategories { get; set; }
+        public virtual ICollection<user> users { get; set; }
     }
 }

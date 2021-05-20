@@ -7,33 +7,30 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SabiAsp
+namespace SabiAsp.Models
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class SubCategory
+    public partial class vendor
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SubCategory()
+        public vendor()
         {
-            this.items = new HashSet<item>();
+            this.Shops = new HashSet<Shop>();
         }
     
-        public int SubCategorieId { get; set; }
-        public Nullable<int> CategoryId { get; set; }
-        public string image { get; set; }
-        public string name { get; set; }
+        public int vendorid { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public string vIDSocial { get; set; }
         public string isDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> shopid { get; set; }
     
-        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<item> items { get; set; }
-        public virtual Shop Shop { get; set; }
+        public virtual ICollection<Shop> Shops { get; set; }
+        public virtual user user { get; set; }
     }
 }

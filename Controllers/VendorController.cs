@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SabiAsp.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Drawing;
@@ -17,16 +18,16 @@ namespace SabiAsp.Controllers
         // GET: Vendor
         public ActionResult Index()
         {
-            if (login == "none")
-            {
-                ViewBag.Login = "none";
-            }
-            else {
-                int vId = int.Parse(loginID);
-                var query = Db.vendors.Where(x=> x.vendorid == vId).SingleOrDefault();
-                ViewBag.Login = query.vendorid.ToString();
-                ViewBag.LoginName = query.name.ToString();
-            }
+            //if (login == "none")
+            //{
+            //    ViewBag.Login = "none";
+            //}
+            //else {
+            //    int vId = int.Parse(loginID);
+            //    var query = Db.vendors.Where(x=> x.vendorid == vId).SingleOrDefault();
+            //    ViewBag.Login = query.vendorid.ToString();
+            //    ViewBag.LoginName = query.name.ToString();
+            //}
             return View();
         }
         public ActionResult Categories(string id)
@@ -40,7 +41,7 @@ namespace SabiAsp.Controllers
             int? vId = int.Parse(vendorid);
             int? cId = int.Parse(cate);
             var shop = Db.Shops.Where(x => x.vendorid == vId).SingleOrDefault();
-            var subCategories = Db.SubCategories.Where(x => x.shopid == shop.Shopid && x.CategoryId == cId && x.isDeleted != "true").ToList();
+            var subCategories = Db.SubCategories.Where(x => x.CategoryId == cId && x.isDeleted != "true").ToList();
             ViewBag.subcats = subCategories;
             ViewBag.categoryid = cate;
             ViewBag.vendorid = vendorid;
@@ -54,7 +55,7 @@ namespace SabiAsp.Controllers
             string shopid = fm["shopid"].ToString();
             string categoryid = fm["categoryid"].ToString();
             SubCategory subCategory = new SubCategory();
-            subCategory.shopid = int.Parse(shopid);
+            //subCategory.shopid = int.Parse(shopid);
             subCategory.CategoryId = int.Parse(categoryid);
             subCategory.name = name;
             subCategory.CreatedBy = int.Parse(venid);
@@ -76,7 +77,7 @@ namespace SabiAsp.Controllers
             var subCategory = Db.SubCategories.Where(x => x.SubCategorieId == subCategoryId && x.isDeleted != "true").SingleOrDefault();
             if (subCategory != null)
             {
-                subCategory.shopid = int.Parse(shopid);
+                //subCategory.shopid = int.Parse(shopid);
                 subCategory.CategoryId = int.Parse(categoryid);
                 subCategory.name = name;
                 subCategory.ModifiedBy = int.Parse(venid);
@@ -105,7 +106,8 @@ namespace SabiAsp.Controllers
         {
             int? vId = int.Parse(vendorid);
             int? subId = int.Parse(sCateID);
-            var allitems = Db.items.Where(x=> x.vendorid == vId && x.SubCategorieId == subId && x.isDeleted != "true").ToList();
+            //var allitems = Db.items.Where(x=> x.vendorid == vId && x.SubCategorieId == subId && x.isDeleted != "true").ToList();
+            var allitems = Db.items.Where(x=> x.SubCategorieId == subId && x.isDeleted != "true").ToList();
             ViewBag.items = allitems;
             ViewBag.sCateID = sCateID;
             ViewBag.vendorid = vendorid;
@@ -146,7 +148,7 @@ namespace SabiAsp.Controllers
             item.name = name;
             item.Weight = weight;
             item.Price = price;
-            item.vendorid = int.Parse(venid);
+            //item.vendorid = int.Parse(venid);
             item.SubCategorieId = int.Parse(sCateID);
             item.isDeleted = "false";
             item.CreatedDate = DateTime.Now;
@@ -196,7 +198,7 @@ namespace SabiAsp.Controllers
                 item.name = name;
                 item.Weight = weight;
                 item.Price = price;
-                item.vendorid = int.Parse(venid);
+                //item.vendorid = int.Parse(venid);
                 item.SubCategorieId = int.Parse(sCateID);
                 item.isDeleted = "false";
                 item.ModifiedBy = int.Parse(venid);
@@ -239,12 +241,12 @@ namespace SabiAsp.Controllers
             string address = fm["Address"].ToString();
             string password = fm["Password"].ToString();
             vendor v = new vendor();
-            v.name = firstName + " " + lastName;
-            v.EmailAddress = emailAddress;
-            v.Contact = contact;
-            v.username = username;
-            v.password = Encryption.Encrypto.EncryptString(password.Trim());
-            v.Address = address;
+            //v.name = firstName + " " + lastName;
+            //v.EmailAddress = emailAddress;
+            //v.Contact = contact;
+            //v.username = username;
+            //v.password = Encryption.Encrypto.EncryptString(password.Trim());
+            //v.Address = address;
             //u.RoleID = 2;
             v.CreatedBy = 1;
             v.CreatedDate = DateTime.Now;
@@ -266,11 +268,11 @@ namespace SabiAsp.Controllers
             var vendor = Db.vendors.Where(x => x.vendorid == vendorId).SingleOrDefault();
             if (vendor != null)
             {
-                vendor.name = name;
-                vendor.EmailAddress = emailAddress;
-                vendor.Contact = contact;
-                vendor.Address = address;
-                vendor.username = userName;
+                //vendor.name = name;
+                //vendor.EmailAddress = emailAddress;
+                //vendor.Contact = contact;
+                //vendor.Address = address;
+                //vendor.username = userName;
                 vendor.ModifiedBy = 1;
                 vendor.ModifiedDate = DateTime.Now;
                 vendor.isDeleted = "false";
