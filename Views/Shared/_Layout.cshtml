@@ -80,7 +80,9 @@
 
         }
 
-        function login() {
+        function login()
+        {
+
             debugger;
             var win = window.open(_url, "windowname1", 'width=800,height=600');
             var pollTimer = window.setInterval(function () {
@@ -136,13 +138,34 @@
                     debugger;
                     user = resp;
                     console.log(user);
-                    $('#uname').html('Welcome ' + user.name);
-                    $('#uemail').html('Email: ' + user.email)
-                    $('#imgHolder').attr('src', user.picture);
-                    $('#profileImg').attr('src', user.picture);
-                    $('#profilebtn').attr('src', user.picture);
-                    $("#UserPassword").val("");
-                    $("#openUserPassordModal").trigger("click");
+
+                    $.ajax({
+                        url: '/Login/CheckSocialLogin/',
+                        type: 'POST',
+                        data: {
+                            email: user.email
+                        },
+                        success: function (data) {
+                            debugger;
+                            if (data == "success") {
+                                window.location.href = "/Home/Index/";
+                            }
+                            else {
+                                $('#uname').html('Welcome ' + user.name);
+                                $('#uemail').html('Email: ' + user.email)
+                                $('#imgHolder').attr('src', user.picture);
+                                $('#profileImg').attr('src', user.picture);
+                                $('#profilebtn').attr('src', user.picture);
+                                $("#UserPassword").val("");
+                                $("#openUserPassordModal").trigger("click");
+                            }
+                        },
+                        error: function () {
+                            debugger;
+                            alert("Error");
+                        }
+                    });
+
                 }
             });
 

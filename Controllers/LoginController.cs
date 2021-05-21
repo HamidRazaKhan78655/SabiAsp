@@ -64,6 +64,34 @@ namespace SabiAsp.Controllers
             }
         }
 
+        public string CheckSocialLogin(string email)
+        {
+            try
+            {
+                var User = Db.users.Where(x => x.username.ToLower() == email.ToLower() && x.EmailAddress == email.ToLower() && x.isDeleted != "true" && x.SocialLoginType != null).FirstOrDefault();
+                if (User != null)
+                {
+                    Session["UserId"] = User.UserId.ToString();
+                    Session["Username"] = User.username;
+                    Session["Name"] = User.name;
+                    Session["RoleType"] = User.RoleType;
+                    Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
+                    Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
+
+                    return "success";
+                }
+                else
+                {
+                    return "error";
+                }
+            }
+            catch (Exception)
+            {
+                return "error";
+            }
+        
+        }
+
         [HttpPost]
         public string  GoogleLogin(string email, string name, string gender, string lastname, string location,int id, string password)
         {
