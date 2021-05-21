@@ -110,6 +110,7 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="SocialLoginType" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="vendor">
           <Key>
@@ -380,6 +381,7 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Role" Relationship="Self.FK_users_Role" FromRole="users" ToRole="Role" />
           <NavigationProperty Name="vendors" Relationship="Self.FK_vendor_users" FromRole="users" ToRole="vendor" />
+          <Property Name="SocialLoginType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="vendor">
           <Key>
@@ -630,6 +632,7 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="sabiShopModel.user">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="SocialLoginType" ColumnName="SocialLoginType" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="name" ColumnName="name" />
