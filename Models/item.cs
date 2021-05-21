@@ -32,7 +32,9 @@ namespace SabiAsp.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<int> Shopid { get; set; }
     
         public virtual SubCategory SubCategory { get; set; }
+        public virtual Shop Shop { get; set; }
     }
 }

@@ -21,7 +21,6 @@ namespace SabiAsp.Models
         }
     
         public int CategoryId { get; set; }
-        public Nullable<int> Shopid { get; set; }
         public string CategoryName { get; set; }
         public string image { get; set; }
         public string isDeleted { get; set; }
@@ -30,7 +29,6 @@ namespace SabiAsp.Models
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Shop Shop { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubCategory> SubCategories { get; set; }
     }

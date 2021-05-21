@@ -13,8 +13,8 @@ namespace SabiAsp.Controllers
     public class VendorController : Controller
     {
         sabiShopEntities Db = new sabiShopEntities();
-        string login = "1";
-        string loginID = "1";
+        //string login = "1";
+        //string loginID = "1";
         // GET: Vendor
         public ActionResult Index()
         {

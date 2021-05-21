@@ -39,7 +39,6 @@ namespace SabiAsp.Controllers
         {
             string firstName = fm["FirstName"].ToString();
             string lastName = fm["LastName"].ToString();
-            //string adminId = fm["adminId"].ToString();
             string username = fm["Username"].ToString();
             string emailAddress = fm["EmailAddress"].ToString();
             string contact = fm["Contact"].ToString();
@@ -49,7 +48,7 @@ namespace SabiAsp.Controllers
             int roleId = int.Parse(roleType);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
 
-            var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower()).FirstOrDefault();
+            var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
             if (User == null)
             {
                 user u = new user();
