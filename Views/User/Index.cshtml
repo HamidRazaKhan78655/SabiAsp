@@ -29,8 +29,14 @@
             <h2>Users</h2>
             <div>
                 <div class="w-margin-bottom-10 w-height-35">
-                    <input type="button" class="btn btn-primary w-pull-right" value="Add User" data-target="#userBootstrapModal" data-toggle="modal" />
-                    <input type="text" class="form-control w-pull-right w-width-200" placeholder="Search" id="searchName" onkeyup="SearchUsersByName();" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add User" data-target="#userBootstrapModal" data-toggle="modal" />
+                    <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchName" onkeyup="SearchUsersByName();" />
+                    <select class="form-control w-width-200 w-pull-right" id="filterByType" onchange="FilterByRoleType();">
+                        <option value="">All</option>
+                        <option value="Admin">Admin</option>
+                        <option value="User">User</option>
+                        <option value="Vendor">Vendor</option>
+                    </select>
                 </div>
                 <table class="table table-hover">
                     <thead class="w-thead-bg">
@@ -57,7 +63,7 @@
                                         <td>@user.EmailAddress</td>
                                         <td>@user.Contact</td>
                                         <td>@user.username</td>
-                                        <td>@user.RoleType</td>
+                                        <td id="FilterRoleType">@user.RoleType</td>
                                         <td>
                                             @if (user.isDeleted == "true")
                                             {
@@ -262,6 +268,10 @@
             .w-margin-bottom-10 {
                 margin-bottom: 10px;
             }
+
+            .w-margin-left-10 {
+                margin-left: 10px;
+            }
         </style>
 
         <script>
@@ -381,7 +391,18 @@
             }
 
             function SearchUsersByName() {
+                debugger;
                 var name = document.getElementById("searchName").value;
+                name = name.toLowerCase();
+                $("#filterUser tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(name) > -1)
+                });
+            }
+
+            function FilterByRoleType() {
+                debugger;
+                var name = document.getElementById("filterByType").value;
+                name = name.toLowerCase();
                 $("#filterUser tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(name) > -1)
                 });
