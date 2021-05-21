@@ -1,374 +1,4 @@
-﻿<!--<!DOCTYPE html>
-<html lang="en">
-<head>
-    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@*@ViewData["Title"]*@ - sabi</title>
-    <link rel="stylesheet" href="~/Content/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/Content/wwwroot/css/site.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script type="text/javascript">
-        var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
-        var VALIDURL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
-        var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
-        var CLIENTID = '797473363020-up2pqdgnus0pjauk6k4r0lpqmg7ednqd.apps.googleusercontent.com';
-        var REDIRECT = 'https://localhost:44317/Home/Index';
-        var LOGOUT = 'http://localhost:56623/Home/Index';
-        var TYPE = 'token';
-        var _url = OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
-        var acToken;
-        var tokenType;
-        var expiresIn;
-        var user;
-        var loggedIn = false;
-
-        function ShowAllItems()
-        {
-            debugger;
-            $.ajax({
-                url: "/Items/ShowAllItems",
-                contentType: "application/json",
-                success: function (responce) {
-                    debugger;
-                    var html = '';
-                    $(responce).each(function (index, value)
-                    {
-                        debugger;
-                        html += '<div onclick="buy(' + value["id"] + ');"  class="col-sm-3 cardstyle" id='+value["id"]+'>'
-                            +'<table>'
-                            +'<tr><td style="padding-left: 50px;"><img src='+ value["image"]+'/></td></tr>'
-                            +'<tr><td><b>Item Name :</b></td><td>'+value["name"]+'</td></tr>'
-                            +'<tr><td>Weight : </td><td>' + value["weight"]+'</td></tr>'
-                            +'<tr><td>Price : </td><td>' + value["price"]+'</td></tr>'
-                            +'</table></div>'
-                    });
-                    $("#allcategories").html(html);
-                }
-            });
-
-        }
-
-        function login()
-        {
-            var win = window.open(_url, "windowname1", 'width=800, height=600');
-            var pollTimer = window.setInterval(function ()
-            {
-                try {
-                    console.log(win.document.URL);
-                    if (win.document.URL.indexOf(REDIRECT) != -1)
-                    {
-                        window.clearInterval(pollTimer);
-                        var url = win.document.URL;
-                        acToken = gup(url, 'access_token');
-                        tokenType = gup(url, 'token_type');
-                        expiresIn = gup(url, 'expires_in');
-
-                        win.close();
-                        debugger;
-                        validateToken(acToken);
-                    }
-                }
-                catch (e) {
-
-                }
-            }, 500);
-        }
-
-        function gup(url, name) {
-            namename = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-            var regexS = "[\\#&]" + name + "=([^&#]*)";
-            var regex = new RegExp(regexS);
-            var results = regex.exec(url);
-            if (results == null)
-                return "";
-            else
-                return results[1];
-        }
-
-        function validateToken(token)
-        {
-            getUserInfo();
-            $.ajax(
-                {
-                    url: VALIDURL + token,
-                    data: null,
-                    success: function (responseText)
-                    {
-
-                    },
-                });
-        }
-
-        function getUserInfo()
-        {
-            debugger;
-            $.ajax({
-                url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
-                data: null,
-                success: function (resp)
-                {
-                    debugger;
-                    user = resp;
-                    console.log(user);
-                    $('#uname').html('Welcome ' + user.name);
-                    $('#uemail').html('Email: ' + user.email)
-                    $('#imgHolder').attr('src', user.picture);
-
-
-                    $('#profileImg').attr('src', user.picture);
-                    $('#profilebtn').attr('src', user.picture);
-                },
-            }),
-                $.ajax({
-
-                    url: '/Login/GoogleLogin/',
-                    type: 'POST',
-                    data: {
-                        email: user.email,
-                        name: user.name,
-                        gender: user.gender,
-                        lastname: user.lastname,
-                        location: user.location,
-                        id: document.getElementById('SignInType').value,
-                    },
-                    success: function ()
-                    {
-                        debugger;
-                        window.location.href = "/Home/Index/";
-                    },
-
-                    //dataType: "jsonp"
-
-                });
-        }
-        function openSignModal(id)
-        {
-            if (id == 1)
-            {
-                $('#changeheader').text('Sign In as Vendor');
-                $('#SignInType').val(1);
-            } else
-            {
-                $('#changeheader').text('Sign In as Buyer');
-                $('#SignInType').val(2);
-            }
-            $('#Signinmodal').trigger('click');
-
-        }
-        function facebooklogin()
-        {
-            debugger;
-
-            var fbid = document.getElementById("SignInType").value;
-
-            if (fbid==1)
-            {
-                window.open('https://localhost:44317/Login/Facebook?UserType=1','_self')
-            } else
-            {
-                window.open('https://localhost:44317/Login/Facebook?UserType=2', '_self')
-            }
-
-        }
-
-    </script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3sVPIXZ27uIfBDViZdbpNHMUoAV_4sEU"></script>
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3" style="background: #130347 !important">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white"><i class="far fa-snowflake"></i> Sabi <i class="far fa-snowflake"></i></a>
-                <button class="navbar-toggler navbar-light" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon" style="color:white"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1 wrap">
-                        <!--<-->
-<!--@*li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-</li>*@
-
-                <!--<li class="nav-item" style="margin:auto">
-                    <a class="nav-link text-light" id="Expand">
-                        Categories<i class="fas fa-chevron-circle-down text-light" style="position: relative; left: 5px; top: 1px;"></i>-->
-@*@Html.DropDownList("ddlcategories", ViewBag.Customercategories as IEnumerable<SelectListItem>, "Categories", new { onchange = "loadCategories(this)", @class = "form-control", @style = "height: 25px;padding: 0px; " })*@
-<!--<div id="dropdown" style="display:none;" class="dropdownStyle">
-                                <ul>
-                                    <li onclick="loadCategories(1)">Groceries</li>
-                                    <li onclick="loadCategories(2)">Pharmacy</li>
-                                    <li onclick="loadCategories(3)">Bakery</li>
-                                    <li onclick="loadCategories(4)">Hampers+Gifts</li>
-                                </ul>
-                            </div>
-
-                        </a>
-                    </li>
-                    <li class="nav-item" style="margin:auto">
-                        <a class="nav-link text-light" style="display:flex">
-                            <input id="itemSearchResult" class="form-control" type="text" placeholder="Search" style="height: 24px;" />
-                            <i class="fas fa-search text-dark hover-fx" style="position: relative; left: -25px; top: 4px;"></i>
-                        </a>
-                        <div class="searchResult" id="searchResultID"></div>
-                    </li>
-                    <li class="nav-item" style="margin:auto" data-target="#GoogleMapsModal" data-toggle="modal" onclick="loadMaps();">
-                        <a class="nav-link text-light">
-                            HRE<i class="fas fa-map-marker-alt text-light hover-fx" style="position: relative; left: 5px; top: 1px;"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item " style="margin:auto">
-                        <a class="nav-link text-light">
-                            <i class="fas fa-shopping-basket text-light hover-fx" style=" position: relative;left: 5px;top: 1px;font-size: 25px;"></i>
-                        </a>
-                    </li>
-
-
-                    <li class="nav-item " style="margin:auto">
-                        <a class="nav-link text-light">
-                            <input id="SignInbtn" class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn" type="button" />
-                            <div id="SignIn" style="display:none;" class="dropdownStyle">
-                                <ul>
-                                    <li onclick="openSignModal(1)">Sign In as Vendor</li>
-                                    <li onclick="openSignModal(2)">Sign In as Buyer</li>
-                                </ul>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item " style="margin:auto;display:none;">
-                        <a class="nav-link text-light">
-                            <input class="btn btn-info" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Fire Base" type="button" onclick="window.open('https://localhost:44317/FireBase/Create','_blank')" />
-                        </a>
-                    </li>
-
-                    <li class="nav-item " style="margin:auto;">
-                        <a class="nav-link text-light">
-                            <img src="~/Images/noimage.jpg" style=" height: 30px; width: 30px; border-radius: 15px;" id="profilebtn" />
-                        </a>
-                        <div id="profile" class="dropdownStyle" style=" right: 5px; width: 360px; padding-bottom: 5px; padding-right: 5px; display: none;">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-sm-12" style="text-align:center">
-                                        <img id="profileImg" src="@TempData["picture"]" style="height: 80px; width: 80px; border-radius: 15px; margin: 15px;" />
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <span>Name :</span>
-                                    </div>
-                                    <div class="col-sm-8">
-                                        <span>@TempData["first_name"] @TempData["lastname"]</span>
-                                    </div>
-
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-4"><span>Email or ID : </span></div>
-                                    <div class="col-sm-8"> <span>@TempData["email"]</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-<div class="second-navbar">
-    <div>Our Story</div>
-    <div>Why Sabi?</div>
-    <div>Cummunity</div>
-    <div>Support</div>
-</div>
-<div class="container">
-    <main role="main" class="pb-3">-->
-@*@Html.DropDownList("Subcategories", ViewBag.Subcategories as IEnumerable<SelectListItem>, "Categories", new { onchange = "loadSubCategories(this)", @class = "form-control", @style = "height: 25px;padding: 0px;display:none; " })*@
-<!--@@RenderBody()
-    </main>
-</div>
-
-
-
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2021 - sabi - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-</footer>
-<script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
-<script src="~/Content/wwwroot/js/script.js" asp-append-version="true"></script>
-@@RenderSection("Scripts", required: false)-->
-@*Modal start*@
-
-<!--<div class="modal fade " id="GoogleMapsModal">
-    <div class="modal-dialog" style="max-width:80%">
-        <div class="modal-content">-->
-<!--Header-->
-<!--<div class="modal-header" style="background: #130347;">
-                <h4 class="title" style="color:white;">Map</h4>
-                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times" style="color:white;"></i>
-                </button>
-            </div>
-            <div class="modal-body" style="width:100%">
-                <div id="dvMap" class="card" style="width: 100%; height: 400px">
-                </div>
-            </div>
-    </div>
-</div>
-</div>
-<input type="hidden" id="Signinmodal" data-target="#MyModal" data-toggle="modal"/>
-
-<input type="hidden" id="SignInType" value=""/>
-
-<div class="modal fade " id="MyModal">
-    <div class="modal-dialog">
-        <div class="modal-content">-->
-<!--Header-->
-<!--<div class="modal-header" style="background: #130347;height: 60px;">
-                <h4 id="changeheader" class="title" style="color:white;"></h4>
-                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i class="fas fa-times" style="color:white;"></i>
-                </button>
-            </div>
-            <div style="width:100%; overflow:auto" class="ModelTrack">
-                <div class="modal-body" style="width:100%">
-                    <div style="display: block;">
-                        <a class="nav-link text-light abtn">
-                            <div class="flex1">
-                                <img src="~/Images/FacebookIcon.png" class="signinimg" />
-                                <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="facebooklogin();" />
-                            </div>
-                        </a>
-                        <a class="nav-link text-light abtn">
-                            <div class="flex1">
-                                <img src="~/Images/GoogleIcon.png" class="signinimg" />
-                                <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
-                            </div>
-                        </a>
-
-                        <input type="button"  value="Login From Sabi" onclick="location.href='Login/SabiLogin?type='+document.getElementById('SignInType').value"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
-@*Modal End*@
-
-
-@*</body>
-    </html>-->*@
-
+﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -384,6 +14,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- bootstrap css -->
+    <link rel="stylesheet" href="~/Content/wwwroot/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/Content/Template/css/bootstrap.min.css">
     <!-- style css -->
     <link rel="stylesheet" href="~/Content/Template/css/style.css">
@@ -403,19 +34,32 @@
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-
     <link href="~/Content/wwwroot/css/site.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 
     <script>
-        function openSignModal(id)
-        {
-            if (id == 1)
-            {
-               $('#changeheader').text('Sign In as Vendor');
+        var OAUTHURL = 'https://accounts.google.com/o/oauth2/auth?';
+        var VALIDURL = 'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
+        var SCOPE = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+        var CLIENTID = '797473363020-up2pqdgnus0pjauk6k4r0lpqmg7ednqd.apps.googleusercontent.com';
+        var REDIRECT = 'https://localhost:44317/Home/Index';
+        var LOGOUT = 'http://localhost:56623/Home/Index';
+        var TYPE = 'token';
+        var _url = OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
+        var acToken;
+        var tokenType;
+        var expiresIn;
+        var user;
+        var loggedIn = false;
+        function openSignModal(id) {
+            debugger;
+            $('#SignIn').click(function () { return false; });
+            if (id == 1) {
+                $('#changeheader').text('Sign In as Vendor');
                 $('#SignInType').val(1);
-            } else
-            {
+            } else {
                 $('#changeheader').text('Sign In as Buyer');
                 $('#SignInType').val(2);
             }
@@ -423,8 +67,7 @@
             $("#LoginList").show(100);
             $("#SignIn").hide(100);
         }
-        function facebooklogin()
-        {
+        function facebooklogin() {
             debugger;
 
             var fbid = document.getElementById("SignInType").value;
@@ -437,15 +80,13 @@
 
         }
 
-                function login()
-        {
-            var win = window.open(_url, "windowname1", 'width=800, height=600');
-            var pollTimer = window.setInterval(function ()
-            {
+        function login() {
+            debugger;
+            var win = window.open(_url, "windowname1", 'width=800,height=600');
+            var pollTimer = window.setInterval(function () {
                 try {
                     console.log(win.document.URL);
-                    if (win.document.URL.indexOf(REDIRECT) != -1)
-                    {
+                    if (win.document.URL.indexOf(REDIRECT) != -1) {
                         window.clearInterval(pollTimer);
                         var url = win.document.URL;
                         acToken = gup(url, 'access_token');
@@ -474,42 +115,49 @@
                 return results[1];
         }
 
-        function validateToken(token)
-        {
+        function validateToken(token) {
             getUserInfo();
             $.ajax(
                 {
                     url: VALIDURL + token,
                     data: null,
-                    success: function (responseText)
-                    {
+                    success: function (responseText) {
 
                     },
                 });
         }
 
-        function getUserInfo()
-        {
+        function getUserInfo() {
             debugger;
             $.ajax({
                 url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
                 data: null,
-                success: function (resp)
-                {
+                success: function (resp) {
                     debugger;
                     user = resp;
                     console.log(user);
                     $('#uname').html('Welcome ' + user.name);
                     $('#uemail').html('Email: ' + user.email)
                     $('#imgHolder').attr('src', user.picture);
-
-
                     $('#profileImg').attr('src', user.picture);
                     $('#profilebtn').attr('src', user.picture);
-                },
-            }),
-                $.ajax({
+                    $("#UserPassword").val("");
+                    $("#openUserPassordModal").trigger("click");
+                }
+            });
 
+        }
+
+        function SaveUserInfo() {
+            debugger;
+            //LayoutSub
+            var password = document.getElementById('UserPassword').value;
+            if (password == "") {
+                alert("Please enter Password.");
+                return;
+            }
+            else {
+                $.ajax({
                     url: '/Login/GoogleLogin/',
                     type: 'POST',
                     data: {
@@ -519,16 +167,25 @@
                         lastname: user.lastname,
                         location: user.location,
                         id: document.getElementById('SignInType').value,
+                        password: document.getElementById('UserPassword').value
                     },
-                    success: function ()
-                    {
+                    success: function (data) {
                         debugger;
-                        window.location.href = "/Home/Index/";
+                        if (data == "success") {
+                            alert("User added successfully.");
+                            window.location.href = "/Home/Index/";
+                        }
+                        else {
+                            alert("User already exist.");
+                            return;
+                        }
                     },
-
-                    //dataType: "jsonp"
-
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
                 });
+            }
         }
 
         function ShowAllItems() {
@@ -541,10 +198,10 @@
                     var html = '';
                     $(responce).each(function (index, value) {
                         debugger;
-                        html += '<div class="col-sm-4" onclick="buy(' + value["id"] +');">'
+                        html += '<div class="col-sm-4" onclick="buy(' + value[" id"] + ');">'
                             + '<div class="best_shoes">'
                             + '<p class="best_text">' + value["name"] + '</p>'
-                            + '<div class="shoes_icon"><img src=' + value["image"] + '/></div>'
+                            + '<div class="shoes_icon"><img src=' + value["image"] + ' /></div>'
                             + '<div class="star_text">'
                             + '<div class="left_part">'
                             + '<ul>'
@@ -615,16 +272,16 @@
                                     </div>
                                 </a>
                                 <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>
-                                <a id="SignInbtn" class="nav-item nav-link">
+                                <a id="SignInbtn" class="nav-item nav-link" style="cursor:pointer;">
                                     Sign In
-                                    <div id="SignIn" style="display:none;" class="dropdownStyle">
+                                    <div id="SignIn" style="display:none;z-index:1" class="dropdownStyle">
                                         <ul>
                                             <li onclick="openSignModal(1)">Sign In as Vendor</li>
                                             <li onclick="openSignModal(2)">Sign In as Buyer</li>
                                         </ul>
                                     </div>
 
-                                    <div id="LoginList" style="display:none;" class="dropdownStyle">
+                                    <div id="LoginList" style="display:none;z-index:1" class="dropdownStyle">
                                         <ul>
                                             <li onclick="login()">
                                                 <div class="flex1">
@@ -643,7 +300,7 @@
                                 </a>
                                 @*<a class="nav-item nav-link" href="contact.html">Contact</a>*@
                                 <a class="nav-item nav-link last" href="#"><img src="~/Content/Template/images/search_icon.png"></a>
-                             
+
 
                                 <a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>
                                 <a class="nav-item nav-link last">
@@ -899,26 +556,61 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="openUserPassordModal" data-target="#userPasswordBootstrapModal" data-toggle="modal" />
+    @*user strat*@
+    <div class="modal fade " id="userPasswordBootstrapModal">
+        <div class="modal-dialog w-user-modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                    <h4 class="title" style="color:white;">Create Password</h4>
 
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="UserPasswordDiv">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <label>Password :</label>
+                                    <input type="password" class="form-control" id="UserPassword" name="UserPassword" required />
+                                </div>
+                            </div>
+
+                            <input type="button" class="btn btn-info" value="Add" onclick="SaveUserInfo();" style="float:right;margin:10px 0;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*user end*@
     @*Modal End*@
 
     <!-- Javascript files-->
-    <script src="~/Content/Template/js/jquery.min.js"></script>
+    <!--<script src="~/Content/Template/js/jquery.min.js"></script>
     <script src="~/Content/Template/js/popper.min.js"></script>
     <script src="~/Content/Template/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/Template/js/jquery-3.0.0.min.js"></script>
-    <script src="~/Content/Template/js/plugin.js"></script>
+    <script src="~/Content/Template/js/plugin.js"></script>-->
     <!-- sidebar -->
-    <script src="~/Content/Template/js/jquery.mCustomScrollbar.concat.min.js"></script>
-    <script src="~/Content/Template/js/custom.js"></script>
+    <!--<script src="~/Content/Template/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Content/Template/js/custom.js"></script>-->
     <!-- javascript -->
-    <script src="~/Content/Template/js/owl.carousel.js"></script>
-    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-    <script>
-        $(document).ready(function ()
-        {
+    <!--<script src="~/Content/Template/js/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
 
-            $(".fancybox").fancybox({
+    <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
+    <script src="~/Content/wwwroot/js/script.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+
+           @* $(".fancybox").fancybox({
                 openEffect: "none",
                 closeEffect: "none"
             });
@@ -946,13 +638,9 @@
                 $(".carousel").on("touchend", function () {
                     $(this).off("touchmove");
                 });
-            });
-        }
+            });*@
+        });
     </script>
-
-    <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
-    <script src="~/Content/wwwroot/js/script.js" asp-append-version="true"></script>
 </body>
 </html>
 

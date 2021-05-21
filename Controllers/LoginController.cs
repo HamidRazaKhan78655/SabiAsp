@@ -65,22 +65,22 @@ namespace SabiAsp.Controllers
         }
 
         [HttpPost]
-        public string  GoogleLogin(string email, string name, string gender, string lastname, string location,int id)
+        public string  GoogleLogin(string email, string name, string gender, string lastname, string location,int id, string password)
         {
             try
             {
+                vendor v = new vendor();
+                user u = new user();
                 if (id==1)
                 {
                     //vendor
-                    vendor v = new vendor();
-                    user u = new user();
-                    //v.vendorid = 6;
-                    var User = Db.users.Where(x => x.username.ToLower() == name.ToLower()).FirstOrDefault();
+                    var User = Db.users.Where(x => x.username.ToLower() == email.ToLower() && x.EmailAddress == email.ToLower() && x.isDeleted != "true").FirstOrDefault();
                     if (User == null)
                     {
-                        u.name = name; //firstname + " " + lastname
-                        u.username = name;
-                        u.password = email;
+                        u.name = name;
+                        u.username = email;
+                        u.password = Encryption.Encrypto.EncryptString(password.Trim());
+                        u.EmailAddress = email;
                         u.RoleID = 3;
                         u.RoleType = "Vendor";
                         u.isDeleted = "false";
@@ -95,24 +95,69 @@ namespace SabiAsp.Controllers
                         v.CreatedDate = DateTime.Now;
                         Db.vendors.Add(v);
                         Db.SaveChanges();
-                    }
 
-                    return "Ok";
+                        Shop s = new Shop();
+                        s.vendorid = v.vendorid;
+                        if (name.Contains("'"))
+                            s.shopname = name + " " + "Shop";
+                        else
+                            s.shopname = name + "'" + " " + "Shop";
+
+                        s.isDeleted = "false";
+                        s.CreatedBy = 1;
+                        s.CreatedDate = DateTime.Now;
+                        Db.Shops.Add(s);
+                        Db.SaveChanges();
+
+                        Session["UserId"] = u.UserId.ToString();
+                        Session["Username"] = email;
+                        Session["Name"] = name;
+                        Session["RoleType"] = "Vendor";
+                        Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
+                        Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
+
+                        return "success";
+                    }
+                    return "error";
                 }
                 else if (id==2)
                 {
                     //Buyer
-                    return "Ok";
+                    var User = Db.users.Where(x => x.username.ToLower() == email.ToLower() && x.EmailAddress == email.ToLower() && x.isDeleted != "true").FirstOrDefault();
+                    if (User == null)
+                    {
+                        u.name = name;
+                        u.username = email;
+                        u.EmailAddress = email;
+                        u.password = Encryption.Encrypto.EncryptString(password.Trim());
+                        u.RoleID = 2;
+                        u.RoleType = "User";
+                        u.isDeleted = "false";
+                        u.CreatedBy = 1;
+                        u.CreatedDate = DateTime.Now;
+                        Db.users.Add(u);
+                        Db.SaveChanges();
+
+                        Session["UserId"] = u.UserId.ToString();
+                        Session["Username"] = email;
+                        Session["Name"] = name;
+                        Session["RoleType"] = "User";
+                        Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
+                        Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
+
+                        return "success";
+                    }
+                    return "error";
                 }
-                return "";
+                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-               
+                return "error";
             }
 
-            return "";
+            return "error";
         }
 
 
