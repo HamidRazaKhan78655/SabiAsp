@@ -3,7 +3,7 @@
 }
 
     <!-- new collection section start -->
-<script>
+<!--<script>
     function SortListChange(obj)
     {
         debugger;
@@ -16,7 +16,7 @@
                 var html = '';
                 $(responce).each(function (index, value)
                 {
-                    debugger;
+                    debugger;-->
                   @*  html += '<div onclick="buy(' + value["id"] + ');"  class="col-sm-3 cardstyle" id=' + value["id"] + '>'
                         + '<table>'
                         + '<tr><td style="padding-left: 50px;"><img src=' + value["image"] + '/></td></tr>'
@@ -25,7 +25,7 @@
                         + '<tr><td>Price : </td><td>' + value["price"] + '</td></tr>'
                         + '</table></div>'*@
 
-                    html += '<div class="col-sm-4">'
+                    <!--html += '<div class="col-sm-4">'
                         + '<div class="best_shoes">'
                         + '<p class="best_text">' + value["name"] + '</p>'
                         + '<div class="shoes_icon"><img src=' + value["image"] + '/></div>'
@@ -50,7 +50,7 @@
             }
         });
     }
-</script>
+</script>-->
 @*<div class="layout_padding collection_section">
     <div class="container">
         <h1 class="new_text"><strong>New  Collection</strong></h1>
@@ -128,7 +128,7 @@
 
 
 
-<div class="layout_padding gallery_section">
+@*<div class="layout_padding gallery_section">
     <div class="container">
         <div>
             <span style="color:white;font-size:large;">Sort By :</span>
@@ -143,7 +143,7 @@
 
         </div>
     </div>
-</div>
+</div>*@
 <div>
     @*@Html.ActionLink("Login with facebook", "Facebook", "Home")*@
     <table>
