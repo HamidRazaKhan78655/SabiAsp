@@ -331,6 +331,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\FacebookIcon.png" />
     <Content Include="Images\GoogleIcon.png" />
+    <Content Include="Images\loginSabi.png" />
+    <Content Include="Images\MainSabilogo.png" />
     <Content Include="Images\noimage.jpg" />
     <Content Include="Models\sabiShop.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -30,6 +30,24 @@ $(document).ready(function ()
        // $("#SignIn").slideToggle();
     });
 
+    var categoriesFlag2 = 0;
+    $("#Aboutbtn").click(function ()
+    {
+        
+        debugger;
+        if (categoriesFlag2 == 0)
+        {
+            $("#About").show(100);
+            categoriesFlag2 = 1;
+
+        } else
+        {
+            categoriesFlag2 = 0
+            $("#About").hide(100);
+        }
+       // $("#SignIn").slideToggle();
+    });
+
     $("#profilebtn").click(function ()
     {
         debugger;
@@ -67,7 +85,7 @@ $(document).ready(function ()
                         +'<div class="star_text">'
                             +'<div class="left_part">'
                                 +'<ul>'
-                                    +'<li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>'
+                                    +'<li><a href="#"><img src="/Content/Template/images/star-icon.png"/></a></li>'
                                     +'<li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>'
                                     +'<li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>'
                                     +'<li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>'

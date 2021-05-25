@@ -209,11 +209,11 @@
                             + '<div class="star_text">'
                             + '<div class="left_part">'
                             + '<ul>'
-                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
-                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
-                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
-                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
-                            + '<li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>'
+                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
+                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
+                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
+                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
+                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
                             + '</ul>'
                             + '</div>'
                             + '<div class="right_part">'
@@ -254,10 +254,15 @@
     <div class="header_section header_main">
         <div class="container">
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="logo"><a href="#"><img src="~/Content/Template/images/logo.png"></a></div>
+                <div class="col-sm-2">
+                    <div class="logo">
+                        <a href="/Home/Index">
+                            @*  <img src="~/Content/Template/images/logo.png">*@
+                            <img src="~/Images/MainSabilogo.png" style=" width: 100px; height: 100px;" />
+                        </a>
+                    </div>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-10">
                     <nav class="navbar navbar-expand-lg navbar-light bg-light">
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -265,6 +270,17 @@
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav">
                                 <a class="nav-item nav-link" href="/Home/Index">Home</a>
+                                <a class="nav-item nav-link" id="Aboutbtn">
+                                    About Us<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
+                                    <div id="About" style="display:none;" class="dropdownStyle">
+                                        <ul>
+                                            <li>Our story</li>
+                                            <li>Why sabi?</li>
+                                            <li>community</li>
+                                        </ul>
+                                    </div>
+
+                                </a>
                                 <a class="nav-item nav-link" id="Categories" style="cursor:pointer">
                                     Categories<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
                                     <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
@@ -275,7 +291,9 @@
                                         <div onclick="loadCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
                                     </div>
                                 </a>
+                                <a class="nav-item nav-link last" href="#"><img src="~/Content/Template/images/search_icon.png"></a>
                                 <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>
+                                <a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>
                                 <a id="SignInbtn" class="nav-item nav-link" style="cursor:pointer;">
                                     Sign In
                                     <div id="SignIn" style="display:none;" class="dropdownStyle">
@@ -285,8 +303,13 @@
                                         </ul>
                                     </div>
                                 </a>
-
+                                <style>
+                                    .flex1 {
+                                        justify-content: normal !important;
+                                    }
+                                </style>
                                 <div id="LoginList" style="display:none;left: 50%;top: 60px;" class="dropdownStyle">
+                                    <i class="fas fa-times" style=" float: right; padding: 5px;" onclick="$('#LoginList').hide()"></i>
                                     <ul>
                                         <li onclick="login()">
                                             <div class="flex1">
@@ -300,14 +323,19 @@
                                                 <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" />
                                             </div>
                                         </li>
+                                        <li onclick="loginWithSabi();">
+                                            <div class="flex1">
+                                                <img src="~/Images/loginSabi.png" class="signinimg" />
+                                                <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Sabi" type="button" />
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                                 @*<a class="nav-item nav-link" href="contact.html">Contact</a>*@
-                                <a class="nav-item nav-link last" href="#"><img src="~/Content/Template/images/search_icon.png"></a>
-                                <a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>
+
                                 <a class="nav-item nav-link last">
-                                    <img src="~/Images/noimage.jpg" style=" height: 30px; width: 30px; border-radius: 15px;" id="profilebtn" />
-                                    <div id="profile" class="dropdownStyle" style=" right: 5px; width: 360px; padding-bottom: 5px; padding-right: 5px; display: none;">
+                                    <img src="~/Images/noimage.jpg" style=" height: 30px; width: 30px;" id="profilebtn" />
+                                    <div id="profile" class="dropdownStyle" style="z-index: 1; right: 5px; width: 360px; padding-bottom: 5px; padding-right: 5px; display: none;">
                                         <div class="container-fluid">
                                             <div class="row">
                                                 <div class="col-sm-12" style="text-align:center">
