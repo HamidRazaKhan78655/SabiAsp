@@ -85,7 +85,7 @@ $(document).ready(function ()
                         +'<div class="star_text">'
                             +'<div class="left_part">'
                                 +'<ul>'
-                                    +'<li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>'
+                                    +'<li><a href="#"><img src="/Content/Template/images/star-icon.png"/></a></li>'
                                     +'<li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>'
                                     +'<li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>'
                                     +'<li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>'
