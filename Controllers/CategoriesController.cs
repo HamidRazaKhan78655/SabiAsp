@@ -1,6 +1,7 @@
 ﻿using SabiAsp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -67,6 +68,69 @@ namespace SabiAsp.Controllers
             ViewBag.items = items;
             return View();
         }
+
+        #region CRUD Category
+        public ActionResult GetAllCategories()
+        {
+            var category = Db.Categories.Where(x => x.isDeleted != "true").ToList();
+            return PartialView(category);
+        }
+        public string AddCategory(FormCollection fm)
+        {
+            string categoryName = fm["CategoryName"].ToString();
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+
+            var category = Db.Categories.Where(x => x.CategoryName.ToLower() == categoryName.ToLower() && x.isDeleted != "true").FirstOrDefault();
+            if (category == null)
+            {
+                Category c = new Category();
+                c.CategoryName = categoryName;
+                c.CreatedBy = logedinUserId;
+                c.CreatedDate = DateTime.Now;
+                c.isDeleted = "false";
+                Db.Categories.Add(c);
+                Db.SaveChanges();
+                return "success";
+            }
+            return "error";
+        }
+        public string UpdateCategory(FormCollection fm)
+        {
+            string categoryName = fm["UpdateCategoryName"].ToString();
+            string updateCategoryId = fm["UpdateCategoryId"].ToString();
+            int categoryId = int.Parse(updateCategoryId);
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+
+            var category = Db.Categories.Where(x => x.CategoryId == categoryId).FirstOrDefault();
+            if (category != null)
+            {
+                category.CategoryName = categoryName;
+                category.ModifiedBy = logedinUserId;
+                category.ModifiedDate = DateTime.Now;
+                category.isDeleted = "false";
+                Db.Entry(category).State = EntityState.Modified;
+                Db.SaveChanges();
+                return "success";
+            }
+            return "error";
+        }
+        public string DeleteCategory(string categoryId)
+        {
+            int cId = int.Parse(categoryId);
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+            var category = Db.Categories.Where(x => x.CategoryId == cId).FirstOrDefault();
+            if (category != null)
+            {
+                category.ModifiedBy = logedinUserId;
+                category.ModifiedDate = DateTime.Now;
+                category.isDeleted = "true";
+                Db.Entry(category).State = EntityState.Modified;
+                Db.SaveChanges();
+                return "success";
+            }
+            return "error";
+        }
+        #endregion
         // Post: Categories
     }
 }

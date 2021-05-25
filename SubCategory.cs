@@ -7,42 +7,33 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SabiAsp.Models
+namespace SabiAsp
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class user
+    public partial class SubCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public user()
+        public SubCategory()
         {
-            this.vendors = new HashSet<vendor>();
+            this.items = new HashSet<item>();
         }
     
-        public int UserId { get; set; }
-        public Nullable<int> RoleID { get; set; }
-        public string name { get; set; }
-        public string EmailAddress { get; set; }
-        public string username { get; set; }
-        public string password { get; set; }
-        public string Contact { get; set; }
-        public string Address { get; set; }
+        public int SubCategorieId { get; set; }
+        public Nullable<int> CategoryId { get; set; }
         public string image { get; set; }
-        public string RoleType { get; set; }
-        public string location { get; set; }
-        public string itemsBuyed { get; set; }
-        public string lastLogin { get; set; }
+        public string name { get; set; }
         public string isDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string SocialLoginType { get; set; }
-        public string ShopName { get; set; }
+        public Nullable<int> shopid { get; set; }
     
-        public virtual Role Role { get; set; }
+        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<vendor> vendors { get; set; }
+        public virtual ICollection<item> items { get; set; }
+        public virtual Shop Shop { get; set; }
     }
 }

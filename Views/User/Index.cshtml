@@ -29,69 +29,224 @@
             <h2>Users</h2>
             <div>
                 <div class="w-margin-bottom-10 w-height-35">
-                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add User" data-target="#userBootstrapModal" data-toggle="modal" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add User" id="addUsersBtn" data-target="#userBootstrapModal" data-toggle="modal" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Category" id="addCategoryBtn" data-target="#userBootstrapModal" data-toggle="modal" style="display:none;" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Sub Category" id="addSubCategoryBtn" data-target="#userBootstrapModal" data-toggle="modal" style="display:none;" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Items" id="addItemBtn" data-target="#userBootstrapModal" data-toggle="modal" style="display:none;" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchName" onkeyup="SearchUsersByName();" />
-                    <select class="form-control w-width-200 w-pull-right" id="filterByType" onchange="FilterByRoleType();">
-                        <option value="">All</option>
+                    <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchSubCategoryName" onkeyup="SearchSubCategoryByName();" style="display:none;" />
+                    <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchItemName" onkeyup="SearchItemsByName();" style="display:none;" />
+                    <select class="form-control w-width-200 w-pull-right w-margin-left-10" id="filterUserByType" onchange="FilterByRoleType();">
+                        <option value="All">All</option>
                         <option value="Admin">Admin</option>
                         <option value="User">User</option>
                         <option value="Vendor">Vendor</option>
                     </select>
+                    <select class="form-control w-width-200 w-pull-right" id="filterByType" onchange="GetData();">
+                        <option value="Users">Users</option>
+                        <option value="Category">Category</option>
+                        <option value="SubCategory">Sub Category</option>
+                        <option value="Items">Items</option>
+                    </select>
                 </div>
-                <table class="table table-hover">
-                    <thead class="w-thead-bg">
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact</th>
-                            <th>Username</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="filterUser">
-                        @{
-                            if (ViewBag.Users.Count > 0)
-                            {
-                                foreach (var user in ViewBag.Users)
+                <div id="usersData">
+                    <table class="table table-hover">
+                        <thead class="w-thead-bg">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Username</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Shop Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filterUser">
+                            @{
+                                if (ViewBag.Users.Count > 0)
+                                {
+                                    foreach (var user in ViewBag.Users)
+                                    {
+                                        <tr>
+                                            <td>@user.UserId</td>
+                                            <td>@user.name</td>
+                                            <td>@user.EmailAddress</td>
+                                            <td>@user.Contact</td>
+                                            <td>@user.username</td>
+                                            <td id="FilterRoleType">@user.RoleType</td>
+                                            <td>
+                                                @if (user.isDeleted == "true")
+                                                {
+                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (user.ShopName == "NA")
+                                                {
+                                                    @user.ShopName
+                                                }
+                                                else
+                                                {
+                                                    <a class="ShopName" onclick="GetCategoryData(@user.UserId);">@user.ShopName</a>
+                                                }
+                                            </td>
+                                            <td>
+                                                <input type="button" id="editUser" value="Edit" onclick="UpdateUser(@user.UserId, '@user.name', '@user.EmailAddress', '@user.Contact', '@user.username', '@user.RoleID', '@user.Address');" />
+                                                <input type="button" id="deleteUser" value="Delete" onclick="DeleteUser(@user.UserId);" />
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
                                 {
                                     <tr>
-                                        <td>@user.UserId</td>
-                                        <td>@user.name</td>
-                                        <td>@user.EmailAddress</td>
-                                        <td>@user.Contact</td>
-                                        <td>@user.username</td>
-                                        <td id="FilterRoleType">@user.RoleType</td>
-                                        <td>
-                                            @if (user.isDeleted == "true")
-                                            {
-                                                <i class="fa fa-times" aria-hidden="true"></i>
-                                            }
-                                            else
-                                            {
-                                                <i class="fa fa-check" aria-hidden="true"></i>
-                                            }
-                                        </td>
-                                        <td>
-                                            <input type="button" id="editUser" value="Edit" onclick="UpdateUser(@user.UserId, '@user.name', '@user.EmailAddress', '@user.Contact', '@user.username', '@user.RoleID', '@user.Address');" />
-                                            <input type="button" id="deleteUser" value="Delete" onclick="DeleteUser(@user.UserId);" />
+                                        <td colspan="7">
+                                            <div class="w-empty-list">Record Not Found</div>
                                         </td>
                                     </tr>
                                 }
                             }
-                            else
-                            {
-                                <tr>
-                                    <td colspan="7">
-                                        <div class="w-empty-list">Record Not Found</div>
-                                    </td>
-                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="categoryData" style="display:none;">
+                    <table class="table table-hover">
+                        <thead class="w-thead-bg">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filterCategory">
+                            @{
+                                if (ViewBag.Categories.Count > 0)
+                                {
+                                    foreach (var category in ViewBag.Categories)
+                                    {
+                                        <tr>
+                                            <td>@category.CategoryId</td>
+                                            <td>@category.CategoryName</td>
+                                            <td>@category.CreatedDate</td>
+                                            <td>
+                                                <input type="button" id="viewSubCategory" value="View Sub Category" onclick="ViewSubCategory(@category.CategoryId);" />
+                                                <input type="button" id="editCategory" value="Edit" onclick="GetUpdateCategory(@category.CategoryId, '@category.CategoryName');" />
+                                                <input type="button" id="deleteCategory" value="Delete" onclick="DeleteCategory(@category.CategoryId);" />
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4">
+                                            <div class="w-empty-list">Record Not Found</div>
+                                        </td>
+                                    </tr>
+                                }
                             }
-                        }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="subCategoryData" style="display:none;">
+                    <table class="table table-hover">
+                        <thead class="w-thead-bg">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filterSubCategory">
+                            @{
+                                if (ViewBag.SubCategories.Count > 0)
+                                {
+                                    foreach (var subCategory in ViewBag.SubCategories)
+                                    {
+                                        <tr>
+                                            <td>@subCategory.SubCategorieId</td>
+                                            <td>@subCategory.name</td>
+                                            <td>@subCategory.image</td>
+                                            <td>@subCategory.CreatedDate</td>
+                                            <td>
+                                                <input type="button" id="viewItems" value="View Items" onclick="ViewItems(@subCategory.SubCategorieId);" />
+                                                <input type="button" id="editSubCategory" value="Edit" onclick="UpdateSubCategory(@subCategory.SubCategorieId, '@subCategory.name', '@subCategory.image');" />
+                                                <input type="button" id="deleteSubCategory" value="Delete" onclick="DeleteSubCategory(@subCategory.SubCategorieId);" />
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="w-empty-list">Record Not Found</div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="ItemsData" style="display:none;">
+                    <table class="table table-hover">
+                        <thead class="w-thead-bg">
+                            <tr>
+                                <th>Id</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Weight</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filterItems">
+                            @{
+                                if (ViewBag.Items.Count > 0)
+                                {
+                                    foreach (var item in ViewBag.Items)
+                                    {
+                                        <tr>
+                                            <td>@item.SubCategorieId</td>
+                                            <td>@item.image</td>
+                                            <td>@item.name</td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Weight</td>
+                                            <td>@item.CreatedDate</td>
+                                            <td>
+                                                <input type="button" id="editItem" value="Edit" onclick="UpdateItem(@item.SubCategorieId, '@item.name', '@item.image', '@item.Price', '@item.Weight');" />
+                                                <input type="button" id="deleteItem" value="Delete" onclick="DeleteItem(@item.SubCategorieId);" />
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="7">
+                                            <div class="w-empty-list">Record Not Found</div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
 
@@ -399,15 +554,211 @@
                 });
             }
 
-            function FilterByRoleType() {
+            function SearchSubCategoryByName() {
                 debugger;
-                var name = document.getElementById("filterByType").value;
+                var name = document.getElementById("searchSubCategoryName").value;
                 name = name.toLowerCase();
-                $("#filterUser tr").filter(function () {
+                $("#filterSubCategory tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(name) > -1)
                 });
             }
 
+            function SearchItemsByName() {
+                debugger;
+                var name = document.getElementById("searchItemName").value;
+                name = name.toLowerCase();
+                $("#filterItems tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(name) > -1)
+                });
+            }
+
+            function FilterByRoleType() {
+                debugger;
+                var type = document.getElementById("filterUserByType").value;
+                $.ajax({
+                    type: "GET",
+                    url: '/User/GetUsersByType?type=' + type,
+                    success: function (response) {
+                        debugger;
+                        $("#filterUser").html(response);
+                    }
+                });
+            }
+
+            function GetData() {
+                debugger;
+                //User/Index
+                var name = document.getElementById("filterByType").value;
+                if (name == "Users") {
+                    $("#usersData").show();
+                    $("#categoryData").hide();
+                    $("#subCategoryData").hide();
+                    $("#ItemsData").hide();
+                    $("#filterUserByType").show();
+                    $("#searchName").show();
+                    $("#searchSubCategoryName").hide();
+                    $("#searchItemName").hide();
+                    $("#addUsersBtn").show();
+                    $("#addCategoryBtn").hide();
+                    $("#addSubCategoryBtn").hide();
+                    $("#addItemBtn").hide();
+
+                }
+                else if (name == "Category") {
+                    $("#usersData").hide();
+                    $("#categoryData").show();
+                    $("#subCategoryData").hide();
+                    $("#ItemsData").hide();
+                    $("#filterUserByType").hide();
+                    $("#searchName").hide();
+                    $("#searchSubCategoryName").hide();
+                    $("#searchItemName").hide();
+                    $("#addUsersBtn").hide();
+                    $("#addCategoryBtn").show();
+                    $("#addSubCategoryBtn").hide();
+                    $("#addItemBtn").hide();
+                }
+                else if (name == "SubCategory") {
+                    $("#usersData").hide();
+                    $("#categoryData").hide();
+                    $("#subCategoryData").show();
+                    $("#ItemsData").hide();
+                    $("#filterUserByType").hide();
+                    $("#searchName").hide();
+                    $("#searchSubCategoryName").show();
+                    $("#searchItemName").hide();
+                    $("#addUsersBtn").hide();
+                    $("#addCategoryBtn").hide();
+                    $("#addSubCategoryBtn").show();
+                    $("#addItemBtn").hide();
+                }
+                else {
+                    $("#usersData").hide();
+                    $("#categoryData").hide();
+                    $("#subCategoryData").hide();
+                    $("#ItemsData").show();
+                    $("#filterUserByType").hide();
+                    $("#searchName").hide();
+                    $("#searchSubCategoryName").hide();
+                    $("#searchItemName").show();
+                    $("#addUsersBtn").hide();
+                    $("#addCategoryBtn").hide();
+                    $("#addSubCategoryBtn").hide();
+                    $("#addItemBtn").show();
+                }
+            }
+
+        </script>
+
+        <script>
+            function GetUpdateCategory(categoryId, name) {
+                debugger;
+                $("#UpdateCategoryId").val(categoryId);
+                $("#UpdateCategoryName").val(name);
+                $("#openUpdateCategoryModal").trigger("click");
+            }
+
+            function DeleteCategory(categoryId) {
+                location.href = '../Categories/DeleteCategory?categoryId=' + categoryId;
+            }
+
+            function SaveCategoryData() {
+                debugger;
+                //User/Index
+                if (document.getElementById('FirstName').value == "") {
+                    alert("Please enter First Name.");
+                    return;
+                }
+                if (document.getElementById('LastName').value == "") {
+                    alert("Please enter Last Name.");
+                    return;
+                }
+                if (document.getElementById('EmailAddress').value == "") {
+                    alert("Please enter Email Address.");
+                    return;
+                }
+                if (document.getElementById('Username').value == "") {
+                    alert("Please enter Username.");
+                    return;
+                }
+                if (document.getElementById('Password').value == "") {
+                    alert("Please enter Password.");
+                    return;
+                }
+                if (document.getElementById('RoleType').value == "") {
+                    alert("Select one Type.");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    async: "true",
+                    data: $("#addUserForm").serialize(),
+                    url: "/Categories/AddCategory",
+                    contenttype: 'application/html; charset=utf-8',
+                    datatype: 'html',
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("User added successfully.");
+                            window.location.reload();
+                        }
+                        else {
+                            alert("User already exist.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+            }
+
+            function UpdateCategoryData() {
+                debugger;
+                //User/Index
+                if (document.getElementById('UpdateUserName').value == "") {
+                    alert("Please enter Name.");
+                    return;
+                }
+                if (document.getElementById('UpdateUserEmailAddress').value == "") {
+                    alert("Please enter Email Address.");
+                    return;
+                }
+                if (document.getElementById('UpdateUserUsername').value == "") {
+                    alert("Please enter Username.");
+                    return;
+                }
+                if (document.getElementById('UpdateRoleType').value == "") {
+                    alert("Select one Type.");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    async: "true",
+                    data: $("#updateUserForm").serialize(),
+                    url: "/Categories/UpdateCategory",
+                    contenttype: 'application/html; charset=utf-8',
+                    datatype: 'html',
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("User updated successfully.");
+                            window.location.reload();
+                        }
+                        else {
+                            alert("Record not updated.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+            }
         </script>
 
 

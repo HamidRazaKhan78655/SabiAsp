@@ -156,6 +156,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Encryption\Encrypto.cs" />
@@ -476,11 +477,13 @@
     <Content Include="Views\Shared\LayoutSub.cshtml" />
     <Content Include="Views\Categories\getItemsByCategories.cshtml" />
     <Content Include="Views\Vendor\GetAllVendor.cshtml" />
+    <Content Include="Views\User\GetUsersByType.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CompanyImages\" />
     <Folder Include="Views\Items\" />
+    <Folder Include="Views\SubCategory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

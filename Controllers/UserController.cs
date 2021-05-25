@@ -15,6 +15,9 @@ namespace SabiAsp.Controllers
         public ActionResult Index()
         {
             ViewBag.Users = Db.users.ToList();
+            ViewBag.Categories = Db.Categories.Where(x=> x.isDeleted != "true").ToList();
+            ViewBag.SubCategories = Db.SubCategories.Where(x => x.isDeleted != "true").ToList();
+            ViewBag.Items = Db.items.Where(x => x.isDeleted != "true").ToList();
             return View();
         }
 
@@ -151,6 +154,21 @@ namespace SabiAsp.Controllers
                 Db.SaveChanges();
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult GetUsersByType(string type)
+        {
+            var users = new List<user>();
+            if (type == "All")
+                users = Db.users.ToList();
+            else
+                users = Db.users.Where(u=> u.RoleType == type).ToList();
+
+            if (users.Count == 0)
+            {
+                users = new List<user>();
+            }
+            return PartialView("GetUsersByType", users);
         }
     }
 }
