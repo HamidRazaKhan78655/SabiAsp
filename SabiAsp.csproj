@@ -480,6 +480,7 @@
     <Content Include="Views\Categories\getItemsByCategories.cshtml" />
     <Content Include="Views\Vendor\GetAllVendor.cshtml" />
     <Content Include="Views\User\GetUsersByType.cshtml" />
+    <Content Include="Views\Categories\GetCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

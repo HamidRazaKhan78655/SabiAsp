@@ -30,9 +30,9 @@
             <div>
                 <div class="w-margin-bottom-10 w-height-35">
                     <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add User" id="addUsersBtn" data-target="#userBootstrapModal" data-toggle="modal" />
-                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Category" id="addCategoryBtn" data-target="#userBootstrapModal" data-toggle="modal" style="display:none;" />
-                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Sub Category" id="addSubCategoryBtn" data-target="#userBootstrapModal" data-toggle="modal" style="display:none;" />
-                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Items" id="addItemBtn" data-target="#userBootstrapModal" data-toggle="modal" style="display:none;" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Category" id="addCategoryBtn" data-target="#categoryBootstrapModal" data-toggle="modal" style="display:none;" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Sub Category" id="addSubCategoryBtn" data-target="#subCategoryBootstrapModal" data-toggle="modal" style="display:none;" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Items" id="addItemBtn" data-target="#itemBootstrapModal" data-toggle="modal" style="display:none;" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchName" onkeyup="SearchUsersByName();" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchSubCategoryName" onkeyup="SearchSubCategoryByName();" style="display:none;" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchItemName" onkeyup="SearchItemsByName();" style="display:none;" />
@@ -392,6 +392,96 @@
             }
         </div>
 
+        @* add/update category start*@
+    <div id="addCategory">
+        @{
+            using (Html.BeginForm("AddCategory", "Categories", FormMethod.Post, new { id = "addCategoryForm" }))
+            {
+
+                @*category strat*@
+                <div class="modal fade " id="categoryBootstrapModal">
+                    <div class="modal-dialog w-category-modal-dialog">
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                <h4 class="title" style="color:white;">Add Category</h4>
+
+                                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times" style="color:white;"></i>
+                                </button>
+                            </div>
+                            <div style="width:100%; overflow:auto" class="ModelTrack">
+                                <div class="modal-body" style="width:100%">
+                                    <div id="CategoryDiv">
+                                        <div class="row">
+
+                                            <div class="col-md-12">
+                                                <label>Category Name :</label>
+                                                <input type="text" class="form-control" id="CategoryName" name="CategoryName" required />
+                                            </div>
+                                        </div>
+
+                                        <input type="button" class="btn btn-info" value="Add" onclick="SaveCategoryData();" style="float:right;margin:10px 0;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*category end*@
+
+
+            }
+        }
+    </div>
+
+        <input type="hidden" id="openCategoryModal" data-target="#updateCategoryBootstrapModal" data-toggle="modal" />
+
+        <div id="editCategory">
+            @{
+                using (Html.BeginForm("UpdateCategory", "Categories", FormMethod.Post, new { id = "updateCategoryForm" }))
+                {
+                    @*category strat*@
+                    <div class="modal fade " id="updateCategoryBootstrapModal">
+                        <div class="modal-dialog w-category-modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                    <h4 class="title" style="color:white;">Update Category</h4>
+
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times" style="color:white;"></i>
+                                    </button>
+                                </div>
+                                <div style="width:100%; overflow:auto" class="ModelTrack">
+                                    <div class="modal-body" style="width:100%">
+                                        <div id="UserDiv">
+                                            <input type="hidden" id="UpdateCategoryId" name="UpdateCategoryId" />
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label>Category Name :</label>
+                                                    <input type="text" class="form-control" id="UpdateCategoryName" name="UpdateCategoryName" />
+                                                </div>
+                                            </div>
+
+                                            <input type="button" class="btn btn-info" value="Update" onclick="UpdateCategoryData();" style="float:right;margin:10px 0;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*category end*@
+
+
+                }
+            }
+        </div>
+        @* add/update category end*@
+
+        @* add/update subcategory start*@
+        @* add/update subcategory end*@
+
         <style>
             .w-width-200 {
                 width: 200px;
@@ -651,11 +741,12 @@
         </script>
 
         <script>
+            //Category
             function GetUpdateCategory(categoryId, name) {
                 debugger;
                 $("#UpdateCategoryId").val(categoryId);
                 $("#UpdateCategoryName").val(name);
-                $("#openUpdateCategoryModal").trigger("click");
+                $("#openCategoryModal").trigger("click");
             }
 
             function DeleteCategory(categoryId) {
@@ -663,6 +754,87 @@
             }
 
             function SaveCategoryData() {
+                debugger;
+                //User/Index
+                if (document.getElementById('CategoryName').value == "") {
+                    alert("Plaese enter Category Name");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    async: "true",
+                    data: $("#addCategoryForm").serialize(),
+                    url: "/Categories/AddCategory",
+                    contenttype: 'application/html; charset=utf-8',
+                    datatype: 'html',
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("Category added successfully.");
+                            window.location.reload();
+                        }
+                        else {
+                            alert("Category already exist.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+            }
+
+            function UpdateCategoryData() {
+                debugger;
+                //User/Index
+                if (document.getElementById('CategoryName').value == "") {
+                    alert("Plaese enter Category Name");
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    async: "true",
+                    data: $("#updateCategoryForm").serialize(),
+                    url: "/Categories/UpdateCategory",
+                    contenttype: 'application/html; charset=utf-8',
+                    datatype: 'html',
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("Category updated successfully.");
+                            window.location.reload();
+                        }
+                        else {
+                            alert("Record not updated.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+            }
+        </script>
+
+        <script>
+            //Sub Category
+            function GetUpdateSubCategory(subCategoryId, categoryId, name) {
+                debugger;
+                $("#UpdateSubCategoryId").val(subCategoryId);
+                $("#UpdateCategoryId").val(categoryId);
+                $("#UpdateCategoryName").val(name);
+                $("#openUpdateCategoryModal").trigger("click");
+            }
+
+            function DeleteSubCategory(subCategoryId) {
+                location.href = '../SubCategory/DeleteSubCategory?subCategoryId=' + subCategoryId;
+            }
+
+            function SaveSubCategoryData() {
                 debugger;
                 //User/Index
                 if (document.getElementById('FirstName').value == "") {
@@ -694,17 +866,17 @@
                     type: "POST",
                     async: "true",
                     data: $("#addUserForm").serialize(),
-                    url: "/Categories/AddCategory",
+                    url: "/SubCategory/AddSubCategory",
                     contenttype: 'application/html; charset=utf-8',
                     datatype: 'html',
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("User added successfully.");
+                            alert("Sub Category added successfully.");
                             window.location.reload();
                         }
                         else {
-                            alert("User already exist.");
+                            alert("Sub Category already exist.");
                             return;
                         }
                     },
@@ -715,7 +887,7 @@
                 });
             }
 
-            function UpdateCategoryData() {
+            function UpdateSubCategoryData() {
                 debugger;
                 //User/Index
                 if (document.getElementById('UpdateUserName').value == "") {
@@ -739,13 +911,13 @@
                     type: "POST",
                     async: "true",
                     data: $("#updateUserForm").serialize(),
-                    url: "/Categories/UpdateCategory",
+                    url: "/SubCategory/UpdateSubCategory",
                     contenttype: 'application/html; charset=utf-8',
                     datatype: 'html',
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("User updated successfully.");
+                            alert("Sub Category updated successfully.");
                             window.location.reload();
                         }
                         else {
