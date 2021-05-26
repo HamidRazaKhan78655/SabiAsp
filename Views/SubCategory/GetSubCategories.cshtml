@@ -1,0 +1,25 @@
+﻿@model IList<SabiAsp.Models.SubCategory>
+
+
+@{
+
+    foreach (var sc in Model)
+    {
+    <tr>
+        <td>@sc.SubCategorieId</td>
+        <td>@sc.name</td>
+        <td>@sc.image</td>
+        <td>@sc.CreatedDate</td>
+        <td>
+            <input type="button" id="viewItems" value="View Items" onclick="ViewItems(@sc.SubCategorieId);" />
+            <input type="button" id="editSubCategory" value="Edit" onclick="GetUpdateSubCategory(@sc.SubCategorieId, @sc.CategoryId, '@sc.name');" />
+            <input type="button" id="deleteSubCategory" value="Delete" onclick="DeleteSubCategory(@sc.SubCategorieId);" />
+        </td>
+    </tr>
+    }
+
+}
+
+
+
+

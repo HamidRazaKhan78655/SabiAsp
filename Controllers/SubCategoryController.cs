@@ -22,12 +22,12 @@ namespace SabiAsp.Controllers
         {
             ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").ToList();
             var subCategory = Db.SubCategories.Where(x => x.isDeleted != "true").ToList();
-            return PartialView(subCategory);
+            return PartialView("GetSubCategories", subCategory);
         }
         public string AddSubCategory(FormCollection fm)
         {
             string subCategoryName = fm["SubCategoryName"].ToString();
-            string updateCategoryId = fm["CategoryId"].ToString();
+            string updateCategoryId = fm["CategoryDrp"].ToString();
             int categoryId = int.Parse(updateCategoryId);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
 

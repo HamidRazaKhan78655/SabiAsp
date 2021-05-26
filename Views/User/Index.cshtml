@@ -182,7 +182,7 @@
                                             <td>@subCategory.CreatedDate</td>
                                             <td>
                                                 <input type="button" id="viewItems" value="View Items" onclick="ViewItems(@subCategory.SubCategorieId);" />
-                                                <input type="button" id="editSubCategory" value="Edit" onclick="UpdateSubCategory(@subCategory.SubCategorieId, '@subCategory.name', '@subCategory.image');" />
+                                                <input type="button" id="editSubCategory" value="Edit" onclick="GetUpdateSubCategory(@subCategory.SubCategorieId, @subCategory.CategoryId, '@subCategory.name');" />
                                                 <input type="button" id="deleteSubCategory" value="Delete" onclick="DeleteSubCategory(@subCategory.SubCategorieId);" />
                                             </td>
                                         </tr>
@@ -393,47 +393,47 @@
         </div>
 
         @* add/update category start*@
-    <div id="addCategory">
-        @{
-            using (Html.BeginForm("AddCategory", "Categories", FormMethod.Post, new { id = "addCategoryForm" }))
-            {
+        <div id="addCategory">
+            @{
+                using (Html.BeginForm("AddCategory", "Categories", FormMethod.Post, new { id = "addCategoryForm" }))
+                {
 
-                @*category strat*@
-                <div class="modal fade " id="categoryBootstrapModal">
-                    <div class="modal-dialog w-category-modal-dialog">
-                        <div class="modal-content">
-                            <!--Header-->
-                            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
-                                <h4 class="title" style="color:white;">Add Category</h4>
+                    @*category strat*@
+                    <div class="modal fade " id="categoryBootstrapModal">
+                        <div class="modal-dialog w-category-modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                    <h4 class="title" style="color:white;">Add Category</h4>
 
-                                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <i class="fas fa-times" style="color:white;"></i>
-                                </button>
-                            </div>
-                            <div style="width:100%; overflow:auto" class="ModelTrack">
-                                <div class="modal-body" style="width:100%">
-                                    <div id="CategoryDiv">
-                                        <div class="row">
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times" style="color:white;"></i>
+                                    </button>
+                                </div>
+                                <div style="width:100%; overflow:auto" class="ModelTrack">
+                                    <div class="modal-body" style="width:100%">
+                                        <div id="CategoryDiv">
+                                            <div class="row">
 
-                                            <div class="col-md-12">
-                                                <label>Category Name :</label>
-                                                <input type="text" class="form-control" id="CategoryName" name="CategoryName" required />
+                                                <div class="col-md-12">
+                                                    <label>Category Name :</label>
+                                                    <input type="text" class="form-control" id="CategoryName" name="CategoryName" required />
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <input type="button" class="btn btn-info" value="Add" onclick="SaveCategoryData();" style="float:right;margin:10px 0;" />
+                                            <input type="button" class="btn btn-info" value="Add" onclick="SaveCategoryData();" style="float:right;margin:10px 0;" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                @*category end*@
+                    @*category end*@
 
 
+                }
             }
-        }
-    </div>
+        </div>
 
         <input type="hidden" id="openCategoryModal" data-target="#updateCategoryBootstrapModal" data-toggle="modal" />
 
@@ -480,6 +480,108 @@
         @* add/update category end*@
 
         @* add/update subcategory start*@
+        <div id="addSubCategory">
+            @{
+                using (Html.BeginForm("AddSubCategory", "SubCategory", FormMethod.Post, new { id = "addSubCategoryForm" }))
+                {
+
+                    @*category strat*@
+                    <div class="modal fade " id="subCategoryBootstrapModal">
+                        <div class="modal-dialog w-subCategory-modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                    <h4 class="title" style="color:white;">Add Sub Category</h4>
+
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times" style="color:white;"></i>
+                                    </button>
+                                </div>
+                                <div style="width:100%; overflow:auto" class="ModelTrack">
+                                    <div class="modal-body" style="width:100%">
+                                        <div id="SubCategoryDiv">
+                                            <div class="row">
+
+                                                <div class="col-md-12">
+                                                    <label>Sub Category Name :</label>
+                                                    <input type="text" class="form-control" id="SubCategoryName" name="SubCategoryName" required />
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Category :</label>
+                                                    <select class="form-control" id="CategoryDrp" name="CategoryDrp" required>
+                                                        @foreach (var item in ViewBag.Categories)
+                                                        {
+                                                            <option value="@item.CategoryId">@item.CategoryName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <input type="button" class="btn btn-info" value="Add" onclick="SaveSubCategoryData();" style="float:right;margin:10px 0;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*category end*@
+
+
+                }
+            }
+        </div>
+
+        <input type="hidden" id="openSubCategoryModal" data-target="#updateSubCategoryBootstrapModal" data-toggle="modal" />
+
+        <div id="editSubCategory">
+            @{
+                using (Html.BeginForm("UpdateSubCategory", "SubCategory", FormMethod.Post, new { id = "updateSubCategoryForm" }))
+                {
+                    @*category strat*@
+                    <div class="modal fade " id="updateCategoryBootstrapModal">
+                        <div class="modal-dialog w-subCategory-modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                    <h4 class="title" style="color:white;">Update Sub Category</h4>
+
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times" style="color:white;"></i>
+                                    </button>
+                                </div>
+                                <div style="width:100%; overflow:auto" class="ModelTrack">
+                                    <div class="modal-body" style="width:100%">
+                                        <div id="UserDiv">
+                                            <input type="hidden" id="UpdateSubCategoryId" name="UpdateSubCategoryId" />
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label>Sub Category Name :</label>
+                                                    <input type="text" class="form-control" id="UpdateSubCategoryName" name="UpdateSubCategoryName" required />
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Category :</label>
+                                                    <select class="form-control" id="UpdateCategoryDrp" name="UpdateCategoryDrp" required>
+                                                        @foreach (var item in ViewBag.Categories)
+                                                        {
+                                                            <option value="@item.CategoryId">@item.CategoryName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <input type="button" class="btn btn-info" value="Update" onclick="UpdateSubCategoryData();" style="float:right;margin:10px 0;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*category end*@
+
+
+                }
+            }
+        </div>
         @* add/update subcategory end*@
 
         <style>
@@ -753,6 +855,18 @@
                 location.href = '../Categories/DeleteCategory?categoryId=' + categoryId;
             }
 
+            function GetAllCategories() {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: '/Categories/GetAllCategories',
+                    success: function (response) {
+                        debugger;
+                        $("#filterCategory").html(response);
+                    }
+                });
+            }
+
             function SaveCategoryData() {
                 debugger;
                 //User/Index
@@ -772,7 +886,7 @@
                         debugger;
                         if (data == "success") {
                             alert("Category added successfully.");
-                            window.location.reload();
+                            GetAllCategories();
                         }
                         else {
                             alert("Category already exist.");
@@ -805,7 +919,7 @@
                         debugger;
                         if (data == "success") {
                             alert("Category updated successfully.");
-                            window.location.reload();
+                            GetAllCategories();
                         }
                         else {
                             alert("Record not updated.");
@@ -825,8 +939,8 @@
             function GetUpdateSubCategory(subCategoryId, categoryId, name) {
                 debugger;
                 $("#UpdateSubCategoryId").val(subCategoryId);
-                $("#UpdateCategoryId").val(categoryId);
-                $("#UpdateCategoryName").val(name);
+                $("#UpdateCategoryDrp").val(categoryId);
+                $("#UpdateSubCategoryName").val(name);
                 $("#openUpdateCategoryModal").trigger("click");
             }
 
@@ -834,38 +948,35 @@
                 location.href = '../SubCategory/DeleteSubCategory?subCategoryId=' + subCategoryId;
             }
 
+            function GetAllSubCategories() {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: '/SubCategory/GetAllSubCategories',
+                    success: function (response) {
+                        debugger;
+                        $("#filterSubCategory").html(response);
+                    }
+                });
+            }
+
             function SaveSubCategoryData() {
                 debugger;
                 //User/Index
-                if (document.getElementById('FirstName').value == "") {
-                    alert("Please enter First Name.");
+
+                if (document.getElementById('SubCategoryName').value == "") {
+                    alert("Please enter Sub Category Name.");
                     return;
                 }
-                if (document.getElementById('LastName').value == "") {
-                    alert("Please enter Last Name.");
-                    return;
-                }
-                if (document.getElementById('EmailAddress').value == "") {
-                    alert("Please enter Email Address.");
-                    return;
-                }
-                if (document.getElementById('Username').value == "") {
-                    alert("Please enter Username.");
-                    return;
-                }
-                if (document.getElementById('Password').value == "") {
-                    alert("Please enter Password.");
-                    return;
-                }
-                if (document.getElementById('RoleType').value == "") {
-                    alert("Select one Type.");
+                if (document.getElementById('UpdateCategoryDrp').value == "") {
+                    alert("Select one Category.");
                     return;
                 }
 
                 $.ajax({
                     type: "POST",
                     async: "true",
-                    data: $("#addUserForm").serialize(),
+                    data: $("#addSubCategoryForm").serialize(),
                     url: "/SubCategory/AddSubCategory",
                     contenttype: 'application/html; charset=utf-8',
                     datatype: 'html',
@@ -873,7 +984,7 @@
                         debugger;
                         if (data == "success") {
                             alert("Sub Category added successfully.");
-                            window.location.reload();
+                            GetAllSubCategories();
                         }
                         else {
                             alert("Sub Category already exist.");
@@ -890,27 +1001,19 @@
             function UpdateSubCategoryData() {
                 debugger;
                 //User/Index
-                if (document.getElementById('UpdateUserName').value == "") {
-                    alert("Please enter Name.");
+                if (document.getElementById('SubCategoryName').value == "") {
+                    alert("Please enter Sub Category Name.");
                     return;
                 }
-                if (document.getElementById('UpdateUserEmailAddress').value == "") {
-                    alert("Please enter Email Address.");
-                    return;
-                }
-                if (document.getElementById('UpdateUserUsername').value == "") {
-                    alert("Please enter Username.");
-                    return;
-                }
-                if (document.getElementById('UpdateRoleType').value == "") {
-                    alert("Select one Type.");
+                if (document.getElementById('CategoryDrp').value == "") {
+                    alert("Select one Category.");
                     return;
                 }
 
                 $.ajax({
                     type: "POST",
                     async: "true",
-                    data: $("#updateUserForm").serialize(),
+                    data: $("#updateSubCategoryForm").serialize(),
                     url: "/SubCategory/UpdateSubCategory",
                     contenttype: 'application/html; charset=utf-8',
                     datatype: 'html',
@@ -918,7 +1021,7 @@
                         debugger;
                         if (data == "success") {
                             alert("Sub Category updated successfully.");
-                            window.location.reload();
+                            GetAllSubCategories();
                         }
                         else {
                             alert("Record not updated.");
