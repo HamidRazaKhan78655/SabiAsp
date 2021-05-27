@@ -73,7 +73,7 @@ namespace SabiAsp.Controllers
         public ActionResult GetAllCategories()
         {
             var category = Db.Categories.Where(x => x.isDeleted != "true").ToList();
-            return PartialView(category);
+            return PartialView("GetCategories", category);
         }
         public string AddCategory(FormCollection fm)
         {

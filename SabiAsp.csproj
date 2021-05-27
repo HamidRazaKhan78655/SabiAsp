@@ -482,12 +482,13 @@
     <Content Include="Views\Categories\getItemsByCategories.cshtml" />
     <Content Include="Views\Vendor\GetAllVendor.cshtml" />
     <Content Include="Views\User\GetUsersByType.cshtml" />
+    <Content Include="Views\Categories\GetCategories.cshtml" />
+    <Content Include="Views\SubCategory\GetSubCategories.cshtml" />
+    <Content Include="Views\Items\GetItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CompanyImages\" />
-    <Folder Include="Views\Items\" />
-    <Folder Include="Views\SubCategory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
