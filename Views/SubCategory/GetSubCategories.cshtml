@@ -7,8 +7,17 @@
     {
     <tr>
         <td>@sc.SubCategorieId</td>
+        <td>
+            @if (sc.image == null)
+            {
+                <img src="~/Images/noimage.jpg" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+            }
+            else
+            {
+                <img src="@string.Format("/CompanyImages/{0}", sc.image)" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+            }
+        </td>
         <td>@sc.name</td>
-        <td>@sc.image</td>
         <td>@sc.CreatedDate</td>
         <td>
             <input type="button" id="viewItems" value="View Items" onclick="ViewItems(@sc.SubCategorieId);" />

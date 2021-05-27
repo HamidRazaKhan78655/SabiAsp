@@ -26,13 +26,13 @@
     <div class="MainDivAdmin">
 
         <div style="padding:10px;">
-            <h2>Users</h2>
+            <h2 id="w-head-text">Users</h2>
             <div>
                 <div class="w-margin-bottom-10 w-height-35">
                     <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add User" id="addUsersBtn" data-target="#userBootstrapModal" data-toggle="modal" />
                     <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Category" id="addCategoryBtn" data-target="#categoryBootstrapModal" data-toggle="modal" style="display:none;" />
                     <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Sub Category" id="addSubCategoryBtn" data-target="#subCategoryBootstrapModal" data-toggle="modal" style="display:none;" />
-                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Items" id="addItemBtn" data-target="#itemBootstrapModal" data-toggle="modal" style="display:none;" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Item" id="addItemBtn" data-target="#itemBootstrapModal" data-toggle="modal" style="display:none;" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchName" onkeyup="SearchUsersByName();" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchSubCategoryName" onkeyup="SearchSubCategoryByName();" style="display:none;" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchItemName" onkeyup="SearchItemsByName();" style="display:none;" />
@@ -94,7 +94,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <a class="ShopName" onclick="GetCategoryData(@user.UserId);">@user.ShopName</a>
+                                                    <a class="w-shopName-bg" onclick="GetCategoryData(@user.UserId);">@user.ShopName</a>
                                                 }
                                             </td>
                                             <td>
@@ -163,8 +163,8 @@
                         <thead class="w-thead-bg">
                             <tr>
                                 <th>Id</th>
-                                <th>Name</th>
                                 <th>Image</th>
+                                <th>Name</th>
                                 <th>Date</th>
                                 <th>Actions</th>
                             </tr>
@@ -177,12 +177,21 @@
                                     {
                                         <tr>
                                             <td>@subCategory.SubCategorieId</td>
+                                            <td>
+                                                @if (subCategory.image == null)
+                                                {
+                                                    <img src="~/Images/noimage.jpg" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                                                }
+                                                else
+                                                {
+                                                    <img src="@string.Format("/CompanyImages/{0}", subCategory.image)" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                                                }
+                                            </td>
                                             <td>@subCategory.name</td>
-                                            <td>@subCategory.image</td>
                                             <td>@subCategory.CreatedDate</td>
                                             <td>
                                                 <input type="button" id="viewItems" value="View Items" onclick="ViewItems(@subCategory.SubCategorieId);" />
-                                                <input type="button" id="editSubCategory" value="Edit" onclick="GetUpdateSubCategory(@subCategory.SubCategorieId, @subCategory.CategoryId, '@subCategory.name');" />
+                                                <input type="button" id="editSubCategory" value="Edit" onclick="GetUpdateSubCategory(@subCategory.SubCategorieId, @subCategory.CategoryId, '@subCategory.name', '@subCategory.image');" />
                                                 <input type="button" id="deleteSubCategory" value="Delete" onclick="DeleteSubCategory(@subCategory.SubCategorieId);" />
                                             </td>
                                         </tr>
@@ -221,15 +230,24 @@
                                     foreach (var item in ViewBag.Items)
                                     {
                                         <tr>
-                                            <td>@item.SubCategorieId</td>
-                                            <td>@item.image</td>
+                                            <td>@item.ItemId</td>
+                                            <td>
+                                                @if (item.image == null)
+                                                {
+                                                    <img src="~/Images/noimage.jpg" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                                                }
+                                                else
+                                                {
+                                                    <img src="@string.Format("/CompanyImages/{0}", item.image)" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                                                }
+                                            </td>
                                             <td>@item.name</td>
                                             <td>@item.Price</td>
                                             <td>@item.Weight</td>
                                             <td>@item.CreatedDate</td>
                                             <td>
-                                                <input type="button" id="editItem" value="Edit" onclick="UpdateItem(@item.SubCategorieId, '@item.name', '@item.image', '@item.Price', '@item.Weight');" />
-                                                <input type="button" id="deleteItem" value="Delete" onclick="DeleteItem(@item.SubCategorieId);" />
+                                                <input type="button" id="editItem" value="Edit" onclick="GetUpdateItem(@item.ItemId, '@item.name', '@item.Weight', '@item.Price', '@item.image', @item.Shopid, @item.SubCategorieId );" />
+                                                <input type="button" id="deleteItem" value="Delete" onclick="DeleteItem(@item.ItemId);" />
                                             </td>
                                         </tr>
                                     }
@@ -515,6 +533,10 @@
                                                         }
                                                     </select>
                                                 </div>
+                                                <div class="col-md-12">
+                                                    <label>Image :</label>
+                                                    <input type="file" class="" id="SubCategoryImage" name="SubCategoryImage" multiple />
+                                                </div>
                                             </div>
 
                                             <input type="button" class="btn btn-info" value="Add" onclick="SaveSubCategoryData();" style="float:right;margin:10px 0;" />
@@ -538,7 +560,7 @@
                 using (Html.BeginForm("UpdateSubCategory", "SubCategory", FormMethod.Post, new { id = "updateSubCategoryForm" }))
                 {
                     @*category strat*@
-                    <div class="modal fade " id="updateCategoryBootstrapModal">
+                    <div class="modal fade " id="updateSubCategoryBootstrapModal">
                         <div class="modal-dialog w-subCategory-modal-dialog">
                             <div class="modal-content">
                                 <!--Header-->
@@ -551,7 +573,7 @@
                                 </div>
                                 <div style="width:100%; overflow:auto" class="ModelTrack">
                                     <div class="modal-body" style="width:100%">
-                                        <div id="UserDiv">
+                                        <div id="SubCategoryDiv">
                                             <input type="hidden" id="UpdateSubCategoryId" name="UpdateSubCategoryId" />
                                             <div class="row">
                                                 <div class="col-md-12">
@@ -566,6 +588,10 @@
                                                             <option value="@item.CategoryId">@item.CategoryName</option>
                                                         }
                                                     </select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Image :</label>
+                                                    <input type="file" class="" id="UpdateSubCategoryImage" name="UpdateSubCategoryImage" multiple />
                                                 </div>
                                             </div>
 
@@ -583,6 +609,151 @@
             }
         </div>
         @* add/update subcategory end*@
+
+        @* add/update item start*@
+        <div id="addItem">
+            @{
+                using (Html.BeginForm("AddItem", "Items", FormMethod.Post, new { id = "addItemForm" }))
+                {
+
+                    @*item strat*@
+                    <div class="modal fade " id="itemBootstrapModal">
+                        <div class="modal-dialog w-item-modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                    <h4 class="title" style="color:white;">Add Item</h4>
+
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times" style="color:white;"></i>
+                                    </button>
+                                </div>
+                                <div style="width:100%; overflow:auto" class="ModelTrack">
+                                    <div class="modal-body" style="width:100%">
+                                        <div id="ItemDiv">
+                                            <div class="row">
+
+                                                <div class="col-md-6">
+                                                    <label>Item Name :</label>
+                                                    <input type="text" class="form-control" id="itemName" name="itemName" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Item Weight :</label>
+                                                    <input type="text" class="form-control" id="itemWeight" name="itemWeight" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Item Price :</label>
+                                                    <input type="text" class="form-control" id="itemPrice" name="itemPrice" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Sub Category :</label>
+                                                    <select class="form-control" id="SubCategorydrp" name="SubCategorydrp" required>
+                                                        @foreach (var item in ViewBag.SubCategories)
+                                                        {
+                                                            <option value="@item.SubCategorieId">@item.name</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Shop :</label>
+                                                    <select class="form-control" id="shopIddrp" name="shopIddrp" required>
+                                                        @foreach (var item in ViewBag.Shops)
+                                                        {
+                                                            <option value="@item.Shopid">@item.shopname</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Image :</label>
+                                                    <input type="file" class="" id="ItemImage" name="ItemImage" multiple />
+                                                </div>
+                                            </div>
+
+                                            <input type="button" class="btn btn-info" value="Add" onclick="SaveItemInfo();" style="float:right;margin:10px 0;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*item end*@
+
+
+                }
+            }
+        </div>
+
+        <input type="hidden" id="openItemModal" data-target="#updateItemBootstrapModal" data-toggle="modal" />
+
+        <div id="editItem">
+            @{
+                using (Html.BeginForm("UpdateItem", "Items", FormMethod.Post, new { id = "updateItemForm" }))
+                {
+                    @*item strat*@
+                    <div class="modal fade " id="updateItemBootstrapModal">
+                        <div class="modal-dialog w-item-modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                    <h4 class="title" style="color:white;">Update Item</h4>
+
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times" style="color:white;"></i>
+                                    </button>
+                                </div>
+                                <div style="width:100%; overflow:auto" class="ModelTrack">
+                                    <div class="modal-body" style="width:100%">
+                                        <div id="ItemDiv">
+                                            <input type="hidden" id="updateItemId" name="updateItemId" />
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label>Item Name :</label>
+                                                    <input type="text" class="form-control" id="updateItemName" name="updateItemName" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Item Weight :</label>
+                                                    <input type="text" class="form-control" id="updateItemWeight" name="updateItemWeight" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Item Price :</label>
+                                                    <input type="text" class="form-control" id="updateItemPrice" name="updateItemPrice" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Sub Category :</label>
+                                                    <select class="form-control" id="UpdateSubCategorydrp" name="UpdateSubCategorydrp" required>
+                                                        @foreach (var item in ViewBag.SubCategories)
+                                                        {
+                                                            <option value="@item.SubCategorieId">@item.name</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Shop :</label>
+                                                    <select class="form-control" id="UpdateShopIddrp" name="UpdateShopIddrp" required>
+                                                        @foreach (var item in ViewBag.Shops)
+                                                        {
+                                                            <option value="@item.Shopid">@item.shopname</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Image :</label>
+                                                    <input type="file" class="" id="ItemImage" name="ItemImage" multiple />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                            <input type="button" class="btn btn-info" value="Update" onclick="UpdateItemInfo();" style="float:right;margin:10px 0;" />
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*item end*@
+                }
+            }
+        </div>
+        @* add/update item end*@
 
         <style>
             .w-width-200 {
@@ -618,6 +789,12 @@
 
             .w-margin-left-10 {
                 margin-left: 10px;
+            }
+
+            .w-shopName-bg {
+                cursor: pointer;
+                text-decoration: underline !important;
+                color: #1b6ec2 !important;
             }
         </style>
 
@@ -678,6 +855,7 @@
                         debugger;
                         if (data == "success") {
                             alert("User added successfully.");
+                            $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
@@ -723,6 +901,7 @@
                         debugger;
                         if (data == "success") {
                             alert("User updated successfully.");
+                            $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
@@ -794,7 +973,7 @@
                     $("#addCategoryBtn").hide();
                     $("#addSubCategoryBtn").hide();
                     $("#addItemBtn").hide();
-
+                    $("#w-head-text").text("Users");
                 }
                 else if (name == "Category") {
                     $("#usersData").hide();
@@ -809,6 +988,7 @@
                     $("#addCategoryBtn").show();
                     $("#addSubCategoryBtn").hide();
                     $("#addItemBtn").hide();
+                    $("#w-head-text").text("Categories");
                 }
                 else if (name == "SubCategory") {
                     $("#usersData").hide();
@@ -823,6 +1003,7 @@
                     $("#addCategoryBtn").hide();
                     $("#addSubCategoryBtn").show();
                     $("#addItemBtn").hide();
+                    $("#w-head-text").text("Sub Categories");
                 }
                 else {
                     $("#usersData").hide();
@@ -837,6 +1018,7 @@
                     $("#addCategoryBtn").hide();
                     $("#addSubCategoryBtn").hide();
                     $("#addItemBtn").show();
+                    $("#w-head-text").text("Items");
                 }
             }
 
@@ -886,6 +1068,7 @@
                         debugger;
                         if (data == "success") {
                             alert("Category added successfully.");
+                            $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
@@ -919,6 +1102,7 @@
                         debugger;
                         if (data == "success") {
                             alert("Category updated successfully.");
+                            $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
@@ -932,16 +1116,22 @@
                     }
                 });
             }
+
+            function GetCategoryData(userId) {
+
+            }
+
         </script>
 
         <script>
             //Sub Category
-            function GetUpdateSubCategory(subCategoryId, categoryId, name) {
+            function GetUpdateSubCategory(subCategoryId, categoryId, name, image) {
                 debugger;
                 $("#UpdateSubCategoryId").val(subCategoryId);
                 $("#UpdateCategoryDrp").val(categoryId);
                 $("#UpdateSubCategoryName").val(name);
-                $("#openUpdateCategoryModal").trigger("click");
+                $("#UpdateSubCategoryImage").val(image);
+                $("#openSubCategoryModal").trigger("click");
             }
 
             function DeleteSubCategory(subCategoryId) {
@@ -968,22 +1158,25 @@
                     alert("Please enter Sub Category Name.");
                     return;
                 }
-                if (document.getElementById('UpdateCategoryDrp').value == "") {
+                if (document.getElementById('CategoryDrp').value == "") {
                     alert("Select one Category.");
                     return;
                 }
 
+                f = new FormData($("#addSubCategoryForm")[0]);
+
                 $.ajax({
                     type: "POST",
                     async: "true",
-                    data: $("#addSubCategoryForm").serialize(),
+                    data: f,
                     url: "/SubCategory/AddSubCategory",
-                    contenttype: 'application/html; charset=utf-8',
-                    datatype: 'html',
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         debugger;
                         if (data == "success") {
                             alert("Sub Category added successfully.");
+                            $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
@@ -1001,26 +1194,29 @@
             function UpdateSubCategoryData() {
                 debugger;
                 //User/Index
-                if (document.getElementById('SubCategoryName').value == "") {
+                if (document.getElementById('UpdateSubCategoryName').value == "") {
                     alert("Please enter Sub Category Name.");
                     return;
                 }
-                if (document.getElementById('CategoryDrp').value == "") {
+                if (document.getElementById('UpdateCategoryDrp').value == "") {
                     alert("Select one Category.");
                     return;
                 }
 
+                f = new FormData($("#updateSubCategoryForm")[0]);
+
                 $.ajax({
                     type: "POST",
                     async: "true",
-                    data: $("#updateSubCategoryForm").serialize(),
+                    data: f,
                     url: "/SubCategory/UpdateSubCategory",
-                    contenttype: 'application/html; charset=utf-8',
-                    datatype: 'html',
+                    processData: false,
+                    contentType: false,
                     success: function (data) {
                         debugger;
                         if (data == "success") {
                             alert("Sub Category updated successfully.");
+                            $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
@@ -1036,6 +1232,137 @@
             }
         </script>
 
+        <script>
+            //Item
+            function GetAllItems() {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: '/Items/GetAllItems',
+                    success: function (response) {
+                        debugger;
+                        $("#filterItems").html(response);
+                    }
+                });
+            }
+
+            function SaveItemInfo() {
+                debugger;
+                if (document.getElementById('itemName').value == "") {
+                    alert("Please enter Item Name.");
+                    return;
+                }
+                if (document.getElementById('itemWeight').value == "") {
+                    alert("Please enter Item Weight.");
+                    return;
+                }
+                if (document.getElementById('itemPrice').value == "") {
+                    alert("Please enter Item Price.");
+                    return;
+                }
+                if (document.getElementById('shopIddrp').value == "") {
+                    alert("Select one Shop.");
+                    return;
+                }
+                if (document.getElementById('SubCategorydrp').value == "") {
+                    alert("Select one Sub Category.");
+                    return;
+                }
+
+                f = new FormData($("#addItemForm")[0]);
+
+                $.ajax({
+                    url: '/Items/AddItem',
+                    type: 'POST',
+                    data: f,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("Item added successfully.");
+                            $(".close").trigger("click");
+                            GetAllItems();
+                        }
+                        else {
+                            alert("Item already exist.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+            }
+
+            function GetUpdateItem(itemId, itemName, itemWeight, itemPrice, itemImage, shopId, subCategoryId) {
+                debugger;
+                $("#updateItemId").val(itemId);
+                $("#updateItemName").val(itemName);
+                $("#updateItemWeight").val(itemWeight);
+                $("#updateItemPrice").val(itemPrice);
+                $("#updateItemImage").val(itemImage);
+                $("#UpdateShopIddrp").val(shopId);
+                $("#UpdateSubCategorydrp").val(subCategoryId);
+                $("#openItemModal").trigger("click");
+            }
+
+            function UpdateItemInfo() {
+                debugger;
+                if (document.getElementById('updateItemName').value == "") {
+                    alert("Please enter Item Name.");
+                    return;
+                }
+                if (document.getElementById('updateItemWeight').value == "") {
+                    alert("Please enter Item Weight.");
+                    return;
+                }
+                if (document.getElementById('updateItemPrice').value == "") {
+                    alert("Please enter Item Price.");
+                    return;
+                }
+                if (document.getElementById('UpdateShopIddrp').value == "") {
+                    alert("Select one Shop.");
+                    return;
+                }
+                if (document.getElementById('UpdateSubCategorydrp').value == "") {
+                    alert("Select one Sub Category.");
+                    return;
+                }
+
+                f = new FormData($("#updateItemForm")[0]);
+
+                $.ajax({
+                    url: '/Items/UpdateItem',
+                    type: 'POST',
+                    data: f,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("Item updated successfully.");
+                            $(".close").trigger("click");
+                            GetAllItems();
+                        }
+                        else {
+                            alert("Record not updated.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+            }
+
+            function DeleteItem(itemId) {
+                debugger;
+                location.href = '../Items/DeleteItem?itemId=' + itemId;
+            }
+        </script>
 
     </div>
 

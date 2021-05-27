@@ -1,0 +1,36 @@
+﻿@model IList<SabiAsp.Models.item>
+
+
+@{
+
+    foreach (var itm in Model)
+    {
+        <tr>
+            <td>@itm.ItemId</td>
+            <td>
+                @if (itm.image == null)
+                {
+                    <img src="~/Images/noimage.jpg" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                }
+                else
+                {
+                    <img src="@string.Format("/CompanyImages/{0}", itm.image)" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                }
+            </td>
+            <td>@itm.name</td>
+            <td>@itm.Price</td>
+            <td>@itm.Weight</td>
+            <td>@itm.CreatedDate</td>
+            <td>
+                <input type="button" id="editItem" value="Edit" onclick="GetUpdateItem(@itm.ItemId, '@itm.name', '@itm.Weight', '@itm.Price', '@itm.image', @itm.Shopid, @itm.SubCategorieId );" />
+                <input type="button" id="deleteItem" value="Delete" onclick="DeleteItem(@itm.ItemId);" />
+            </td>
+        </tr>
+    }
+
+}
+
+
+
+
+

@@ -14,10 +14,11 @@ namespace SabiAsp.Controllers
         // GET: User
         public ActionResult Index()
         {
-            ViewBag.Users = Db.users.ToList();
-            ViewBag.Categories = Db.Categories.Where(x=> x.isDeleted != "true").ToList();
-            ViewBag.SubCategories = Db.SubCategories.Where(x => x.isDeleted != "true").ToList();
-            ViewBag.Items = Db.items.Where(x => x.isDeleted != "true").ToList();
+            ViewBag.Users = Db.users.OrderByDescending(x=>x.CreatedBy).ToList();
+            ViewBag.Categories = Db.Categories.Where(x=> x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+            ViewBag.SubCategories = Db.SubCategories.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+            ViewBag.Items = Db.items.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+            ViewBag.Shops = Db.Shops.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
             return View();
         }
 
@@ -62,13 +63,23 @@ namespace SabiAsp.Controllers
                 u.password = Encryption.Encrypto.EncryptString(password.Trim());
                 u.Address = address;
                 u.RoleID = roleId;
+                u.ShopName = "NA";
                 if (roleId == 1)
+                {
                     u.RoleType = "Admin";
+                }
                 else if (roleId == 2)
+                {
                     u.RoleType = "User";
-                else
+                }
+                else {
                     u.RoleType = "Vendor";
-
+                    if (firstName.Contains("'"))
+                        u.ShopName = firstName + " " + "Shop";
+                    else
+                        u.ShopName = firstName + "'" + " " + "Shop";
+                }
+ 
                 u.CreatedBy = logedinUserId;
                 u.CreatedDate = DateTime.Now;
                 u.isDeleted = "false";
@@ -125,12 +136,23 @@ namespace SabiAsp.Controllers
                 user.Address = address;
                 user.username = userName;
                 user.RoleID = roleId;
+                user.ShopName = "NA";
                 if (roleId == 1)
+                {
                     user.RoleType = "Admin";
+                }
                 else if (roleId == 2)
+                {
                     user.RoleType = "User";
+                }
                 else
+                {
                     user.RoleType = "Vendor";
+                    if (name.Contains("'"))
+                        user.ShopName = name + " " + "Shop";
+                    else
+                        user.ShopName = name + "'" + " " + "Shop";
+                }
 
                 user.ModifiedBy = logedinUserId;
                 user.ModifiedDate = DateTime.Now;
@@ -160,9 +182,9 @@ namespace SabiAsp.Controllers
         {
             var users = new List<user>();
             if (type == "All")
-                users = Db.users.ToList();
+                users = Db.users.OrderByDescending(x => x.CreatedBy).ToList();
             else
-                users = Db.users.Where(u=> u.RoleType == type).ToList();
+                users = Db.users.Where(u=> u.RoleType == type).OrderByDescending(x => x.CreatedBy).ToList();
 
             if (users.Count == 0)
             {
