@@ -1,0 +1,94 @@
+﻿@model SabiAsp.Models.UserFacebookInfoModal
+
+@{
+    ViewBag.Title = "FacebookCallback";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    $(document).ready(function () {
+        $("#openUserfbPassordModal").trigger("click");
+    });
+
+    function SaveUserFBInfo() {
+        debugger;
+        //LayoutSub
+        var UserTypeId = document.getElementById('UserTypeId').value;
+        var UserName = document.getElementById('UserName').value;
+        var EmailAddress = document.getElementById('EmailAddress').value;
+        var Name = document.getElementById('Name').value;
+        var Image = document.getElementById('Image').value;
+        var password = document.getElementById('UserPassword').value;
+        if (password == "") {
+            alert("Please enter Password.");
+            return;
+        }
+        else {
+            $.ajax({
+                url: '/Login/CreateFacebookPassword/',
+                type: 'POST',
+                data: {
+                    id: UserTypeId,
+                    email: EmailAddress,
+                    username: UserName,
+                    name: Name,
+                    image: Image,
+                    password: password
+                },
+                success: function (data) {
+                    debugger;
+                    if (data == "success") {
+                        alert("User added successfully.");
+                        window.location.href = "/Home/Index/";
+                    }
+                    else {
+                        alert("User already exist.");
+                        return;
+                    }
+                },
+                error: function () {
+                    debugger;
+                    alert("Error");
+                }
+            });
+        }
+    }
+</script>
+@*<h2>FacebookCallback</h2>*@
+
+<input type="hidden" id="openUserfbPassordModal" data-target="#userfbPasswordBootstrapModal" data-toggle="modal" />
+@*user strat*@
+<div class="modal fade " id="userfbPasswordBootstrapModal">
+    <div class="modal-dialog w-user-modal-dialog">
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                <h4 class="title" style="color:white;">Create Password</h4>
+
+                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times" style="color:white;"></i>
+                </button>
+            </div>
+            <div style="width:100%; overflow:auto" class="ModelTrack">
+                <div class="modal-body" style="width:100%">
+                    <div id="UserFBPasswordDiv">
+                        <div class="row">
+                            <input type="hidden" id="UserTypeId" name="UserTypeId" value="@Model.UserTypeId" />
+                            <input type="hidden" id="UserName" name="UserName" value="@Model.Username" />
+                            <input type="hidden" id="EmailAddress" name="EmailAddress" value="@Model.EmailAddress" />
+                            <input type="hidden" id="Name" name="Name" value="@Model.Name" />
+                            <input type="hidden" id="Image" name="Image" value="@Model.Image" />
+                            <div class="col-md-12">
+                                <label>Password :</label>
+                                <input type="password" class="form-control" id="UserPassword" name="UserPassword" required  />
+                            </div>
+                        </div>
+
+                        <input type="button" class="btn btn-info" value="Add" onclick="SaveUserFBInfo();" style="float:right;margin:10px 0;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*user end*@
+

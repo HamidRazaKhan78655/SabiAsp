@@ -255,73 +255,170 @@ namespace SabiAsp.Controllers
             var accessToken = result.access_token;
             Session["AccessToken"] = accessToken;
             fb.AccessToken = accessToken;
+            UserFacebookInfoModal userFacebookInfo = new UserFacebookInfoModal();
             dynamic me = fb.Get("me?fields=link,id,first_name,currency,last_name,email,gender,locale,timezone,verified,picture,age_range");
-            string email = me.email;
-            string id = me.id;
-            TempData["email"] = me.id;
-            Session["Login"] = me.id;
-            TempData["first_name"] = me.first_name;
-            TempData["lastname"] = me.last_name;
-            TempData["picture"] = me.picture.data.url;
-            FormsAuthentication.SetAuthCookie(email, false);
-            user u = new user();
-            if (UserTypeId==1)
+            userFacebookInfo.UserTypeId = UserTypeId;
+            userFacebookInfo.EmailAddress = me.email;
+            userFacebookInfo.Username = me.id;
+            userFacebookInfo.Name = me.first_name + " " + me.last_name;
+            userFacebookInfo.Image = me.picture.data.url;
+            FormsAuthentication.SetAuthCookie(userFacebookInfo.EmailAddress, false);
+
+            //user u = new user();
+            //if (UserTypeId==1)
+            //{
+            //    //Vendor
+            //    try
+            //    {
+            //        vendor v = new vendor();
+            //        u.name = me.first_name + " " + me.last_name;
+            //        u.username = me.first_name + " " + me.last_name;
+            //        u.password = me.email;
+            //        u.RoleID = 3;
+            //        u.RoleType = "Vendor";
+            //        u.isDeleted = "false";
+            //        u.CreatedBy = 1;
+            //        u.CreatedDate = DateTime.Now;
+            //        Db.users.Add(u);
+            //        Db.SaveChanges();
+
+            //        v.UserId = u.UserId;
+            //        v.isDeleted = "false";
+            //        v.CreatedBy = 1;
+            //        v.CreatedDate = DateTime.Now;
+            //        Db.vendors.Add(v);
+            //        Db.SaveChanges();
+
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        var r = e;
+
+            //    }
+
+
+            //}
+            //else if (UserTypeId==2)
+            //{
+            //    //Buyer
+            //    try
+            //    {
+            //        u.UserId = 1;
+            //        u.name = me.first_name + me.last_name;
+            //        u.password = me.email;
+            //        u.RoleID = 2;
+            //        u.RoleType = "User";
+            //        u.isDeleted = "false";
+            //        u.CreatedBy = 1;
+            //        u.CreatedDate = DateTime.Now;
+            //        Db.users.Add(u);
+            //        Db.SaveChanges();
+            //    }
+            //    catch (Exception)
+            //    {
+
+
+            //    }
+            //}
+
+            return View(userFacebookInfo);
+        }
+
+        public string CreateFacebookPassword(int id, string email, string username, string name, string image, string password) 
+        {
+            try
             {
-                //Vendor
-                try
+                vendor v = new vendor();
+                user u = new user();
+                if (id == 1)
                 {
-                    vendor v = new vendor();
-                    u.name = me.first_name + " " + me.last_name;
-                    u.username = me.first_name + " " + me.last_name;
-                    u.password = me.email;
-                    u.RoleID = 3;
-                    u.RoleType = "Vendor";
-                    u.isDeleted = "false";
-                    u.CreatedBy = 1;
-                    u.CreatedDate = DateTime.Now;
-                    Db.users.Add(u);
-                    Db.SaveChanges();
+                    //vendor
+                    var User = Db.users.Where(x => x.username.ToLower() == email.ToLower() && x.EmailAddress == email.ToLower() && x.isDeleted != "true").FirstOrDefault();
+                    if (User == null)
+                    {
+                        u.name = name;
+                        u.username = username;
+                        u.password = Encryption.Encrypto.EncryptString(password.Trim());
+                        u.EmailAddress = email;
+                        u.image = image;
+                        u.RoleID = 3;
+                        u.RoleType = "Vendor";
+                        u.isDeleted = "false";
+                        u.CreatedBy = 1;
+                        u.CreatedDate = DateTime.Now;
+                        Db.users.Add(u);
+                        Db.SaveChanges();
 
-                    v.UserId = u.UserId;
-                    v.isDeleted = "false";
-                    v.CreatedBy = 1;
-                    v.CreatedDate = DateTime.Now;
-                    Db.vendors.Add(v);
-                    Db.SaveChanges();
+                        v.UserId = u.UserId;
+                        v.isDeleted = "false";
+                        v.CreatedBy = 1;
+                        v.CreatedDate = DateTime.Now;
+                        Db.vendors.Add(v);
+                        Db.SaveChanges();
 
+                        Shop s = new Shop();
+                        s.vendorid = v.vendorid;
+                        if (name.Contains("'"))
+                            s.shopname = name + " " + "Shop";
+                        else
+                            s.shopname = name + "'" + " " + "Shop";
+
+                        s.isDeleted = "false";
+                        s.CreatedBy = 1;
+                        s.CreatedDate = DateTime.Now;
+                        Db.Shops.Add(s);
+                        Db.SaveChanges();
+
+                        Session["UserId"] = u.UserId.ToString();
+                        Session["Username"] = email;
+                        Session["Name"] = name;
+                        Session["RoleType"] = "Vendor";
+                        Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
+                        Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
+
+                        return "success";
+                    }
+                    return "error";
                 }
-                catch (Exception e)
+                else if (id == 2)
                 {
-                    var r = e;
-                    
-                }
+                    //Buyer
+                    var User = Db.users.Where(x => x.username.ToLower() == email.ToLower() && x.EmailAddress == email.ToLower() && x.isDeleted != "true").FirstOrDefault();
+                    if (User == null)
+                    {
+                        u.name = name;
+                        u.username = username;
+                        u.EmailAddress = email;
+                        u.password = Encryption.Encrypto.EncryptString(password.Trim());
+                        u.image = image;
+                        u.RoleID = 2;
+                        u.RoleType = "User";
+                        u.isDeleted = "false";
+                        u.CreatedBy = 1;
+                        u.CreatedDate = DateTime.Now;
+                        Db.users.Add(u);
+                        Db.SaveChanges();
 
+                        Session["UserId"] = u.UserId.ToString();
+                        Session["Username"] = email;
+                        Session["Name"] = name;
+                        Session["RoleType"] = "User";
+                        Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
+                        Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
+
+                        return "success";
+                    }
+                    return "error";
+                }
 
             }
-            else if (UserTypeId==2)
+            catch (Exception ex)
             {
-                //Buyer
-                try
-                {
-                    u.UserId = 1;
-                    u.name = me.first_name + me.last_name;
-                    u.password = me.email;
-                    u.RoleID = 2;
-                    u.RoleType = "User";
-                    u.isDeleted = "false";
-                    u.CreatedBy = 1;
-                    u.CreatedDate = DateTime.Now;
-                    Db.users.Add(u);
-                    Db.SaveChanges();
-                }
-                catch (Exception)
-                {
 
-                    
-                }
+                return "error";
             }
 
-            return RedirectToAction("Index", "Home");
+            return "error";
         }
 
     }

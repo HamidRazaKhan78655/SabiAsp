@@ -201,6 +201,7 @@
     <Compile Include="Models\user.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserFacebookInfoModal.cs" />
     <Compile Include="Models\vendor.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
@@ -486,6 +487,7 @@
     <Content Include="Views\Categories\GetCategories.cshtml" />
     <Content Include="Views\SubCategory\GetSubCategories.cshtml" />
     <Content Include="Views\Items\GetItems.cshtml" />
+    <Content Include="Views\Login\FacebookCallback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
