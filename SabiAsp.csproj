@@ -329,6 +329,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\appDownload.png" />
     <Content Include="Images\FacebookIcon.png" />
     <Content Include="Images\GoogleIcon.png" />
     <Content Include="Images\greater.png" />
