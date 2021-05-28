@@ -35,7 +35,7 @@ namespace SabiAsp.Controllers
                 Db.users.Add(u);
                 Db.SaveChanges();
             }
-            return View();
+            return RedirectToAction("SabiLogin", "Login");
         }
         public ActionResult Admin()
         {
@@ -51,7 +51,7 @@ namespace SabiAsp.Controllers
             string username = admin["username"].ToString();
             string password = admin["pass"].ToString();
 
-            var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.RoleID == 1).FirstOrDefault();
+            var User = Db.users.Where(x => x.username.ToLower() == username.ToLower()).FirstOrDefault();
             if (User != null)
             {
                 string DecryptPassword = Encrypto.DecryptString(User.password);

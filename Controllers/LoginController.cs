@@ -1,4 +1,5 @@
 ﻿using Facebook;
+using SabiAsp.Encryption;
 using SabiAsp.Models;
 using System;
 using System.Collections.Generic;
@@ -31,17 +32,53 @@ namespace SabiAsp.Controllers
             return View();
         }  
         
-        public ActionResult SabiLogin(string type)
+        public ActionResult SabiLogin()
         {
-            if (type=="1")
-            {
-                ViewBag.type = "vendor";
-            }
-            else if (type=="2")
-            {
-                ViewBag.type = "Buyer";
-            }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult SabiLogin(FormCollection admin)
+        {
+            HttpContext.Session["Connectionstring"] = System.Configuration.ConfigurationManager.ConnectionStrings["sabiShopEntities"].ToString();
+            string username = admin["username"].ToString();
+            string password = admin["pass"].ToString();
+
+            var User = Db.users.Where(x => x.username.ToLower() == username.ToLower()).FirstOrDefault();
+            if (User != null)
+            {
+                string DecryptPassword = Encrypto.DecryptString(User.password);
+                if (password == DecryptPassword)
+                {
+                    Session["UserId"] = User.UserId.ToString();
+                    Session["Username"] = User.username.ToString();
+                    Session["Name"] = User.name.ToString();
+                    Session["RoleType"] = User.RoleType.ToString();
+                    Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
+                    Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
+
+                    if (User.RoleID == 1)
+                    {
+                        return RedirectToAction("Index", "User");
+                    }
+                    else if (User.RoleID == 2)
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                return View();
+            }
         }
         public ActionResult SabiRegister(string type)
         {
