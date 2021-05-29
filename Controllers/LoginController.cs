@@ -54,9 +54,10 @@ namespace SabiAsp.Controllers
                     Session["Username"] = User.username.ToString();
                     Session["Name"] = User.name.ToString();
                     Session["RoleType"] = User.RoleType.ToString();
+                    Session["RoleID"] = User.RoleID.ToString();
                     Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                     Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
-
+                    FormsAuthentication.SetAuthCookie(User.username, false);
                     if (User.RoleID == 1)
                     {
                         return RedirectToAction("Index", "User");
@@ -79,6 +80,12 @@ namespace SabiAsp.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
         }
         public ActionResult SabiRegister(string type)
         {

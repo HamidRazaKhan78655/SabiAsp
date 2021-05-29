@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "GetSubCategories";
+    ViewBag.LayoutPage = "sub";
+    Layout = "~/Views/Shared/LayoutSub.cshtml";
+}
+<!-- New Arrivals section start -->
+<div class="collection_text">@ViewBag.Category</div>
+<div class="layout_padding gallery_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <span style="color:white;font-size:large;">Sort By :</span>
+                @Html.DropDownList("SortList", new List<SelectListItem>{
+           new SelectListItem{ Text="Date", Value = "1" },
+           new SelectListItem{ Text="Price", Value = "2" },
+           }, "All", new { onchange = "SortListChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
+            </div>
+        </div>
+        <div class="row">
+
+            @foreach (var subCate in ViewBag.SubCategorylist)
+            {
+
+                <div class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(1,'@ViewBag.Category')">
+                    <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
+                    <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
+
+                    <div class="row best_shoes">
+                        <div class="col-md-4">
+                            <div class="shoes_icon"><img src="~/Content/Template/images/shoes-img4.png"></div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="best_shoes">
+
+                                <p class="best_text" style="text-align:left;padding-left: 25px;">@subCate.name</p>
+
+                                <div class="star_text">
+                                    <div class="left_part">
+                                        <ul>
+                                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="right_part">
+                                        <div class="shoes_price">Items : <span style="color: #ff4e5b;">60</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        </div>
+        @*        <div id="item_View" style="">
+
+            </div>*@
+    </div>
+</div>
+<!-- New Arrivals section end -->

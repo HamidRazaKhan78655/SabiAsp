@@ -150,8 +150,13 @@ $(document).ready(function ()
 });
 
 //                                               javascript                                  // 
-function loadCategories(cate, name)
+function loadSubCategories(cate, name)
 {
-    window.open('/Categories/GetSubCategories?id='+cate+"&&name="+name , "_self");
+    debugger;
+    window.open('/Categories/GetSubCategoriesByCategory?id='+cate+"&&name="+name , "_self");
+}
+
+function loadCategories(cate, name) {
+    window.open('/Categories/GetSubCategories?id=' + cate + "&&name=" + name, "_self");
 }
   

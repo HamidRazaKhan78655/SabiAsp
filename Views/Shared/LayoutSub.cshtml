@@ -286,13 +286,19 @@
                                 </a>
                                 <a class="nav-item nav-link" id="Categories" style="cursor:pointer">
                                     Categories<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
-                                    <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
+                                              <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
 
-                                        <div onclick="loadCategories(1 ,'Groceries')">Groceries</div>
-                                        <div onclick="loadCategories(2,'Pharmacy')">Pharmacy</div>
-                                        <div onclick="loadCategories(3,'Bakery')">Bakery</div>
-                                        <div onclick="loadCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
-                                    </div>
+                                                  @*<div onclick="loadCategories(1 ,'Groceries')">Groceries</div>
+        <div onclick="loadCategories(2,'Pharmacy')">Pharmacy</div>
+        <div onclick="loadCategories(3,'Bakery')">Bakery</div>
+        <div onclick="loadCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>*@
+
+
+                                                  <div onclick="loadSubCategories(1,'Groceries')">Groceries</div>
+                                                  <div onclick="loadSubCategories(2, 'Pharmacy')">Pharmacy</div>
+                                                  <div onclick="loadSubCategories(3,'Bakery')">Bakery</div>
+                                                  <div onclick="loadSubCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
+                                              </div>
                                 </a>
                                 <a class="nav-item nav-link last" href="#"><img src="~/Content/Template/images/search_icon.png"></a>
                                 <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>

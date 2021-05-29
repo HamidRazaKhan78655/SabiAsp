@@ -19,6 +19,12 @@ namespace SabiAsp.Controllers
         {
             return View();
         }
+        public ActionResult GetSubCategoriesByCategory(int id, string name)
+        {
+            ViewBag.Category = name;
+            ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.CategoryId == id).ToList();
+            return View();
+        }
         public ActionResult GetSubCategories(int id, string name)
         {
             var query = Db.items.ToList();
