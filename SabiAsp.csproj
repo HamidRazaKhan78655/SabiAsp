@@ -489,6 +489,7 @@
     <Content Include="Views\Items\GetItems.cshtml" />
     <Content Include="Views\Login\FacebookCallback.cshtml" />
     <Content Include="Views\Categories\GetSubCategoriesByCategory.cshtml" />
+    <Content Include="Views\SubCategory\ShowSubCategoriesByCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

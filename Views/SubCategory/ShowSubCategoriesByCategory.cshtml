@@ -1,0 +1,53 @@
+﻿@model IList<SabiAsp.Models.SubCategory>
+
+<div id="">
+    <table class="table table-hover">
+        <thead class="w-thead-bg">
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="filterSubCategory">
+            @{
+                if (Model.Count > 0)
+                {
+                    foreach (var subCategory in Model)
+                    {
+                        <tr>
+                            <td>@subCategory.SubCategorieId</td>
+                            <td>
+                                @if (subCategory.image == null)
+                                {
+                                    <img src="~/Images/noimage.jpg" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                                }
+                                else
+                                {
+                                    <img src="@string.Format("/CompanyImages/{0}", subCategory.image)" class="Emp44by44" style="height: 70px; width: 70px; border-radius: 50px;">
+                                }
+                            </td>
+                            <td>@subCategory.name</td>
+                            <td>@subCategory.CreatedDate</td>
+                            <td>
+                                <input type="button" id="viewItems" value="View Items" onclick="ViewItems(@subCategory.SubCategorieId);" />
+                                <input type="button" id="editSubCategory" value="Edit" onclick="GetUpdateSubCategory(@subCategory.SubCategorieId, @subCategory.CategoryId, '@subCategory.name', '@subCategory.image');" />
+                                <input type="button" id="deleteSubCategory" value="Delete" onclick="DeleteSubCategory(@subCategory.SubCategorieId);" />
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">
+                            <div class="w-empty-list">Record Not Found</div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

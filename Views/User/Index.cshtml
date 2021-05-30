@@ -94,7 +94,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <a class="w-shopName-bg" onclick="GetCategoryData(@user.UserId);">@user.ShopName</a>
+                                                    <a class="w-shopName-bg" onclick="AddShopItemData(@user.UserId)">@user.ShopName</a>
                                                 }
                                             </td>
                                             <td>
@@ -610,6 +610,37 @@
         </div>
         @* add/update subcategory end*@
 
+        @* show subcategory start*@
+
+        <input type="hidden" id="openShowSubCategoryModal" data-target="#showSubCategoryBootstrapModal" data-toggle="modal" />
+
+        <div id="showSubCategory">
+
+            <div class="modal fade " id="showSubCategoryBootstrapModal">
+                <div class="modal-dialog w-subCategory-modal-dialog" style="max-width: 70% !important;">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                            <h4 class="title" style="color:white;">Sub Categories</h4>
+
+                            <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-times" style="color:white;"></i>
+                            </button>
+                        </div>
+                        <div style="width:100%; overflow:auto" class="ModelTrack">
+                            <div class="modal-body" style="width:100%">
+                                <div id="showSubCategoryDiv">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        @* show subcategory end*@
+
         @* add/update item start*@
         <div id="addItem">
             @{
@@ -743,13 +774,83 @@
                                             </div>
                                         </div>
 
-                                            <input type="button" class="btn btn-info" value="Update" onclick="UpdateItemInfo();" style="float:right;margin:10px 0;" />
-                                        </div>
+                                        <input type="button" class="btn btn-info" value="Update" onclick="UpdateItemInfo();" style="float:right;margin:10px 0;" />
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     @*item end*@
+                }
+            }
+        </div>
+
+        <input type="hidden" id="openShopItemModal" data-target="#shopItemBootstrapModal" data-toggle="modal" />
+        <div id="addShopItem">
+            @{
+                using (Html.BeginForm("AddShopItem", "Items", FormMethod.Post, new { id = "addShopItemForm" }))
+                {
+
+                    @*item strat*@
+                    <div class="modal fade " id="shopItemBootstrapModal">
+                        <div class="modal-dialog w-item-modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                    <h4 class="title" style="color:white;">Add Item</h4>
+
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times" style="color:white;"></i>
+                                    </button>
+                                </div>
+                                <div style="width:100%; overflow:auto" class="ModelTrack">
+                                    <div class="modal-body" style="width:100%">
+                                        <div id="ItemDiv">
+                                            <div class="row">
+
+                                                <input type="hidden" class="form-control" id="shopUserId" name="shopUserId" required />
+                                                <div class="col-md-6">
+                                                    <label>Item Name :</label>
+                                                    <input type="text" class="form-control" id="shopItemName" name="shopItemName" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Item Weight :</label>
+                                                    <input type="text" class="form-control" id="shopItemWeight" name="shopItemWeight" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Item Price :</label>
+                                                    <input type="text" class="form-control" id="shopItemPrice" name="shopItemPrice" required />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Sub Category :</label>
+                                                    <select class="form-control" id="shopSubCategorydrp" name="shopSubCategorydrp" required>
+                                                        @foreach (var item in ViewBag.SubCategories)
+                                                        {
+                                                            <option value="@item.SubCategorieId">@item.name</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Shop :</label>
+                                                    <input type="text" class="form-control" id="itemShopName" name="itemShopName" readonly />
+
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label>Image :</label>
+                                                    <input type="file" class="" id="shopItemImage" name="shopItemImage" multiple />
+                                                </div>
+                                            </div>
+
+                                            <input type="button" class="btn btn-info" value="Add" onclick="SaveShopItemInfo();" style="float:right;margin:10px 0;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*item end*@
+
+
                 }
             }
         </div>
@@ -813,7 +914,31 @@
             }
 
             function DeleteUser(userId) {
-                location.href = '../User/DeleteUser?userId=' + userId;
+                //location.href = '../User/DeleteUser?userId=' + userId;
+
+                $.ajax({
+                    url: '/User/DeleteUser?userId=' + userId,
+                    type: 'POST',
+                    data: f,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("User deleted successfully.");
+                            $(".close").trigger("click");
+                            window.location.reload();
+                        }
+                        else {
+                            alert("User not deleted.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
             }
 
             function SaveUserData() {
@@ -1034,7 +1159,31 @@
             }
 
             function DeleteCategory(categoryId) {
-                location.href = '../Categories/DeleteCategory?categoryId=' + categoryId;
+                //location.href = '../Categories/DeleteCategory?categoryId=' + categoryId;
+
+                $.ajax({
+                    url: '/Categories/DeleteCategory?categoryId=' + categoryId,
+                    type: 'POST',
+                    data: f,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("Category deleted successfully.");
+                            $(".close").trigger("click");
+                            GetAllCategories();
+                        }
+                        else {
+                            alert("Category not deleted.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
             }
 
             function GetAllCategories() {
@@ -1117,14 +1266,24 @@
                 });
             }
 
-            function GetCategoryData(userId) {
-
-            }
-
         </script>
 
         <script>
             //Sub Category
+
+            function ViewSubCategory(categoryId) {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: '/SubCategory/GetAllSubCategoriesByCategory?categoryId=' + categoryId,
+                    success: function (response) {
+                        debugger;
+                        $("#showSubCategoryBootstrapModal #showSubCategoryDiv").html(response);
+                        $("#openShowSubCategoryModal").trigger("click");
+                    }
+                });
+            }
+
             function GetUpdateSubCategory(subCategoryId, categoryId, name, image) {
                 debugger;
                 $("#UpdateSubCategoryId").val(subCategoryId);
@@ -1135,7 +1294,31 @@
             }
 
             function DeleteSubCategory(subCategoryId) {
-                location.href = '../SubCategory/DeleteSubCategory?subCategoryId=' + subCategoryId;
+                //location.href = '../SubCategory/DeleteSubCategory?subCategoryId=' + subCategoryId;
+
+                $.ajax({
+                    url: '/SubCategory/DeleteSubCategory?subCategoryId=' + subCategoryId,
+                    type: 'POST',
+                    data: f,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("Sub Category deleted successfully.");
+                            $(".close").trigger("click");
+                            GetAllSubCategories();
+                        }
+                        else {
+                            alert("Sub Category not deleted.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
             }
 
             function GetAllSubCategories() {
@@ -1234,6 +1417,24 @@
 
         <script>
             //Item
+
+            function showItemDataTable() {
+                debugger;
+                $("#usersData").hide();
+                $("#categoryData").hide();
+                $("#subCategoryData").hide();
+                $("#ItemsData").show();
+                $("#filterUserByType").hide();
+                $("#searchName").hide();
+                $("#searchSubCategoryName").hide();
+                $("#searchItemName").show();
+                $("#addUsersBtn").hide();
+                $("#addCategoryBtn").hide();
+                $("#addSubCategoryBtn").hide();
+                $("#addItemBtn").show();
+                $("#w-head-text").text("Items");
+            }
+
             function GetAllItems() {
                 debugger;
                 $.ajax({
@@ -1242,6 +1443,52 @@
                     success: function (response) {
                         debugger;
                         $("#filterItems").html(response);
+                    }
+                });
+            }
+
+            function SaveShopItemInfo() {
+                debugger;
+                if (document.getElementById('shopItemName').value == "") {
+                    alert("Please enter Item Name.");
+                    return;
+                }
+                if (document.getElementById('shopItemWeight').value == "") {
+                    alert("Please enter Item Weight.");
+                    return;
+                }
+                if (document.getElementById('shopItemPrice').value == "") {
+                    alert("Please enter Item Price.");
+                    return;
+                }
+                if (document.getElementById('shopSubCategorydrp').value == "") {
+                    alert("Select one Sub Category.");
+                    return;
+                }
+
+                f = new FormData($("#addShopItemForm")[0]);
+
+                $.ajax({
+                    url: '/Items/AddShopItem',
+                    type: 'POST',
+                    data: f,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            $(".close").trigger("click");
+                            showItemDataTable();
+                            GetAllItems();
+                        }
+                        else {
+                            alert("Item already exist.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
                     }
                 });
             }
@@ -1360,8 +1607,48 @@
 
             function DeleteItem(itemId) {
                 debugger;
-                location.href = '../Items/DeleteItem?itemId=' + itemId;
+                //location.href = '../Items/DeleteItem?itemId=' + itemId;
+
+                $.ajax({
+                    url: '/Items/DeleteItem?itemId=' + itemId,
+                    type: 'POST',
+                    data: f,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+                            alert("Item deleted successfully.");
+                            $(".close").trigger("click");
+                            GetAllItems();
+                        }
+                        else {
+                            alert("Item not deleted.");
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+
             }
+
+            function AddShopItemData(userId) {
+                debugger;
+                $("#shopUserId").val(userId);
+                $.ajax({
+                    type: "GET",
+                    url: '/Items/GetShopName?userId=' + userId,
+                    success: function (response) {
+                        debugger;
+                        $("#itemShopName").val(response);
+                    }
+                });
+                $("#openShopItemModal").trigger("click");
+            }
+
         </script>
 
     </div>

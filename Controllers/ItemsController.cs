@@ -85,9 +85,63 @@ namespace SabiAsp.Controllers
         #region CRUD SubCategory
         public ActionResult GetAllItems()
         {
-            ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").ToList();
-            var subCategory = Db.SubCategories.Where(x => x.isDeleted != "true").ToList();
-            return PartialView("GetSubCategories", subCategory);
+            var item = Db.items.Where(x => x.isDeleted != "true").ToList();
+            return PartialView("GetItems", item);
+        }
+        public string AddShopItem(IEnumerable<HttpPostedFileBase> files, FormCollection fm)
+        {
+            string name = fm["shopItemName"].ToString();
+            string weight = fm["shopItemWeight"].ToString();
+            string price = fm["shopItemPrice"].ToString();
+            string updateShopUserId = fm["shopUserId"].ToString();
+            int shopUserId = int.Parse(updateShopUserId);
+            string updateSubCategoryId = fm["shopSubCategorydrp"].ToString();
+            int subCategoryId = int.Parse(updateSubCategoryId);
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+            string _fileName = string.Empty;
+
+            item item = new item();
+            var itemData = Db.items.Where(x => x.name.ToLower() == name.ToLower() && x.isDeleted != "true").FirstOrDefault();
+            if (itemData == null)
+            {
+                for (int i = 0; i < Request.Files.Count; i++)
+            {
+                try
+                {
+                    var file = Request.Files[i];
+                    string namefile = string.Empty;
+                    namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                    if (string.IsNullOrEmpty(namefile) == false)
+                    {
+                        Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                        _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
+                        var path = Server.MapPath("~/CompanyImages/");
+                        string SavePath = path + _fileName;
+                        b.Save(SavePath, ImageFormat.Png);
+                        item.image = _fileName;
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+                var vendor = Db.vendors.Where(x => x.UserId == shopUserId).SingleOrDefault();
+                var shop = Db.Shops.Where(x => x.vendorid == vendor.vendorid).SingleOrDefault();
+
+                item.name = name;
+                item.Weight = weight;
+                item.Price = price;
+                item.Shopid = shop.Shopid;
+                item.SubCategorieId = subCategoryId;
+                item.isDeleted = "false";
+                item.CreatedDate = DateTime.Now;
+                item.CreatedBy = logedinUserId;
+                Db.items.Add(item);
+                Db.SaveChanges();
+                return "success";
+            }
+            return "error";
         }
         public string AddItem(IEnumerable<HttpPostedFileBase> files, FormCollection fm)
         {
@@ -214,6 +268,12 @@ namespace SabiAsp.Controllers
         }
         #endregion
 
+        public string GetShopName(int userId)
+        {
+            var vendor = Db.vendors.Where(x => x.UserId == userId).SingleOrDefault();
+            var shop = Db.Shops.Where(x => x.vendorid == vendor.vendorid).SingleOrDefault();
+            return shop.shopname;
+        }
 
 
     }

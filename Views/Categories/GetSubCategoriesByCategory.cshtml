@@ -22,7 +22,7 @@
             @foreach (var subCate in ViewBag.SubCategorylist)
             {
 
-                <div class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(1,'@ViewBag.Category')">
+                <div class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(1, '@subCate.name', @subCate.SubCategorieId)">
                     <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
                     <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
@@ -45,9 +45,9 @@
                                             <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
                                         </ul>
                                     </div>
-                                    <div class="right_part">
+                                    @*<div class="right_part">
                                         <div class="shoes_price">Items : <span style="color: #ff4e5b;">60</span></div>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div>
                         </div>
