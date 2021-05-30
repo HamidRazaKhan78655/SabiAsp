@@ -275,6 +275,24 @@ namespace SabiAsp.Controllers
             return shop.shopname;
         }
 
+        public ActionResult SortItemList(string value, string subCategoryId)
+        {
+            int subCId = int.Parse(subCategoryId);
+            var itemList = new List<item>();
+            if (value == "1")
+            {
+                itemList = Db.items.Where(x => x.SubCategorieId == subCId && x.isDeleted != "true").OrderByDescending(x => x.CreatedDate).ToList();
+            }
+            else if(value == "2")
+            {
+                itemList = Db.items.Where(x => x.SubCategorieId == subCId && x.isDeleted != "true").OrderByDescending(x => x.name).ToList();
+            }
+            else
+            {
+                itemList = Db.items.Where(x => x.SubCategorieId == subCId && x.isDeleted != "true").ToList();
+            }
 
+            return PartialView("SortedItems", itemList);
+        }
     }
 }

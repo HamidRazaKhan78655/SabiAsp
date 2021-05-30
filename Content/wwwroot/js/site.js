@@ -160,4 +160,5 @@ function loadCategories(cate, name, subCategorieId) {
     debugger;
     window.open('/Categories/GetSubCategories?id=' + cate + "&&name=" + name + "&&subCategorieId=" + subCategorieId, "_self");
 }
+
   

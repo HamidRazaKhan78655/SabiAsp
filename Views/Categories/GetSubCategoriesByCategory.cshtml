@@ -10,11 +10,12 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
+                <input type="hidden" value="@ViewBag.CategoryId" id="GetCategoryId" />
                 <span style="color:white;font-size:large;">Sort By :</span>
                 @Html.DropDownList("SortList", new List<SelectListItem>{
            new SelectListItem{ Text="Date", Value = "1" },
-           new SelectListItem{ Text="Price", Value = "2" },
-           }, "All", new { onchange = "SortListChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
+           new SelectListItem{ Text="Name", Value = "2" },
+           }, "All", new { onchange = "SortSubCategorylistChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
             </div>
         </div>
         <div class="row">
@@ -22,7 +23,7 @@
             @foreach (var subCate in ViewBag.SubCategorylist)
             {
 
-                <div class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(1, '@subCate.name', @subCate.SubCategorieId)">
+                <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(1, '@subCate.name', @subCate.SubCategorieId)">
                     <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
                     <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
@@ -62,3 +63,20 @@
     </div>
 </div>
 <!-- New Arrivals section end -->
+
+
+<script>
+    function SortSubCategorylistChange(selectedValue) {
+        debugger;
+        var selectedValueId = document.getElementById('SortList').value;
+        var categoryId = document.getElementById('GetCategoryId').value;
+        $.ajax({
+            type: "GET",
+            url: '/SubCategory/SortSubCategoryList?value=' + selectedValueId + "&&categoryId=" + categoryId,
+            success: function (response) {
+                debugger;
+                $("#subCategoryList").html(response);
+            }
+        });
+    }
+</script>

@@ -10,23 +10,25 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
+
+                <input type="hidden" value="@ViewBag.SubCategoryId" id="GetSubCategoryId" />
                 <span style="color:white;font-size:large;">Sort By :</span>
                 @Html.DropDownList("SortList", new List<SelectListItem>{
            new SelectListItem{ Text="Date", Value = "1" },
            new SelectListItem{ Text="Price", Value = "2" },
-           }, "All", new { onchange = "SortListChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
+           }, "All", new { onchange = "SortItemslistChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
             </div>
             <div class="col-sm-6" id="Subcategoriesdiv" style="text-align:end">
                 <span style="color:white;font-size:large;">Sub Categories : </span>
                 @Html.DropDownList("Subcategories", ViewBag.SubCategorylist as IEnumerable<SelectListItem>, "All", new { @class = "form-control", @style = "display:initial;width:auto;" })
             </div>
         </div>
-        <div class="row">
+        <div class="row" id="itemsList">
 
             @foreach (var subCate in ViewBag.SCats)
             {
 
-                <div class="col-sm-4 showItemsOfSubCategories">
+                <div  class="col-sm-4 showItemsOfSubCategories">
                     <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
                     <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
@@ -58,3 +60,21 @@
     </div>
 </div>
 <!-- New Arrivals section end -->
+
+
+<script>
+    function SortItemslistChange(value) {
+        debugger;
+        var selectedValueId = document.getElementById('SortList').value;
+        var subCategoryId = document.getElementById('GetSubCategoryId').value;
+        $.ajax({
+            type: "GET",
+            url: '/Items/SortItemList?value=' + selectedValueId + "&&subCategoryId=" + subCategoryId,
+            success: function (response) {
+                debugger;
+                $("#itemsList").html("");
+                $("#itemsList").html(response);
+            }
+        });
+    }
+</script>

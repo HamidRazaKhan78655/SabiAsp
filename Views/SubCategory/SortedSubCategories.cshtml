@@ -1,0 +1,38 @@
+﻿@model List<SabiAsp.Models.SubCategory>
+
+@foreach (var subCate in Model)
+{
+
+    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(1, '@subCate.name', @subCate.SubCategorieId)">
+        <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
+        <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
+
+        <div class="row best_shoes">
+            <div class="col-md-4">
+                <div class="shoes_icon"><img src="~/Content/Template/images/shoes-img4.png"></div>
+            </div>
+            <div class="col-md-8">
+                <div class="best_shoes">
+
+                    <p class="best_text" style="text-align:left;padding-left: 25px;">@subCate.name</p>
+
+                    <div class="star_text">
+                        <div class="left_part">
+                            <ul>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                            </ul>
+                        </div>
+                        @*<div class="right_part">
+                                <div class="shoes_price">Items : <span style="color: #ff4e5b;">60</span></div>
+                            </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}

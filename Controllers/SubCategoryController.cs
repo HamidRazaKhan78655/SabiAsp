@@ -141,5 +141,26 @@ namespace SabiAsp.Controllers
             return "error";
         }
         #endregion
+
+        public ActionResult SortSubCategoryList(string value, string categoryId)
+        {
+            int cId = int.Parse(categoryId);
+            var subCategory = new List<SubCategory>();
+            if (value == "1")
+            {
+                subCategory = Db.SubCategories.Where(x => x.CategoryId == cId && x.isDeleted != "true").OrderByDescending(x => x.CreatedDate).ToList();
+            }
+            else if (value == "2")
+            {
+                subCategory = Db.SubCategories.Where(x => x.CategoryId == cId && x.isDeleted != "true").OrderBy(x => x.name).ToList();
+            }
+            else
+            {
+                subCategory = Db.SubCategories.Where(x => x.CategoryId == cId && x.isDeleted != "true").ToList();
+            }
+
+            return PartialView("SortedSubCategories", subCategory);
+        }
+
     }
 }

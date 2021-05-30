@@ -22,6 +22,7 @@ namespace SabiAsp.Controllers
         public ActionResult GetSubCategoriesByCategory(int id, string name)
         {
             ViewBag.Category = name;
+            ViewBag.CategoryId = id;
             ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.CategoryId == id).ToList();
             return View();
         }
@@ -29,6 +30,7 @@ namespace SabiAsp.Controllers
         {
             var items = Db.items.Where(x=>x.SubCategorieId == subCategorieId).ToList();
             ViewBag.Category = name;
+            ViewBag.SubCategoryId = subCategorieId;
             ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.CategoryId == id).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
             list = ViewBag.SubCategorylist;
             ViewBag.SCats = items;
