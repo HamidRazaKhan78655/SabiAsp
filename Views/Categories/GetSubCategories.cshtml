@@ -3,8 +3,8 @@
     ViewBag.Title = "GetSubCategories";
     ViewBag.LayoutPage = "sub";
     Layout = "~/Views/Shared/LayoutSub.cshtml";
-}   
- <!-- New Arrivals section start -->
+}
+<!-- New Arrivals section start -->
 <div class="collection_text">@ViewBag.Category</div>
 <div class="layout_padding gallery_section">
     <div class="container">
@@ -18,9 +18,12 @@
            new SelectListItem{ Text="Price", Value = "2" },
            }, "All", new { onchange = "SortItemslistChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
             </div>
-            <div class="col-sm-6" id="Subcategoriesdiv" style="text-align:end">
+            <div class="col-sm-4" id="Subcategoriesdiv" style="text-align:end">
                 <span style="color:white;font-size:large;">Sub Categories : </span>
                 @Html.DropDownList("Subcategories", ViewBag.SubCategorylist as IEnumerable<SelectListItem>, "All", new { @class = "form-control", @style = "display:initial;width:auto;" })
+            </div>
+            <div class="col-sm-2" style="text-align:end">
+                <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Item" id="addItemBtn" data-target="#vendorShopItemBootstrapModal" data-toggle="modal" />
             </div>
         </div>
         <div class="row" id="itemsList">
@@ -28,7 +31,7 @@
             @foreach (var subCate in ViewBag.SCats)
             {
 
-                <div  class="col-sm-4 showItemsOfSubCategories">
+                <div class="col-sm-4 showItemsOfSubCategories">
                     <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
                     <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
@@ -39,11 +42,11 @@
                         <div class="star_text">
                             <div class="left_part">
                                 <ul>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png"/></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
                                 </ul>
                             </div>
                             <div class="right_part">
@@ -54,12 +57,155 @@
                 </div>
             }
         </div>
-@*        <div id="item_View" style="">
+        @*        <div id="item_View" style="">
 
-        </div>*@
+            </div>*@
     </div>
 </div>
 <!-- New Arrivals section end -->
+
+@* add/update item start*@
+<input type="hidden" id="openItemModal" data-target="#updateItemBootstrapModal" data-toggle="modal" />
+
+<div id="editItem">
+    @{
+        using (Html.BeginForm("UpdateItem", "Items", FormMethod.Post, new { id = "updateItemForm" }))
+        {
+            @*item strat*@
+            <div class="modal fade " id="updateItemBootstrapModal">
+                <div class="modal-dialog w-item-modal-dialog">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                            <h4 class="title" style="color:white;">Update Item</h4>
+
+                            <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-times" style="color:white;"></i>
+                            </button>
+                        </div>
+                        <div style="width:100%; overflow:auto" class="ModelTrack">
+                            <div class="modal-body" style="width:100%">
+                                <div id="ItemDiv">
+                                    <input type="hidden" id="updateItemId" name="updateItemId" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Item Name :</label>
+                                            <input type="text" class="form-control" id="updateItemName" name="updateItemName" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Item Weight :</label>
+                                            <input type="text" class="form-control" id="updateItemWeight" name="updateItemWeight" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Item Price :</label>
+                                            <input type="text" class="form-control" id="updateItemPrice" name="updateItemPrice" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Sub Category :</label>
+                                            <select class="form-control" id="UpdateSubCategorydrp" name="UpdateSubCategorydrp" required>
+                                                @*@foreach (var item in ViewBag.SubCategories)
+                                                {
+                                                    <option value="@item.SubCategorieId">@item.name</option>
+                                                }*@
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Shop :</label>
+                                            <select class="form-control" id="UpdateShopIddrp" name="UpdateShopIddrp" required>
+                                                @*@foreach (var item in ViewBag.Shops)
+                                                {
+                                                    <option value="@item.Shopid">@item.shopname</option>
+                                                }*@
+                                            </select>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label>Image :</label>
+                                            <input type="file" class="" id="ItemImage" name="ItemImage" multiple />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <input type="button" class="btn btn-info" value="Update" onclick="UpdateItemInfo();" style="float:right;margin:10px 0;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*item end*@
+        }
+    }
+</div>
+
+
+<div id="addShopItem">
+    @{
+        using (Html.BeginForm("AddShopItem", "Items", FormMethod.Post, new { id = "addVendorShopItemForm" }))
+        {
+
+            @*item strat*@
+            <div class="modal fade " id="vendorShopItemBootstrapModal">
+                <div class="modal-dialog w-item-modal-dialog">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                            <h4 class="title" style="color:white;">Add Item</h4>
+
+                            <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-times" style="color:white;"></i>
+                            </button>
+                        </div>
+                        <div style="width:100%; overflow:auto" class="ModelTrack">
+                            <div class="modal-body" style="width:100%">
+                                <div id="ItemDiv">
+                                    <div class="row">
+
+                                        <input type="hidden" class="form-control" id="shopUserId" name="shopUserId" value="@ViewBag.logedinUserId" />
+                                        <div class="col-md-6">
+                                            <label>Item Name :</label>
+                                            <input type="text" class="form-control" id="shopItemName" name="shopItemName" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Item Weight :</label>
+                                            <input type="text" class="form-control" id="shopItemWeight" name="shopItemWeight" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Item Price :</label>
+                                            <input type="text" class="form-control" id="shopItemPrice" name="shopItemPrice" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Sub Category :</label>
+                                            <select class="form-control" id="shopSubCategorydrp" name="shopSubCategorydrp" required>
+                                                @foreach (var item in ViewBag.SubCategorylist)
+                                                {
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        @*<div class="col-md-12">
+                                            <label>Shop :</label>
+                                            <input type="text" class="form-control" id="itemShopName" name="itemShopName" readonly />
+
+                                        </div>*@
+                                        <div class="col-md-12">
+                                            <label>Image :</label>
+                                            <input type="file" class="" id="shopItemImage" name="shopItemImage" multiple />
+                                        </div>
+                                    </div>
+
+                                    <input type="button" class="btn btn-info" value="Add" onclick="addVendorItemData();" style="float:right;margin:10px 0;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*item end*@
+
+
+        }
+    }
+</div>
+@* add/update item end*@
 
 
 <script>
@@ -74,6 +220,51 @@
                 debugger;
                 $("#itemsList").html("");
                 $("#itemsList").html(response);
+            }
+        });
+    }
+
+    function addVendorItemData() {
+        debugger;
+        if (document.getElementById('shopItemName').value == "") {
+            alert("Please enter Item Name.");
+            return;
+        }
+        if (document.getElementById('shopItemWeight').value == "") {
+            alert("Please enter Item Weight.");
+            return;
+        }
+        if (document.getElementById('shopItemPrice').value == "") {
+            alert("Please enter Item Price.");
+            return;
+        }
+        if (document.getElementById('shopSubCategorydrp').value == "") {
+            alert("Select one Sub Category.");
+            return;
+        }
+
+        f = new FormData($("#addVendorShopItemForm")[0]);
+
+        $.ajax({
+            url: '/Items/AddShopItem',
+            type: 'POST',
+            data: f,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                if (data == "success") {
+                    $(".close").trigger("click");
+                    window.location.reload();
+                }
+                else {
+                    alert("Item already exist.");
+                    return;
+                }
+            },
+            error: function () {
+                debugger;
+                alert("Error");
             }
         });
     }

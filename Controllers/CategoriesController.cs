@@ -21,16 +21,38 @@ namespace SabiAsp.Controllers
         }
         public ActionResult GetSubCategoriesByCategory(int id, string name)
         {
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+            if (logedinUserId == 0)
+            {
+                return RedirectToAction("SabiLogin", "Login");
+            }
+            int logedinRoleID = Convert.ToInt32(Session["RoleID"]);
             ViewBag.Category = name;
-            ViewBag.CategoryId = id;
-            ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.CategoryId == id).ToList();
-            return View();
+            ViewBag.logedinRoleID = logedinRoleID;
+            if (logedinRoleID == 2)
+            {
+                ViewBag.itemsList = Db.items.OrderByDescending(x => x.CreatedBy).ToList();
+                return View();
+            }
+            else
+            {
+                ViewBag.CategoryId = id;
+                ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.CategoryId == id).ToList();
+                return View();
+            }
         }
+
         public ActionResult GetSubCategories(int id, string name, int subCategorieId)
         {
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+            if (logedinUserId == 0)
+            {
+                return RedirectToAction("SabiLogin", "Login");
+            }
             var items = Db.items.Where(x=>x.SubCategorieId == subCategorieId).ToList();
             ViewBag.Category = name;
             ViewBag.SubCategoryId = subCategorieId;
+            ViewBag.logedinUserId = logedinUserId;
             ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.CategoryId == id).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
             list = ViewBag.SubCategorylist;
             ViewBag.SCats = items;
