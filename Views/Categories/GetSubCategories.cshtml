@@ -42,7 +42,7 @@
             @foreach (var subCate in ViewBag.SCats)
             {
 
-                <div class="col-sm-4 showItemsOfSubCategories">
+                <div class="col-sm-4 showItemsOfSubCategories" onclick="GetVendorItemData(@subCate.ItemId, '@subCate.name', '@subCate.Weight', '@subCate.Price', '@subCate.image', @subCate.Shopid, @subCate.SubCategorieId);">
                     <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
                     <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
@@ -76,14 +76,14 @@
 <!-- New Arrivals section end -->
 
 @* add/update item start*@
-<input type="hidden" id="openItemModal" data-target="#updateItemBootstrapModal" data-toggle="modal" />
+<input type="hidden" id="openVendorItemModal" data-target="#updateVendorItemBootstrapModal" data-toggle="modal" />
 
 <div id="editItem">
     @{
-        using (Html.BeginForm("UpdateItem", "Items", FormMethod.Post, new { id = "updateItemForm" }))
+        using (Html.BeginForm("UpdateItem", "Items", FormMethod.Post, new { id = "updateVendorItemForm" }))
         {
             @*item strat*@
-            <div class="modal fade " id="updateItemBootstrapModal">
+            <div class="modal fade " id="updateVendorItemBootstrapModal">
                 <div class="modal-dialog w-item-modal-dialog">
                     <div class="modal-content">
                         <!--Header-->
@@ -98,6 +98,7 @@
                             <div class="modal-body" style="width:100%">
                                 <div id="ItemDiv">
                                     <input type="hidden" id="updateItemId" name="updateItemId" />
+                                    <input type="hidden" id="UpdateShopIddrp" name="UpdateShopIddrp" />
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label>Item Name :</label>
@@ -114,19 +115,10 @@
                                         <div class="col-md-6">
                                             <label>Sub Category :</label>
                                             <select class="form-control" id="UpdateSubCategorydrp" name="UpdateSubCategorydrp" required>
-                                                @*@foreach (var item in ViewBag.SubCategories)
+                                                @foreach (var item in ViewBag.SubCategorylist)
                                                 {
-                                                    <option value="@item.SubCategorieId">@item.name</option>
-                                                }*@
-                                            </select>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label>Shop :</label>
-                                            <select class="form-control" id="UpdateShopIddrp" name="UpdateShopIddrp" required>
-                                                @*@foreach (var item in ViewBag.Shops)
-                                                {
-                                                    <option value="@item.Shopid">@item.shopname</option>
-                                                }*@
+                                                    <option value="@item.Value">@item.Text</option>
+                                                }
                                             </select>
                                         </div>
                                         <div class="col-md-12">
@@ -136,7 +128,7 @@
                                     </div>
                                 </div>
 
-                                <input type="button" class="btn btn-info" value="Update" onclick="UpdateItemInfo();" style="float:right;margin:10px 0;" />
+                                <input type="button" class="btn btn-info" value="Update" onclick="updateVendorItemData();" style="float:right;margin:10px 0;" />
                             </div>
                         </div>
                     </div>
@@ -192,11 +184,6 @@
                                                 }
                                             </select>
                                         </div>
-                                        @*<div class="col-md-12">
-                                            <label>Shop :</label>
-                                            <input type="text" class="form-control" id="itemShopName" name="itemShopName" readonly />
-
-                                        </div>*@
                                         <div class="col-md-12">
                                             <label>Image :</label>
                                             <input type="file" class="" id="shopItemImage" name="shopItemImage" multiple />
@@ -270,6 +257,64 @@
                 }
                 else {
                     alert("Item already exist.");
+                    return;
+                }
+            },
+            error: function () {
+                debugger;
+                alert("Error");
+            }
+        });
+    }
+
+    function GetVendorItemData(itemId, itemName, itemWeight, itemPrice, itemImage, shopId, subCategoryId) {
+        debugger;
+        $("#updateItemId").val(itemId);
+        $("#updateItemName").val(itemName);
+        $("#updateItemWeight").val(itemWeight);
+        $("#updateItemPrice").val(itemPrice);
+        $("#updateItemImage").val(itemImage);
+        $("#UpdateShopIddrp").val(shopId);
+        $("#UpdateSubCategorydrp").val(subCategoryId);
+        $("#openVendorItemModal").trigger("click");
+    }
+
+    function updateVendorItemData() {
+        debugger;
+        if (document.getElementById('updateItemName').value == "") {
+            alert("Please enter Item Name.");
+            return;
+        }
+        if (document.getElementById('updateItemWeight').value == "") {
+            alert("Please enter Item Weight.");
+            return;
+        }
+        if (document.getElementById('updateItemPrice').value == "") {
+            alert("Please enter Item Price.");
+            return;
+        }
+        if (document.getElementById('UpdateSubCategorydrp').value == "") {
+            alert("Select one Sub Category.");
+            return;
+        }
+
+        f = new FormData($("#updateVendorItemForm")[0]);
+
+        $.ajax({
+            url: '/Items/UpdateItem',
+            type: 'POST',
+            data: f,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                if (data == "success") {
+                    alert("Item updated successfully.");
+                    $(".close").trigger("click");
+                    window.location.reload();
+                }
+                else {
+                    alert("Record not updated.");
                     return;
                 }
             },
