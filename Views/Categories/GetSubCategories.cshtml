@@ -18,13 +18,24 @@
            new SelectListItem{ Text="Price", Value = "2" },
            }, "All", new { onchange = "SortItemslistChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
             </div>
-            <div class="col-sm-4" id="Subcategoriesdiv" style="text-align:end">
-                <span style="color:white;font-size:large;">Sub Categories : </span>
-                @Html.DropDownList("Subcategories", ViewBag.SubCategorylist as IEnumerable<SelectListItem>, "All", new { @class = "form-control", @style = "display:initial;width:auto;" })
-            </div>
-            <div class="col-sm-2" style="text-align:end">
-                <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Item" id="addItemBtn" data-target="#vendorShopItemBootstrapModal" data-toggle="modal" />
-            </div>
+            @if (ViewBag.logedinRoleID == 3)
+            {
+                <div class="col-sm-4" id="Subcategoriesdiv" style="text-align:end">
+                    <span style="color:white;font-size:large;">Sub Categories : </span>
+                    @Html.DropDownList("Subcategories", ViewBag.SubCategorylist as IEnumerable<SelectListItem>, "All", new { @class = "form-control", @style = "display:initial;width:auto;" })
+                </div>
+                <div class="col-sm-2" style="text-align:end">
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Item" id="addItemBtn" data-target="#vendorShopItemBootstrapModal" data-toggle="modal" />
+                </div>
+            }
+            else
+            {
+                <div class="col-sm-6" id="Subcategoriesdiv" style="text-align:end">
+                    <span style="color:white;font-size:large;">Sub Categories : </span>
+                    @Html.DropDownList("Subcategories", ViewBag.SubCategorylist as IEnumerable<SelectListItem>, "All", new { @class = "form-control", @style = "display:initial;width:auto;" })
+                </div>
+            }
+
         </div>
         <div class="row" id="itemsList">
 
