@@ -264,11 +264,23 @@
                 }
             });
         }
-        function loginWithSabi()
-        {
+        function loginWithSabi() {
             window.location.href = "/Login/SabiLogin/"
         }
+        var SearchItemsFlag = 0;
+        function SearchItems() {
+            $('.searchEveryThing');
+            if (SearchItemsFlag == 0) {
+                $('.searchEveryThing').css('display', 'block');
+                SearchItemsFlag = 1;
+            } else {
+                $('.searchEveryThing').css('display', 'none');
+                SearchItemsFlag = 0;
+            }
+        }
     </script>
+    
+
 </head>
 <!-- body -->
 <body class="main-layout">
@@ -307,9 +319,9 @@
                                     <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
 
                                         @*<div onclick="loadCategories(1,'Groceries')">Groceries</div>
-                                        <div onclick="loadCategories(2, 'Pharmacy')">Pharmacy</div>
-                                        <div onclick="loadCategories(3,'Bakery')">Bakery</div>
-                                        <div onclick="loadCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>*@
+                <div onclick="loadCategories(2, 'Pharmacy')">Pharmacy</div>
+                <div onclick="loadCategories(3,'Bakery')">Bakery</div>
+                <div onclick="loadCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>*@
 
                                         <div onclick="loadSubCategories(1,'Groceries')">Groceries</div>
                                         <div onclick="loadSubCategories(2, 'Pharmacy')">Pharmacy</div>
@@ -317,7 +329,13 @@
                                         <div onclick="loadSubCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
                                     </div>
                                 </a>
-                                <a class="nav-item nav-link last" href="#"><img src="~/Content/Template/images/search_icon.png"></a>
+                              
+                                <a class="nav-item nav-link last" href="#">
+                                    <img src="~/Content/Template/images/search_icon.png" onclick="SearchItems()"> <div class="searchEveryThing" style=" position: absolute; margin-left: -188px; /* margin-top: 10px; */ display:none">
+                                        <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
+                                        <input class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " />
+                                    </div>
+                                </a>
                                 <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>
                                 <a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>
                                 <a id="SignInbtn" class="nav-item nav-link" style="cursor:pointer;">
@@ -359,7 +377,7 @@
                                 </a>
                                 @*<a class="nav-item nav-link" href="contact.html">Contact</a>*@
 
-                                <a class="nav-item nav-link last">
+                                <a class="nav-item nav-link last" style="display:none">
                                     <img src="~/Images/noimage.jpg" style=" height: 30px; width: 30px;" id="profilebtn" />
                                     <div id="profile" class="dropdownStyle" style="z-index: 1; right: 5px; width: 360px; padding-bottom: 5px; padding-right: 5px; display: none;">
                                         <div class="container-fluid">
@@ -501,80 +519,180 @@
             </div>
         </div>
 
-        <div style="height:500px;">
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner" style="left:10%">
-                    <div class="carousel-item active">
-                        <div class="container-fluid mrleft">
-                            <p class="bkcolor">Meet our some of our partner Merchants</p>
-                            <div class="carousalinner">
-                                <img src="~/Images/FacebookIcon.png" />
-                                <div class="pd">
-                                    <span class="bkcolor">
-                                        Lorem Ipsum is simply dummy text of the printing  anf typesetting  industry.Lorem Ipsum has been the industry s
-                                        standerd dummy text ever since the 1500s ,When an unknown printer took a galley of type and scrembeld it to make
-                                        a type spicman book.
-                                    </span>
-                                    <input type="button" value="Shop Now" class="btn" />
-                                    <img src="~/Images/appDownload.png" />
+    </div>
+
+    <style>
+            .sabiCurausal {
+                height: 1400px;
+                position: relative;
+                top: 43px;
+                z-index:-1;
+                @*display:none;*@
+            }
+            .sabiCurausalInner {
+                height: 100%;
+                width: 100%;
+            }
+            .sabiCurausalItem1 {
+            }
+            .sabiCurausalItem2 {
+                display:none;
+            }
+            .sabiCurausalItem3 {
+                display: none;
+            }
+            .sabiCurausalHeader {
+                color: #150247;
+                font-size: 20px;
+                margin-left: 19%;
+                font-weight: 500;
+                position: relative;
+                top: 26px;
+                text-align:center;
+                font-size:35px;
+            }
+            .sabiCurausalMain {
+                height: auto;
+                display: flex;
+                width: 90%;
+                margin: 6%;
+            }
+            .sabiCurausalImage {
+                width: 411px;
+
+            }
+                .sabiCurausalImage img {
+                    max-width: 290px !important;
+                }
+        .sabiCurausalText {
+            font-size: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: black;
+            padding: 30px;
+        }
+            .sabiCurausalbtn {
+                margin: auto;
+                display: block;
+                margin-top: -11%;
+            }
+    </style>
+    <div class="sabiCurausal">
+
+        <div class="sabiCurausalLeft" style=" font-size: 60px;
+        position: relative;
+        top: 14%;
+        left: 2%;
+">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="sabiCurausalRight" style=" float: right; font-size: 60px; position: relative; top: 7%;right:1%">
+            <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="sabiCurausalInner">
+            <div class="sabiCurausalItem1">
+                <p class="sabiCurausalHeader">Meet our some of our Partner Merchants:</p>
+                <div class="sabiCurausalMain">
+                    <div class="sabiCurausalImage"><img src="~/Content/Template/images/shoes-img1.png" /></div>
+                    <div class="sabiCurausalText">
+                        It is a long established fact that a reader will be distracted by the
+                        readable content of a page when looking at its layout. The point of using
+                    </div>
+                </div>
+
+                <input type="button" class="btn btn-info sabiCurausalbtn" value="Shop Now" />
+            </div>
+            <div class="sabiCurausalItem2">
+                <p class="sabiCurausalHeader">Meet our some of our Partner Merchants:</p>
+                <div class="sabiCurausalMain">
+                    <div class="sabiCurausalImage"><img src="~/Content/Template/images/search_icon.png" />
+                   
+                    </div>
+                    <div class="sabiCurausalText">
+                        It is a long established fact that a reader will be distracted by the
+                        readable content of a page when looking at its layout. The point of using Lore
+                    </div>
+                </div>
+
+                <input type="button" class="btn btn-info sabiCurausalbtn" value="Shop Now" />
+            </div>
+            <div class="sabiCurausalItem3">
+                <p class="sabiCurausalHeader">Meet our some of our Partner Merchants:</p>
+                <div class="sabiCurausalMain">
+                    <div class="sabiCurausalImage"><img src="~/Content/Template/images/search_icon.png" /></div>
+                    <div class="sabiCurausalText">
+                        It is a long established fact that a reader will be distracted by the
+                        readable content of a page when looking at its layout. The point of using Lorem Ipsum is
+                    </div>
+                </div>
+
+                <input type="button" class="btn btn-info sabiCurausalbtn" value="Shop Now" />
+            </div>
+        </div>
+
+    </div>
+    <div class="container" style="        height: 315px;
+        margin-top: -13%;
+        border-radius: 10px;
+        margin-bottom: 3%;
+        background: #f7f5f5;
+">
+        <div class="row">
+            <div class="col-12">
+                <style>
+                    .downloadApp {
+                        font-weight: 600;
+                        color: #adadad;
+                        font-size: 32px;
+                        text-align: center;
+                        margin-top: 15px;
+                    }
+                </style>
+                <div>
+                    <h1 class="downloadApp"> Download Our App</h1>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-8" style="margin-top:70px">
+                                <div class="row">
+                                    <div class="col-3" style="display:flex;min-width:243px;">
+                                        <div>
+                                            <img style="height: 58px; width: 53px; max-width: 100px;" src="/Images/play1.png" />
+                                        </div>
+                                        <div>
+                                            <h3 style=" width: 194px; margin-left: 10px; margin-top: 7px; font-size: 28px;">Google Play</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-3" style="        display: flex;
+        min-width: 200px;">
+                                        <div>
+                                            <img style="height: 58px; width: 53px; max-width: 100px;" src="/Images/android1.png" />
+                                        </div>
+                                        <div>
+                                            <h3 style=" width: 194px; margin-left: 10px; margin-top: 7px; font-size: 28px;">Android</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-3" style="        display: flex;
+        min-width: 243px;
+">
+                                        <div>
+                                            <img style="height: 58px; width: 90px; max-width: 100px;" src="/Images/Apple.png" />
+                                        </div>
+                                        <div>
+                                            <h3 style=" width: 194px; margin-left: 10px; margin-top: 7px; font-size: 28px;">App Store</h3>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                           
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container-fluid mrleft">
-                            <p class="bkcolor">Meet our some of our partner Merchants</p>
-                            <div class="carousalinner">
-                                <img src="~/Images/FacebookIcon.png" />
-                                <div class="pd">
-                                    <span class="bkcolor">
-                                        Lorem Ipsum is simply dummy text of the printing  anf typesetting  industry.Lorem Ipsum has been the industry s
-                                        standerd dummy text ever since the 1500s ,When an unknown printer took a galley of type and scrembeld it to make
-                                        a type spicman book.
-                                    </span>
-                                    <input type="button" value="Shop Now" class="btn" />
-                                    <img src="~/Images/appDownload.png" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="container-fluid mrleft">
-                            <p class="bkcolor">Meet our some of our partner Merchants</p>
-                            <div class="carousalinner">
-                                <img src="~/Images/FacebookIcon.png" />
-                                <div class="pd">
-                                    <span class="bkcolor">
-                                        Lorem Ipsum is simply dummy text of the printing  anf typesetting  industry.Lorem Ipsum has been the industry s
-                                        standerd dummy text ever since the 1500s ,When an unknown printer took a galley of type and scrembeld it to make
-                                        a type spicman book.
-                                    </span>
-                                    <input type="button" value="Shop Now" class="btn" />
-                                    <img src="~/Images/appDownload.png" />
-                                </div>
+                            <div class="col-4">
+                                <img src="~/Images/mobile.png" style="height: 266px; float: right;" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" >
-                    <span class="carousel-control-prev-icon" aria-hidden="true" style="background-image: url(../Images/less.png)"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true" style="background-image: url(../Images/greater.png)"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
         </div>
-    </div>
 
-   
+    </div>
 
     <!-- header section end -->
     @RenderBody();
