@@ -164,6 +164,87 @@ body {
 }
 /*///////////////////////////////////////Admin End////////////////////////////////////////*/
 
+.jss261 {
+    top: 8px;
+    padding: 5px;
+    z-index: 1;
+    position: absolute;
+    min-width: 24px;
+    border-radius: 20px;
+    background-color: #fd4d5a;
+    margin-left: 17px;
+}
+
+.jss262 {
+    text-align: center;
+}
+
+.jss439 {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif;
+    line-height: normal;
+}
+
+.jss260 {
+    color: #1C2223;
+    margin-right: 8px;
+}
+
+
+.jss305 {
+    flex: 0 0 auto;
+    color: rgba(0, 0, 0, 0.54);
+    padding: 12px;
+    overflow: visible;
+    font-size: 1.5rem;
+    text-align: center;
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    border-radius: 50%;
+}
+
+.jss311 {
+    color: inherit;
+    border: 0;
+    margin: 0;
+    cursor: pointer;
+    display: inline-flex;
+    outline: none;
+    padding: 0;
+    position: relative;
+    align-items: center;
+    user-select: none;
+    border-radius: 0;
+    vertical-align: middle;
+    justify-content: center;
+    -moz-appearance: none;
+    text-decoration: none;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.jss310 {
+    width: 100%;
+    display: flex;
+    align-items: inherit;
+    justify-content: inherit;
+}
+
+
+.jss314 {
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    font-size: 24px;
+    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+
 
 
 /*////////////////////////////////Login Modal CSS start///////////////////////*/

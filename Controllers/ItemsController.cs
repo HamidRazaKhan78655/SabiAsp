@@ -49,7 +49,7 @@ namespace SabiAsp.Controllers
             using (var db = new sabiShopEntities())
             {
 
-               var  data = db.items.Where(d => d.SubCategorieId == id).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
+                var data = db.items.Where(d => d.SubCategorieId == id).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
 
@@ -60,25 +60,25 @@ namespace SabiAsp.Controllers
         {
             using (var db = new sabiShopEntities())
             {
-                var data = db.items.Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image ,weight=d.Weight,price=d.Price }).ToList();
+                var data = db.items.Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-        } 
-        
+        }
+
         [HttpGet]
         public ActionResult GetSortList(int id)
         {
             using (var db = new sabiShopEntities())
             {
-                
-                if (id==1)
+
+                if (id == 1)
                 {
-                    var data= db.items.OrderBy(x => x.CreatedDate).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
+                    var data = db.items.OrderBy(x => x.CreatedDate).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
                     return Json(data, JsonRequestBehavior.AllowGet);
                 }
-                
-                    var data1 = db.items.OrderBy(x => x.Price).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
-                    return Json(data1, JsonRequestBehavior.AllowGet); 
+
+                var data1 = db.items.OrderBy(x => x.Price).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image, weight = d.Weight, price = d.Price }).ToList();
+                return Json(data1, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -105,27 +105,27 @@ namespace SabiAsp.Controllers
             if (itemData == null)
             {
                 for (int i = 0; i < Request.Files.Count; i++)
-            {
-                try
                 {
-                    var file = Request.Files[i];
-                    string namefile = string.Empty;
-                    namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
-                    if (string.IsNullOrEmpty(namefile) == false)
+                    try
                     {
-                        Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
-                        _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
-                        var path = Server.MapPath("~/CompanyImages/");
-                        string SavePath = path + _fileName;
-                        b.Save(SavePath, ImageFormat.Png);
-                        item.image = _fileName;
+                        var file = Request.Files[i];
+                        string namefile = string.Empty;
+                        namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                        if (string.IsNullOrEmpty(namefile) == false)
+                        {
+                            Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                            _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
+                            var path = Server.MapPath("~/CompanyImages/");
+                            string SavePath = path + _fileName;
+                            b.Save(SavePath, ImageFormat.Png);
+                            item.image = _fileName;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
                     }
                 }
-                catch (Exception ex)
-                {
-
-                }
-            }
                 var vendor = Db.vendors.Where(x => x.UserId == shopUserId).SingleOrDefault();
                 var shop = Db.Shops.Where(x => x.vendorid == vendor.vendorid).SingleOrDefault();
 
@@ -160,27 +160,27 @@ namespace SabiAsp.Controllers
             if (item == null)
             {
                 for (int i = 0; i < Request.Files.Count; i++)
-            {
-                try
                 {
-                    var file = Request.Files[i];
-                    string namefile = string.Empty;
-                    namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
-                    if (string.IsNullOrEmpty(namefile) == false)
+                    try
                     {
-                        Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
-                        _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
-                        var path = Server.MapPath("~/CompanyImages/");
-                        string SavePath = path + _fileName;
-                        b.Save(SavePath, ImageFormat.Png);
-                        item.image = _fileName;
+                        var file = Request.Files[i];
+                        string namefile = string.Empty;
+                        namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                        if (string.IsNullOrEmpty(namefile) == false)
+                        {
+                            Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                            _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
+                            var path = Server.MapPath("~/CompanyImages/");
+                            string SavePath = path + _fileName;
+                            b.Save(SavePath, ImageFormat.Png);
+                            item.image = _fileName;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
                     }
                 }
-                catch (Exception ex)
-                {
-
-                }
-            }
 
                 item.name = name;
                 item.Weight = weight;
@@ -283,7 +283,7 @@ namespace SabiAsp.Controllers
             {
                 itemList = Db.items.Where(x => x.SubCategorieId == subCId && x.isDeleted != "true").OrderByDescending(x => x.CreatedDate).ToList();
             }
-            else if(value == "2")
+            else if (value == "2")
             {
                 itemList = Db.items.Where(x => x.SubCategorieId == subCId && x.isDeleted != "true").OrderByDescending(x => x.name).ToList();
             }
@@ -293,6 +293,26 @@ namespace SabiAsp.Controllers
             }
 
             return PartialView("SortedItems", itemList);
+        }
+       
+        public bool SaveBuyProducts(string userid,string itemid)
+        {
+            try
+            {
+                if (userid != null && itemid != null || userid != "" && itemid != "")
+                {
+
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+
+
+            return false;
         }
     }
 }

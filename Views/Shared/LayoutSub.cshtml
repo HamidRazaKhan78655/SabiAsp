@@ -286,23 +286,34 @@
                                 </a>
                                 <a class="nav-item nav-link" id="Categories" style="cursor:pointer">
                                     Categories<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
-                                              <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
+                                    <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
 
-                                                  @*<div onclick="loadCategories(1 ,'Groceries')">Groceries</div>
-        <div onclick="loadCategories(2,'Pharmacy')">Pharmacy</div>
-        <div onclick="loadCategories(3,'Bakery')">Bakery</div>
-        <div onclick="loadCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>*@
+                                        @*<div onclick="loadCategories(1 ,'Groceries')">Groceries</div>
+                <div onclick="loadCategories(2,'Pharmacy')">Pharmacy</div>
+                <div onclick="loadCategories(3,'Bakery')">Bakery</div>
+                <div onclick="loadCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>*@
 
 
-                                                  <div onclick="loadSubCategories(1,'Groceries')">Groceries</div>
-                                                  <div onclick="loadSubCategories(2, 'Pharmacy')">Pharmacy</div>
-                                                  <div onclick="loadSubCategories(3,'Bakery')">Bakery</div>
-                                                  <div onclick="loadSubCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
-                                              </div>
+                                        <div onclick="loadSubCategories(1,'Groceries')">Groceries</div>
+                                        <div onclick="loadSubCategories(2, 'Pharmacy')">Pharmacy</div>
+                                        <div onclick="loadSubCategories(3,'Bakery')">Bakery</div>
+                                        <div onclick="loadSubCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
+                                    </div>
                                 </a>
                                 <a class="nav-item nav-link last" href="#"><img src="~/Content/Template/images/search_icon.png"></a>
                                 <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>
-                                <a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>
+                                @*<a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>*@
+                                <a class="jss109 nav-item nav-link last" href="/cart">
+                                    <div class="jss261">
+                                        <div class="jss439 jss262">0</div>
+                                    </div>
+                                    <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
+                                        <span class="jss310">
+                                            <img src="~/Content/Template/images/shop_icon.png">
+                                        </span>
+                                        <span class="jss700"></span>
+                                    </button>
+                                </a>
                                 <a id="SignInbtn" class="nav-item nav-link" style="cursor:pointer;">
                                     Sign In
                                     <div id="SignIn" style="display:none;" class="dropdownStyle">
@@ -546,6 +557,8 @@
     <script src="~/Content/wwwroot/js/script.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
+
+            debugger;
           @*  $(".fancybox").fancybox({
                 openEffect: "none",
                 closeEffect: "none"
