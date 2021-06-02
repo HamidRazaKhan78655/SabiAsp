@@ -299,13 +299,30 @@ namespace SabiAsp.Controllers
         {
             try
             {
+                int uid = int.Parse(userid);
+                int iid= int.Parse(itemid);
                 if (userid != null && itemid != null || userid != "" && itemid != "")
                 {
-
-                    return true;
+                    var itemData = Db.UserItemCards.Where(x => x.UesrId == uid && x.ItemId ==iid && x.isDeleted != "true").Count();
+                    //var itemData = Db.UserItemCards.Where(x => x.UesrId == int.Parse(userid) && x.ItemId==int.Parse(itemid) && x.isDeleted != "true").FirstOrDefault();
+                    if (itemData==0)
+                    {
+                        UserItemCard card = new UserItemCard();
+                        card.ItemId = uid;
+                        card.UesrId = iid;
+                        card.isDeleted = "false";
+                        Db.UserItemCards.Add(card);
+                        Db.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                       
+                    }
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 return false;

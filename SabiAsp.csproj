@@ -202,6 +202,9 @@
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserFacebookInfoModal.cs" />
+    <Compile Include="Models\UserItemCard.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vendor.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>

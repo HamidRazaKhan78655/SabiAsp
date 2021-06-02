@@ -14,6 +14,12 @@ namespace SabiAsp.Models
     
     public partial class item
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public item()
+        {
+            this.UserItemCards = new HashSet<UserItemCard>();
+        }
+    
         public int ItemId { get; set; }
         public Nullable<int> SubCategorieId { get; set; }
         public string name { get; set; }
@@ -36,5 +42,7 @@ namespace SabiAsp.Models
     
         public virtual SubCategory SubCategory { get; set; }
         public virtual Shop Shop { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserItemCard> UserItemCards { get; set; }
     }
 }

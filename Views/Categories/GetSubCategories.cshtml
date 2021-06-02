@@ -15,17 +15,24 @@
             alert('Please sign in first');
         }
         else {
-            var valadd = $('.jss262').text();
-            var iNum = parseInt(valadd);
-            iNum = iNum + 1;
-            $('.jss262').text(iNum);
-            $('#totalitemlist').val(listofitem);
+           
             $.ajax({
                 url: '/Items/SaveBuyProducts?userid='+@ViewBag.logedinUserId+'&itemid='+id,
-                data: null,
+                type: "GET",
                 success: function (resp)
                 {
-                    
+                    debugger;
+                    if (resp == "True")
+                    {
+                        var valadd = $('.jss262').text();
+                        var iNum = parseInt(valadd);
+                        iNum = iNum + 1;
+                        $('.jss262').text(iNum);
+                        $('#totalitemlist').val(listofitem);
+                    } else
+                    {
+                        alert("Item already exist");
+                    }
                 }
             });
 
@@ -72,7 +79,7 @@
             @foreach (var subCate in ViewBag.SCats)
             {
 
-                <div class="col-sm-4 @*showItemsOfSubCategories*@" @*onclick="GetVendorItemData(@subCate.ItemId, '@subCate.name', '@subCate.Weight', '@subCate.Price', '@subCate.image', @subCate.Shopid, @subCate.SubCategorieId);"*@>
+                <div class="col-sm-4 showItemsOfSubCategories" @*onclick="GetVendorItemData(@subCate.ItemId, '@subCate.name', '@subCate.Weight', '@subCate.Price', '@subCate.image', @subCate.Shopid, @subCate.SubCategorieId);"*@>
                     <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
                     <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
@@ -92,7 +99,7 @@
                             </div>
                             <div class="right_part">
                                 <div class="shoes_price">Items : <span style="color: #ff4e5b;">60</span></div>
-                                <input type="button" class="btn" onclick="AddtoBasket(@subCate.SubCategorieId)" value="Shop Now" />
+                                <input type="button" class="btn" onclick="AddtoBasket(@subCate.ItemId)" value="Shop Now" />
                             </div>
                         </div>
                     </div>

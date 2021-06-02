@@ -18,6 +18,7 @@ namespace SabiAsp.Models
         public user()
         {
             this.vendors = new HashSet<vendor>();
+            this.UserItemCards = new HashSet<UserItemCard>();
         }
     
         public int UserId { get; set; }
@@ -44,5 +45,7 @@ namespace SabiAsp.Models
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<vendor> vendors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserItemCard> UserItemCards { get; set; }
     }
 }

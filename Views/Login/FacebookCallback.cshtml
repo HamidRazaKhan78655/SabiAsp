@@ -2,8 +2,38 @@
 
 @{
     ViewBag.Title = "FacebookCallback";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/vendor/animate/animate.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/vendor/daterangepicker/daterangepicker.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/css/util.css">
+<link rel="stylesheet" type="text/css" href="~/Content/Admin/css/main.css">
+<!--===============================================================================================-->
+<style>
+    form {
+        background: white;
+        border-radius: 10px;
+        padding: 10px;
+    }
+</style>
+
 <script>
     $(document).ready(function () {
         $("#openUserfbPassordModal").trigger("click");
@@ -79,7 +109,7 @@
                             <input type="hidden" id="Image" name="Image" value="@Model.Image" />
                             <div class="col-md-12">
                                 <label>Password :</label>
-                                <input type="password" class="form-control" id="UserPassword" name="UserPassword" required  />
+                                <input type="password" class="form-control" id="UserPassword" name="UserPassword" required />
                             </div>
                         </div>
 
@@ -91,4 +121,23 @@
     </div>
 </div>
 @*user end*@
+
+
+
+<!--===============================================================================================-->
+<script src="~/Content/Admin/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/Content/Admin/vendor/animsition/js/animsition.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/Content/Admin/vendor/bootstrap/js/popper.js"></script>
+<script src="~/Content/Admin/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/Content/Admin/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+<script src="~/Content/Admin/vendor/daterangepicker/moment.min.js"></script>
+<script src="vendor/daterangepicker/daterangepicker.js"></script>
+<!--===============================================================================================-->
+<script src="~/Content/Admin/vendor/countdowntime/countdowntime.js"></script>
+<!--===============================================================================================-->
+<script src="~/Content/Admin/js/main.js"></script>
 
