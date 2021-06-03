@@ -48,24 +48,6 @@ namespace SabiAsp.Controllers
             ViewBag.items = SearchList;
             return PartialView();
         }
-        [HttpGet]
-        public ActionResult BuyItem(int id)
-        {
-            using (var db = new sabiShopEntities())
-            {
-                var t = Session["Login"].ToString();
-                if (Session["Login"].ToString() == "")
-                {
-                    return RedirectToAction("Index");
-
-                }
-                var data1 = db.items.OrderBy(x => x.Price).Select(d => new { name = d.name, id = d.ItemId.ToString(), image = d.image }).ToList();
-                return Json(data1, JsonRequestBehavior.AllowGet);
-
-                
-
-            }
-        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

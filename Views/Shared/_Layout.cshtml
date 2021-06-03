@@ -279,6 +279,18 @@
             }
         }
 
+        function BuyItemView()
+        {
+            debugger;
+            var mySession = '<%=@Session["UserId"]=%>';
+            if (mySession =='<%==%>')
+            {
+                alert("First item select than buy");
+            } else {
+                window.open("/Items/BuyItemView?Userid=@Session["UserId"]", "_self");
+            }
+        }
+
     </script>
     
 
@@ -339,7 +351,7 @@
                                 </a>
                                 <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>
                                 @*<a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>*@
-                                <a class="jss109 nav-item nav-link last" onclick="ShowBuyItems()">
+                                <a class="jss109 nav-item nav-link last"  onclick="BuyItemView()">
                                     <div class="jss261">
                                         <div class="jss439 jss262">0</div>
                                     </div>

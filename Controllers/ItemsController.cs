@@ -294,6 +294,27 @@ namespace SabiAsp.Controllers
 
             return PartialView("SortedItems", itemList);
         }
+
+        [HttpGet]
+        public ActionResult BuyItemView(int ? Userid=0)
+        {
+            List<UserItemCard> itemslist = new List<UserItemCard>();
+            List<item> buyitemslist =new  List<item>();
+            if (Userid==0)
+            {
+                ViewBag.noItemSelect = "";
+            }
+            else
+            {
+                itemslist = Db.UserItemCards.Where(x => x.UesrId == Userid && x.isDeleted != "true").ToList();
+                foreach (var itm in itemslist)
+                {
+                    buyitemslist.Add(Db.items.Where(x => x.ItemId == itm.ItemId && x.isDeleted != "true").Select(e=>e).FirstOrDefault());  
+                }
+            }
+            
+            return View(buyitemslist);
+        }
        
         public bool SaveBuyProducts(string userid,string itemid)
         {
@@ -304,12 +325,11 @@ namespace SabiAsp.Controllers
                 if (userid != null && itemid != null || userid != "" && itemid != "")
                 {
                     var itemData = Db.UserItemCards.Where(x => x.UesrId == uid && x.ItemId ==iid && x.isDeleted != "true").Count();
-                    //var itemData = Db.UserItemCards.Where(x => x.UesrId == int.Parse(userid) && x.ItemId==int.Parse(itemid) && x.isDeleted != "true").FirstOrDefault();
                     if (itemData==0)
                     {
                         UserItemCard card = new UserItemCard();
-                        card.ItemId = uid;
-                        card.UesrId = iid;
+                        card.ItemId = iid;
+                        card.UesrId = uid;
                         card.isDeleted = "false";
                         Db.UserItemCards.Add(card);
                         Db.SaveChanges();
@@ -317,7 +337,7 @@ namespace SabiAsp.Controllers
                     }
                     else
                     {
-                       
+                        return false;
                     }
                     return false;
                 }
