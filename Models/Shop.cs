@@ -14,12 +14,6 @@ namespace SabiAsp.Models
     
     public partial class Shop
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Shop()
-        {
-            this.items = new HashSet<item>();
-        }
-    
         public int Shopid { get; set; }
         public Nullable<int> vendorid { get; set; }
         public string shopname { get; set; }
@@ -31,7 +25,5 @@ namespace SabiAsp.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual vendor vendor { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<item> items { get; set; }
     }
 }

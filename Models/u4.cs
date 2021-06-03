@@ -12,12 +12,12 @@ namespace SabiAsp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class u4
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public double Mobile { get; set; }
+        public string NAME { get; set; }
+        public string Address { get; set; }
+        public string CNIC { get; set; }
+        public string COUNTRY_NAME { get; set; }
     }
 }

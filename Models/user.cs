@@ -17,8 +17,8 @@ namespace SabiAsp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public user()
         {
-            this.vendors = new HashSet<vendor>();
             this.UserItemCards = new HashSet<UserItemCard>();
+            this.vendors = new HashSet<vendor>();
         }
     
         public int UserId { get; set; }
@@ -34,18 +34,18 @@ namespace SabiAsp.Models
         public string location { get; set; }
         public string itemsBuyed { get; set; }
         public string lastLogin { get; set; }
+        public string SocialLoginType { get; set; }
+        public string ShopName { get; set; }
         public string isDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string SocialLoginType { get; set; }
-        public string ShopName { get; set; }
     
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<vendor> vendors { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserItemCard> UserItemCards { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<vendor> vendors { get; set; }
     }
 }
