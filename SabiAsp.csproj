@@ -277,9 +277,13 @@
     <Content Include="Content\Template\images\fb-icon.png" />
     <Content Include="Content\Template\images\footer-logo.png" />
     <Content Include="Content\Template\images\google-icon.png" />
+    <Content Include="Content\Template\images\Grocceries.png" />
+    <Content Include="Content\Template\images\hamper.png" />
     <Content Include="Content\Template\images\in-icon.png" />
     <Content Include="Content\Template\images\logo.png" />
     <Content Include="Content\Template\images\map-icon.png" />
+    <Content Include="Content\Template\images\natural.png" />
+    <Content Include="Content\Template\images\pharma.png" />
     <Content Include="Content\Template\images\phone-icon.png" />
     <Content Include="Content\Template\images\running-shoes.png" />
     <Content Include="Content\Template\images\search_icon.png" />
@@ -335,6 +339,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\appDownload.png" />
     <Content Include="Images\Bakery.png" />
+    <Content Include="Images\Downloadapp.png" />
     <Content Include="Images\FacebookIcon.png" />
     <Content Include="Images\Gifts.png" />
     <Content Include="Images\GoogleIcon.png" />
