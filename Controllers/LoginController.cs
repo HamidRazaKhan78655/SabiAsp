@@ -85,27 +85,102 @@ namespace SabiAsp.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Session["UserId"] = "";
+            Session["Username"] = "";
+            Session["Name"] = "";
+            Session["RoleType"] = "";
+            Session["RoleID"] = "";
+            Session["DateFormate"] = "";
+            Session["ShortDateFormate"] = "";
             return RedirectToAction("Login");
         }
-        public ActionResult SabiRegister(string type)
+        public ActionResult SabiRegister(int type)
         {
-            if (type== "vendor")
-            {
-                ViewBag.type = "vendor";
-            }
-            else
-            {
-                ViewBag.type = "Buyer";
-            }
+            ViewBag.type = type == 2 ? 2 : 3;
             return View();
         }
         [HttpPost]
-        public ActionResult SabiRegister(FormCollection formCollection)
+        public string SabiRegister(FormCollection fm)
         {
-            if (true)
+            string firstName = fm["FirstName"].ToString();
+            string lastName = fm["LastName"].ToString();
+            string username = fm["Username"].ToString();
+            string emailAddress = fm["EmailAddress"].ToString();
+            string contact = fm["Contact"].ToString();
+            string address = fm["Address"].ToString();
+            string password = fm["Password"].ToString();
+            string roleType = fm["RoleType"].ToString();
+            int roleId = int.Parse(roleType);
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+
+            var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
+            if (User == null)
             {
-                return RedirectToAction("index" , "Home");
+                user u = new user();
+                u.name = firstName + " " + lastName;
+                u.EmailAddress = emailAddress;
+                u.Contact = contact;
+                u.username = username;
+                u.password = Encryption.Encrypto.EncryptString(password.Trim());
+                u.Address = address;
+                u.RoleID = roleId;
+                u.ShopName = "NA";
+                if (roleId == 2)
+                {
+                    u.RoleType = "User";
+                }
+                else
+                {
+                    u.RoleType = "Vendor";
+                    if (firstName.Contains("'"))
+                        u.ShopName = firstName + " " + "Shop";
+                    else
+                        u.ShopName = firstName + "'" + " " + "Shop";
+                }
+
+                u.CreatedBy = logedinUserId;
+                u.CreatedDate = DateTime.Now;
+                u.isDeleted = "false";
+                Db.users.Add(u);
+                Db.SaveChanges();
+
+                if (roleId == 3)
+                {
+                    vendor v = new vendor();
+                    v.UserId = u.UserId;
+                    v.isDeleted = "false";
+                    v.CreatedBy = 1;
+                    v.CreatedDate = DateTime.Now;
+                    Db.vendors.Add(v);
+                    Db.SaveChanges();
+
+                    Shop s = new Shop();
+                    s.vendorid = v.vendorid;
+                    if (firstName.Contains("'"))
+                        s.shopname = firstName + " " + "Shop";
+                    else
+                        s.shopname = firstName + "'" + " " + "Shop";
+
+                    s.isDeleted = "false";
+                    s.CreatedBy = 1;
+                    s.CreatedDate = DateTime.Now;
+                    Db.Shops.Add(s);
+                    Db.SaveChanges();
+                }
+
+                Session["UserId"] = u.UserId.ToString();
+                Session["Username"] = u.username.ToString();
+                Session["Name"] = u.name.ToString();
+                Session["RoleType"] = u.RoleType.ToString();
+                Session["RoleID"] = u.RoleID.ToString();
+                Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
+                Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
+                FormsAuthentication.SetAuthCookie(User.username, false);
+
+                return "success";
             }
+
+            return "error";
         }
 
         public string CheckSocialLogin(string email)

@@ -264,6 +264,10 @@
                 }
             });
         }
+        function RegisterAccount() {
+            var userType = $('#SignInType').val();
+            window.open('/Login/SabiRegister?type=' + userType, "_self");
+        }
         function loginWithSabi() {
             window.location.href = "/Login/SabiLogin/"
         }
@@ -330,19 +334,12 @@
                                 <a class="nav-item nav-link stylenone" id="Categories" style="cursor:pointer">
                                     Categories<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
                                     <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
-
-                                        @*<div onclick="loadCategories(1,'Groceries')">Groceries</div>
-                                            <div onclick="loadCategories(2, 'Pharmacy')">Pharmacy</div>
-                                            <div onclick="loadCategories(3,'Bakery')">Bakery</div>
-                                            <div onclick="loadCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>*@
-
                                         <div onclick="loadSubCategories(1,'Groceries')">Groceries</div>
                                         <div onclick="loadSubCategories(2, 'Pharmacy')">Pharmacy</div>
                                         <div onclick="loadSubCategories(3,'Bakery')">Bakery</div>
                                         <div onclick="loadSubCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
                                     </div>
                                 </a>
-
                                 <a class="nav-item nav-link last" href="#">
                                     <img src="~/Content/Template/images/search_icon.png" onclick="SearchItems()"> <div class="searchEveryThing" style=" position: absolute; margin-left: -188px; /* margin-top: 10px; */ display:none">
                                         <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
@@ -394,6 +391,12 @@
                                                 <div class="flex1">
                                                     <img src="~/Images/loginSabi.png" class="signinimg" />
                                                     <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Sabi" type="button" />
+                                                </div>
+                                            </li>
+                                            <li onclick="RegisterAccount();">
+                                                <div class="flex1">
+                                                    <img src="~/Images/loginSabi.png" class="signinimg" />
+                                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Create New Account" type="button" />
                                                 </div>
                                             </li>
                                         </ul>
