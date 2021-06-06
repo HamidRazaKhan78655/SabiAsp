@@ -19,8 +19,6 @@ namespace SabiAsp.Controllers
             return View();
         }
 
-
-
         [HttpGet]
         public ActionResult GetCategories(int id)
         {
@@ -34,8 +32,6 @@ namespace SabiAsp.Controllers
                 var data = db.SubCategories.Where(d => d.CategoryId == id).Select(d => new { name = d.name, id = d.SubCategorieId.ToString(), image = d.image }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
-
-
         }
 
         [HttpGet]
@@ -82,7 +78,17 @@ namespace SabiAsp.Controllers
             }
         }
 
-        #region CRUD SubCategory
+        #region CRUD Item
+        public ActionResult GetAllItemsBySubCategory(int subCategorieId)
+        {
+            var item = new List<item>();
+            if (subCategorieId == 0)
+                item = Db.items.Where(x => x.SubCategorieId == subCategorieId && x.isDeleted != "true").ToList();
+            else
+                item = Db.items.Where(x => x.isDeleted != "true").ToList();
+
+            return PartialView("GetItems", item);
+        }
         public ActionResult GetAllItems()
         {
             var item = Db.items.Where(x => x.isDeleted != "true").ToList();

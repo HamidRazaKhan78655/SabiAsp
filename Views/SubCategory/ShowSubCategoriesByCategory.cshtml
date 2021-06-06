@@ -1,17 +1,6 @@
 ﻿@model IList<SabiAsp.Models.SubCategory>
 
-<div id="">
-    <table class="table table-hover">
-        <thead class="w-thead-bg">
-            <tr>
-                <th>Id</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="filterSubCategory">
+
             @{
                 if (Model.Count > 0)
                 {
@@ -48,6 +37,4 @@
                     </tr>
                 }
             }
-        </tbody>
-    </table>
-</div>
+

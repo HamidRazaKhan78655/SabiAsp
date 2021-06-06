@@ -1099,6 +1099,9 @@
                     $("#addSubCategoryBtn").hide();
                     $("#addItemBtn").hide();
                     $("#w-head-text").text("Users");
+                    $("#filterUserByType").val("All");
+                    $("#searchName").val("");
+                    FilterByRoleType();
                 }
                 else if (name == "Category") {
                     $("#usersData").hide();
@@ -1114,6 +1117,7 @@
                     $("#addSubCategoryBtn").hide();
                     $("#addItemBtn").hide();
                     $("#w-head-text").text("Categories");
+                    GetAllCategories();
                 }
                 else if (name == "SubCategory") {
                     $("#usersData").hide();
@@ -1129,6 +1133,7 @@
                     $("#addSubCategoryBtn").show();
                     $("#addItemBtn").hide();
                     $("#w-head-text").text("Sub Categories");
+                    ViewSubCategory(0);
                 }
                 else {
                     $("#usersData").hide();
@@ -1144,6 +1149,7 @@
                     $("#addSubCategoryBtn").hide();
                     $("#addItemBtn").show();
                     $("#w-head-text").text("Items");
+                    ViewItems(0);
                 }
             }
 
@@ -1270,6 +1276,22 @@
 
         <script>
             //Sub Category
+            function showSubCategoryDataTable() {
+                debugger;
+                $("#usersData").hide();
+                $("#categoryData").hide();
+                $("#subCategoryData").show();
+                $("#ItemsData").hide();
+                $("#filterUserByType").hide();
+                $("#searchName").hide();
+                $("#searchSubCategoryName").show();
+                $("#searchItemName").hide();
+                $("#addUsersBtn").hide();
+                $("#addCategoryBtn").hide();
+                $("#addSubCategoryBtn").show();
+                $("#addItemBtn").hide();
+                $("#w-head-text").text("Sub Categories");
+            }
 
             function ViewSubCategory(categoryId) {
                 debugger;
@@ -1278,8 +1300,10 @@
                     url: '/SubCategory/GetAllSubCategoriesByCategory?categoryId=' + categoryId,
                     success: function (response) {
                         debugger;
-                        $("#showSubCategoryBootstrapModal #showSubCategoryDiv").html(response);
-                        $("#openShowSubCategoryModal").trigger("click");
+                        $("#filterSubCategory").html(response);
+                        showSubCategoryDataTable();
+                        //$("#showSubCategoryBootstrapModal #showSubCategoryDiv").html(response);
+                        //$("#openShowSubCategoryModal").trigger("click");
                     }
                 });
             }
@@ -1443,6 +1467,19 @@
                     success: function (response) {
                         debugger;
                         $("#filterItems").html(response);
+                    }
+                });
+            }
+
+            function ViewItems(subCategorieId) {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: '/Items/GetAllItemsBySubCategory?subCategorieId=' + subCategorieId,
+                    success: function (response) {
+                        debugger;
+                        $("#filterItems").html(response);
+                        showItemDataTable();
                     }
                 });
             }

@@ -32,6 +32,7 @@ namespace SabiAsp.Controllers
                 u.CreatedBy = 1;
                 u.CreatedDate = DateTime.Now;
                 u.isDeleted = "false";
+                u.ShopName = "NA";
                 Db.users.Add(u);
                 Db.SaveChanges();
             }
@@ -61,6 +62,7 @@ namespace SabiAsp.Controllers
                     Session["Username"] = User.username.ToString();
                     Session["Name"] = User.name.ToString();
                     Session["RoleType"] = User.RoleType.ToString();
+                    Session["RoleID"] = User.RoleID.ToString();
                     Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                     Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
 

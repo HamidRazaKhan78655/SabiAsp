@@ -22,8 +22,12 @@ namespace SabiAsp.Controllers
         #region CRUD SubCategory
         public ActionResult GetAllSubCategoriesByCategory(int categoryId)
         {
-            ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").ToList();
-            var subCategory = Db.SubCategories.Where(x => x.CategoryId == categoryId && x.isDeleted != "true").ToList();
+            var subCategory = new List<SubCategory>();
+            if (categoryId == 0)
+                subCategory = Db.SubCategories.Where(x => x.isDeleted != "true").ToList();
+            else
+                subCategory = Db.SubCategories.Where(x => x.CategoryId == categoryId && x.isDeleted != "true").ToList();
+
             return PartialView("ShowSubCategoriesByCategory", subCategory);
         }
         public ActionResult GetAllSubCategories()

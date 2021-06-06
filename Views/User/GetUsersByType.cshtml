@@ -1,44 +1,47 @@
 ﻿@model IList<SabiAsp.Models.user>
 
 
-            @{
-
-                    foreach (var u in Model)
+@{
+    if (Model.Count > 0)
+    {
+        foreach (var u in Model)
+        {
+            <tr>
+                <td>@u.UserId</td>
+                <td>@u.name</td>
+                <td>@u.EmailAddress</td>
+                <td>@u.Contact</td>
+                <td>@u.username</td>
+                <td id="FilterRoleType">@u.RoleType</td>
+                <td>
+                    @if (u.isDeleted == "true")
                     {
-                        <tr>
-                            <td>@u.UserId</td>
-                            <td>@u.name</td>
-                            <td>@u.EmailAddress</td>
-                            <td>@u.Contact</td>
-                            <td>@u.username</td>
-                            <td id="FilterRoleType">@u.RoleType</td>
-                            <td>
-                                @if (u.isDeleted == "true")
-                                {
-                                    <i class="fa fa-times" aria-hidden="true"></i>
-                                }
-                                else
-                                {
-                                    <i class="fa fa-check" aria-hidden="true"></i>
-                                }
-                            </td>
-                            <td>
-                                @if (u.ShopName == "NA")
-                                {
-                                    @u.ShopName
-                                }
-                                else
-                                {
-                                    <a class="w-shopName-bg" onclick="GetCategoryData(@u.UserId);">@u.ShopName</a>
-                                }
-                            </td>
-                            <td>
-                                <input type="button" id="editUser" value="Edit" onclick="UpdateUser(@u.UserId, '@u.name', '@u.EmailAddress', '@u.Contact', '@u.username', '@u.RoleID', '@u.Address');" />
-                                <input type="button" id="deleteUser" value="Delete" onclick="DeleteUser(@u.UserId);" />
-                            </td>
-                        </tr>
+                        <i class="fa fa-times" aria-hidden="true"></i>
                     }
+                    else
+                    {
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    }
+                </td>
+                <td>
+                    @if (u.ShopName == "NA")
+                    {
+                        @u.ShopName
+                    }
+                    else
+                    {
+                        <a class="w-shopName-bg" onclick="GetCategoryData(@u.UserId);">@u.ShopName</a>
+                    }
+                </td>
+                <td>
+                    <input type="button" id="editUser" value="Edit" onclick="UpdateUser(@u.UserId, '@u.name', '@u.EmailAddress', '@u.Contact', '@u.username', '@u.RoleID', '@u.Address');" />
+                    <input type="button" id="deleteUser" value="Delete" onclick="DeleteUser(@u.UserId);" />
+                </td>
+            </tr>
+        }
+    }
 
-            }
+
+}
 
 
