@@ -265,6 +265,10 @@
                 window.open("/Items/BuyItemView?Userid=@Session["UserId"]", "_self");
             }
         }
+
+        function LogoutUser() {
+            window.location.href = '/Login/Logout/';
+        }
     </script>
 </head>
 <!-- body -->
@@ -329,6 +333,7 @@
                                         <ul>
                                             <li onclick="openSignModal(1)">Sign In as Vendor</li>
                                             <li onclick="openSignModal(2)">Sign In as Buyer</li>
+                                            <li onclick="LogoutUser()">Sign Out</li>
                                         </ul>
                                     </div>
                                 </a>

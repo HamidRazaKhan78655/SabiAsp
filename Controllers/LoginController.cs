@@ -92,7 +92,7 @@ namespace SabiAsp.Controllers
             Session["RoleID"] = "";
             Session["DateFormate"] = "";
             Session["ShortDateFormate"] = "";
-            return RedirectToAction("Login");
+            return RedirectToAction("SabiLogin");
         }
         public ActionResult SabiRegister(int type)
         {
