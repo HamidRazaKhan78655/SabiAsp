@@ -14,12 +14,28 @@ namespace SabiAsp.Controllers
         // GET: User
         public ActionResult Index()
         {
-            ViewBag.Users = Db.users.OrderByDescending(x=>x.CreatedBy).ToList();
-            ViewBag.Categories = Db.Categories.Where(x=> x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
-            ViewBag.SubCategories = Db.SubCategories.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
-            ViewBag.Items = Db.items.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
-            ViewBag.Shops = Db.Shops.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
-            return View();
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+            if (logedinUserId == 0)
+            {
+                return RedirectToAction("SabiLogin", "Login");
+            }
+            else
+            {
+                int logedinRoleID = Convert.ToInt32(Session["RoleID"]);
+                if (logedinRoleID == 1)
+                {
+                    ViewBag.Users = Db.users.OrderByDescending(x => x.CreatedBy).ToList();
+                    ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+                    ViewBag.SubCategories = Db.SubCategories.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+                    ViewBag.Items = Db.items.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+                    ViewBag.Shops = Db.Shops.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+                    return View();
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
         }
 
         public ActionResult GetUserByName(string Name)
