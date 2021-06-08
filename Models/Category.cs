@@ -17,7 +17,7 @@ namespace SabiAsp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Category()
         {
-            this.SubCategories = new HashSet<SubCategory>();
+            this.Shops = new HashSet<Shop>();
         }
     
         public int CategoryId { get; set; }
@@ -30,6 +30,6 @@ namespace SabiAsp.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SubCategory> SubCategories { get; set; }
+        public virtual ICollection<Shop> Shops { get; set; }
     }
 }

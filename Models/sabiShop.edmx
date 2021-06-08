@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="sabiShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="sabiShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -24,7 +24,6 @@
           </Key>
           <Property Name="ItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubCategorieId" Type="int" />
-          <Property Name="Shopid" Type="int" />
           <Property Name="name" Type="nvarchar" MaxLength="400" />
           <Property Name="image" Type="nvarchar(max)" />
           <Property Name="rating" Type="nvarchar" MaxLength="50" />
@@ -56,6 +55,7 @@
           </Key>
           <Property Name="Shopid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="vendorid" Type="int" />
+          <Property Name="CategoryId" Type="int" />
           <Property Name="shopname" Type="nvarchar" MaxLength="50" />
           <Property Name="image" Type="nvarchar(max)" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
@@ -69,7 +69,7 @@
             <PropertyRef Name="SubCategorieId" />
           </Key>
           <Property Name="SubCategorieId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CategoryId" Type="int" />
+          <Property Name="Shopid" Type="int" />
           <Property Name="name" Type="nvarchar" MaxLength="100" />
           <Property Name="image" Type="nvarchar(max)" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
@@ -164,18 +164,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SubCatego__Categ__4316F928">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="CategoryId" />
-            </Principal>
-            <Dependent Role="SubCategories">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__UserItemC__UesrI__5165187F">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="UserItemCard" Type="Self.UserItemCard" Multiplicity="*" />
@@ -212,6 +200,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Shops_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
+          <End Role="Shops" Type="Self.Shops" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Shops">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCategories_Shops">
+          <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+          <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="Shopid" />
+            </Principal>
+            <Dependent Role="SubCategories">
+              <PropertyRef Name="Shopid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="sabiShopModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />
@@ -230,10 +242,6 @@
             <End Role="vendor" EntitySet="vendor" />
             <End Role="Shops" EntitySet="Shops" />
           </AssociationSet>
-          <AssociationSet Name="FK__SubCatego__Categ__4316F928" Association="Self.FK__SubCatego__Categ__4316F928">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="SubCategories" EntitySet="SubCategories" />
-          </AssociationSet>
           <AssociationSet Name="FK__UserItemC__UesrI__5165187F" Association="Self.FK__UserItemC__UesrI__5165187F">
             <End Role="users" EntitySet="users" />
             <End Role="UserItemCard" EntitySet="UserItemCard" />
@@ -246,9 +254,16 @@
             <End Role="users" EntitySet="users" />
             <End Role="vendor" EntitySet="vendor" />
           </AssociationSet>
+          <AssociationSet Name="FK_Shops_Categories" Association="Self.FK_Shops_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Shops" EntitySet="Shops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategories_Shops" Association="Self.FK_SubCategories_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="SubCategories" EntitySet="SubCategories" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sabiShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -264,7 +279,7 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="SubCategories" Relationship="Self.FK__SubCatego__Categ__4316F928" FromRole="Categories" ToRole="SubCategories" />
+          <NavigationProperty Name="Shops" Relationship="sabiShopModel.FK_Shops_Categories" FromRole="Category" ToRole="Shop" />
         </EntityType>
         <EntityType Name="item">
           <Key>
@@ -314,6 +329,9 @@
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="vendor" Relationship="Self.FK__Shops__vendorid__4E88ABD4" FromRole="Shops" ToRole="vendor" />
+          <Property Name="CategoryId" Type="Int32" />
+          <NavigationProperty Name="Category" Relationship="sabiShopModel.FK_Shops_Categories" FromRole="Shop" ToRole="Category" />
+          <NavigationProperty Name="SubCategories" Relationship="sabiShopModel.FK_SubCategories_Shops" FromRole="Shop" ToRole="SubCategory" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -328,8 +346,9 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Category" Relationship="Self.FK__SubCatego__Categ__4316F928" FromRole="SubCategories" ToRole="Categories" />
           <NavigationProperty Name="items" Relationship="Self.FK__items__SubCatego__4BAC3F29" FromRole="SubCategories" ToRole="items" />
+          <Property Name="Shopid" Type="Int32" />
+          <NavigationProperty Name="Shop" Relationship="sabiShopModel.FK_SubCategories_Shops" FromRole="SubCategory" ToRole="Shop" />
         </EntityType>
         <EntityType Name="u4">
           <Key>
@@ -399,18 +418,6 @@
           <NavigationProperty Name="Shops" Relationship="Self.FK__Shops__vendorid__4E88ABD4" FromRole="vendor" ToRole="Shops" />
           <NavigationProperty Name="user" Relationship="Self.FK__vendor__UserId__48CFD27E" FromRole="vendor" ToRole="users" />
         </EntityType>
-        <Association Name="FK__SubCatego__Categ__4316F928">
-          <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
-          <End Role="SubCategories" Type="Self.SubCategory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="CategoryId" />
-            </Principal>
-            <Dependent Role="SubCategories">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__items__SubCatego__4BAC3F29">
           <End Role="SubCategories" Type="Self.SubCategory" Multiplicity="0..1" />
           <End Role="items" Type="Self.item" Multiplicity="*" />
@@ -481,10 +488,6 @@
           <EntitySet Name="UserItemCards" EntityType="Self.UserItemCard" />
           <EntitySet Name="users" EntityType="Self.user" />
           <EntitySet Name="vendors" EntityType="Self.vendor" />
-          <AssociationSet Name="FK__SubCatego__Categ__4316F928" Association="Self.FK__SubCatego__Categ__4316F928">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="SubCategories" EntitySet="SubCategories" />
-          </AssociationSet>
           <AssociationSet Name="FK__items__SubCatego__4BAC3F29" Association="Self.FK__items__SubCatego__4BAC3F29">
             <End Role="SubCategories" EntitySet="SubCategories" />
             <End Role="items" EntitySet="items" />
@@ -505,7 +508,39 @@
             <End Role="users" EntitySet="users" />
             <End Role="vendor" EntitySet="vendors" />
           </AssociationSet>
+          <AssociationSet Name="FK_Shops_Categories" Association="sabiShopModel.FK_Shops_Categories">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Shop" EntitySet="Shops" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubCategories_Shops" Association="sabiShopModel.FK_SubCategories_Shops">
+            <End Role="Shop" EntitySet="Shops" />
+            <End Role="SubCategory" EntitySet="SubCategories" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Shops_Categories">
+          <End Type="sabiShopModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="sabiShopModel.Shop" Role="Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Shop">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubCategories_Shops">
+          <End Type="sabiShopModel.Shop" Role="Shop" Multiplicity="0..1" />
+          <End Type="sabiShopModel.SubCategory" Role="SubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shopid" />
+            </Principal>
+            <Dependent Role="SubCategory">
+              <PropertyRef Name="Shopid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -531,7 +566,6 @@
               <MappingFragment StoreEntitySet="items">
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="SubCategorieId" ColumnName="SubCategorieId" />
-                <ScalarProperty Name="Shopid" ColumnName="Shopid" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="rating" ColumnName="rating" />
@@ -563,6 +597,7 @@
           <EntitySetMapping Name="Shops">
             <EntityTypeMapping TypeName="sabiShopModel.Shop">
               <MappingFragment StoreEntitySet="Shops">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="Shopid" ColumnName="Shopid" />
                 <ScalarProperty Name="vendorid" ColumnName="vendorid" />
                 <ScalarProperty Name="shopname" ColumnName="shopname" />
@@ -578,8 +613,8 @@
           <EntitySetMapping Name="SubCategories">
             <EntityTypeMapping TypeName="sabiShopModel.SubCategory">
               <MappingFragment StoreEntitySet="SubCategories">
+                <ScalarProperty Name="Shopid" ColumnName="Shopid" />
                 <ScalarProperty Name="SubCategorieId" ColumnName="SubCategorieId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
