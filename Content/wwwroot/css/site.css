@@ -301,3 +301,20 @@ body {
         border-radius: 10px;
     }
 
+    /*Media Query start*/
+@media only screen and (max-width: 1310px)
+{
+    #catimg {
+        display: none;
+    }
+    #Categories{
+        display:block!important;
+    }
+}
+
+
+
+
+
+    /*MediaQuery End*/
+
