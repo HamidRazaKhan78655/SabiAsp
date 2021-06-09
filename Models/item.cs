@@ -16,7 +16,6 @@ namespace SabiAsp.Models
     {
         public int ItemId { get; set; }
         public Nullable<int> SubCategorieId { get; set; }
-        public Nullable<int> Shopid { get; set; }
         public string name { get; set; }
         public string image { get; set; }
         public string rating { get; set; }

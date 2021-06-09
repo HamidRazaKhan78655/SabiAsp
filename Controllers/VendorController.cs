@@ -41,7 +41,7 @@ namespace SabiAsp.Controllers
             int? vId = int.Parse(vendorid);
             int? cId = int.Parse(cate);
             var shop = Db.Shops.Where(x => x.vendorid == vId).SingleOrDefault();
-            var subCategories = Db.SubCategories.Where(x => x.CategoryId == cId && x.isDeleted != "true").ToList();
+            var subCategories = Db.SubCategories.Where(x => x.Shopid == cId && x.isDeleted != "true").ToList();
             ViewBag.subcats = subCategories;
             ViewBag.categoryid = cate;
             ViewBag.vendorid = vendorid;
@@ -56,7 +56,7 @@ namespace SabiAsp.Controllers
             string categoryid = fm["categoryid"].ToString();
             SubCategory subCategory = new SubCategory();
             //subCategory.shopid = int.Parse(shopid);
-            subCategory.CategoryId = int.Parse(categoryid);
+            subCategory.Shopid = int.Parse(categoryid);
             subCategory.name = name;
             subCategory.CreatedBy = int.Parse(venid);
             subCategory.CreatedDate = DateTime.Now;
@@ -78,7 +78,7 @@ namespace SabiAsp.Controllers
             if (subCategory != null)
             {
                 //subCategory.shopid = int.Parse(shopid);
-                subCategory.CategoryId = int.Parse(categoryid);
+                subCategory.Shopid = int.Parse(categoryid);
                 subCategory.name = name;
                 subCategory.ModifiedBy = int.Parse(venid);
                 subCategory.ModifiedDate = DateTime.Now;

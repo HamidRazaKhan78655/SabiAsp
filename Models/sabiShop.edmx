@@ -287,7 +287,6 @@
           </Key>
           <Property Name="ItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SubCategorieId" Type="Int32" />
-          <Property Name="Shopid" Type="Int32" />
           <Property Name="name" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="rating" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -338,7 +337,6 @@
             <PropertyRef Name="SubCategorieId" />
           </Key>
           <Property Name="SubCategorieId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryId" Type="Int32" />
           <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />

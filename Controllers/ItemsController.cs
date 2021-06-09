@@ -29,7 +29,7 @@ namespace SabiAsp.Controllers
 
             using (var db = new sabiShopEntities())
             {
-                var data = db.SubCategories.Where(d => d.CategoryId == id).Select(d => new { name = d.name, id = d.SubCategorieId.ToString(), image = d.image }).ToList();
+                var data = db.SubCategories.Where(d => d.Shopid == id).Select(d => new { name = d.name, id = d.SubCategorieId.ToString(), image = d.image }).ToList();
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
         }
@@ -138,7 +138,7 @@ namespace SabiAsp.Controllers
                 item.name = name;
                 item.Weight = weight;
                 item.Price = price;
-                item.Shopid = shop.Shopid;
+                item.SubCategorieId = shop.Shopid;
                 item.SubCategorieId = subCategoryId;
                 item.isDeleted = "false";
                 item.CreatedDate = DateTime.Now;
@@ -191,7 +191,7 @@ namespace SabiAsp.Controllers
                 item.name = name;
                 item.Weight = weight;
                 item.Price = price;
-                item.Shopid = shopId;
+                item.SubCategorieId = shopId;
                 item.SubCategorieId = subCategoryId;
                 item.isDeleted = "false";
                 item.CreatedDate = DateTime.Now;
@@ -245,7 +245,7 @@ namespace SabiAsp.Controllers
                 item.name = name;
                 item.Weight = weight;
                 item.Price = price;
-                item.Shopid = shopId;
+                item.SubCategorieId = shopId;
                 item.SubCategorieId = subCategoryId;
                 item.isDeleted = "false";
                 item.ModifiedBy = logedinUserId;

@@ -26,7 +26,7 @@ namespace SabiAsp.Controllers
             if (categoryId == 0)
                 subCategory = Db.SubCategories.Where(x => x.isDeleted != "true").ToList();
             else
-                subCategory = Db.SubCategories.Where(x => x.CategoryId == categoryId && x.isDeleted != "true").ToList();
+                subCategory = Db.SubCategories.Where(x => x.Shopid == categoryId && x.isDeleted != "true").ToList();
 
             return PartialView("ShowSubCategoriesByCategory", subCategory);
         }
@@ -72,7 +72,7 @@ namespace SabiAsp.Controllers
                 }
 
                 sc.name = subCategoryName;
-                sc.CategoryId = categoryId;
+                sc.Shopid = categoryId;
                 sc.CreatedBy = logedinUserId;
                 sc.CreatedDate = DateTime.Now;
                 sc.isDeleted = "false";
@@ -118,7 +118,7 @@ namespace SabiAsp.Controllers
                     }
                 }
                 subCategory.name = subCategoryName;
-                subCategory.CategoryId = categoryId;
+                subCategory.Shopid = categoryId;
                 subCategory.ModifiedBy = logedinUserId;
                 subCategory.ModifiedDate = DateTime.Now;
                 subCategory.isDeleted = "false";
@@ -152,15 +152,15 @@ namespace SabiAsp.Controllers
             var subCategory = new List<SubCategory>();
             if (value == "1")
             {
-                subCategory = Db.SubCategories.Where(x => x.CategoryId == cId && x.isDeleted != "true").OrderByDescending(x => x.CreatedDate).ToList();
+                subCategory = Db.SubCategories.Where(x => x.Shopid == cId && x.isDeleted != "true").OrderByDescending(x => x.CreatedDate).ToList();
             }
             else if (value == "2")
             {
-                subCategory = Db.SubCategories.Where(x => x.CategoryId == cId && x.isDeleted != "true").OrderBy(x => x.name).ToList();
+                subCategory = Db.SubCategories.Where(x => x.Shopid == cId && x.isDeleted != "true").OrderBy(x => x.name).ToList();
             }
             else
             {
-                subCategory = Db.SubCategories.Where(x => x.CategoryId == cId && x.isDeleted != "true").ToList();
+                subCategory = Db.SubCategories.Where(x => x.Shopid == cId && x.isDeleted != "true").ToList();
             }
 
             return PartialView("SortedSubCategories", subCategory);

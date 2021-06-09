@@ -97,6 +97,7 @@ namespace SabiAsp.Controllers
         public ActionResult SabiRegister(int type)
         {
             ViewBag.type = type == 2 ? 2 : 3;
+            ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
             return View();
         }
         [HttpPost]
@@ -111,6 +112,8 @@ namespace SabiAsp.Controllers
             string password = fm["Password"].ToString();
             string roleType = fm["RoleType"].ToString();
             int roleId = int.Parse(roleType);
+            string Category = fm["Category"].ToString();
+            int categoryId = int.Parse(Category);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
 
             var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
@@ -156,6 +159,7 @@ namespace SabiAsp.Controllers
 
                     Shop s = new Shop();
                     s.vendorid = v.vendorid;
+                    s.CategoryId = categoryId;
                     if (firstName.Contains("'"))
                         s.shopname = firstName + " " + "Shop";
                     else

@@ -21,7 +21,6 @@ namespace SabiAsp.Models
         }
     
         public int SubCategorieId { get; set; }
-        public Nullable<int> CategoryId { get; set; }
         public string name { get; set; }
         public string image { get; set; }
         public string isDeleted { get; set; }

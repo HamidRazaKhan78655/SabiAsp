@@ -149,6 +149,21 @@
                                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
                             </div>
+                            @if (@ViewBag.type == 3)
+                            {
+                                <div class="col-md-12">
+                                    <div class="wrap-input100 validate-input" data-validate="Category">
+                                        <select class="input100" id="Category" name="Category" required>
+                                            @foreach (var item in ViewBag.Categories)
+                                            {
+                                                <option value="@item.CategoryId">@item.CategoryName</option>
+                                            }
+                                        </select>
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                            }
+
                         </div>
                         <div class="container-login100-form-btn m-t-32">
                             <button class="login100-form-btn" onclick="Register();">Register</button>

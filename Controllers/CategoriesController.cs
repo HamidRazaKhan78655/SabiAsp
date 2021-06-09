@@ -37,7 +37,7 @@ namespace SabiAsp.Controllers
             //else
             //{
                 ViewBag.CategoryId = id;
-                ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.CategoryId == id).ToList();
+                ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.Shopid == id).ToList();
                 return View();
             //}
         }
@@ -53,7 +53,7 @@ namespace SabiAsp.Controllers
             ViewBag.Category = name;
             ViewBag.SubCategoryId = subCategorieId;
             ViewBag.logedinUserId = logedinUserId;
-            ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.CategoryId == id).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
+            ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.Shopid == id).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
             list = ViewBag.SubCategorylist;
             ViewBag.SCats = items;
 
