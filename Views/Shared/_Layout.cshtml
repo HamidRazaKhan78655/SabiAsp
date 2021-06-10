@@ -311,18 +311,12 @@
                 return;
             }
 
-        @*    $.ajax({
-                url: "/Items/SearchItem",
-                data: { id: val1 },
-                type: 'GET',
-                dataType: 'json', // added data type
-                success: function (res)
-                {
-
-                }
-            });*@
-
-            var url = '/Items/SearchItem?id='+$("#Searchid").val();            $.get(url, function (data)            {                $('#Searchdiv').html(data);                $('#Searchdiv').show();            }); 
+            var url = '/Items/SearchItem?id='+$("#Searchid").val();
+            $.get(url, function (data)
+            {
+                $('#Searchdiv').html(data);
+                $('#Searchdiv').show();
+            }); 
         }
     </script>
     
@@ -331,7 +325,7 @@
 <!-- body -->
 <body class="main-layout">
 
-    <div style="display:none;min-height: 300px; background: red; position: absolute; margin: auto; z-index: 10;top: 120px; width: 300px;left: 35%;" id="Searchdiv">
+    <div class="itemsearchdiv" id="Searchdiv">
 
     </div>
     <!-- header section start -->

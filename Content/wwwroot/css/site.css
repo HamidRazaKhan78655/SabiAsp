@@ -174,6 +174,19 @@ body {
     background-color: #fd4d5a;
     margin-left: 17px;
 }
+.itemsearchdiv{
+    display: none;
+    min-height: 300px;
+    max-height: 65vh;
+    position: absolute;
+    margin: auto;
+    z-index: 10;
+    top: 135px;
+    width: 300px;
+    left: 35%;
+    background-color:white;
+    overflow-y: scroll;
+}
 
 .jss262 {
     text-align: center;

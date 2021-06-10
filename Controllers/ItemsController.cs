@@ -163,7 +163,7 @@ namespace SabiAsp.Controllers
 
             item item = new item();
             var itemData = Db.items.Where(x => x.name.ToLower() == name.ToLower() && x.isDeleted != "true").FirstOrDefault();
-            if (item == null)
+            if (itemData == null)
             {
                 for (int i = 0; i < Request.Files.Count; i++)
                 {
@@ -363,7 +363,7 @@ namespace SabiAsp.Controllers
         {
             using (var db = new sabiShopEntities())
             {
-                var data= db.items.Where(t => id.Contains(t.location) ||id.Contains(t.name)).Select(p => p).ToList();
+                var data= db.items.Where(t => t.location.Contains(id) || t.name.Contains(id)).Select(p => p).ToList();
                 return View(data);
             }
         }
