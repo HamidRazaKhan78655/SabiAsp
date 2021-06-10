@@ -506,6 +506,7 @@
     <Content Include="Views\SubCategory\SortedSubCategories.cshtml" />
     <Content Include="Views\Items\SortedItems.cshtml" />
     <Content Include="Views\Items\BuyItemView.cshtml" />
+    <Content Include="Views\SubCategory\GetShopSubCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

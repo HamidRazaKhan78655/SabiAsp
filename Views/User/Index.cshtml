@@ -191,7 +191,7 @@
                                             <td>@subCategory.CreatedDate</td>
                                             <td>
                                                 <input type="button" id="viewItems" value="View Items" onclick="ViewItems(@subCategory.SubCategorieId);" />
-                                                <input type="button" id="editSubCategory" value="Edit" onclick="GetUpdateSubCategory(@subCategory.SubCategorieId, @subCategory.CategoryId, '@subCategory.name', '@subCategory.image');" />
+                                                <input type="button" id="editSubCategory" value="Edit" onclick="GetUpdateSubCategory(@subCategory.SubCategorieId, @subCategory.Shopid, '@subCategory.name', '@subCategory.image');" />
                                                 <input type="button" id="deleteSubCategory" value="Delete" onclick="DeleteSubCategory(@subCategory.SubCategorieId);" />
                                             </td>
                                         </tr>
@@ -315,7 +315,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>Type :</label>
-                                                    <select class="form-control" id="RoleType" name="RoleType" required>
+                                                    <select class="form-control" id="RoleType" name="RoleType" onchange="GetShoplist();" required>
                                                         <option value="">Select</option>
                                                         <option value="1">Admin</option>
                                                         <option value="2">User</option>
@@ -325,6 +325,15 @@
                                                 <div class="col-md-6">
                                                     <label>Address :</label>
                                                     <input type="text" class="form-control" id="Address" name="Address" />
+                                                </div>
+                                                <div class="col-md-12" id="vendorCategoryDrpDiv" style="display:none;">
+                                                    <label>Category :</label>
+                                                    <select class="form-control" id="VendorCategoryDrp" name="VendorCategoryDrp" required>
+                                                        @foreach (var item in ViewBag.Categories)
+                                                        {
+                                                            <option value="@item.CategoryId">@item.CategoryName</option>
+                                                        }
+                                                    </select>
                                                 </div>
                                             </div>
 
@@ -525,11 +534,11 @@
                                                     <input type="text" class="form-control" id="SubCategoryName" name="SubCategoryName" required />
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <label>Category :</label>
-                                                    <select class="form-control" id="CategoryDrp" name="CategoryDrp" required>
-                                                        @foreach (var item in ViewBag.Categories)
+                                                    <label>Shop :</label>
+                                                    <select class="form-control" id="VendorShopDrp" name="VendorShopDrp" required>
+                                                        @foreach (var item in ViewBag.Shops)
                                                         {
-                                                            <option value="@item.CategoryId">@item.CategoryName</option>
+                                                            <option value="@item.Shopid">@item.shopname</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -581,11 +590,11 @@
                                                     <input type="text" class="form-control" id="UpdateSubCategoryName" name="UpdateSubCategoryName" required />
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <label>Category :</label>
-                                                    <select class="form-control" id="UpdateCategoryDrp" name="UpdateCategoryDrp" required>
-                                                        @foreach (var item in ViewBag.Categories)
+                                                    <label>Shop :</label>
+                                                    <select class="form-control" id="UpdateSVendorShopDrp" name="UpdateSVendorShopDrp" required>
+                                                        @foreach (var item in ViewBag.Shops)
                                                         {
-                                                            <option value="@item.CategoryId">@item.CategoryName</option>
+                                                            <option value="@item.Shopid">@item.shopname</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -787,7 +796,7 @@
 
         <input type="hidden" id="openShopItemModal" data-target="#shopItemBootstrapModal" data-toggle="modal" />
         <div id="addShopItem">
-            @{
+            @{ 
                 using (Html.BeginForm("AddShopItem", "Items", FormMethod.Post, new { id = "addShopItemForm" }))
                 {
 
@@ -821,7 +830,7 @@
                                                     <label>Item Price :</label>
                                                     <input type="text" class="form-control" id="shopItemPrice" name="shopItemPrice" required />
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-6" id="shopSubCategorydrpDiv">
                                                     <label>Sub Category :</label>
                                                     <select class="form-control" id="shopSubCategorydrp" name="shopSubCategorydrp" required>
                                                         @foreach (var item in ViewBag.SubCategories)
@@ -1153,6 +1162,14 @@
                 }
             }
 
+            function GetShoplist() {
+                var roleId = document.getElementById("RoleType").value;
+                if (roleId == "3") 
+                    $("#vendorCategoryDrpDiv").show();
+                else
+                    $("#vendorCategoryDrpDiv").hide();
+            }
+
         </script>
 
         <script>
@@ -1293,25 +1310,23 @@
                 $("#w-head-text").text("Sub Categories");
             }
 
-            function ViewSubCategory(categoryId) {
+            function ViewSubCategory(shopId) {
                 debugger;
                 $.ajax({
                     type: "GET",
-                    url: '/SubCategory/GetAllSubCategoriesByCategory?categoryId=' + categoryId,
+                    url: '/SubCategory/GetAllSubCategoriesByCategory?shopId=' + shopId,
                     success: function (response) {
                         debugger;
                         $("#filterSubCategory").html(response);
                         showSubCategoryDataTable();
-                        //$("#showSubCategoryBootstrapModal #showSubCategoryDiv").html(response);
-                        //$("#openShowSubCategoryModal").trigger("click");
                     }
                 });
             }
 
-            function GetUpdateSubCategory(subCategoryId, categoryId, name, image) {
+            function GetUpdateSubCategory(subCategoryId, shopId, name, image) {
                 debugger;
                 $("#UpdateSubCategoryId").val(subCategoryId);
-                $("#UpdateCategoryDrp").val(categoryId);
+                $("#UpdateSVendorShopDrp").val(shopId);
                 $("#UpdateSubCategoryName").val(name);
                 $("#UpdateSubCategoryImage").val(image);
                 $("#openSubCategoryModal").trigger("click");
@@ -1365,8 +1380,8 @@
                     alert("Please enter Sub Category Name.");
                     return;
                 }
-                if (document.getElementById('CategoryDrp').value == "") {
-                    alert("Select one Category.");
+                if (document.getElementById('VendorShopDrp').value == "") {
+                    alert("Select one Shop.");
                     return;
                 }
 
@@ -1405,8 +1420,8 @@
                     alert("Please enter Sub Category Name.");
                     return;
                 }
-                if (document.getElementById('UpdateCategoryDrp').value == "") {
-                    alert("Select one Category.");
+                if (document.getElementById('UpdateSVendorShopDrp').value == "") {
+                    alert("Select one Shop.");
                     return;
                 }
 
@@ -1674,15 +1689,25 @@
 
             function AddShopItemData(userId) {
                 debugger;
+                //shopSubCategorydrpDiv
                 $("#shopUserId").val(userId);
                 $.ajax({
                     type: "GET",
-                    url: '/Items/GetShopName?userId=' + userId,
+                    url: '/SubCategory/GetSubCategoriesByShopId?userId=' + userId,
                     success: function (response) {
                         debugger;
-                        $("#itemShopName").val(response);
+                        $("#shopSubCategorydrpDiv").html(response);
+                        $.ajax({
+                            type: "GET",
+                            url: '/Items/GetShopName?userId=' + userId,
+                            success: function (response) {
+                                debugger;
+                                $("#itemShopName").val(response);
+                            }
+                        });
                     }
                 });
+
                 $("#openShopItemModal").trigger("click");
             }
 

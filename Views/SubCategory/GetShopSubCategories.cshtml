@@ -1,0 +1,17 @@
+﻿@model List<SabiAsp.Models.SubCategory>
+
+@{
+    if (Model.Count > 0)
+    {
+        <div class="col-md-6" id="shopSubCategorydrpDiv">
+            <label>Sub Category :</label>
+            <select class="form-control" id="shopSubCategorydrp" name="shopSubCategorydrp" required>
+                @foreach (var item in Model)
+                {
+                    <option value="@item.SubCategorieId">@item.name</option>
+                }
+            </select>
+        </div>
+
+    }
+}

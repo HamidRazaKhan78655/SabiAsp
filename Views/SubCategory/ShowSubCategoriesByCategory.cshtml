@@ -22,7 +22,7 @@
                             <td>@subCategory.CreatedDate</td>
                             <td>
                                 <input type="button" id="viewItems" value="View Items" onclick="ViewItems(@subCategory.SubCategorieId);" />
-                                <input type="button" id="editSubCategory" value="Edit" onclick="GetUpdateSubCategory(@subCategory.SubCategorieId, @subCategory.CategoryId, '@subCategory.name', '@subCategory.image');" />
+                                <input type="button" id="editSubCategory" value="Edit" onclick="GetUpdateSubCategory(@subCategory.SubCategorieId, @subCategory.Shopid, '@subCategory.name', '@subCategory.image');" />
                                 <input type="button" id="deleteSubCategory" value="Delete" onclick="DeleteSubCategory(@subCategory.SubCategorieId);" />
                             </td>
                         </tr>

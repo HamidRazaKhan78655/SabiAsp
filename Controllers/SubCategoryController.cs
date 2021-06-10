@@ -20,27 +20,33 @@ namespace SabiAsp.Controllers
         }
 
         #region CRUD SubCategory
-        public ActionResult GetAllSubCategoriesByCategory(int categoryId)
+        public ActionResult GetAllSubCategoriesByCategory(int shopId)
         {
             var subCategory = new List<SubCategory>();
-            if (categoryId == 0)
+            if (shopId == 0)
                 subCategory = Db.SubCategories.Where(x => x.isDeleted != "true").ToList();
             else
-                subCategory = Db.SubCategories.Where(x => x.Shopid == categoryId && x.isDeleted != "true").ToList();
+                subCategory = Db.SubCategories.Where(x => x.Shopid == shopId && x.isDeleted != "true").ToList();
 
             return PartialView("ShowSubCategoriesByCategory", subCategory);
         }
+        public ActionResult GetSubCategoriesByShopId(int userId)
+        {
+            var vendor = Db.vendors.Where(x => x.UserId == userId).SingleOrDefault();
+            var shop = Db.Shops.Where(x => x.vendorid == vendor.vendorid).SingleOrDefault();
+            var subCategory = Db.SubCategories.Where(x => x.Shopid == shop.Shopid && x.isDeleted != "true").ToList();
+            return PartialView("GetShopSubCategories", subCategory);
+        }
         public ActionResult GetAllSubCategories()
         {
-            ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").ToList();
             var subCategory = Db.SubCategories.Where(x => x.isDeleted != "true").ToList();
             return PartialView("GetSubCategories", subCategory);
         }
         public string AddSubCategory(IEnumerable<HttpPostedFileBase> files, FormCollection fm)
         {
             string subCategoryName = fm["SubCategoryName"].ToString();
-            string updateCategoryId = fm["CategoryDrp"].ToString();
-            int categoryId = int.Parse(updateCategoryId);
+            string VendorShopDrp = fm["VendorShopDrp"].ToString();
+            int shopId = int.Parse(VendorShopDrp);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
             string _fileName = string.Empty;
 
@@ -72,7 +78,7 @@ namespace SabiAsp.Controllers
                 }
 
                 sc.name = subCategoryName;
-                sc.Shopid = categoryId;
+                sc.Shopid = shopId;
                 sc.CreatedBy = logedinUserId;
                 sc.CreatedDate = DateTime.Now;
                 sc.isDeleted = "false";
@@ -85,8 +91,8 @@ namespace SabiAsp.Controllers
         public string UpdateSubCategory(IEnumerable<HttpPostedFileBase> files, FormCollection fm)
         {
             string subCategoryName = fm["UpdateSubCategoryName"].ToString();
-            string updateCategoryId = fm["UpdateCategoryDrp"].ToString();
-            int categoryId = int.Parse(updateCategoryId);
+            string UpdateSVendorShopDrp = fm["UpdateSVendorShopDrp"].ToString();
+            int shopId = int.Parse(UpdateSVendorShopDrp);
             string updateSubCategoryId = fm["UpdateSubCategoryId"].ToString();
             int subCategoryId = int.Parse(updateSubCategoryId);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
@@ -118,7 +124,7 @@ namespace SabiAsp.Controllers
                     }
                 }
                 subCategory.name = subCategoryName;
-                subCategory.Shopid = categoryId;
+                subCategory.Shopid = shopId;
                 subCategory.ModifiedBy = logedinUserId;
                 subCategory.ModifiedDate = DateTime.Now;
                 subCategory.isDeleted = "false";

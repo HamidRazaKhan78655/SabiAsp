@@ -66,6 +66,8 @@ namespace SabiAsp.Controllers
             string password = fm["Password"].ToString();
             string roleType = fm["RoleType"].ToString();
             int roleId = int.Parse(roleType);
+            string vendorCategoryDrp = fm["VendorCategoryDrp"].ToString();
+            int categoryId = int.Parse(vendorCategoryDrp);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
 
             var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
@@ -114,6 +116,7 @@ namespace SabiAsp.Controllers
 
                     Shop s = new Shop();
                     s.vendorid = v.vendorid;
+                    s.CategoryId = categoryId;
                     if (firstName.Contains("'"))
                         s.shopname = firstName + " " + "Shop";
                     else
