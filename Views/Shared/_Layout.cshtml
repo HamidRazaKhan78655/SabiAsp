@@ -299,12 +299,41 @@
         {
             window.location.href = '/Login/Logout/';
         }
+
+        function Search()
+        {
+            debugger;
+            var val1 = $('#Searchid').val();
+
+            if (val1=="")
+            {
+                $('#Searchdiv').hide();
+                return;
+            }
+
+        @*    $.ajax({
+                url: "/Items/SearchItem",
+                data: { id: val1 },
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function (res)
+                {
+
+                }
+            });*@
+
+            var url = '/Items/SearchItem?id='+$("#Searchid").val();            $.get(url, function (data)            {                $('#Searchdiv').html(data);                $('#Searchdiv').show();            }); 
+        }
     </script>
     
 
 </head>
 <!-- body -->
 <body class="main-layout">
+
+    <div style="display:none;min-height: 300px; background: red; position: absolute; margin: auto; z-index: 10;top: 120px; width: 300px;left: 35%;" id="Searchdiv">
+
+    </div>
     <!-- header section start -->
     <div class="header_section">
         <div class="container">
@@ -347,7 +376,7 @@
                                 <a class="nav-item nav-link last" href="#">
                                     <img src="~/Content/Template/images/search_icon.png" onclick="SearchItems()"> <div class="searchEveryThing" style=" position: absolute; margin-left: -188px; /* margin-top: 10px; */ display:none">
                                         <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
-                                        <input class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " />
+                                        <input id="Searchid" class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " onkeyup="Search()" />
                                     </div>
                                 </a>
                                 <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>
@@ -547,10 +576,10 @@
                             </div>
                             <div class="container" id="catimg" style=" width: 35%;position: absolute; left: -30px; top: 330px;">
                                 <div class="row">
-                                    <div class="col-3" onclick="loadSubCategories(1,'Groceries')"><img src="~/Images/Groceries.png" /><b style="padding-left: 20px;">Groceries</b></div>
-                                    <div class="col-3" onclick="loadSubCategories(2, 'Pharmacy')"><img src="~/Images/Pharmacy.png" /><b style="padding-left: 20px;">Pharmacy</b></div>
-                                    <div class="col-3" onclick="loadSubCategories(3,'Bakery')"><img src="~/Images/Bakery.png" /><b style="padding-left: 20px;">Bakery</b></div>
-                                    <div class="col-3" onclick="loadSubCategories(4,'Hampers+Gifts')"><img src="~/Images/Gifts.png" /><b>Hampers + Gifts</b></div>
+                                    <div class="col-3" onclick="loadSubCategories(1,'Groceries')"><img src="~/Images/Groceries.png" style="cursor:pointer" /><b style="padding-left: 20px;">Groceries</b></div>
+                                    <div class="col-3" onclick="loadSubCategories(2, 'Pharmacy')"><img src="~/Images/Pharmacy.png" style="cursor:pointer" /><b style="padding-left: 20px;">Pharmacy</b></div>
+                                    <div class="col-3" onclick="loadSubCategories(3,'Bakery')"><img src="~/Images/Bakery.png" style="cursor:pointer" /><b style="padding-left: 20px;">Bakery</b></div>
+                                    <div class="col-3" onclick="loadSubCategories(4,'Hampers+Gifts')"><img src="~/Images/Gifts.png" style="cursor:pointer" /><b>Hampers + Gifts</b></div>
                                 </div>
                             </div>
                         </div>
@@ -733,173 +762,173 @@
                 </div>
             </div>
         </div>
-        </div>
-        <!-- contact section end -->
-
-        <!-- header section end -->
-        @RenderBody();
-        <!-- section footer start -->
-        <div class="section_footer">
-            <div class="container">
-                <div class="mail_section">
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-2">
-                            <div><a href="#"><img src="~/Content/Template/images/footer-logo.png"></a></div>
-                        </div>
-                        <div class="col-sm-6 col-lg-2">
-                            <div class="footer-logo"><img src="~/Content/Template/~/Content/Template/images/phone-icon.png"><span class="map_text">(71) 1234567890</span></div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="footer-logo"><img src="~/Content/Template/images/email-icon.png"><span class="map_text">Demo@gmail.com</span></div>
-                        </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <div class="social_icon">
-                                <ul>
-                                    <li><a href="#"><img src="~/Content/Template/images/fb-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/twitter-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/in-icon.png"></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/google-icon.png"></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-2"></div>
+    </div>
+    <!-- contact section end -->
+    <!-- header section end -->
+    @RenderBody();
+    <!-- section footer start -->
+    <div class="section_footer">
+        <div class="container">
+            <div class="mail_section">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-2">
+                        <div><a href="#"><img src="~/Content/Template/images/footer-logo.png"></a></div>
                     </div>
+                    <div class="col-sm-6 col-lg-2">
+                        <div class="footer-logo"><img src="~/Content/Template/~/Content/Template/images/phone-icon.png"><span class="map_text">(71) 1234567890</span></div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="footer-logo"><img src="~/Content/Template/images/email-icon.png"><span class="map_text">Demo@gmail.com</span></div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="social_icon">
+                            <ul>
+                                <li><a href="#"><img src="~/Content/Template/images/fb-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/twitter-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/in-icon.png"></a></li>
+                                <li><a href="#"><img src="~/Content/Template/images/google-icon.png"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
                 </div>
-                <div class="footer_section_2">
-                    <div class="row">
-                        <div class="col-sm-4 col-lg-2">
-                            <p class="dummy_text"> ipsum dolor sit amet, consectetur ipsum dolor sit amet, consectetur  ipsum dolor sit amet,</p>
+            </div>
+            <div class="footer_section_2">
+                <div class="row">
+                    <div class="col-sm-4 col-lg-2">
+                        <p class="dummy_text"> ipsum dolor sit amet, consectetur ipsum dolor sit amet, consectetur  ipsum dolor sit amet,</p>
+                    </div>
+                    <div class="col-sm-4 col-lg-2">
+                        <h2 class="shop_text">Address </h2>
+                        <div class="image-icon"><img src="~/Content/Template/images/map-icon.png"><span class="pet_text">No 40 Baria Sreet 15/2 NewYork City, NY, United States.</span></div>
+                    </div>
+                    <div class="col-sm-4 col-md-6 col-lg-3">
+                        <h2 class="shop_text">Our Company </h2>
+                        <div class="delivery_text">
+                            <ul>
+                                <li>Delivery</li>
+                                <li>Legal Notice</li>
+                                <li>About us</li>
+                                <li>Secure payment</li>
+                                <li>Contact us</li>
+                            </ul>
                         </div>
-                        <div class="col-sm-4 col-lg-2">
-                            <h2 class="shop_text">Address </h2>
-                            <div class="image-icon"><img src="~/Content/Template/images/map-icon.png"><span class="pet_text">No 40 Baria Sreet 15/2 NewYork City, NY, United States.</span></div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <h2 class="adderess_text">Products</h2>
+                        <div class="delivery_text">
+                            <ul>
+                                <li>Prices drop</li>
+                                <li>New products</li>
+                                <li>Best sales</li>
+                                <li>Contact us</li>
+                                <li>Sitemap</li>
+                            </ul>
                         </div>
-                        <div class="col-sm-4 col-md-6 col-lg-3">
-                            <h2 class="shop_text">Our Company </h2>
-                            <div class="delivery_text">
-                                <ul>
-                                    <li>Delivery</li>
-                                    <li>Legal Notice</li>
-                                    <li>About us</li>
-                                    <li>Secure payment</li>
-                                    <li>Contact us</li>
-                                </ul>
-                            </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-2">
+                        <h2 class="adderess_text">Newsletter</h2>
+                        <div class="form-group">
+                            <input type="text" class="enter_email" placeholder="Enter Your email" name="Name">
                         </div>
-                        <div class="col-sm-6 col-lg-3">
-                            <h2 class="adderess_text">Products</h2>
-                            <div class="delivery_text">
-                                <ul>
-                                    <li>Prices drop</li>
-                                    <li>New products</li>
-                                    <li>Best sales</li>
-                                    <li>Contact us</li>
-                                    <li>Sitemap</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-2">
-                            <h2 class="adderess_text">Newsletter</h2>
-                            <div class="form-group">
-                                <input type="text" class="enter_email" placeholder="Enter Your email" name="Name">
-                            </div>
-                            <button class="subscribr_bt">Subscribe</button>
-                        </div>
+                        <button class="subscribr_bt">Subscribe</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- section footer end -->
-        @*Modal Start*@
-        <input type="hidden" id="Signinmodal" data-target="#MyModal" data-toggle="modal" />
+    </div>
+    <!-- section footer end -->
+    @*Modal Start*@
+    <input type="hidden" id="Signinmodal" data-target="#MyModal" data-toggle="modal" />
 
-        <input type="hidden" id="SignInType" value="" />
+    <input type="hidden" id="SignInType" value="" />
 
-        <div class="modal fade " id="MyModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!--Header-->
-                    <div class="modal-header" style="background: #130347;height: 60px;">
-                        <h4 id="changeheader" class="title" style="color:white;"></h4>
-                        <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="fas fa-times" style="color:white;"></i>
-                        </button>
-                    </div>
-                    <div style="width:100%; overflow:auto" class="ModelTrack">
-                        <div class="modal-body" style="width:100%">
-                            <div style="display: block;">
-                                <a class="nav-link text-light abtn">
-                                    <div class="flex1">
-                                        <img src="~/Images/FacebookIcon.png" class="signinimg" />
-                                        <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="facebooklogin();" />
-                                    </div>
-                                </a>
-                                <a class="nav-link text-light abtn">
-                                    <div class="flex1">
-                                        <img src="~/Images/GoogleIcon.png" class="signinimg" />
-                                        <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
-                                    </div>
-                                </a>
-
-                                <input type="button" value="Login From Sabi" onclick="location.href='Login/SabiLogin?type='+document.getElementById('SignInType').value" />
-                            </div>
-                        </div>
-                    </div>
+    <div class="modal fade " id="MyModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;"></h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
                 </div>
-            </div>
-        </div>
-        <input type="hidden" id="openUserPassordModal" data-target="#userPasswordBootstrapModal" data-toggle="modal" />
-        @*user strat*@
-        <div class="modal fade " id="userPasswordBootstrapModal">
-            <div class="modal-dialog w-user-modal-dialog">
-                <div class="modal-content">
-                    <!--Header-->
-                    <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
-                        <h4 class="title" style="color:white;">Create Password</h4>
-
-                        <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <i class="fas fa-times" style="color:white;"></i>
-                        </button>
-                    </div>
-                    <div style="width:100%; overflow:auto" class="ModelTrack">
-                        <div class="modal-body" style="width:100%">
-                            <div id="UserPasswordDiv">
-                                <div class="row">
-
-                                    <div class="col-md-12">
-                                        <label>Password :</label>
-                                        <input type="password" class="form-control" id="UserPassword" name="UserPassword" required />
-                                    </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div style="display: block;">
+                            <a class="nav-link text-light abtn">
+                                <div class="flex1">
+                                    <img src="~/Images/FacebookIcon.png" class="signinimg" />
+                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" onclick="facebooklogin();" />
                                 </div>
+                            </a>
+                            <a class="nav-link text-light abtn">
+                                <div class="flex1">
+                                    <img src="~/Images/GoogleIcon.png" class="signinimg" />
+                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" onclick="login()" />
+                                </div>
+                            </a>
 
-                                <input type="button" class="btn btn-info" value="Add" onclick="SaveUserInfo();" style="float:right;margin:10px 0;" />
-                            </div>
+                            <input type="button" value="Login From Sabi" onclick="location.href='Login/SabiLogin?type='+document.getElementById('SignInType').value" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @*user end*@
-        @*Modal End*@
+    </div>
+    <input type="hidden" id="openUserPassordModal" data-target="#userPasswordBootstrapModal" data-toggle="modal" />
+    @*user strat*@
+    <div class="modal fade " id="userPasswordBootstrapModal">
+        <div class="modal-dialog w-user-modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                    <h4 class="title" style="color:white;">Create Password</h4>
 
-        <!-- Javascript files-->
-        <!--<script src="~/Content/Template/js/jquery.min.js"></script>
-        <script src="~/Content/Template/js/popper.min.js"></script>
-        <script src="~/Content/Template/js/bootstrap.bundle.min.js"></script>
-        <script src="~/Content/Template/js/jquery-3.0.0.min.js"></script>
-        <script src="~/Content/Template/js/plugin.js"></script>-->
-        <!-- sidebar -->
-        <!--<script src="~/Content/Template/js/jquery.mCustomScrollbar.concat.min.js"></script>
-        <script src="~/Content/Template/js/custom.js"></script>-->
-        <!-- javascript -->
-        <!--<script src="~/Content/Template/js/owl.carousel.js"></script>
-        <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="UserPasswordDiv">
+                            <div class="row">
 
-        <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
-        <script src="~/Content/wwwroot/js/script.js" asp-append-version="true"></script>
-        <script>
+                                <div class="col-md-12">
+                                    <label>Password :</label>
+                                    <input type="password" class="form-control" id="UserPassword" name="UserPassword" required />
+                                </div>
+                            </div>
+
+                            <input type="button" class="btn btn-info" value="Add" onclick="SaveUserInfo();" style="float:right;margin:10px 0;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*user end*@
+    @*Modal End*@
+
+
+    <!-- Javascript files-->
+    <!--<script src="~/Content/Template/js/jquery.min.js"></script>
+    <script src="~/Content/Template/js/popper.min.js"></script>
+    <script src="~/Content/Template/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/Template/js/jquery-3.0.0.min.js"></script>
+    <script src="~/Content/Template/js/plugin.js"></script>-->
+    <!-- sidebar -->
+    <!--<script src="~/Content/Template/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Content/Template/js/custom.js"></script>-->
+    <!-- javascript -->
+    <!--<script src="~/Content/Template/js/owl.carousel.js"></script>
+    <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>-->
+
+    <script src="~/Content/wwwroot/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
+    <script src="~/Content/wwwroot/js/script.js" asp-append-version="true"></script>
+    <script>
         $(document).ready(function () {
             debugger;
 
@@ -935,7 +964,7 @@
                 });
             });*@
         });
-        </script>
+    </script>
 </body>
 </html>
 

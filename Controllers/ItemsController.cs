@@ -357,5 +357,16 @@ namespace SabiAsp.Controllers
 
             return false;
         }
+
+
+        public ActionResult SearchItem(string id)
+        {
+            using (var db = new sabiShopEntities())
+            {
+                var data= db.items.Where(t => id.Contains(t.location) ||id.Contains(t.name)).Select(p => p).ToList();
+                return View(data);
+            }
+        }
+
     }
 }
