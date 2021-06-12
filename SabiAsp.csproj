@@ -192,10 +192,16 @@
     <Compile Include="Models\Shop.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SubCategory.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\u4.cs">
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">
