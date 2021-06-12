@@ -36,7 +36,11 @@ namespace SabiAsp.Controllers
         
         public ActionResult SabiLogin(string type = "")
         {
-            ViewBag.Type = Convert.ToInt32(type);
+            if (type == "")
+                ViewBag.Type = 0;
+            else
+                ViewBag.Type = Convert.ToInt32(type);
+
             return View();
         }
 
@@ -190,7 +194,7 @@ namespace SabiAsp.Controllers
                                 }
                                 else if (i == 1)
                                 {
-                                    s.image = _fileName;
+                                    s.Logo = _fileName;
                                 }
                                 
                             }
