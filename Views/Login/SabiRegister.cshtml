@@ -64,14 +64,40 @@
                 alert("Please enter Password.");
                 return;
             }
-
+            if (@ViewBag.type == 3) {
+                if (document.getElementById('Category').value == "") {
+                    alert("Select one Category.");
+                    return;
+                }
+                if (document.getElementById('Location').value == "") {
+                    alert("Select one Location.");
+                    return;
+                }
+                if (document.getElementById('ShopName').value == "") {
+                    alert("Please enter ShopName.");
+                    return;
+                }
+                if (document.getElementById('Description').value == "") {
+                    alert("Please enter Description.");
+                    return;
+                }
+                if (document.getElementById('DeliveryFee').value == "") {
+                    alert("Please enter DeliveryFee.");
+                    return;
+                }
+                if (document.getElementById('DeliveryTime').value == "") {
+                    alert("Please enter DeliveryTime.");
+                    return;
+                }
+            }
+            f = new FormData($("#addSubCategoryForm")[0]);
             $.ajax({
                 type: "POST",
                 async: "true",
-                data: $("#registerUserForm").serialize(),
+                data: f,
                 url: "/Login/SabiRegister",
-                contenttype: 'application/html; charset=utf-8',
-                datatype: 'html',
+                processData: false,
+                contentType: false,
                 success: function (data) {
                     debugger;
                     if (data == "success") {
@@ -99,7 +125,7 @@
                 <span class="login100-form-title p-b-41">
                     Create Account
                 </span>
-                @using (Html.BeginForm("AddUser", "User", FormMethod.Post, new { id = "registerUserForm" }))
+                @using (Html.BeginForm("SabiRegister", "Login", FormMethod.Post, new { id = "registerUserForm" }))
                 {
                     <input type="hidden" value="@ViewBag.type" id="RoleType" name="RoleType" />
 
@@ -107,43 +133,43 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="wrap-input100 validate-input" data-validate="Enter First Name">
-                                    <input class="input100" type="text" id="FirstName" name="FirstName" placeholder="First Name" required>
+                                    <input class="input100" type="text" id="FirstName" name="FirstName" placeholder="First Name">
                                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="wrap-input100 validate-input" data-validate="Enter Last Name">
-                                    <input class="input100" type="text" id="LastName" name="LastName" placeholder="Last Name" required>
+                                    <input class="input100" type="text" id="LastName" name="LastName" placeholder="Last Name">
                                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="wrap-input100 validate-input" data-validate="Enter Email Address">
-                                    <input class="input100" type="email" id="EmailAddress" name="EmailAddress" placeholder="Email Address" required>
+                                    <input class="input100" type="email" id="EmailAddress" name="EmailAddress" placeholder="Email Address">
                                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="wrap-input100 validate-input" data-validate="Enter Contact">
-                                    <input class="input100" type="text" id="Contact" name="Contact" placeholder="Contact" required>
+                                    <input class="input100" type="text" id="Contact" name="Contact" placeholder="Contact">
                                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="wrap-input100 validate-input" data-validate="Enter Username">
-                                    <input class="input100" type="text" id="Username" name="Username" placeholder="Username" required>
+                                    <input class="input100" type="text" id="Username" name="Username" placeholder="Username">
                                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="wrap-input100 validate-input" data-validate="Enter Password">
-                                    <input class="input100" type="password" id="Password" name="Password" placeholder="Password" required>
+                                    <input class="input100" type="password" id="Password" name="Password" placeholder="Password">
                                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="wrap-input100 validate-input" data-validate="Enter Address">
-                                    <input class="input100" type="text" id="Address" name="Address" placeholder="Address" required>
+                                    <input class="input100" type="text" id="Address" name="Address" placeholder="Address">
                                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
                             </div>
@@ -151,7 +177,7 @@
                             {
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Category">
-                                        <select class="input100" id="Category" name="Category" required>
+                                        <select class="input100" id="Category" name="Category">
                                             @foreach (var item in ViewBag.Categories)
                                             {
                                                 <option value="@item.CategoryId">@item.CategoryName</option>
@@ -162,7 +188,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Location">
-                                        <select class="input100" id="Location" name="Location" required>
+                                        <select class="input100" id="Location" name="Location">
                                             <option value="HRE">HRE</option>
                                             <option value="BRQ">BRQ</option>
                                         </select>
@@ -171,25 +197,31 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Enter Shop Name">
-                                        <input class="input100" type="text" id="ShopName" name="ShopName" placeholder="Shop Name" required>
+                                        <input class="input100" type="text" id="ShopName" name="ShopName" placeholder="Shop Name">
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Enter Description">
-                                        <input class="input100" type="text" id="Description" name="Description" placeholder="Description" required>
+                                        <input class="input100" type="text" id="Description" name="Description" placeholder="Description">
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Enter Delivery Fee">
-                                        <input class="input100" type="text" id="DeliveryFee" name="DeliveryFee" placeholder="Delivery Fee" required>
+                                        <input class="input100" type="text" id="DeliveryFee" name="DeliveryFee" placeholder="Delivery Fee">
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Enter Delivery Time">
-                                        <input class="input100" type="email" id="DeliveryTime" name="DeliveryTime" placeholder="Delivery Time" required>
+                                        <input class="input100" type="text" id="DeliveryTime" name="DeliveryTime" placeholder="Delivery Time">
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="wrap-input100 validate-input" data-validate="Enter Shop Image">
+                                        <input class="input100" type="file" id="ShopImage" name="ShopImage" placeholder="Shop Image" multiple >
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>

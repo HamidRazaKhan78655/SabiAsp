@@ -116,14 +116,8 @@ namespace SabiAsp.Controllers
             string password = fm["Password"].ToString();
             string roleType = fm["RoleType"].ToString();
             int roleId = int.Parse(roleType);
-            string Category = fm["Category"].ToString();
-            int categoryId = int.Parse(Category);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
-            string location = fm["Location"].ToString();
-            string shopName = fm["ShopName"].ToString();
-            string description = fm["Description"].ToString();
-            string deliveryFee = fm["DeliveryFee"].ToString();
-            string deliveryTime = fm["DeliveryTime"].ToString();
+
 
             var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
             if (User == null)
@@ -166,6 +160,14 @@ namespace SabiAsp.Controllers
                     Db.vendors.Add(v);
                     Db.SaveChanges();
 
+                    string Category = fm["Category"].ToString();
+                    int categoryId = int.Parse(Category);
+                    string location = fm["Location"].ToString();
+                    string shopName = fm["ShopName"].ToString();
+                    string description = fm["Description"].ToString();
+                    string deliveryFee = fm["DeliveryFee"].ToString();
+                    string deliveryTime = fm["DeliveryTime"].ToString();
+
                     Shop s = new Shop();
                     string _fileName = string.Empty;
                     for (int i = 0; i < Request.Files.Count; i++)
@@ -182,7 +184,15 @@ namespace SabiAsp.Controllers
                                 var path = Server.MapPath("~/CompanyImages/");
                                 string SavePath = path + _fileName;
                                 b.Save(SavePath, ImageFormat.Png);
-                                s.image = _fileName;
+                                if (i == 0)
+                                {
+                                    s.image = _fileName;
+                                }
+                                else if (i == 1)
+                                {
+                                    s.image = _fileName;
+                                }
+                                
                             }
                         }
                         catch (Exception ex)
