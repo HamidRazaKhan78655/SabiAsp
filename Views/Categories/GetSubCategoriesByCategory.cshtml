@@ -25,16 +25,16 @@
                 @foreach (var subCate in ViewBag.SubCategorylist)
                 {
 
-                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(@subCate.Location, '@subCate.shopname', @subCate.Shopid)">
+                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories('@subCate.location', '@subCate.shopname', @subCate.Shopid)" style="padding:0px; margin:10px; height:100px">
                         <input type="hidden" value="@subCate.Shopid" class="GetSubCategorieId" />
                         <input type="hidden" value="@subCate.shopname" class="GetSubCategorieName" />
 
-                        <div class="row best_shoes">
-                            <div class="col-md-4">
-                                <div class="shoes_icon"><img src="~/Content/Template/images/shoes-img4.png"></div>
+                        <div class="row best_shoes" style="padding:0px; margin:0px; height:100px">
+                            <div class="col-md-4" style="padding:0px; margin:0px; height:100px;max-width:200px">
+                                <div style="background-image:url('../../Content/Template/images/banner.png');background-size:cover;"><img src="~/Content/Template/images/shoes-img4.png" style="height:100px"></div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="best_shoes">
+                            <div class="col-md-8" style="padding:0px; margin:0px; height:100px">
+                                <div class="best_shoes" style="padding:0px; margin:0px; height:100px">
 
                                     <p class="best_text" style="text-align:left;padding-left: 25px;">@subCate.shopname</p>
 
