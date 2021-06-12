@@ -3,6 +3,8 @@ using SabiAsp.Encryption;
 using SabiAsp.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -103,7 +105,7 @@ namespace SabiAsp.Controllers
             return View();
         }
         [HttpPost]
-        public string SabiRegister(FormCollection fm)
+        public string SabiRegister(IEnumerable<HttpPostedFileBase> files, FormCollection fm)
         {
             string firstName = fm["FirstName"].ToString();
             string lastName = fm["LastName"].ToString();
@@ -117,6 +119,11 @@ namespace SabiAsp.Controllers
             string Category = fm["Category"].ToString();
             int categoryId = int.Parse(Category);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
+            string location = fm["Location"].ToString();
+            string shopName = fm["ShopName"].ToString();
+            string description = fm["Description"].ToString();
+            string deliveryFee = fm["DeliveryFee"].ToString();
+            string deliveryTime = fm["DeliveryTime"].ToString();
 
             var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
             if (User == null)
@@ -154,21 +161,45 @@ namespace SabiAsp.Controllers
                     vendor v = new vendor();
                     v.UserId = u.UserId;
                     v.isDeleted = "false";
-                    v.CreatedBy = 1;
+                    v.CreatedBy = u.UserId;
                     v.CreatedDate = DateTime.Now;
                     Db.vendors.Add(v);
                     Db.SaveChanges();
 
                     Shop s = new Shop();
+                    string _fileName = string.Empty;
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        try
+                        {
+                            var file = Request.Files[i];
+                            string namefile = string.Empty;
+                            namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                            if (string.IsNullOrEmpty(namefile) == false)
+                            {
+                                Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                                _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
+                                var path = Server.MapPath("~/CompanyImages/");
+                                string SavePath = path + _fileName;
+                                b.Save(SavePath, ImageFormat.Png);
+                                s.image = _fileName;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
+                        }
+                    }
+
                     s.vendorid = v.vendorid;
                     s.CategoryId = categoryId;
-                    if (firstName.Contains("'"))
-                        s.shopname = firstName + " " + "Shop";
-                    else
-                        s.shopname = firstName + "'" + " " + "Shop";
-
+                    s.shopname = shopName;
+                    s.Description = description;
+                    s.DeliveryFee = deliveryFee;
+                    s.DeliveryTime = deliveryTime;
+                    s.location = location;
                     s.isDeleted = "false";
-                    s.CreatedBy = 1;
+                    s.CreatedBy = u.UserId;
                     s.CreatedDate = DateTime.Now;
                     Db.Shops.Add(s);
                     Db.SaveChanges();
