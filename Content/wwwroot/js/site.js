@@ -156,9 +156,9 @@ function loadSubCategories(cate, name)
     window.open('/Categories/GetSubCategoriesByCategory?id='+cate+"&&name="+name , "_self");
 }
 
-function loadCategories(cate, name, subCategorieId) {
+function loadCategories(categoryId, shopname, shopid) {
     debugger;
-    window.open('/Categories/GetSubCategories?id=' + cate + "&&name=" + name + "&&subCategorieId=" + subCategorieId, "_self");
+    window.open('/Categories/GetSubCategories?categoryId=' + categoryId + "&&shopname=" + shopname + "&&shopid=" + shopid, "_self");
 }
 
   

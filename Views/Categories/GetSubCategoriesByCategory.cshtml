@@ -13,11 +13,11 @@
             <div class="row">
                 <div class="col-sm-6">
                     <input type="hidden" value="@ViewBag.CategoryId" id="GetCategoryId" />
-                    <span style="color:white;font-size:large;">Sort By :</span>
+                    @*<span style="color:white;font-size:large;">Sort By :</span>
                     @Html.DropDownList("SortList", new List<SelectListItem>{
                new SelectListItem{ Text="Date", Value = "1" },
                new SelectListItem{ Text="Name", Value = "2" },
-               }, "All", new { onchange = "SortSubCategorylistChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })
+               }, "All", new { onchange = "SortSubCategorylistChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })*@
                 </div>
             </div>
             <div class="row">
@@ -25,7 +25,7 @@
                 @foreach (var subCate in ViewBag.SubCategorylist)
                 {
 
-                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(1, '@subCate.shopname', @subCate.Shopid)">
+                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(@subCate.CategoryId, '@subCate.shopname', @subCate.Shopid)">
                         <input type="hidden" value="@subCate.Shopid" class="GetSubCategorieId" />
                         <input type="hidden" value="@subCate.shopname" class="GetSubCategorieName" />
 

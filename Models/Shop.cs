@@ -30,6 +30,7 @@ namespace SabiAsp.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string location { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual vendor vendor { get; set; }
