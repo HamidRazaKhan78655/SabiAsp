@@ -1,0 +1,44 @@
+﻿@model List<SabiAsp.Models.SubCategoryItems>
+@foreach (var sub in Model)
+{
+    <p style="margin: 10px; font-size: 32px; color: white;">@sub.name</p>
+    <br />
+
+
+    <div class="row" @*onclick="GetVendorItemData(@subCate.ItemId, '@subCate.name', '@subCate.Weight', '@subCate.Price', '@subCate.image', @subCate.Shopid, @subCate.SubCategorieId);"*@>
+        @if (sub.items != null)
+        {
+            if (sub.items.Count == 0)
+            {
+                <div class="best_shoes" style="height: 90px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
+                    <p class="best_text" style="        margin-bottom: 5px;
+        color: #e0ab09;
+">No Item In This Category !</p>
+                </div>
+
+            }
+            else
+            {
+                foreach (var subCate in sub.items)
+                {
+                    <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
+                    <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
+
+                    <div class="best_shoes" style="height: 200px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
+                        <div><i class="fas fa-plus-circle" style="float: right; position: absolute; margin: 13px; font-size: 30px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId)"></i></div>
+                        <p class="best_text" style=" margin-bottom: 5px;">@subCate.name</p>
+                        <div class="shoes_icon" style="min-height: 10px;"><img src="~/Content/Template/images/shoes-img4.png" style="max-width:66%;"></div>
+                        <div class="star_text">
+                            <div class="right_part" style="width:100%; text-align:center">
+                                <div class="">Price : <span style="color: #ff4e5b;">60$</span></div>
+                                <div class="">Weight : <span style="color: #ff4e5b;">2KG</span></div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+
+    </div>
+
+}

@@ -127,7 +127,11 @@ $(document).ready(function ()
     });
 
 });
+$('.sideNavtab').click(function () {
+    $('.sideNavtab').css('border-left', '0px solid');
+    $(this).css('border-left', '4px solid');
 
+});
 //                                               javascript                                  // 
 function loadLocationType(type)
 {
@@ -150,5 +154,3 @@ function RegisterAccount(userType) {
     debugger;
     window.open('/Login/SabiRegister?type=' + userType, "_self");
 }
-
-  

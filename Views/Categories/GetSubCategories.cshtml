@@ -38,7 +38,28 @@
 
         }
     }
+    function showItemByCategory(Sid) {
+        if (Sid == 0) {
+            $('#itemsList').show();
+            $('#itemsbyCategory').hide();
+        } else {
+            $('#itemsList').hide();
+            $('#itemsbyCategory').show();
+            //
+            $.ajax({
+                type: "GET",
+                url: "/Items/ItemBySubCategories?Sid=" + Sid,
+                success: function (responce) {
+                    debugger;
+                    $('#itemsbyCategory').html('');
+                    $('#itemsbyCategory').html(responce);
+                }
+            });
+            //
+        }
+    }
 </script>
+
 <!-- New Arrivals section start -->
 <style>
     .ShopView {
@@ -82,8 +103,42 @@
 <!-- New Arrivals section start -->
 <div class="ShopView">
     <div class="ShopCenter" style="display: flex;">
-        <div class="ShopLogo"></div>
-        <div class="ShopDetails"></div>
+        <div class="ShopLogo">
+            <img src="~/Content/Template/images/shoes-img9.png" style="height:100%; width:100%;" />
+        </div>
+        <div class="ShopDetails">
+            <div>
+                <div class="star_text" style="        margin-left: 40px;">
+                    <div class="left_part" style="padding:0px;width:50%">
+                        <h4 style="text-align:left; padding:10px; font-size:30px;">Natural Foods</h4>
+
+                        <ul>
+                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                        </ul>
+                    </div>
+                    <div class="right_part" style="width:35%">
+                        <div class="shoes_price" style="text-align:left;font-size:18px;font-weight:400">Location : <span style="color: #ff4e5b;">HRE</span></div>
+                        <div class="shoes_price" style="        text-align: left;
+        font-size: 18px;
+        font-weight: 400
+">Delivery Fee : <span style="color: #ff4e5b;">$760</span></div>
+                        <div class="shoes_price" style="        text-align: left;
+        font-size: 18px;
+        font-weight: 400
+">Min-Order : <span style="color: #ff4e5b;">60</span></div>
+                        <div class="shoes_price" style="        text-align: left;
+        font-size: 18px;
+        font-weight: 400
+">Time :  <span style="color: #ff4e5b;">Next Day delivery</span></div>
+                    </div>
+                </div>
+            </div>
+            <div></div>
+        </div>
     </div>
 </div>
 <div class="layout_padding gallery_section">
@@ -121,19 +176,21 @@
         <div class="row">
            
         
-            <div class="col-3 " style="background:white">
-                <div class="sideNavtab" style="        margin: 10px;
-        font-size: 20px;
-        color: #e0ab09; cursor:pointer"><span style=" border-left: 4px solid; padding-left: 10px;">All</span></div>
-                @foreach (var sub in Model)
-                {
+            <div class="col-3 ">
+                <div  style="background:white; padding:5px;">
                     <div class="sideNavtab" style="        margin: 10px;
+        font-size: 20px;
+        color: #e0ab09; cursor:pointer; border-left: 4px solid; "><span style=" padding-left: 10px;" onclick="showItemByCategory(0)">All</span></div>
+                    @foreach (var sub in Model)
+                    {
+                        <div class="sideNavtab" onclick="showItemByCategory(@sub.SubCategorieId)" style="        margin: 10px;
         font-size: 20px;
         color: #e0ab09; cursor:pointer"><span style=" padding-left: 10px;">@sub.name</span></div>
         }
+                </div>
             </div>
         <div class="col-9">
-
+            <div style="display:none" id="itemsbyCategory"></div>
             <div class="" id="itemsList">
                 @foreach (var sub in Model)
                 {
