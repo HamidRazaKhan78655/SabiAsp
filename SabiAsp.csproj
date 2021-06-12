@@ -357,6 +357,7 @@
     <Content Include="Images\MainSabilogo.png" />
     <Content Include="Images\noimage.jpg" />
     <Content Include="Images\Pharmacy.png" />
+    <Content Include="Images\shopbg.jpg" />
     <Content Include="Models\sabiShop.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>sabiShop.edmx</DependentUpon>

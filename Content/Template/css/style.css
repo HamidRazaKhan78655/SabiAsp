@@ -571,12 +571,11 @@ body{
 	margin-top: 35px;
 }
 
-.gallery_section{
-	width: 100%;
-	float: left;
-	background-color: #ff4e5b;
-	height: auto;
-
+.gallery_section {
+    width: 100%;
+    float: left;
+    background-color: #E0AB09;
+    height: auto;
 }
 
 .best_shoes {
