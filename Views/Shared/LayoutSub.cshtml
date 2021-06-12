@@ -246,10 +246,7 @@
                 }
             });
         }
-        function RegisterAccount() {
-            var userType = $('#SignInType').val();
-            window.open('/Login/SabiRegister?type=' + userType, "_self");
-        }
+
         function loginWithSabi() {
             window.location.href = "/Login/SabiLogin/"
         }
@@ -314,7 +311,13 @@
                                     </div>
                                 </a>
                                 <a class="nav-item nav-link last" href="#"><img src="~/Content/Template/images/search_icon.png"></a>
-                                <a class="nav-item nav-link" href="shoes.html">HRE<i class="fas fa-map-marker-alt" style="margin-left:8px"></i></a>
+                                <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
+                                    @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>
+                                    <div id="LocationTypeDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
+                                        <div onclick="loadLocationType('HRE')">HRE</div>
+                                        <div onclick="loadLocationType('BRQ')">BRQ</div>
+                                    </div>
+                                </a>
                                 @*<a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>*@
                                 <a class="jss109 nav-item nav-link last" onclick="BuyItemView()">
                                     <div class="jss261">
@@ -361,12 +364,6 @@
                                             <div class="flex1">
                                                 <img src="~/Images/loginSabi.png" class="signinimg" />
                                                 <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Sabi" type="button" />
-                                            </div>
-                                        </li>
-                                        <li onclick="RegisterAccount();">
-                                            <div class="flex1">
-                                                <img src="~/Images/loginSabi.png" class="signinimg" />
-                                                <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Create New Account" type="button" />
                                             </div>
                                         </li>
                                     </ul>

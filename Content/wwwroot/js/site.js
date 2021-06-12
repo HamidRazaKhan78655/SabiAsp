@@ -12,41 +12,7 @@ $(document).ready(function ()
         debugger;
         $("#dropdown").slideToggle();
     });*/
-    var categoriesFlag = 0;
-    $("#SignInbtn").click(function ()
-    {
-        
-        debugger;
-        if (categoriesFlag == 0)
-        {
-            $("#SignIn").show(100);
-            categoriesFlag = 1;
 
-        } else
-        {
-            categoriesFlag = 0
-            $("#SignIn").hide(100);
-        }
-       // $("#SignIn").slideToggle();
-    });
-
-    var categoriesFlag2 = 0;
-    $("#Aboutbtn").click(function ()
-    {
-        
-        debugger;
-        if (categoriesFlag2 == 0)
-        {
-            $("#About").show(100);
-            categoriesFlag2 = 1;
-
-        } else
-        {
-            categoriesFlag2 = 0
-            $("#About").hide(100);
-        }
-       // $("#SignIn").slideToggle();
-    });
 
     $("#profilebtn").click(function ()
     {
@@ -118,18 +84,23 @@ $(document).ready(function ()
         }
         
     });*/
-    var categoriesFlag = 0;
-    $("#Categories").click(function ()
-    {
-        debugger;
-        if (categoriesFlag == 0)
-        {
-            $("#categoriesDropDiv").show(100);
-            categoriesFlag = 1;
-        } else {
-            categoriesFlag = 0
-            $("#categoriesDropDiv").hide(100);
-        }
+
+    $("#SignInbtn").hover(function () {
+        $("#SignIn").show();
+    }, function () {
+            $("#SignIn").hide();
+    });
+
+    $("#Aboutbtn").hover(function () {
+        $("#About").show();
+    }, function () {
+            $("#About").hide();
+    });
+
+    $("#Categories").hover(function () {
+        $("#categoriesDropDiv").show();
+    }, function () {
+            $("#categoriesDropDiv").hide();
     });
 
     $('.showItemsOfSubCategories').click(function ()
@@ -147,9 +118,23 @@ $(document).ready(function ()
             },
                 'fast');
     });
+
+
+    $("#LocationType").hover(function () {
+        $("#LocationTypeDropDiv").show();
+    }, function () {
+        $("#LocationTypeDropDiv").hide();
+    });
+
 });
 
 //                                               javascript                                  // 
+function loadLocationType(type)
+{
+    debugger;
+    window.open('/Home/Index?type=' + type, "_self");
+}
+
 function loadSubCategories(cate, name)
 {
     debugger;
@@ -159,6 +144,11 @@ function loadSubCategories(cate, name)
 function loadCategories(location, shopname, shopid) {
     debugger;
     window.open('/Categories/GetSubCategories?location=' + location + "&&shopname=" + shopname + "&&shopid=" + shopid, "_self");
+}
+
+function RegisterAccount(userType) {
+    debugger;
+    window.open('/Login/SabiRegister?type=' + userType, "_self");
 }
 
   

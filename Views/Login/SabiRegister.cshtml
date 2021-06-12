@@ -4,8 +4,6 @@
     Layout = null;
 }
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,7 +125,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="wrap-input100 validate-input" data-validate="Enter Contact">
-                                    <input class="input100" type="text" id="Contact" name="Contact" placeholder="Contact">
+                                    <input class="input100" type="text" id="Contact" name="Contact" placeholder="Contact" required>
                                     <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                 </div>
                             </div>
@@ -151,7 +149,7 @@
                             </div>
                             @if (@ViewBag.type == 3)
                             {
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Category">
                                         <select class="input100" id="Category" name="Category" required>
                                             @foreach (var item in ViewBag.Categories)
@@ -162,6 +160,40 @@
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="wrap-input100 validate-input" data-validate="Location">
+                                        <select class="input100" id="Location" name="Location" required>
+                                            <option value="HRE">HRE</option>
+                                            <option value="BRQ">BRQ</option>
+                                        </select>
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wrap-input100 validate-input" data-validate="Enter Shop Name">
+                                        <input class="input100" type="text" id="ShopName" name="ShopName" placeholder="Shop Name" required>
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wrap-input100 validate-input" data-validate="Enter Description">
+                                        <input class="input100" type="text" id="Description" name="Description" placeholder="Description" required>
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wrap-input100 validate-input" data-validate="Enter Delivery Fee">
+                                        <input class="input100" type="text" id="DeliveryFee" name="DeliveryFee" placeholder="Delivery Fee" required>
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wrap-input100 validate-input" data-validate="Enter Delivery Time">
+                                        <input class="input100" type="email" id="DeliveryTime" name="DeliveryTime" placeholder="Delivery Time" required>
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+
                             }
 
                         </div>
