@@ -201,6 +201,7 @@
     <Compile Include="Models\SubCategory.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SubCategoryItems.cs" />
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>

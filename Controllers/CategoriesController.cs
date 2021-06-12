@@ -43,7 +43,7 @@ namespace SabiAsp.Controllers
             //}
         }
 
-        public ActionResult GetSubCategories(int location, string shopname, int shopid)
+        public ActionResult GetSubCategories(string location, string shopname, int shopid)
         {
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
             //if (logedinUserId == 0)
@@ -51,27 +51,29 @@ namespace SabiAsp.Controllers
             //    return RedirectToAction("SabiLogin", "Login");//HRE, BRQ
             //}
 
-
-            ViewBag.locationType = "";
+            ViewBag.ShopData = Db.Shops.Where(d => d.Shopid == shopid).FirstOrDefault();
 
             var subCategory = Db.SubCategories.Where(x => x.Shopid == shopid).ToList();
             ViewBag.SubCategorylist = subCategory;
-
-
-            foreach (var subCate in subCategory)
+            var itemList = new List<SubCategoryItems>();
+            foreach (var sub in subCategory)
             {
-                var items = Db.items.Where(x => x.SubCategorieId == shopid).ToList();
+                var sci = new SubCategoryItems();
+                var it = Db.items.Where(x => x.SubCategorieId == sub.SubCategorieId && x.isDeleted != "true").ToList();
+                sci.SubCategorieId = sub.SubCategorieId;
+                sci.name = sub.name;
+                sci.items = it;
+                itemList.Add(sci);
             }
-
 
             ViewBag.Category = shopname;
             ViewBag.SubCategoryId = shopid;
             ViewBag.logedinUserId = logedinUserId;
-            ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.Shopid == shopid).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
-            list = ViewBag.SubCategorylist;
+            //ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.Shopid == shopid).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
+            //list = ViewBag.SubCategorylist;
             //ViewBag.SCats = items;
 
-            return View();
+            return View(itemList);
         } 
         public ActionResult GetSubCategoriesItem(int id, string name)
         {

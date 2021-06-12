@@ -1,4 +1,4 @@
-﻿
+﻿@model List<SabiAsp.Models.SubCategoryItems>
 @{
     ViewBag.Title = "GetSubCategories";
     ViewBag.LayoutPage = "sub";
@@ -57,54 +57,60 @@
             </div>
             @if (ViewBag.logedinRoleID == 3)
             {
-                <div class="col-sm-4" id="Subcategoriesdiv" style="text-align:end">
+                @*<div class="col-sm-4" id="Subcategoriesdiv" style="text-align:end">
                     <span style="color:white;font-size:large;">Sub Categories : </span>
                     @Html.DropDownList("Subcategories", ViewBag.SubCategorylist as IEnumerable<SelectListItem>, "All", new { @class = "form-control", @style = "display:initial;width:auto;" })
-                </div>
+                </div>*@
                 <div class="col-sm-2" style="text-align:end">
                     <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Item" id="addItemBtn" data-target="#vendorShopItemBootstrapModal" data-toggle="modal" />
                 </div>
             }
             else
             {
-                <div class="col-sm-6" id="Subcategoriesdiv" style="text-align:end">
+                @*<div class="col-sm-6" id="Subcategoriesdiv" style="text-align:end">
                     <span style="color:white;font-size:large;">Sub Categories : </span>
                     @Html.DropDownList("Subcategories", ViewBag.SubCategorylist as IEnumerable<SelectListItem>, "All", new { @class = "form-control", @style = "display:initial;width:auto;" })
-                </div>
+                </div>*@
             }
 
         </div>
         <div class="row" id="itemsList">
-
-            @foreach (var subCate in ViewBag.SCats)
+            @foreach (var sub in Model)
             {
+                <p>@sub.name</p>
+                <br />
+                foreach (var subCate in sub.items)
+                {
 
-                <div class="col-sm-4 showItemsOfSubCategories" @*onclick="GetVendorItemData(@subCate.ItemId, '@subCate.name', '@subCate.Weight', '@subCate.Price', '@subCate.image', @subCate.Shopid, @subCate.SubCategorieId);"*@>
-                    <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
-                    <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
+                    <div class="col-sm-4 showItemsOfSubCategories" @*onclick="GetVendorItemData(@subCate.ItemId, '@subCate.name', '@subCate.Weight', '@subCate.Price', '@subCate.image', @subCate.Shopid, @subCate.SubCategorieId);"*@>
+                        <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
+                        <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
-                    <div class="best_shoes">
+                        <div class="best_shoes">
 
-                        <p class="best_text">@subCate.name</p>
-                        <div class="shoes_icon"><img src="~/Content/Template/images/shoes-img4.png"></div>
-                        <div class="star_text">
-                            <div class="left_part">
-                                <ul>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
-                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
-                                </ul>
-                            </div>
-                            <div class="right_part">
-                                <div class="shoes_price">Items : <span style="color: #ff4e5b;">60</span></div>
-                                <input type="button" class="btn" onclick="AddtoBasket(@subCate.ItemId)" value="Shop Now" />
+                            <p class="best_text">@subCate.name</p>
+                            <div class="shoes_icon"><img src="~/Content/Template/images/shoes-img4.png"></div>
+                            <div class="star_text">
+                                <div class="left_part">
+                                    <ul>
+                                        <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                        <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                        <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                        <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                        <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                    </ul>
+                                </div>
+                                <div class="right_part">
+                                    <div class="shoes_price">Items : <span style="color: #ff4e5b;">60</span></div>
+                                    <input type="button" class="btn" onclick="AddtoBasket(@subCate.ItemId)" value="Shop Now" />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
             }
+
+
         </div>
         @*        <div id="item_View" style="">
 
@@ -154,7 +160,7 @@
                                             <select class="form-control" id="UpdateSubCategorydrp" name="UpdateSubCategorydrp" required>
                                                 @foreach (var item in ViewBag.SubCategorylist)
                                                 {
-                                                    <option value="@item.Value">@item.Text</option>
+                                                    <option value="@item.SubCategorieId">@item.name</option>
                                                 }
                                             </select>
                                         </div>
@@ -217,7 +223,7 @@
                                             <select class="form-control" id="shopSubCategorydrp" name="shopSubCategorydrp" required>
                                                 @foreach (var item in ViewBag.SubCategorylist)
                                                 {
-                                                    <option value="@item.Value">@item.Text</option>
+                                                    <option value="@item.SubCategorieId">@item.name</option>
                                                 }
                                             </select>
                                         </div>
