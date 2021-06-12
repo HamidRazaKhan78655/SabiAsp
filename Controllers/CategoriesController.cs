@@ -36,13 +36,14 @@ namespace SabiAsp.Controllers
             //}
             //else
             //{
-                ViewBag.CategoryId = id;
-                ViewBag.SubCategorylist = Db.Shops.Where(d => d.CategoryId == id).ToList();
-                return View();
+            var location = Session["Location"].ToString();
+            ViewBag.CategoryId = id;
+            ViewBag.SubCategorylist = Db.Shops.Where(d => d.CategoryId == id && d.location == location).ToList();
+            return View();
             //}
         }
 
-        public ActionResult GetSubCategories(int categoryId, string shopname, int shopid)
+        public ActionResult GetSubCategories(int location, string shopname, int shopid)
         {
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
             //if (logedinUserId == 0)
@@ -50,20 +51,25 @@ namespace SabiAsp.Controllers
             //    return RedirectToAction("SabiLogin", "Login");//HRE, BRQ
             //}
 
-           // var user = Db.vendors.Where(v=> v.sh)
-            //ViewBag.locationType = "";
+
+            ViewBag.locationType = "";
 
             var subCategory = Db.SubCategories.Where(x => x.Shopid == shopid).ToList();
             ViewBag.SubCategorylist = subCategory;
 
 
-            var items = Db.items.Where(x=>x.SubCategorieId == shopid).ToList();
+            foreach (var subCate in subCategory)
+            {
+                var items = Db.items.Where(x => x.SubCategorieId == shopid).ToList();
+            }
+
+
             ViewBag.Category = shopname;
             ViewBag.SubCategoryId = shopid;
             ViewBag.logedinUserId = logedinUserId;
             ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.Shopid == shopid).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
             list = ViewBag.SubCategorylist;
-            ViewBag.SCats = items;
+            //ViewBag.SCats = items;
 
             return View();
         } 
