@@ -32,8 +32,9 @@ namespace SabiAsp.Controllers
             return View();
         }  
         
-        public ActionResult SabiLogin()
+        public ActionResult SabiLogin(string type = "")
         {
+            ViewBag.Type = Convert.ToInt32(type);
             return View();
         }
 
@@ -85,6 +86,7 @@ namespace SabiAsp.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Session.Clear();
             Session["UserId"] = "";
             Session["Username"] = "";
             Session["Name"] = "";

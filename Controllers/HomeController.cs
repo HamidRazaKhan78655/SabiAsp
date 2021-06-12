@@ -13,12 +13,12 @@ namespace SabiAsp.Controllers
     {
         sabiShopEntities Db = new sabiShopEntities();
         
-        public ActionResult Index()
+        public ActionResult Index(string type = "")
         {
             try
             {
                 Session["Login"] = "";
-                Session["Location"] = "HRE";
+                Session["Location"] = type == "" ? "HRE" : type;
                 //  ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
                 /*  var query = Db.SubCategories.ToList();
                   List<SubCategory> subCategories = new List<SubCategory>();
