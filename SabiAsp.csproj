@@ -517,6 +517,7 @@
     <Content Include="Views\SubCategory\GetShopSubCategories.cshtml" />
     <Content Include="Views\Items\SearchItem.cshtml" />
     <Content Include="Views\Items\ItemBySubCategories.cshtml" />
+    <Content Include="Views\Items\SearchItemBySubCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

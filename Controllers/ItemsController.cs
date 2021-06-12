@@ -384,6 +384,23 @@ namespace SabiAsp.Controllers
 
             return PartialView("ItemBySubCategories" , itemList);
         }
+        public ActionResult SearchItemBySubCategories(string key , int Sid)
+        {
+            var subCategory = Db.SubCategories.Where(x => x.Shopid == Sid).ToList();
+            var itemList = new List<SubCategoryItems>();
+            foreach (var sub in subCategory)
+            {
+                var sci = new SubCategoryItems();
+                var it = Db.items.Where(x => x.SubCategorieId == sub.SubCategorieId && x.isDeleted != "true" && x.name.Contains(key)).ToList();
+                sci.SubCategorieId = sub.SubCategorieId;
+                sci.name = sub.name;
+                sci.items = it;
+                itemList.Add(sci);
+            }
+
+
+            return PartialView("SearchItemBySubCategories", itemList);
+        }
 
     }
 }

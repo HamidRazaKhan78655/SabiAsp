@@ -121,19 +121,19 @@
                         </ul>
                     </div>
                     <div class="right_part" style="width:35%">
-                        <div class="shoes_price" style="text-align:left;font-size:18px;font-weight:400">Location : <span style="color: #ff4e5b;">HRE</span></div>
+                        <div class="shoes_price" style="text-align:left;font-size:15px;font-weight:400">Location : <span style="color: #ff4e5b;">HRE</span></div>
                         <div class="shoes_price" style="        text-align: left;
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 400
 ">Delivery Fee : <span style="color: #ff4e5b;">$760</span></div>
                         <div class="shoes_price" style="        text-align: left;
-        font-size: 18px;
+        font-size: 15px;
         font-weight: 400
 ">Min-Order : <span style="color: #ff4e5b;">60</span></div>
                         <div class="shoes_price" style="        text-align: left;
-        font-size: 18px;
-        font-weight: 400
-">Time :  <span style="color: #ff4e5b;">Next Day delivery</span></div>
+        font-size: 15px;
+        font-weight: 400;
+        white-space: nowrap;">Time :  <span style="color: #ff4e5b;">Next Day delivery</span></div>
                     </div>
                 </div>
             </div>
@@ -142,6 +142,7 @@
     </div>
 </div>
 <div class="layout_padding gallery_section">
+    <input type="text" class="form-control" id="searchItemsInshop" style="position: absolute; margin: -70px; margin-left: 15px; width: 300px;" placeholder="Search Items In Shop!" />
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
@@ -173,11 +174,13 @@
             }
 
         </div>
-        <div class="row">
+        <div class="row" id="searchResultView">
+
+        </div>
+        <div class="row" id="NormalView">
            
-        
             <div class="col-3 ">
-                <div  style="background:white; padding:5px;">
+                <div style="background:white; padding:5px;">
                     <div class="sideNavtab" style="        margin: 10px;
         font-size: 20px;
         color: #e0ab09; cursor:pointer; border-left: 4px solid; "><span style=" padding-left: 10px;" onclick="showItemByCategory(0)">All</span></div>
@@ -186,59 +189,61 @@
                         <div class="sideNavtab" onclick="showItemByCategory(@sub.SubCategorieId)" style="        margin: 10px;
         font-size: 20px;
         color: #e0ab09; cursor:pointer"><span style=" padding-left: 10px;">@sub.name</span></div>
-        }
+    }
                 </div>
             </div>
-        <div class="col-9">
-            <div style="display:none" id="itemsbyCategory"></div>
-            <div class="" id="itemsList">
-                @foreach (var sub in Model)
-                {
-                    <p style="margin: 10px; font-size: 32px; color: white;">@sub.name</p>
-                    <br />
+            <div class="col-9">
+                <div style="display:none" id="itemsbyCategory"></div>
+                <div class="" id="itemsList">
+                    @foreach (var sub in Model)
+                    {
+                        <p style="margin: 10px; font-size: 32px; color: white;">@sub.name</p>
+                        <br />
 
 
-                    <div class="row" @*onclick="GetVendorItemData(@subCate.ItemId, '@subCate.name', '@subCate.Weight', '@subCate.Price', '@subCate.image', @subCate.Shopid, @subCate.SubCategorieId);"*@>
-                        @if (sub.items != null)
-                        {
-                            if (sub.items.Count == 0)
+                        <div class="row" @*onclick="GetVendorItemData(@subCate.ItemId, '@subCate.name', '@subCate.Weight', '@subCate.Price', '@subCate.image', @subCate.Shopid, @subCate.SubCategorieId);"*@>
+                            @if (sub.items != null)
                             {
-                                <div class="best_shoes" style="height: 90px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
-                                    <p class="best_text" style="        margin-bottom: 5px;
+                                if (sub.items.Count == 0)
+                                {
+                                    <div class="best_shoes" style="height: 90px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
+                                        <p class="best_text" style="        margin-bottom: 5px;
         color: #e0ab09;
 ">No Item In This Category !</p>
-                                </div>
+                                    </div>
 
-                            }
-                            else
-                            {
-                                foreach (var subCate in sub.items)
+                                }
+                                else
                                 {
-                                    <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
-                                    <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
+                                    foreach (var subCate in sub.items)
+                                    {
+                                        <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
+                                        <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
-                                    <div class="best_shoes" style="height: 200px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
-                                        <div><i class="fas fa-plus-circle" style="float: right; position: absolute; margin: 13px; font-size: 30px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId)"></i></div>
-                                        <p class="best_text" style=" margin-bottom: 5px;">@subCate.name</p>
-                                        <div class="shoes_icon" style="min-height: 10px;"><img src="~/Content/Template/images/shoes-img4.png" style="max-width:66%;"></div>
-                                        <div class="star_text">
-                                            <div class="right_part" style="width:100%; text-align:center">
-                                                <div class="">Price : <span style="color: #ff4e5b;">60$</span></div>
-                                                <div class="">Weight : <span style="color: #ff4e5b;">2KG</span></div>
+                                        <div class="best_shoes" style="height: 200px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
+                                            <div><i class="fas fa-plus-circle" style="float: right; position: absolute; margin: 13px; font-size: 30px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId)"></i></div>
+                                            <p class="best_text" style=" margin-bottom: 5px;">@subCate.name</p>
+                                            <div class="shoes_icon" style="min-height: 10px;"><img src="~/Content/Template/images/shoes-img4.png" style="max-width:66%;"></div>
+                                            <div class="star_text">
+                                                <div class="right_part" style="width:100%; text-align:center">
+                                                    <div class="">Price : <span style="color: #ff4e5b;">60$</span></div>
+                                                    <div class="">Weight : <span style="color: #ff4e5b;">2KG</span></div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
                                 }
                             }
-                        }
 
-                    </div>
+                        </div>
 
-                }
+                    }
 
 
+                </div>
             </div>
-        </div>
+        
+           
         </div>
 
 

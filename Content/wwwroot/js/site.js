@@ -132,6 +132,23 @@ $('.sideNavtab').click(function () {
     $(this).css('border-left', '4px solid');
 
 });
+$('#searchItemsInshop').keyup(function () {
+    if ($('#searchItemsInshop').val() == "") {
+        $("#searchResultView").hide();
+        $("#NormalView").show();
+    } else {
+        $("#searchResultView").show();
+        $("#NormalView").hide();
+        $.ajax({
+            type: "GET",
+            url: "/Items/SearchItemBySubCategories?key=" + $('#searchItemsInshop').val() + "&&Sid=" + $("#GetSubCategoryId").val(),
+            success: function (responce) {
+                debugger;
+                $('#searchResultView').html('');
+                $('#searchResultView').html(responce);
+            }
+        });}
+});
 //                                               javascript                                  // 
 function loadLocationType(type)
 {
