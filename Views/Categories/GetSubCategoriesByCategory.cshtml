@@ -25,9 +25,9 @@
                 @foreach (var subCate in ViewBag.SubCategorylist)
                 {
 
-                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(1, '@subCate.name', @subCate.SubCategorieId)">
-                        <input type="hidden" value="@subCate.SubCategorieId" class="GetSubCategorieId" />
-                        <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
+                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories(1, '@subCate.shopname', @subCate.Shopid)">
+                        <input type="hidden" value="@subCate.Shopid" class="GetSubCategorieId" />
+                        <input type="hidden" value="@subCate.shopname" class="GetSubCategorieName" />
 
                         <div class="row best_shoes">
                             <div class="col-md-4">
@@ -36,7 +36,7 @@
                             <div class="col-md-8">
                                 <div class="best_shoes">
 
-                                    <p class="best_text" style="text-align:left;padding-left: 25px;">@subCate.name</p>
+                                    <p class="best_text" style="text-align:left;padding-left: 25px;">@subCate.shopname</p>
 
                                     <div class="star_text">
                                         <div class="left_part">

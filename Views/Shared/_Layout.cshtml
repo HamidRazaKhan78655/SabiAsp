@@ -212,40 +212,40 @@
 
         function ShowAllItems() {
             debugger;
-            $.ajax({
-                url: "/Items/ShowAllItems",
-                contentType: "application/json",
-                success: function (responce) {
-                    debugger;
-                    var html = '';
-                    $(responce).each(function (index, value) {
-                        debugger;
-                        html += '<div class="col-sm-4" onclick="buy(' + value[" id"] + ');">'
-                            + '<div class="best_shoes">'
-                            + '<p class="best_text">' + value["name"] + '</p>'
-                            + '<div class="shoes_icon"><img src=' + value["image"] + ' /></div>'
-                            + '<div class="star_text">'
-                            + '<div class="left_part">'
-                            + '<ul>'
-                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
-                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
-                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
-                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
-                            + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
-                            + '</ul>'
-                            + '</div>'
-                            + '<div class="right_part">'
-                            + '<div class="shoes_price">$ <span style="color: #ff4e5b;">' + value["price"] + '</span></div>'
-                            + '</div>'
-                            + '</div>'
-                            + '</div>'
-                            + '</div>'
+            //$.ajax({
+            //    url: "/Items/ShowAllItems",
+            //    contentType: "application/json",
+            //    success: function (responce) {
+            //        debugger;
+            //        var html = '';
+            //        $(responce).each(function (index, value) {
+            //            debugger;
+            //            html += '<div class="col-sm-4" onclick="buy(' + value[" id"] + ');">'
+            //                + '<div class="best_shoes">'
+            //                + '<p class="best_text">' + value["name"] + '</p>'
+            //                + '<div class="shoes_icon"><img src=' + value["image"] + ' /></div>'
+            //                + '<div class="star_text">'
+            //                + '<div class="left_part">'
+            //                + '<ul>'
+            //                + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
+            //                + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
+            //                + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
+            //                + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
+            //                + '<li><a href="#"><img src="/Content/Template/images/star-icon.png"></a></li>'
+            //                + '</ul>'
+            //                + '</div>'
+            //                + '<div class="right_part">'
+            //                + '<div class="shoes_price">$ <span style="color: #ff4e5b;">' + value["price"] + '</span></div>'
+            //                + '</div>'
+            //                + '</div>'
+            //                + '</div>'
+            //                + '</div>'
 
 
-                    });
-                    $("#allcategories").html(html);
-                }
-            });
+            //        });
+            //        $("#allcategories").html(html);
+            //    }
+            //});
 
         }
         function buy(obj) {

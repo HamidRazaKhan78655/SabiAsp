@@ -37,7 +37,7 @@ namespace SabiAsp.Controllers
             //else
             //{
                 ViewBag.CategoryId = id;
-                ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.Shopid == id).ToList();
+                ViewBag.SubCategorylist = Db.Shops.Where(d => d.CategoryId == id).ToList();
                 return View();
             //}
         }

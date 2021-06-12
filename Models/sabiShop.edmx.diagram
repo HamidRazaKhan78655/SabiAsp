@@ -4,23 +4,24 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="22de79647a0447848f9197e5008afd81" Name="Diagram1">
-        <EntityTypeShape EntityType="sabiShopModel.Category" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.item" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.Role" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.Shop" Width="1.5" PointX="7.5" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.SubCategory" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.u4" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.UserItemCard" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.user" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="sabiShopModel.vendor" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
-        <AssociationConnector Association="sabiShopModel.FK__items__SubCatego__4BAC3F29" ManuallyRouted="false" />
-        <AssociationConnector Association="sabiShopModel.FK__users__RoleID__45F365D3" ManuallyRouted="false" />
-        <AssociationConnector Association="sabiShopModel.FK__Shops__vendorid__4E88ABD4" ManuallyRouted="false" />
-        <AssociationConnector Association="sabiShopModel.FK__UserItemC__UesrI__5165187F" ManuallyRouted="false" />
-        <AssociationConnector Association="sabiShopModel.FK__vendor__UserId__48CFD27E" ManuallyRouted="false" />
-        <AssociationConnector Association="sabiShopModel.FK_Shops_Categories" />
-        <AssociationConnector Association="sabiShopModel.FK_SubCategories_Shops" />
+      <Diagram DiagramId="ef92b4eae7ec4634b3681dc7e40d9fe8" Name="Diagram1">
+        <EntityTypeShape EntityType="sabiShopModel.Category" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.item" Width="1.5" PointX="12" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.Role" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.Shop" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.SubCategory" Width="1.5" PointX="9.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.UserItemCard" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.user" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.vendor" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <AssociationConnector Association="sabiShopModel.FK_Shops_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="sabiShopModel.FK_items_SubCategories" ManuallyRouted="false" />
+        <AssociationConnector Association="sabiShopModel.FK_UserItemCard_items" ManuallyRouted="false" />
+        <AssociationConnector Association="sabiShopModel.FK_users_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="sabiShopModel.FK_Shops_vendor" ManuallyRouted="false" />
+        <AssociationConnector Association="sabiShopModel.FK_SubCategories_Shops" ManuallyRouted="false" />
+        <AssociationConnector Association="sabiShopModel.FK_UserItemCard_users" ManuallyRouted="false" />
+        <AssociationConnector Association="sabiShopModel.FK_vendor_users" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
