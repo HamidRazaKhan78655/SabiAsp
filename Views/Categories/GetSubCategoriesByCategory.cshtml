@@ -25,42 +25,19 @@
                 @foreach (var subCate in ViewBag.SubCategorylist)
                 {
 
-                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories('@subCate.location', '@subCate.shopname', @subCate.Shopid)" style="        padding: 0px;
-        margin: 10px;
-        height: 100px;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%)">
+                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories('@subCate.location', '@subCate.shopname', @subCate.Shopid)" style="padding: 0px;margin: 10px;height: 100px;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%)">
                         <input type="hidden" value="@subCate.Shopid" class="GetSubCategorieId" />
                         <input type="hidden" value="@subCate.shopname" class="GetSubCategorieName" />
 
                         <div class="row best_shoes" style="padding:0px; margin:0px; height:100px">
                             <div class="col-md-4" style="padding:0px; margin:0px; height:100px;max-width:200px">
-                                <div style="background-image:url('../../Content/Template/images/banner.png');background-size:cover;height:100px"><img src="~/Content/Template/images/natural.png" style=" height: 70px;
-        float: right;
-        position: relative;
-        top: 14px;
-        left: 51px;
-        z-index: 10;
-        height: 80px;
-        width: 80px;
-        float: right;
-        position: relative;
-        top: 9px;
-        left: 30px;
-        box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
-        z-index: 10;
-"></div>
+                                <div style="background-image:url('../../Content/Template/images/banner.png');background-size:cover;height:100px"><img src="~/Content/Template/images/natural.png" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;"></div>
                             </div>
                             <div class="col-md-4" style="padding:0px; margin:0px; height:100px">
-                                <div class="best_shoes" style="        padding: 0px;
-        margin: 0px;
-        height: 100px;
-        padding: 0px;
-        margin: 0px;
-        margin-left: 30px;
-        height: 100px;
-">
+                                <div class="best_shoes" style="padding: 0px;margin: 0px;height: 100px;padding: 0px;margin: 0px;margin-left: 30px;height: 100px;">
 
                                     <p class="best_text" style="text-align:left;padding-left: 25px; font-weight:500 ; margin:0px; margin-top:10px">@subCate.shopname</p>
-                                    <p class="best_text" style="text-align:left;padding-left: 25px; font-weight:500; margin:0px; font-size:14px">@subCate.shopname</p>
+                                    <p class="best_text" style="text-align:left;padding-left: 25px; font-weight:500; margin:0px; font-size:14px">@subCate.Description</p>
 
                                     <div class="star_text" >
                                         <div class="left_part" style="padding-top:5px">
@@ -81,19 +58,10 @@
                             <div class="col-md-4" style="padding:0px; margin:0px; height:100px">
                                 <div >
 
-                                    <div class="best_shoes" style="        padding: 0px;
-        margin: 0px;
-        height: 100px;
-        padding: 0px;
-        margin: 0px;
-        margin-left: 30px;
-        height: 100px;
-        padding-top:10px;
-">
-
-                                       <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Delivery Fee  : @subCate.shopname</p>
-                                       <p class="best_text" style="text-align:left;padding-left: 25px; margin:0px; font-size:14px">Delivery Time : @subCate.shopname</p>
-                                       <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Location      : @subCate.shopname</p>
+                                    <div class="best_shoes" style="padding: 0px;margin: 0px;height: 100px;padding: 0px; margin: 0px;margin-left: 30px;height: 100px;padding-top:10px;">
+                                       <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Delivery Fee  : @subCate.DeliveryFee</p>
+                                       <p class="best_text" style="text-align:left;padding-left: 25px; margin:0px; font-size:14px">Delivery Time : @subCate.DeliveryTime</p>
+                                       <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Location : @subCate.location</p>
 
                                     </div>
                                 </div>
