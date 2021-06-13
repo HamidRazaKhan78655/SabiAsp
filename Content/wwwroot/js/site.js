@@ -204,7 +204,20 @@ function LoadProfile() {
     debugger;
     $("#openUserProfileModal").trigger("click");
 }
-
+function AddToCart(itemId) {
+    alert(itemId);
+}
+function showItemDetails(itemId) {
+    var itemView = $('#itemViewFromAllSide');
+    var trigger = $('#ItemViewTrigger');
+    trigger.trigger('click');
+    
+    var url = '/Items/ItemView?itemID=' + itemId;
+    $.get(url, function (data) {
+        itemView.html(data);
+        itemView.show();
+    });
+}
 function UpdateUserProfileInfo() {
     debugger;
     if (document.getElementById('ProfileUserName').value == "") {

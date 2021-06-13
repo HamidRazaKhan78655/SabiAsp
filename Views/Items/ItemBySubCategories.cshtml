@@ -25,10 +25,18 @@
                     <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
                     <div class="best_shoes" style="height: 200px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
-                        <div><i class="fas fa-plus-circle" style="float: right; position: absolute; margin: 13px; font-size: 30px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId)"></i></div>
+                        <div><i class="fas fa-plus-circle" style="float: right; position: absolute; margin: 13px; font-size: 30px; color: #e0ab09;" onclick="AddToCart(@subCate.ItemId)"></i></div>
                         <p class="best_text" style=" margin-bottom: 5px;">@subCate.name</p>
-                        <div class="shoes_icon" style="min-height: 10px;"><img src="~/Content/Template/images/shoes-img4.png" style="max-width:66%;"></div>
-                        <div class="star_text">
+                        <div class="shoes_icon" style="min-height: 10px;">
+                            @if (subCate.image == null)
+                            {
+                                <img src="~/Content/Template/images/shoes-img4.png" style="max-width:66%;" onclick="showItemDetails(@subCate.ItemId)">
+                            }
+                            else
+                            {
+                                <img src="@string.Format("/CompanyImages/{0}", subCate.image)" onclick="showItemDetails(@subCate.ItemId)" class="Emp44by44" style="height: 70px; width: 70px;">
+                            }
+                        </div> <div class="star_text">
                             <div class="right_part" style="width:100%; text-align:center">
                                 <div class="">Price : <span style="color: #ff4e5b;">60$</span></div>
                                 <div class="">Weight : <span style="color: #ff4e5b;">2KG</span></div>

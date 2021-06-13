@@ -294,6 +294,32 @@
 <!-- body -->
 <body class="main-layout">
 
+    @*//modal Item View*@
+
+    <input id="ItemViewTrigger" type="hidden" data-target="#ItemView" data-toggle="modal" />
+
+
+    <div class="modal fade " id="ItemView">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="        background: #f5aa1c;
+        height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Item Details</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="itemViewFromAllSide"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*
+        //modal to tem View*@
     <!-- header section start -->
     <div class="header_section">
         <div class="container">

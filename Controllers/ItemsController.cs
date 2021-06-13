@@ -18,6 +18,18 @@ namespace SabiAsp.Controllers
         {
             return View();
         }
+        
+        public ActionResult ItemView(int itemID)
+        {
+            var query = Db.items.Where(x => x.ItemId == itemID).FirstOrDefault();
+            var querySub = Db.SubCategories.Where(x => x.SubCategorieId == query.SubCategorieId).FirstOrDefault();
+            var queryShop = Db.Shops.Where(x => x.Shopid == querySub.Shopid).FirstOrDefault();
+            ItemViewGen itemView = new ItemViewGen();
+            itemView.ShopName = queryShop.shopname;
+            itemView.SubCategoryName = querySub.name;
+            itemView.itemDetails = query;
+            return PartialView("ItemView", itemView);
+        }
 
         [HttpGet]
         public ActionResult GetCategories(int id)
