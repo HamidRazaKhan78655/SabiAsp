@@ -18,16 +18,6 @@ namespace SabiAsp.Controllers
         // GET: Vendor
         public ActionResult Index()
         {
-            //if (login == "none")
-            //{
-            //    ViewBag.Login = "none";
-            //}
-            //else {
-            //    int vId = int.Parse(loginID);
-            //    var query = Db.vendors.Where(x=> x.vendorid == vId).SingleOrDefault();
-            //    ViewBag.Login = query.vendorid.ToString();
-            //    ViewBag.LoginName = query.name.ToString();
-            //}
             return View();
         }
         public ActionResult Categories(string id)
@@ -148,7 +138,6 @@ namespace SabiAsp.Controllers
             item.name = name;
             item.Weight = weight;
             item.Price = price;
-            //item.vendorid = int.Parse(venid);
             item.SubCategorieId = int.Parse(sCateID);
             item.isDeleted = "false";
             item.CreatedDate = DateTime.Now;
@@ -227,6 +216,10 @@ namespace SabiAsp.Controllers
         public ActionResult VendorView()
         {
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
+            if (logedinUserId == 0)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             var vendor = Db.vendors.Where(v => v.UserId == logedinUserId).FirstOrDefault();
             var shop = Db.Shops.Where(d => d.vendorid == vendor.vendorid).FirstOrDefault();
             ViewBag.ShopData = shop;

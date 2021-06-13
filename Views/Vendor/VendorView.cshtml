@@ -58,16 +58,58 @@
             //
         }
     }
-    function editCategory(id) {
-        $('.subCatEdit').show();
-        $('.subCatDelete').show();
-        $('.subCatName').show();
-        $('.subCatInput').hide();
+    function editCategory(subCategoryId, name) {
+        debugger;
+        $("#UpdateSubCategoryId").val(subCategoryId);
+        $("#UpdateSubCategoryName").val(name);
+        $("#showEditSubCategoryModal").trigger("click");
+        //$('.subCatEdit').show();
+        //$('.subCatDelete').show();
+        //$('.subCatName').show();
+        //$('.subCatInput').hide();
 
-        $('#subCatEdit_' + id).hide();
-        $('#subCatDelete_' + id).hide();
-        $('#subCatId_' + id).hide();
-        $('#subCatInputId_' + id).show();
+        //$('#subCatEdit_' + id).hide();
+        //$('#subCatDelete_' + id).hide();
+        //$('#subCatId_' + id).hide();
+        //$('#subCatInputId_' + id).show();
+    }
+
+    function editVendorSubCategory(subCategoryId) {
+        debugger;
+        //User/Index
+        var subCategoryName = $('#subCatInputId_' + subCategoryId).val();
+        if (subCategoryName == "") {
+            alert("Please enter Category Name.");
+            return;
+        }
+        $("#UpdateSubCategoryName").val(subCategoryName);
+        $("#UpdateSubCategoryId").val(subCategoryId);
+        return;
+        f = new FormData($("#updateSubCategoryForm")[0]);
+
+        $.ajax({
+            type: "POST",
+            async: "true",
+            data: f,
+            url: "/SubCategory/UpdateSubCategory",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                if (data == "success") {
+                    alert("Sub Category updated successfully.");
+                    window.location.href = '/Vendor/VendorView';
+                }
+                else {
+                    alert("Record not updated.");
+                    return;
+                }
+            },
+            error: function () {
+                debugger;
+                alert("Error");
+            }
+        });
     }
 </script>
 
@@ -119,8 +161,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <!--Header-->
-            <div class="modal-header" style="        background: #f5aa1c;
-        height: 60px;">
+            <div class="modal-header" style="background: #f5aa1c;height: 60px;">
                 <h4 id="changeheader" class="title" style="color:white;">Add Category</h4>
                 <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times" style="color:white;"></i>
@@ -153,12 +194,53 @@
         </div>
     </div>
 </div>
+
+<input type="hidden" id="showEditSubCategoryModal" data-target="#editSubCategory" data-toggle="modal" />
+
+<div class="modal fade " id="editSubCategory">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--Header-->
+            <div class="modal-header" style="background: #f5aa1c;height: 60px;">
+                <h4 id="changeheader" class="title" style="color:white;">Update Category</h4>
+                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times" style="color:white;"></i>
+                </button>
+            </div>
+            <div style="width:100%; overflow:auto" class="ModelTrack">
+                <div class="modal-body" style="width:100%">
+                    @using (Html.BeginForm("UpdateSubCategory", "SubCategory", FormMethod.Post, new { id = "updateSubCategoryForm" }))
+                    {
+                        <input type="hidden" id="UpdateSVendorShopDrp" name="UpdateSVendorShopDrp" value="@ViewBag.ShopData.Shopid" />
+                        <input type="hidden" id="UpdateSubCategoryId" name="UpdateSubCategoryId" />
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Category Name</label>
+                                    <input class="form-control" id="UpdateSubCategoryName" name="UpdateSubCategoryName" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-6">
+                                    <input class="btn btn-warning right" type="button" value="Save" onclick="UpdateSubCategoryInfo();" style="margin: 10px 10px 0px 10px; float: right;" />
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @*
     //modal to Add category*@
 @*//modal to Add Item Vendor*@
 
 
-
+<input type="hidden" id="showAddItemVendor" data-target="#AddItemVendor" data-toggle="modal"/>
 <div class="modal fade " id="AddItemVendor">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -171,27 +253,43 @@
             </div>
             <div style="width:100%; overflow:auto" class="ModelTrack">
                 <div class="modal-body" style="width:100%">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Item Name</label>
-                                <input class="form-control" />
+                    @using (Html.BeginForm("AddItem", "Items", FormMethod.Post, new { id = "addItemVendorForm" }))
+                    {
+                        <input type="hidden" id="SubCategorydrp" name="SubCategorydrp" />
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Item Name</label>
+                                    <input type="text" class="form-control" id="itemName" name="itemName" required />
+                                </div>
                             </div>
-                            <div class="col-6">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Weight</label>
+                                    <input type="text" class="form-control" id="itemWeight" name="itemWeight" required />
+                                </div>
+                                <div class="col-6">
+                                    <label>Price</label>
+                                    <input type="text" class="form-control" id="itemPrice" name="itemPrice" required />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Item Image</label>
+                                    <input type="file" class="form-control" id="itemImage" name="itemImage" required />
+                                </div>
+                            </div>
 
-                                <label>Others</label>
-                                <input class="form-control" />
+                            <div class="row">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-6">
+                                    <input class="btn btn-warning right" type="button" value="Save" onclick="SaveVendorItemInfo();" style="margin: 10px 10px 0px 10px; float: right;" />
+                                </div>
                             </div>
                         </div>
+                    }
 
-                        <div class="row">
-                            <div class="col-6">
-                            </div>
-                            <div class="col-6">
-                                <input class="btn btn-warning right" type="button" value="Save" style="margin: 10px 10px 0px 10px; float: right;" />
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -202,7 +300,7 @@
 @*//modal to EditItemVendor*@
 
 
-
+<input type="hidden" id="showEditItemVendorModal" data-target="#EditItemVendor" data-toggle="modal" />
 <div class="modal fade " id="EditItemVendor">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -446,11 +544,11 @@
                                 @sub.name
                             </span>
                             <span>
-                                <input type="text" class="form-control subCatInput" style="display:none" id="subCatInputId_@sub.SubCategorieId" placeholder="@sub.name" />
+                                    <input type="text" class="form-control subCatInput" style="display:none" id="subCatInputId_@sub.SubCategorieId" value="@sub.name" />
                             </span>
-                            <i class="far fa-trash-alt subCatDelete" id="subCatDelete_@sub.SubCategorieId" style="float:right;color: #fc3726;position:relative;left:6px;" onclick="deleteCategory(@sub.SubCategorieId);"></i>
+                            <i class="far fa-trash-alt subCatDelete" id="subCatDelete_@sub.SubCategorieId" style="float:right;color: #fc3726;position:relative;left:6px;" onclick="DeleteVendorSubCategory(@sub.SubCategorieId);"></i>
 
-                            <i class="fas fa-edit subCatEdit" id="subCatEdit_@sub.SubCategorieId" style="float:right" onclick="editCategory(@sub.SubCategorieId);"></i>
+                            <i class="fas fa-edit subCatEdit" id="subCatEdit_@sub.SubCategorieId" style="float:right" onclick="editCategory(@sub.SubCategorieId, '@sub.name');"></i>
                         </div>
                     }
                 </div>
@@ -479,7 +577,7 @@
                                         <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
                                         <div class="best_shoes" style="height: 200px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
-                                            <div><i class="fas fa-edit" data-target="#EditItemVendor" data-toggle="modal" style="float: right; position: absolute; margin: 13px; font-size: 20px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId)"></i></div>
+                                            <div><i class="fas fa-edit" style="float: right; position: absolute; margin: 13px; font-size: 20px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId); showEdititemModal();"></i></div>
                                             <p class="best_text" style=" margin-bottom: 5px;">@subCate.name</p>
                                             <div class="shoes_icon" style="min-height: 10px;">
                                                 @if (subCate.image == null)
@@ -500,7 +598,7 @@
                                         </div>
                                     }
                                 }
-                                <div class="best_shoes" style="height: 90px; width: 90px; margin: 15px; border-radius: 12px; padding: 0px;" data-target="#AddItemVendor" data-toggle="modal">
+                                <div class="best_shoes" style="height: 90px; width: 90px; margin: 15px; border-radius: 12px; padding: 0px;" onclick="showAdditemModal(@sub.SubCategorieId);">
 
                                     <i class="fas fa-plus-circle" style="font-size: 60px; margin: 15px; color: #e0ab09;"></i>
                                 </div>
@@ -872,6 +970,119 @@
             }
         });
     }
+
+    function UpdateSubCategoryInfo() {
+        debugger;
+        if (document.getElementById('UpdateSubCategoryName').value == "") {
+            alert("Please enter Category Name.");
+            return;
+        }
+
+        f = new FormData($("#updateSubCategoryForm")[0]);
+
+        $.ajax({
+            type: "POST",
+            async: "true",
+            data: f,
+            url: "/SubCategory/UpdateSubCategory",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                if (data == "success") {
+                    alert("Sub Category updated successfully.");
+                    window.location.href = '/Vendor/VendorView';
+                }
+                else {
+                    alert("Record not updated.");
+                    return;
+                }
+            },
+            error: function () {
+                debugger;
+                alert("Error");
+            }
+        });
+    }
+
+    function DeleteVendorSubCategory(subCategoryId) {
+        debugger;
+        $.ajax({
+            url: '/SubCategory/DeleteSubCategory?subCategoryId=' + subCategoryId,
+            type: 'POST',
+            data: f,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                if (data == "success") {
+                    alert("Sub Category deleted successfully.");
+                    window.location.href = '/Vendor/VendorView';
+                }
+                else {
+                    alert("Sub Category not deleted.");
+                    return;
+                }
+            },
+            error: function () {
+                debugger;
+                alert("Error");
+            }
+        });
+    }
+
+    function showAdditemModal(subCategoryId) {
+        debugger;
+        $("#SubCategorydrp").val(subCategoryId);
+        $("#showAddItemVendor").trigger("click");
+    }
+
+    function SaveVendorItemInfo() {
+        debugger;
+        if (document.getElementById('itemName').value == "") {
+            alert("Please enter Item Name.");
+            return;
+        }
+        if (document.getElementById('itemWeight').value == "") {
+            alert("Please enter Item Weight.");
+            return;
+        }
+        if (document.getElementById('itemPrice').value == "") {
+            alert("Please enter Item Price.");
+            return;
+        }
+
+        f = new FormData($("#addItemVendorForm")[0]);
+
+        $.ajax({
+            url: '/Items/AddItem',
+            type: 'POST',
+            data: f,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                if (data == "success") {
+                    alert("Item added successfully.");
+                    window.location.href = '/Vendor/VendorView';
+                }
+                else {
+                    alert("Item already exist.");
+                    return;
+                }
+            },
+            error: function () {
+                debugger;
+                alert("Error");
+            }
+        });
+    }
+
+    function showEdititemModal() {
+        debugger;
+        $("#showEditItemVendorModal").trigger("click");
+    }
+
 </script>
 
 

@@ -166,15 +166,13 @@ namespace SabiAsp.Controllers
             string name = fm["itemName"].ToString();
             string weight = fm["itemWeight"].ToString();
             string price = fm["itemPrice"].ToString();
-            string updateshopId = fm["shopIddrp"].ToString();
-            int shopId = int.Parse(updateshopId);
             string updateSubCategoryId = fm["SubCategorydrp"].ToString();
             int subCategoryId = int.Parse(updateSubCategoryId);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
             string _fileName = string.Empty;
 
             item item = new item();
-            var itemData = Db.items.Where(x => x.name.ToLower() == name.ToLower() && x.isDeleted != "true").FirstOrDefault();
+            var itemData = Db.items.Where(x => x.name.ToLower() == name.ToLower() && x.SubCategorieId == subCategoryId && x.isDeleted != "true").FirstOrDefault();
             if (itemData == null)
             {
                 for (int i = 0; i < Request.Files.Count; i++)
@@ -203,7 +201,6 @@ namespace SabiAsp.Controllers
                 item.name = name;
                 item.Weight = weight;
                 item.Price = price;
-                item.SubCategorieId = shopId;
                 item.SubCategorieId = subCategoryId;
                 item.isDeleted = "false";
                 item.CreatedDate = DateTime.Now;
@@ -292,7 +289,6 @@ namespace SabiAsp.Controllers
             var shop = Db.Shops.Where(x => x.vendorid == vendor.vendorid).SingleOrDefault();
             return shop.shopname;
         }
-
         public ActionResult SortItemList(string value, string subCategoryId)
         {
             int subCId = int.Parse(subCategoryId);
@@ -312,7 +308,6 @@ namespace SabiAsp.Controllers
 
             return PartialView("SortedItems", itemList);
         }
-
         [HttpGet]
         public ActionResult BuyItemView(int ? Userid=0)
         {
@@ -342,8 +337,7 @@ namespace SabiAsp.Controllers
             }
             
             return View(cartList);
-        }
-       
+        }  
         public bool SaveBuyProducts(string userid,string itemid)
         {
             try
@@ -379,8 +373,6 @@ namespace SabiAsp.Controllers
 
             return false;
         }
-
-
         public ActionResult SearchItem(string id)
         {
             using (var db = new sabiShopEntities())
