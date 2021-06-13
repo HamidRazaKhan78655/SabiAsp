@@ -132,6 +132,17 @@ $('.sideNavtab').click(function () {
     $(this).css('border-left', '4px solid');
 
 });
+var SearchItemsFlag = 0;
+function SearchItems() {
+    $('.searchEveryThing');
+    if (SearchItemsFlag == 0) {
+        $('.searchEveryThing').css('display', 'block');
+        SearchItemsFlag = 1;
+    } else {
+        $('.searchEveryThing').css('display', 'none');
+        SearchItemsFlag = 0;
+    }
+}
 $('#searchItemsInshop').keyup(function () {
     if ($('#searchItemsInshop').val() == "") {
         $("#searchResultView").hide();
@@ -147,7 +158,8 @@ $('#searchItemsInshop').keyup(function () {
                 $('#searchResultView').html('');
                 $('#searchResultView').html(responce);
             }
-        });}
+        });
+    }
 });
 //                                               javascript                                  // 
 function loadLocationType(type)
@@ -170,4 +182,20 @@ function loadCategories(location, shopname, shopid) {
 function RegisterAccount(userType) {
     debugger;
     window.open('/Login/SabiRegister?type=' + userType, "_self");
+}
+
+function Search() {
+    debugger;
+    var val1 = $('#Searchid').val();
+
+    if (val1 == "") {
+        $('#Searchdiv').hide();
+        return;
+    }
+
+    var url = '/Items/SearchItem?id=' + $("#Searchid").val();
+    $.get(url, function (data) {
+        $('#Searchdiv').html(data);
+        $('#Searchdiv').show();
+    });
 }

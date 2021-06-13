@@ -268,17 +268,7 @@
             var userType = $('#SignInType').val();
             window.location.href = "/Login/SabiLogin?type=" + userType;
         }
-        var SearchItemsFlag = 0;
-        function SearchItems() {
-            $('.searchEveryThing');
-            if (SearchItemsFlag == 0) {
-                $('.searchEveryThing').css('display', 'block');
-                SearchItemsFlag = 1;
-            } else {
-                $('.searchEveryThing').css('display', 'none');
-                SearchItemsFlag = 0;
-            }
-        }
+       
 
         function BuyItemView()
         {
@@ -297,34 +287,13 @@
             window.location.href = '/Login/Logout/';
         }
 
-        function Search()
-        {
-            debugger;
-            var val1 = $('#Searchid').val();
-
-            if (val1=="")
-            {
-                $('#Searchdiv').hide();
-                return;
-            }
-
-            var url = '/Items/SearchItem?id='+$("#Searchid").val();
-            $.get(url, function (data)
-            {
-                $('#Searchdiv').html(data);
-                $('#Searchdiv').show();
-            }); 
-        }
     </script>
-    
+  
 
 </head>
 <!-- body -->
 <body class="main-layout">
 
-    <div class="itemsearchdiv" id="Searchdiv">
-
-    </div>
     <!-- header section start -->
     <div class="header_section">
         <div class="container">
@@ -366,9 +335,19 @@
                                 </a>
                                 <a class="nav-item nav-link last" href="#">
                                     <img src="~/Content/Template/images/search_icon.png" onclick="SearchItems()"> <div class="searchEveryThing" style=" position: absolute; margin-left: -188px; /* margin-top: 10px; */ display:none">
-                                        <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
-                                        <input id="Searchid" class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " onkeyup="Search()" />
-                                    </div>
+    <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
+    <input id="Searchid" class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " onkeyup="Search()" />
+
+    <div class="itemsearchdiv" id="Searchdiv" style="        background: #e0ab09;
+        width: 225px;
+        padding: 10px;
+        overflow-x: hidden;
+        box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
+        border-radius:5px;
+">
+
+    </div>
+</div>
                                 </a>
                                 <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
                                     @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>
