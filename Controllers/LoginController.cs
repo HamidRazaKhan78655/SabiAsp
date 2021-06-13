@@ -111,125 +111,134 @@ namespace SabiAsp.Controllers
         [HttpPost]
         public string SabiRegister(IEnumerable<HttpPostedFileBase> files, FormCollection fm)
         {
-            string firstName = fm["FirstName"].ToString();
-            string lastName = fm["LastName"].ToString();
-            string username = fm["Username"].ToString();
-            string emailAddress = fm["EmailAddress"].ToString();
-            string contact = fm["Contact"].ToString();
-            string address = fm["Address"].ToString();
-            string password = fm["Password"].ToString();
-            string roleType = fm["RoleType"].ToString();
-            int roleId = int.Parse(roleType);
-            int logedinUserId = Convert.ToInt32(Session["UserId"]);
-
-
-            var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
-            if (User == null)
+            try
             {
-                user u = new user();
-                u.name = firstName + " " + lastName;
-                u.EmailAddress = emailAddress;
-                u.Contact = contact;
-                u.username = username;
-                u.password = Encryption.Encrypto.EncryptString(password.Trim());
-                u.Address = address;
-                u.RoleID = roleId;
-                u.ShopName = "NA";
-                if (roleId == 2)
+                string firstName = fm["FirstName"].ToString();
+                string lastName = fm["LastName"].ToString();
+                string username = fm["Username"].ToString();
+                string emailAddress = fm["EmailAddress"].ToString();
+                string contact = fm["Contact"].ToString();
+                string address = fm["Address"].ToString();
+                string password = fm["Password"].ToString();
+                string roleType = fm["RoleType"].ToString();
+                int roleId = int.Parse(roleType);
+                int logedinUserId = Convert.ToInt32(Session["UserId"]);
+
+
+                var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
+                if (User == null)
                 {
-                    u.RoleType = "User";
-                }
-                else
-                {
-                    u.RoleType = "Vendor";
-                    if (firstName.Contains("'"))
-                        u.ShopName = firstName + " " + "Shop";
-                    else
-                        u.ShopName = firstName + "'" + " " + "Shop";
-                }
-
-                u.CreatedBy = logedinUserId;
-                u.CreatedDate = DateTime.Now;
-                u.isDeleted = "false";
-                Db.users.Add(u);
-                Db.SaveChanges();
-
-                if (roleId == 3)
-                {
-                    vendor v = new vendor();
-                    v.UserId = u.UserId;
-                    v.isDeleted = "false";
-                    v.CreatedBy = u.UserId;
-                    v.CreatedDate = DateTime.Now;
-                    Db.vendors.Add(v);
-                    Db.SaveChanges();
-
-                    string Category = fm["Category"].ToString();
-                    int categoryId = int.Parse(Category);
-                    string location = fm["Location"].ToString();
-                    string shopName = fm["ShopName"].ToString();
-                    string description = fm["Description"].ToString();
-                    string deliveryFee = fm["DeliveryFee"].ToString();
-                    string deliveryTime = fm["DeliveryTime"].ToString();
-
-                    Shop s = new Shop();
-                    string _fileName = string.Empty;
-                    for (int i = 0; i < Request.Files.Count; i++)
+                    user u = new user();
+                    u.name = firstName + " " + lastName;
+                    u.EmailAddress = emailAddress;
+                    u.Contact = contact;
+                    u.username = username;
+                    u.password = Encryption.Encrypto.EncryptString(password.Trim());
+                    u.Address = address;
+                    u.RoleID = roleId;
+                    u.ShopName = "NA";
+                    if (roleId == 2)
                     {
-                        try
-                        {
-                            var file = Request.Files[i];
-                            string namefile = string.Empty;
-                            namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
-                            if (string.IsNullOrEmpty(namefile) == false)
-                            {
-                                Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
-                                _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
-                                var path = Server.MapPath("~/CompanyImages/");
-                                string SavePath = path + _fileName;
-                                b.Save(SavePath, ImageFormat.Png);
-                                if (i == 0)
-                                {
-                                    s.image = _fileName;
-                                }
-                                else if (i == 1)
-                                {
-                                    s.Logo = _fileName;
-                                }
-                                
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
+                        u.RoleType = "User";
+                    }
+                    else
+                    {
+                        u.RoleType = "Vendor";
+                        if (firstName.Contains("'"))
+                            u.ShopName = firstName + " " + "Shop";
+                        else
+                            u.ShopName = firstName + "'" + " " + "Shop";
                     }
 
-                    s.vendorid = v.vendorid;
-                    s.CategoryId = categoryId;
-                    s.shopname = shopName;
-                    s.Description = description;
-                    s.DeliveryFee = deliveryFee;
-                    s.DeliveryTime = deliveryTime;
-                    s.location = location;
-                    s.isDeleted = "false";
-                    s.CreatedBy = u.UserId;
-                    s.CreatedDate = DateTime.Now;
-                    Db.Shops.Add(s);
+                    u.CreatedBy = logedinUserId;
+                    u.CreatedDate = DateTime.Now;
+                    u.isDeleted = "false";
+                    Db.users.Add(u);
                     Db.SaveChanges();
+
+                    if (roleId == 3)
+                    {
+                        vendor v = new vendor();
+                        v.UserId = u.UserId;
+                        v.isDeleted = "false";
+                        v.CreatedBy = u.UserId;
+                        v.CreatedDate = DateTime.Now;
+                        Db.vendors.Add(v);
+                        Db.SaveChanges();
+
+                        string Category = fm["Category"].ToString();
+                        int categoryId = int.Parse(Category);
+                        string location = fm["Location"].ToString();
+                        string shopName = fm["ShopName"].ToString();
+                        string description = fm["Description"].ToString();
+                        string deliveryFee = fm["DeliveryFee"].ToString();
+                        string deliveryTime = fm["DeliveryTime"].ToString();
+
+                        Shop s = new Shop();
+                        string _fileName = string.Empty;
+                        for (int i = 0; i < Request.Files.Count; i++)
+                        {
+                            try
+                            {
+                                var file = Request.Files[i];
+                                string namefile = string.Empty;
+                                namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                                if (string.IsNullOrEmpty(namefile) == false)
+                                {
+                                    Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                                    _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
+                                    var path = Server.MapPath("~/CompanyImages/");
+                                    string SavePath = path + _fileName;
+                                    b.Save(SavePath, ImageFormat.Png);
+                                    if (i == 0)
+                                    {
+                                        s.image = _fileName;
+                                    }
+                                    else if (i == 1)
+                                    {
+                                        s.Logo = _fileName;
+                                    }
+
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+                        }
+
+                        s.vendorid = v.vendorid;
+                        s.CategoryId = categoryId;
+                        s.shopname = shopName;
+                        s.Description = description;
+                        s.DeliveryFee = deliveryFee;
+                        s.DeliveryTime = deliveryTime;
+                        s.location = location;
+                        s.isDeleted = "false";
+                        s.CreatedBy = u.UserId;
+                        s.CreatedDate = DateTime.Now;
+                        Db.Shops.Add(s);
+                        Db.SaveChanges();
+                    }
+
+                    Session["UserId"] = u.UserId.ToString();
+                    Session["Username"] = u.username.ToString();
+                    Session["Name"] = u.name.ToString();
+                    Session["RoleType"] = u.RoleType.ToString();
+                    Session["RoleID"] = u.RoleID.ToString();
+                    Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
+                    Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
+                    FormsAuthentication.SetAuthCookie(u.username, false);
+
+                    return "success";
                 }
-
-                Session["UserId"] = u.UserId.ToString();
-                Session["Username"] = u.username.ToString();
-                Session["Name"] = u.name.ToString();
-                Session["RoleType"] = u.RoleType.ToString();
-                Session["RoleID"] = u.RoleID.ToString();
-                Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
-                Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
-                FormsAuthentication.SetAuthCookie(u.username, false);
-
-                return "success";
             }
+            catch (Exception ex)
+            {
+
+                return "error";
+            }
+
 
             return "error";
         }

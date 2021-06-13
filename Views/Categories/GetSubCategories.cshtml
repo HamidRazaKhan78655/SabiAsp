@@ -71,7 +71,6 @@
         font-size: 40px;
         background-color: #db5660;
         height: 500px;
-        background-image: url('../../Images/shopbg.jpg');
         background-size: cover;
         border: 1px solid #2d2d2d;
         display: flex;
@@ -102,13 +101,38 @@
 <div class="collection_text"></div>
 <!-- New Arrivals section start -->
 <div class="ShopView">
+    @if (ViewBag.ShopData.Logo == null)
+    {
+        <style>
+            .ShopView {
+                background-image: url('../../Images/shopbg.jpg');
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            .ShopView {
+                background-image: url('@string.Format("/CompanyImages/{0}", ViewBag.ShopData.image)');
+            }
+        </style>
+    }
+
     <div class="ShopCenter" style="display: flex;">
         <div class="ShopLogo">
-            <img src="~/Content/Template/images/shoes-img9.png" style="height:100%; width:100%;" />
+            @if (ViewBag.ShopData.Logo == null)
+            {
+                <img src="~/Content/Template/images/shoes-img9.png" style="height:100%; width:100%;" />
+            }
+            else
+            {
+                <img src="@string.Format("/CompanyImages/{0}", ViewBag.ShopData.Logo)" style="height:100%; width:100%;" />
+            }
+
         </div>
         <div class="ShopDetails">
             <div>
-                <div class="star_text" style="        margin-left: 40px;">
+                <div class="star_text" style="margin-left: 40px;">
                     <div class="left_part" style="padding:0px;width:50%">
                         <h4 style="text-align:left; padding:10px; font-size:30px;">@ViewBag.ShopData.shopname</h4>
                         <p class="best_text" style="text-align:left;padding-left: 10px; font-weight:500; margin:0px; font-size:14px">@ViewBag.ShopData.Description</p>

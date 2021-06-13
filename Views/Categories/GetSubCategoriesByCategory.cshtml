@@ -30,7 +30,41 @@
 
                         <div class="row best_shoes" style="padding:0px; margin:0px; height:100px">
                             <div class="col-md-4" style="padding:0px; margin:0px; height:100px;max-width:200px">
-                                <div style="background-image:url('../../Content/Template/images/banner.png');background-size:cover;height:100px"><img src="~/Content/Template/images/natural.png" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;"></div>
+
+                                @if (subCate.image == null)
+                                {
+                                <div style="background-image:url('../../Content/Template/images/banner.png');background-size:cover;height:100px">
+                                    @if (subCate.Logo == null)
+                                    {
+                                        <img src="~/Content/Template/images/natural.png" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                    }
+                                    else
+                                    {
+                                        <img src="@string.Format("/CompanyImages/{0}", subCate.Logo)" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                    }
+
+                                </div>
+                                }
+                                else
+                                {
+                                    
+                            <div style="background-image:url('@string.Format("/CompanyImages/{0}", subCate.image)');background-size:cover;height:100px">
+                                @if (subCate.Logo == null)
+                                {
+                                    <img src="~/Content/Template/images/natural.png" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                }
+                                else
+                                {
+                                    
+                                    <img src="@string.Format("/CompanyImages/{0}", subCate.Logo)" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                }
+
+                            </div>
+                                }
+                                
+                                @*<div style="background-image:url('../../Content/Template/images/banner.png');background-size:cover;height:100px">
+
+        </div>*@
                             </div>
                             <div class="col-md-4" style="padding:0px; margin:0px; height:100px">
                                 <div class="best_shoes" style="padding: 0px;margin: 0px;height: 100px;padding: 0px;margin: 0px;margin-left: 30px;height: 100px;">
