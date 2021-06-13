@@ -63,6 +63,7 @@
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="DeliveryFee" Type="nvarchar" MaxLength="100" />
           <Property Name="DeliveryTime" Type="nvarchar" MaxLength="100" />
+          <Property Name="MinOrder" Type="nvarchar" MaxLength="100" />
           <Property Name="Ratings" Type="nvarchar" MaxLength="100" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
           <Property Name="CreatedBy" Type="int" />
@@ -391,6 +392,7 @@
           <Property Name="DeliveryTime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Ratings" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MinOrder" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -713,6 +715,7 @@
           <EntitySetMapping Name="Shops">
             <EntityTypeMapping TypeName="sabiShopModel.Shop">
               <MappingFragment StoreEntitySet="Shops">
+                <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
                 <ScalarProperty Name="Logo" ColumnName="Logo" />
                 <ScalarProperty Name="Ratings" ColumnName="Ratings" />
                 <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
