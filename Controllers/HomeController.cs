@@ -26,7 +26,7 @@ namespace SabiAsp.Controllers
                     //Session["Username"] = "";
                     Session["Name"] = "";
                     //Session["RoleType"] = "";
-                    //Session["RoleID"] = "";
+                    Session["RoleID"] = 0;
                 }
 
                 //  ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });

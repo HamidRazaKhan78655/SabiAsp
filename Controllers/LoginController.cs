@@ -79,7 +79,7 @@ namespace SabiAsp.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("VendorView", "Vendor");
                     }
                 }
                 else

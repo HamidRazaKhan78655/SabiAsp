@@ -224,18 +224,14 @@ namespace SabiAsp.Controllers
         }
 
 
-        public ActionResult VendorView(int shopid)
+        public ActionResult VendorView()
         {
-            shopid = 1;
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
-            //if (logedinUserId == 0)
-            //{
-            //    return RedirectToAction("SabiLogin", "Login");//HRE, BRQ
-            //}
-
-            var shop = Db.Shops.Where(d => d.Shopid == shopid).FirstOrDefault();
+            var vendor = Db.vendors.Where(v => v.UserId == logedinUserId).FirstOrDefault();
+            var shop = Db.Shops.Where(d => d.vendorid == vendor.vendorid).FirstOrDefault();
             ViewBag.ShopData = shop;
-            var subCategory = Db.SubCategories.Where(x => x.Shopid == shopid).ToList();
+            ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").ToList();
+            var subCategory = Db.SubCategories.Where(x => x.Shopid == shop.Shopid).ToList();
             ViewBag.SubCategorylist = subCategory;
             var itemList = new List<SubCategoryItems>();
             foreach (var sub in subCategory)
@@ -249,7 +245,7 @@ namespace SabiAsp.Controllers
             }
 
             ViewBag.Category = shop.shopname;
-            ViewBag.SubCategoryId = shopid;
+            ViewBag.SubCategoryId = shop.Shopid;
             ViewBag.logedinUserId = logedinUserId;
             //ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.Shopid == shopid).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
             //list = ViewBag.SubCategorylist;
@@ -334,5 +330,73 @@ namespace SabiAsp.Controllers
             return RedirectToAction("GetAllVendor");
         }
         #endregion
+
+        public string UpdateShop(FormCollection fm)
+        {
+            string Sid = fm["Shopid"].ToString();
+            int shopid = int.Parse(Sid);
+            string Category = fm["Category"].ToString();
+            int categoryId = int.Parse(Category);
+            string location = fm["Location"].ToString();
+            string shopName = fm["ShopName"].ToString();
+            string description = fm["Description"].ToString();
+            string deliveryFee = fm["DeliveryFee"].ToString();
+            string deliveryTimeMax = fm["DeliveryTimeMax"].ToString();
+            string deliveryTimeMin = fm["DeliveryTimeMin"].ToString();
+            string minOrder = fm["MinOrder"].ToString();
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+
+            var s = Db.Shops.Where(sh=>sh.Shopid == shopid).FirstOrDefault();
+            if (s != null)
+            {
+                string _fileName = string.Empty;
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    try
+                    {
+                        var file = Request.Files[i];
+                        string namefile = string.Empty;
+                        namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                        if (string.IsNullOrEmpty(namefile) == false)
+                        {
+                            Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                            _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
+                            var path = Server.MapPath("~/CompanyImages/");
+                            string SavePath = path + _fileName;
+                            b.Save(SavePath, ImageFormat.Png);
+                            if (i == 0)
+                            {
+                                s.Logo = _fileName;
+                            }
+                            else if (i == 1)
+                            {
+                                s.image = _fileName;
+                            }
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+
+                s.CategoryId = categoryId;
+                s.shopname = shopName;
+                s.Description = description;
+                s.DeliveryFee = deliveryFee;
+                s.DeliveryTime = deliveryTimeMin + " " + "-" + " " + deliveryTimeMax;
+                s.MinOrder = minOrder;
+                s.location = location;
+                s.isDeleted = "false";
+                s.ModifiedBy = logedinUserId;
+                s.ModifiedDate = DateTime.Now;
+                Db.Entry(s).State = EntityState.Modified;
+                Db.SaveChanges();
+                return "success";
+            }
+
+            return "error";
+        }
     }
 }

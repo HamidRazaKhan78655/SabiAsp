@@ -50,43 +50,38 @@ namespace SabiAsp.Controllers
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
             string _fileName = string.Empty;
 
-            var subCategory = Db.SubCategories.Where(x => x.name.ToLower() == subCategoryName.ToLower() && x.isDeleted != "true").FirstOrDefault();
-            if (subCategory == null)
+            SubCategory sc = new SubCategory();
+            for (int i = 0; i < Request.Files.Count; i++)
             {
-                SubCategory sc = new SubCategory();
-                for (int i = 0; i < Request.Files.Count; i++)
+                try
                 {
-                    try
+                    var file = Request.Files[i];
+                    string namefile = string.Empty;
+                    namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                    if (string.IsNullOrEmpty(namefile) == false)
                     {
-                        var file = Request.Files[i];
-                        string namefile = string.Empty;
-                        namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
-                        if (string.IsNullOrEmpty(namefile) == false)
-                        {
-                            Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
-                            _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
-                            var path = Server.MapPath("~/CompanyImages/");
-                            string SavePath = path + _fileName;
-                            b.Save(SavePath, ImageFormat.Png);
-                            sc.image = _fileName;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-
+                        Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                        _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
+                        var path = Server.MapPath("~/CompanyImages/");
+                        string SavePath = path + _fileName;
+                        b.Save(SavePath, ImageFormat.Png);
+                        sc.image = _fileName;
                     }
                 }
+                catch (Exception ex)
+                {
 
-                sc.name = subCategoryName;
-                sc.Shopid = shopId;
-                sc.CreatedBy = logedinUserId;
-                sc.CreatedDate = DateTime.Now;
-                sc.isDeleted = "false";
-                Db.SubCategories.Add(sc);
-                Db.SaveChanges();
-                return "success";
+                }
             }
-            return "error";
+
+            sc.name = subCategoryName;
+            sc.Shopid = shopId;
+            sc.CreatedBy = logedinUserId;
+            sc.CreatedDate = DateTime.Now;
+            sc.isDeleted = "false";
+            Db.SubCategories.Add(sc);
+            Db.SaveChanges();
+            return "success";
         }
         public string UpdateSubCategory(IEnumerable<HttpPostedFileBase> files, FormCollection fm)
         {

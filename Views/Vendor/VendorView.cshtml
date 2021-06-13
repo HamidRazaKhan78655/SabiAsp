@@ -128,27 +128,26 @@
             </div>
             <div style="width:100%; overflow:auto" class="ModelTrack">
                 <div class="modal-body" style="width:100%">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Category Name</label>
-                                <input class="form-control" />
+                    @using (Html.BeginForm("AddSubCategory", "SubCategory", FormMethod.Post, new { id = "addSubCategoryForm" }))
+                    {
+                        <input type="hidden" id="VendorShopDrp" name="VendorShopDrp" value="@ViewBag.ShopData.Shopid" />
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Category Name</label>
+                                    <input class="form-control" id="SubCategoryName" name="SubCategoryName" />
+                                </div>
                             </div>
-                            <div class="col-6">
 
-                                <label>Others</label>
-                                <input class="form-control" />
+                            <div class="row">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-6">
+                                    <input class="btn btn-warning right" type="button" value="Save" onclick="SaveSubCategoryInfo();" style="margin: 10px 10px 0px 10px; float: right;" />
+                                </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                            </div>
-                            <div class="col-6">
-                                <input class="btn btn-warning right" type="button" value="Save" style="margin: 10px 10px 0px 10px; float: right;" />
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -164,8 +163,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <!--Header-->
-            <div class="modal-header" style="        background: #f5aa1c;
-        height: 60px;">
+            <div class="modal-header" style="background: #f5aa1c;height: 60px;">
                 <h4 id="changeheader" class="title" style="color:white;">Add Item</h4>
                 <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times" style="color:white;"></i>
@@ -209,8 +207,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <!--Header-->
-            <div class="modal-header" style="        background: #f5aa1c;
-        height: 60px;">
+            <div class="modal-header" style="background: #f5aa1c;height: 60px;">
                 <h4 id="changeheader" class="title" style="color:white;">Add Category</h4>
                 <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times" style="color:white;"></i>
@@ -218,27 +215,26 @@
             </div>
             <div style="width:100%; overflow:auto" class="ModelTrack">
                 <div class="modal-body" style="width:100%">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Category Name</label>
-                                <input class="form-control" />
+                    @using (Html.BeginForm("AddSubCategory", "SubCategory", FormMethod.Post, new { id = "addSubCategoryForm" }))
+                    {
+                        <input type="hidden" id="VendorShopDrp" name="VendorShopDrp" value="@ViewBag.ShopData.Shopid" />
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Category Name</label>
+                                    <input class="form-control" id="SubCategoryName" name="SubCategoryName"/>
+                                </div>
                             </div>
-                            <div class="col-6">
 
-                                <label>Others</label>
-                                <input class="form-control" />
+                            <div class="row">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-6">
+                                    <input class="btn btn-warning right" type="button" value="Save" onclick="SaveSubCategoryInfo();" style="margin: 10px 10px 0px 10px; float: right;" />
+                                </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-6">
-                            </div>
-                            <div class="col-6">
-                                <input class="btn btn-warning right" type="button" value="Save" style="margin: 10px 10px 0px 10px; float: right;" />
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
@@ -254,8 +250,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <!--Header-->
-            <div class="modal-header" style="        background: #f5aa1c;
-        height: 60px;">
+            <div class="modal-header" style="background: #f5aa1c;height: 60px;">
                 <h4 id="changeheader" class="title" style="color:white;">Edit Shop</h4>
                 <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times" style="color:white;"></i>
@@ -263,59 +258,77 @@
             </div>
             <div style="width:100%; overflow:auto" class="ModelTrack">
                 <div class="modal-body" style="width:100%">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Shop Name</label>
-                                <input class="form-control" />
+                    @using (Html.BeginForm("UpdateShop", "Vendor", FormMethod.Post, new { id = "UpdateShopForm" }))
+                    {
+                        <input type="hidden" id="Shopid" name="Shopid" value="@ViewBag.ShopData.Shopid"/>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Shop Name</label>
+                                    <input class="form-control" id="ShopName" name="ShopName" value="@ViewBag.ShopData.shopname" />
+                                </div>
                             </div>
-                            <div class="col-6">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Category</label>
+                                    <select class="form-control" id="Category" name="Category" value="@ViewBag.ShopData.CategoryId">
+                                        @foreach (var item in ViewBag.Categories)
+                                        {
+                                            <option value="@item.CategoryId">@item.CategoryName</option>
+                                        }
+                                    </select>
+                                </div>
 
-                                <label>Location</label>
-                                <input class="form-control" />
+                                <div class="col-6">
+                                    <label>Location</label>
+                                    <select class="form-control" id="Location" name="Location" value="@ViewBag.ShopData.location">
+                                        <option value="HRE">HRE</option>
+                                        <option value="BRQ">BRQ</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Delivery Fee</label>
-                                <input class="form-control" />
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Delivery Fee</label>
+                                    <input class="form-control" id="DeliveryFee" name="DeliveryFee" value="@ViewBag.ShopData.DeliveryFee" />
+                                </div>
+                                <div class="col-6">
+                                    <label>Min-Order</label>
+                                    <input class="form-control" id="MinOrder" name="MinOrder" value="@ViewBag.ShopData.MinOrder" />
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <label>Min-Order</label>
-                                <input class="form-control" />
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Time</label>
-                                <input class="form-control" />
-                            </div>
-                            <div class="col-6">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Time</label>
+                                    <input class="form-control" id="DeliveryTime" name="DeliveryTime" value="@ViewBag.ShopData.DeliveryTime" />
+                                </div>
+                                <div class="col-6">
 
-                                <label>Discription</label>
-                                <input class="form-control" />
+                                    <label>Discription</label>
+                                    <input class="form-control" id="Description" name="Description" value="@ViewBag.ShopData.Description" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Logo</label>
+                                    <input class="form-control" type="file" id="ShopLogo" name="ShopLogo" value="@ViewBag.ShopData.Logo" />
+                                </div>
+                                <div class="col-12">
+                                    <label>Shop Picture</label>
+                                    <input class="form-control" type="file" id="ShopImage" name="ShopImage" value="@ViewBag.ShopData.image" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                </div>
+                                <div class="col-6">
+                                    <input class="btn btn-warning right" type="button" value="Save" onclick="SaveVendorShopInfo();" style="margin: 10px 10px 0px 10px; float: right;" />
+                                </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label>Logo</label>
-                                <input class="form-control" type="file" />
-                            </div>
-                            <div class="col-6">
+                    }
 
-                                <label>Shop Picture</label>
-                                <input class="form-control" type="file" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                            </div>
-                            <div class="col-6">
-                                <input class="btn btn-warning right" type="button" value="Save" style="margin: 10px 10px 0px 10px; float: right;" />
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -455,11 +468,8 @@
                                 if (sub.items.Count == 0)
                                 {
                                     <div class="best_shoes" style="height: 90px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
-                                        <p class="best_text" style="        margin-bottom: 5px;
-        color: #e0ab09;
-">No Item In This Category !</p>
+                                        <p class="best_text" style="margin-bottom: 5px;color: #e0ab09;">No Item In This Category !</p>
                                     </div>
-
                                 }
                                 else
                                 {
@@ -754,6 +764,105 @@
                 }
                 else {
                     alert("Record not updated.");
+                    return;
+                }
+            },
+            error: function () {
+                debugger;
+                alert("Error");
+            }
+        });
+    }
+
+
+    function SaveVendorShopInfo() {
+        debugger;
+        //Vendor/VendorView
+        if (document.getElementById('ShopName').value == "") {
+            alert("Please enter ShopName.");
+            return;
+        }
+        if (document.getElementById('Category').value == "") {
+            alert("Select one Category.");
+            return;
+        }
+        if (document.getElementById('Location').value == "") {
+            alert("Select one Location.");
+            return;
+        }
+        if (document.getElementById('Description').value == "") {
+            alert("Please enter Description.");
+            return;
+        }
+        if (document.getElementById('DeliveryFee').value == "") {
+            alert("Please enter DeliveryFee.");
+            return;
+        }
+        if (document.getElementById('DeliveryTimeMax').value == "") {
+            alert("Please enter Maximum Delivery Time.");
+            return;
+        }
+        if (document.getElementById('DeliveryTimeMin').value == "") {
+            alert("Please enter Minimum Delivery Time.");
+            return;
+        }
+        if (document.getElementById('MinOrder').value == "") {
+            alert("Please enter Minimum Order.");
+            return;
+        }
+
+        f = new FormData($("#UpdateShopForm")[0]);
+            $.ajax({
+                type: "POST",
+                async: "true",
+                data: f,
+                url: "/Vendor/UpdateShop",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    debugger;
+                    if (data == "success") {
+                        alert("Shop updated successfully.");
+                        window.location.href = '/Vendor/VendorView';
+                    }
+                    else {
+                        alert("Record not updated.");
+                        return;
+                    }
+                },
+                error: function () {
+                    debugger;
+                    alert("Error");
+                }
+            });
+    }
+
+    function SaveSubCategoryInfo() {
+        debugger;
+        //User/Index
+
+        if (document.getElementById('SubCategoryName').value == "") {
+            alert("Please enter Sub Category Name.");
+            return;
+        }
+
+        f = new FormData($("#addSubCategoryForm")[0]);
+
+        $.ajax({
+            type: "POST",
+            async: "true",
+            data: f,
+            url: "/SubCategory/AddSubCategory",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                if (data == "success") {
+                    alert("Sub Category added successfully.");
+                    window.location.href = '/Vendor/VendorView';
+                }
+                else {
+                    alert("Sub Category already exist.");
                     return;
                 }
             },

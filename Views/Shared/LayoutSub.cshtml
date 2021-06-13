@@ -290,62 +290,62 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav">
-                                <a class="nav-item nav-link" href="/Home/Index">Home</a>
-                                <a class="nav-item nav-link" id="Aboutbtn">
-                                    About Us<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
-                                    <div id="About" style="display:none;" class="dropdownStyle">
-                                        <ul>
-                                            <li>Our story</li>
-                                            <li>Why sabi?</li>
-                                            <li>community</li>
-                                        </ul>
-                                    </div>
+                                @if (Session["RoleID"].ToString() != "3")
+                                {
+                                    <a class="nav-item nav-link" href="/Home/Index">Home</a>
+                                    <a class="nav-item nav-link" id="Aboutbtn">
+                                        About Us<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
+                                        <div id="About" style="display:none;" class="dropdownStyle">
+                                            <ul>
+                                                <li>Our story</li>
+                                                <li>Why sabi?</li>
+                                                <li>community</li>
+                                            </ul>
+                                        </div>
 
-                                </a>
-                                <a class="nav-item nav-link" id="Categories" style="cursor:pointer">
-                                    Categories<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
-                                    <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
-                                        <div onclick="loadSubCategories(1,'Groceries')">Groceries</div>
-                                        <div onclick="loadSubCategories(2, 'Pharmacy')">Pharmacy</div>
-                                        <div onclick="loadSubCategories(3,'Bakery')">Bakery</div>
-                                        <div onclick="loadSubCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
-                                    </div>
-                                </a>
-                                <a class="nav-item nav-link last" href="#">
-                                    <img src="~/Content/Template/images/search_icon.png" onclick="SearchItems()"> <div class="searchEveryThing" style=" position: absolute; margin-left: -188px; /* margin-top: 10px; */ display:none">
-                                        <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
-                                        <input id="Searchid" class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " onkeyup="Search()" />
-                                        <div class="itemsearchdiv" id="Searchdiv" style="background: #e0ab09;width: 225px;padding: 10px;overflow-x: hidden;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);border-radius:5px;"></div>
-                                    </div>
-                                </a>
-                                <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
-                                    @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>
-                                    <div id="LocationTypeDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
-                                        <div onclick="loadLocationType('HRE')">HRE</div>
-                                        <div onclick="loadLocationType('BRQ')">BRQ</div>
-                                    </div>
-                                </a>
-                                @*<a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>*@
-                                <a class="jss109 nav-item nav-link last" onclick="BuyItemView()">
-                                    <div class="jss261">
-                                        <div class="jss439 jss262">0</div>
-                                    </div>
-                                    <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
-                                        <span class="jss310">
-                                            <img src="~/Content/Template/images/shop_icon.png">
-                                        </span>
-                                        <span class="jss700"></span>
-                                    </button>
-                                </a>
+                                    </a>
+                                    <a class="nav-item nav-link" id="Categories" style="cursor:pointer">
+                                        Categories<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
+                                        <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
+                                            <div onclick="loadSubCategories(1,'Groceries')">Groceries</div>
+                                            <div onclick="loadSubCategories(2, 'Pharmacy')">Pharmacy</div>
+                                            <div onclick="loadSubCategories(3,'Bakery')">Bakery</div>
+                                            <div onclick="loadSubCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
+                                        </div>
+                                    </a>
+                                    <a class="nav-item nav-link last" href="#">
+                                        <img src="~/Content/Template/images/search_icon.png" onclick="SearchItems()"> <div class="searchEveryThing" style=" position: absolute; margin-left: -188px; /* margin-top: 10px; */ display:none">
+                                            <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
+                                            <input id="Searchid" class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " onkeyup="Search()" />
+                                            <div class="itemsearchdiv" id="Searchdiv" style="background: #e0ab09;width: 225px;padding: 10px;overflow-x: hidden;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);border-radius:5px;"></div>
+                                        </div>
+                                    </a>
+                                    <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
+                                        @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>
+                                        <div id="LocationTypeDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
+                                            <div onclick="loadLocationType('HRE')">HRE</div>
+                                            <div onclick="loadLocationType('BRQ')">BRQ</div>
+                                        </div>
+                                    </a>
+                                    @*<a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>*@
+                                    <a class="jss109 nav-item nav-link last" onclick="BuyItemView()">
+                                        <div class="jss261">
+                                            <div class="jss439 jss262">0</div>
+                                        </div>
+                                        <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
+                                            <span class="jss310">
+                                                <img src="~/Content/Template/images/shop_icon.png">
+                                            </span>
+                                            <span class="jss700"></span>
+                                        </button>
+                                    </a>
+                                }
+
                                 <a id="SignInbtn" class="nav-item nav-link" style="cursor:pointer;">
                                     @if (Session["Name"].ToString() == "")
-                                    {
-                                        <span>Sign In</span>
-                                    }
+                                    {<span>Sign In</span> }
                                     else
-                                    {
-                                        <span>@Session["Name"]</span>
-                                    }
+                                    { <span>@Session["Name"]</span>}
                                     <div id="SignIn" style="display:none;z-index:1" class="dropdownStyle">
                                         <ul>
                                             @if (Session["Name"].ToString() == "")
