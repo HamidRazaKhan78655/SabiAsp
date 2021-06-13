@@ -172,7 +172,9 @@ namespace SabiAsp.Controllers
                         string shopName = fm["ShopName"].ToString();
                         string description = fm["Description"].ToString();
                         string deliveryFee = fm["DeliveryFee"].ToString();
-                        string deliveryTime = fm["DeliveryTime"].ToString();
+                        string deliveryTimeMax = fm["DeliveryTimeMax"].ToString();
+                        string deliveryTimeMin = fm["DeliveryTimeMin"].ToString();
+                        string minOrder = fm["MinOrder"].ToString();
 
                         Shop s = new Shop();
                         string _fileName = string.Empty;
@@ -212,7 +214,8 @@ namespace SabiAsp.Controllers
                         s.shopname = shopName;
                         s.Description = description;
                         s.DeliveryFee = deliveryFee;
-                        s.DeliveryTime = deliveryTime;
+                        s.DeliveryTime = deliveryTimeMin + " " + "-" + " " + deliveryTimeMax;
+                        s.MinOrder = minOrder;
                         s.location = location;
                         s.isDeleted = "false";
                         s.CreatedBy = u.UserId;

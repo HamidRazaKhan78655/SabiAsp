@@ -85,8 +85,16 @@
                     alert("Please enter DeliveryFee.");
                     return;
                 }
-                if (document.getElementById('DeliveryTime').value == "") {
-                    alert("Please enter DeliveryTime.");
+                if (document.getElementById('DeliveryTimeMax').value == "") {
+                    alert("Please enter Maximum Delivery Time.");
+                    return;
+                }
+                if (document.getElementById('DeliveryTimeMin').value == "") {
+                    alert("Please enter Minimum Delivery Time.");
+                    return;
+                }
+                if (document.getElementById('MinOrder').value == "") {
+                    alert("Please enter Minimum Order.");
                     return;
                 }
             }
@@ -214,8 +222,20 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="wrap-input100 validate-input" data-validate="Enter Delivery Time">
-                                        <input class="input100" type="text" id="DeliveryTime" name="DeliveryTime" placeholder="Delivery Time">
+                                    <div class="wrap-input100 validate-input" data-validate="Enter Maximum Delivery Time">
+                                        <input class="input100" type="text" id="DeliveryTimeMax" name="DeliveryTimeMax" placeholder="Maximum Delivery Time">
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wrap-input100 validate-input" data-validate="Enter Minimum Delivery Time">
+                                        <input class="input100" type="text" id="DeliveryTimeMin" name="DeliveryTimeMin" placeholder="Minimum Delivery Time">
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="wrap-input100 validate-input" data-validate="Enter Minimum Order">
+                                        <input class="input100" type="text" id="MinOrder" name="MinOrder" placeholder="Minimum Order">
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
