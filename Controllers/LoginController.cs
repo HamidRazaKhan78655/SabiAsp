@@ -226,7 +226,7 @@ namespace SabiAsp.Controllers
                 Session["RoleID"] = u.RoleID.ToString();
                 Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                 Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
-                FormsAuthentication.SetAuthCookie(User.username, false);
+                FormsAuthentication.SetAuthCookie(u.username, false);
 
                 return "success";
             }

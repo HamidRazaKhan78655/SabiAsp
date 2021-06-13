@@ -125,7 +125,7 @@
                 <span class="login100-form-title p-b-41">
                     Create Account
                 </span>
-                @using (Html.BeginForm("SabiRegister", "Login", FormMethod.Post, new { id = "registerUserForm" }))
+                @using (Html.BeginForm("", "", FormMethod.Post, new { id = "registerUserForm" }))
                 {
                     <input type="hidden" value="@ViewBag.type" id="RoleType" name="RoleType" />
 
@@ -221,16 +221,22 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="wrap-input100 validate-input" data-validate="Enter Shop Image">
-                                        <input class="input100" type="file" id="ShopImage" name="ShopImage" placeholder="Shop Image" multiple >
+                                        <input class="input100" type="file" id="ShopImage" name="ShopImage" placeholder="Shop Image" multiple>
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
+                                @*<div class="col-md-12">
+                                    <div class="wrap-input100 validate-input" data-validate="Enter Shop Logo">
+                                        <input class="input100" type="file" id="ShopLogo" name="ShopLogo" placeholder="Shop Logo" multiple>
+                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>*@
 
                             }
 
                         </div>
                         <div class="container-login100-form-btn m-t-32">
-                            <button class="login100-form-btn" onclick="Register();">Register</button>
+                            <button type="button" class="login100-form-btn" onclick="Register();">Register</button>
                         </div>
 
                     </div>

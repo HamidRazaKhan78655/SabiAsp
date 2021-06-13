@@ -110,30 +110,21 @@
             <div>
                 <div class="star_text" style="        margin-left: 40px;">
                     <div class="left_part" style="padding:0px;width:50%">
-                        <h4 style="text-align:left; padding:10px; font-size:30px;">Natural Foods</h4>
-
+                        <h4 style="text-align:left; padding:10px; font-size:30px;">@ViewBag.ShopData.shopname</h4>
+                        <p class="best_text" style="text-align:left;padding-left: 10px; font-weight:500; margin:0px; font-size:14px">@ViewBag.ShopData.Description</p>
                         <ul>
-                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
                         </ul>
                     </div>
                     <div class="right_part" style="width:35%">
-                        <div class="shoes_price" style="text-align:left;font-size:15px;font-weight:400">Location : <span style="color: #ff4e5b;">HRE</span></div>
-                        <div class="shoes_price" style="        text-align: left;
-        font-size: 15px;
-        font-weight: 400
-">Delivery Fee : <span style="color: #ff4e5b;">$760</span></div>
-                        <div class="shoes_price" style="        text-align: left;
-        font-size: 15px;
-        font-weight: 400
-">Min-Order : <span style="color: #ff4e5b;">60</span></div>
-                        <div class="shoes_price" style="        text-align: left;
-        font-size: 15px;
-        font-weight: 400;
-        white-space: nowrap;">Time :  <span style="color: #ff4e5b;">Next Day delivery</span></div>
+                        <div class="shoes_price" style="text-align:left;font-size:15px;font-weight:400">Location : <span style="color: #ff4e5b;">@ViewBag.ShopData.location</span></div>
+                        <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400">Delivery Fee : <span style="color: #ff4e5b;">$@ViewBag.ShopData.DeliveryFee</span></div>
+                        <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400">Min-Order : <span style="color: #ff4e5b;">60</span></div>
+                        <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400;white-space: nowrap;">Time :  <span style="color: #ff4e5b;">Next Day delivery</span></div>
                     </div>
                 </div>
             </div>
@@ -181,15 +172,11 @@
            
             <div class="col-3 ">
                 <div style="background:white; padding:5px;">
-                    <div class="sideNavtab" style="        margin: 10px;
-        font-size: 20px;
-        color: #e0ab09; cursor:pointer; border-left: 4px solid; "><span style=" padding-left: 10px;" onclick="showItemByCategory(0)">All</span></div>
+                    <div class="sideNavtab" style="margin: 10px;font-size: 20px;color: #e0ab09; cursor:pointer; border-left: 4px solid; "><span style=" padding-left: 10px;" onclick="showItemByCategory(0)">All</span></div>
                     @foreach (var sub in Model)
                     {
-                        <div class="sideNavtab" onclick="showItemByCategory(@sub.SubCategorieId)" style="        margin: 10px;
-        font-size: 20px;
-        color: #e0ab09; cursor:pointer"><span style=" padding-left: 10px;">@sub.name</span></div>
-    }
+                        <div class="sideNavtab" onclick="showItemByCategory(@sub.SubCategorieId)" style="margin: 10px;font-size: 20px;color: #e0ab09; cursor:pointer"><span style=" padding-left: 10px;">@sub.name</span></div>
+                    }
                 </div>
             </div>
             <div class="col-9">
@@ -199,8 +186,6 @@
                     {
                         <p style="margin: 10px; font-size: 32px; color: white;">@sub.name</p>
                         <br />
-
-
                         <div class="row" @*onclick="GetVendorItemData(@subCate.ItemId, '@subCate.name', '@subCate.Weight', '@subCate.Price', '@subCate.image', @subCate.Shopid, @subCate.SubCategorieId);"*@>
                             @if (sub.items != null)
                             {
@@ -223,11 +208,20 @@
                                         <div class="best_shoes" style="height: 200px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
                                             <div><i class="fas fa-plus-circle" style="float: right; position: absolute; margin: 13px; font-size: 30px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId)"></i></div>
                                             <p class="best_text" style=" margin-bottom: 5px;">@subCate.name</p>
-                                            <div class="shoes_icon" style="min-height: 10px;"><img src="~/Content/Template/images/shoes-img4.png" style="max-width:66%;"></div>
+                                            <div class="shoes_icon" style="min-height: 10px;">
+                                                @if (subCate.image == null)
+                                                {
+                                                    <img src="~/Content/Template/images/shoes-img4.png" style="max-width:66%;">
+                                                }
+                                                else
+                                                {
+                                                    <img src="@string.Format("/CompanyImages/{0}", subCate.image)" class="Emp44by44" style="height: 70px; width: 70px;">
+                                                }
+                                            </div>
                                             <div class="star_text">
                                                 <div class="right_part" style="width:100%; text-align:center">
-                                                    <div class="">Price : <span style="color: #ff4e5b;">60$</span></div>
-                                                    <div class="">Weight : <span style="color: #ff4e5b;">2KG</span></div>
+                                                    <div class="">Price : <span style="color: #ff4e5b;">$@subCate.Price</span></div>
+                                                    <div class="">Weight : <span style="color: #ff4e5b;">@subCate.Weight KG</span></div>
                                                 </div>
                                             </div>
                                         </div>
