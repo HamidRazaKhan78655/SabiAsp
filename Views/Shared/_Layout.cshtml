@@ -335,19 +335,12 @@
                                 </a>
                                 <a class="nav-item nav-link last" href="#">
                                     <img src="~/Content/Template/images/search_icon.png" onclick="SearchItems()"> <div class="searchEveryThing" style=" position: absolute; margin-left: -188px; /* margin-top: 10px; */ display:none">
-    <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
-    <input id="Searchid" class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " onkeyup="Search()" />
+                                        <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
+                                        <input id="Searchid" class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " onkeyup="Search()" />
+                                        <div class="itemsearchdiv" id="Searchdiv" style="background: #e0ab09;width: 225px;padding: 10px;overflow-x: hidden;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);border-radius:5px;">
 
-    <div class="itemsearchdiv" id="Searchdiv" style="        background: #e0ab09;
-        width: 225px;
-        padding: 10px;
-        overflow-x: hidden;
-        box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
-        border-radius:5px;
-">
-
-    </div>
-</div>
+                                        </div>
+                                    </div>
                                 </a>
                                 <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
                                     @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>
@@ -369,12 +362,26 @@
                                     </button>
                                 </a>
                                 <a id="SignInbtn" class="nav-item nav-link" style="cursor:pointer;">
-                                    Sign In
+                                    @if (Session["Name"].ToString() == "")
+                                    {
+                                        <span>Sign In</span>
+                                    }
+                                    else
+                                    {
+                                        <span>@Session["Name"]</span>
+                                    }
                                     <div id="SignIn" style="display:none;z-index:1" class="dropdownStyle">
                                         <ul>
-                                            <li onclick="openSignModal(1)">Sign In as Vendor</li>
-                                            <li onclick="openSignModal(2)">Sign In as Buyer</li>
-                                            <li onclick="LogoutUser()">Sign Out</li>
+                                            @if (Session["Name"].ToString() == "")
+                                            {
+                                                <li onclick="openSignModal(1)">Sign In as Vendor</li>
+                                                <li onclick="openSignModal(2)">Sign In as Buyer</li>
+                                            }
+                                            else
+                                            {
+                                                <li onclick="LoadProfile()">Profile</li>
+                                                <li onclick="LogoutUser()">Sign Out</li>
+                                            }
                                         </ul>
                                     </div>
                                     <style>
@@ -629,9 +636,7 @@
             </style>
             <div class="sabiCurausal">
 
-                <div class="sabiCurausalLeft" style=" font-size: 60px;
-        position: absolute;
-">
+                <div class="sabiCurausalLeft" style=" font-size: 60px;position: absolute;">
                     <i class="fas fa-chevron-left"></i>
                 </div>
                 <div class="sabiCurausalRight" style=" float: right; font-size: 60px; position: relative; top: 7%;right:1%">
@@ -878,6 +883,68 @@
         </div>
     </div>
     @*user end*@
+
+    <input type="hidden" id="openUserProfileModal" data-target="#updateUserProfileBootstrapModal" data-toggle="modal" />
+
+    <div id="editUserProfile">
+        @{
+            using (Html.BeginForm("UpdateUserProfile", "User", FormMethod.Post, new { id = "updateUserProfileForm" }))
+            {
+                @*user strat*@
+                <div class="modal fade " id="updateUserProfileBootstrapModal">
+                    <div class="modal-dialog w-user-modal-dialog">
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                <h4 class="title" style="color:white;">Update User Profile</h4>
+
+                                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times" style="color:white;"></i>
+                                </button>
+                            </div>
+                            <div style="width:100%; overflow:auto" class="ModelTrack">
+                                <div class="modal-body" style="width:100%">
+                                    <div id="UserProfileDiv">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name :</label>
+                                                <input type="text" class="form-control" id="ProfileUserName" name="ProfileUserName" value="@Session["Name"]" required />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Email Address :</label>
+                                                <input type="email" class="form-control" id="ProfileUserEmailAddress" name="ProfileUserEmailAddress" value="@Session["EmailAddress"]" required />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Contact :</label>
+                                                <input type="text" class="form-control" id="ProfileUserContact" name="ProfileUserContact" value="@Session["Contact"]" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Username :</label>
+                                                <input type="text" class="form-control" id="ProfileUserUsername" name="ProfileUserUsername" value="@Session["Username"]" required />
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Address :</label>
+                                                <input type="text" class="form-control" id="ProfileUserAddress" name="ProfileUserAddress" value="@Session["Address"]" />
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label>Image :</label>
+                                                <input type="file" id="ProfileImage" name="ProfileImage" value="@Session["image"]" />
+                                            </div>
+                                        </div>
+
+                                        <input type="button" class="btn btn-info" value="Update" onclick="UpdateUserProfileInfo();" style="float:right;margin:10px 0;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*user end*@
+
+
+            }
+        }
+    </div>
     @*Modal End*@
 
 

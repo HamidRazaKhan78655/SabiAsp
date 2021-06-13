@@ -199,3 +199,60 @@ function Search() {
         $('#Searchdiv').show();
     });
 }
+
+function LoadProfile() {
+    debugger;
+    $("#openUserProfileModal").trigger("click");
+}
+
+function UpdateUserProfileInfo() {
+    debugger;
+    if (document.getElementById('ProfileUserName').value == "") {
+        alert("Please enter Name.");
+        return;
+    }
+    if (document.getElementById('ProfileUserEmailAddress').value == "") {
+        alert("Please enter Email Address.");
+        return;
+    }
+    if (document.getElementById('ProfileUserContact').value == "") {
+        alert("Please enter Contact.");
+        return;
+    }
+    if (document.getElementById('ProfileUserUsername').value == "") {
+        alert("Please enter Username.");
+        return;
+    }
+    if (document.getElementById('ProfileUserAddress').value == "") {
+        alert("Please enter Address.");
+        return;
+    }
+
+    f = new FormData($("#updateUserProfileForm")[0]);
+
+    $.ajax({
+        type: "POST",
+        async: "true",
+        data: f,
+        url: "/User/UpdateUserProfile",
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            debugger;
+            if (data == "success") {
+                alert("User profile updated successfully.");
+                $(".close").trigger("click");
+                window.location.reload();
+            }
+            else {
+                alert("Profile not updated.");
+                return;
+            }
+        },
+        error: function () {
+            debugger;
+            alert("Error");
+        }
+    });
+}
+

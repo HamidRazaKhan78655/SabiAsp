@@ -60,8 +60,12 @@ namespace SabiAsp.Controllers
                     Session["UserId"] = User.UserId.ToString();
                     Session["Username"] = User.username.ToString();
                     Session["Name"] = User.name.ToString();
+                    Session["EmailAddress"] = User.EmailAddress.ToString();
+                    Session["Contact"] = User.Contact.ToString();
+                    Session["Address"] = User.Address.ToString();
                     Session["RoleType"] = User.RoleType.ToString();
                     Session["RoleID"] = User.RoleID.ToString();
+                    Session["image"] = User.image == null ? "" : User.image.ToString();
                     Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                     Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
                     FormsAuthentication.SetAuthCookie(User.username, false);

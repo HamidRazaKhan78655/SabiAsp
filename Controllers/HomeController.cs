@@ -19,6 +19,16 @@ namespace SabiAsp.Controllers
             {
                 Session["Login"] = "";
                 Session["Location"] = type == "" ? "HRE" : type;
+                int logedinUserId = Convert.ToInt32(Session["UserId"]);
+                Session["UserId"] = logedinUserId;
+                if (logedinUserId == 0)
+                {
+                    //Session["Username"] = "";
+                    Session["Name"] = "";
+                    //Session["RoleType"] = "";
+                    //Session["RoleID"] = "";
+                }
+
                 //  ViewBag.Customercategories = Db.Categories.Select(d => new SelectListItem { Text = d.CategoryName, Value = d.CategoryId.ToString() });
                 /*  var query = Db.SubCategories.ToList();
                   List<SubCategory> subCategories = new List<SubCategory>();

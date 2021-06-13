@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -210,6 +212,68 @@ namespace SabiAsp.Controllers
                 users = new List<user>();
             }
             return PartialView("GetUsersByType", users);
+        }
+
+        public string UpdateUserProfile(IEnumerable<HttpPostedFileBase> files, FormCollection fm)
+        {
+            string name = fm["ProfileUserName"].ToString();
+            string emailAddress = fm["ProfileUserEmailAddress"].ToString();
+            string contact = fm["ProfileUserContact"].ToString();
+            string userName = fm["ProfileUserUsername"].ToString();
+            string address = fm["ProfileUserAddress"].ToString();
+            int userId = Convert.ToInt32(Session["UserId"]);
+
+            var user = Db.users.Where(x => x.UserId == userId).SingleOrDefault();
+            if (user != null)
+            {
+                string _fileName = string.Empty;
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    try
+                    {
+                        var file = Request.Files[i];
+                        string namefile = string.Empty;
+                        namefile = System.IO.Path.GetFileNameWithoutExtension(file.FileName);
+                        if (string.IsNullOrEmpty(namefile) == false)
+                        {
+                            Bitmap b = (Bitmap)Bitmap.FromStream(file.InputStream);
+                            _fileName = namefile.Replace(@"'", "") + "_" + DateTime.Now.ToString("mmss") + ".png";
+                            var path = Server.MapPath("~/CompanyImages/");
+                            string SavePath = path + _fileName;
+                            b.Save(SavePath, ImageFormat.Png);
+                            user.image = _fileName;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+
+                user.name = name;
+                user.EmailAddress = emailAddress;
+                user.Contact = contact;
+                user.Address = address;
+                user.username = userName;
+                user.ModifiedBy = userId;
+                user.ModifiedDate = DateTime.Now;
+                user.isDeleted = "false";
+                Db.Entry(user).State = EntityState.Modified;
+                Db.SaveChanges();
+
+                Session["UserId"] = user.UserId.ToString();
+                Session["Username"] = user.username.ToString();
+                Session["Name"] = user.name.ToString();
+                Session["EmailAddress"] = user.EmailAddress.ToString();
+                Session["Contact"] = user.Contact.ToString();
+                Session["Address"] = user.Address.ToString();
+                Session["RoleType"] = user.RoleType.ToString();
+                Session["RoleID"] = user.RoleID.ToString();
+                Session["image"] = user.image == null ? "" : user.image.ToString();
+
+                return "success";
+            }
+            return "error";
         }
     }
 }
