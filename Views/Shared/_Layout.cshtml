@@ -268,19 +268,8 @@
             var userType = $('#SignInType').val();
             window.location.href = "/Login/SabiLogin?type=" + userType;
         }
-       
 
-        function BuyItemView()
-        {
-            debugger;
-            var mySession = '<%=@Session["UserId"]=%>';
-            if (mySession =='<%==%>')
-            {
-                alert("First item select than buy");
-            } else {
-                window.open("/Items/BuyItemView?Userid=@Session["UserId"]", "_self");
-            }
-        }
+
 
         function LogoutUser()
         {
@@ -288,12 +277,18 @@
         }
 
     </script>
-  
+
 
 </head>
+
 <!-- body -->
 <body class="main-layout">
+    <input value="@Session["UserId"]" id="CheckLogin" type="hidden"/>
+    <div class="AddtoCartDiv">
+        <div id="LoadCartData">
 
+        </div>
+    </div>
     @*//modal Item View*@
 
     <input id="ItemViewTrigger" type="hidden" data-target="#ItemView" data-toggle="modal" />
@@ -380,7 +375,7 @@
                                     <div class="jss261">
                                         <div class="jss439 jss262">0</div>
                                     </div>
-                                    <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
+                                    <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart" >
                                         <span class="jss310">
                                             <img src="~/Content/Template/images/shop_icon.png">
                                         </span>

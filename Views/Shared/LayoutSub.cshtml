@@ -251,17 +251,6 @@
             window.location.href = "/Login/SabiLogin/"
         }
 
-       function BuyItemView()
-       {
-           debugger;
-            var mySession = '<%=@Session["UserId"]=%>';
-           if (mySession =='<%==%>')
-            {
-               alert("First item select than buy");
-            } else {
-                window.open("/Items/BuyItemView?Userid=@Session["UserId"]", "_self");
-            }
-        }
 
         function LogoutUser() {
             window.location.href = '/Login/Logout/';
@@ -271,9 +260,14 @@
 <!-- body -->
 <body class="main-layout">
     @*//modal Item View*@
+    <input value="@Session["UserId"]" id="CheckLogin" type="hidden" />
+    <div class="AddtoCartDiv">
+        <div id="LoadCartData">
 
+        </div>
+    </div>
 
-    <input id="ItemViewTrigger" type="hidden" data-target="#ItemView" data-toggle="modal"/>
+    <input id="ItemViewTrigger" type="hidden" data-target="#ItemView" data-toggle="modal" />
     <div class="modal fade " id="ItemView">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -204,8 +204,27 @@ function LoadProfile() {
     debugger;
     $("#openUserProfileModal").trigger("click");
 }
+function checkUserSignIn() {
+    if ($('#CheckLogin').val() == "0") {
+        return false;
+    }
+    return true;
+}
+
+function BuyItemView() {
+    debugger;
+    var cartDiv = $("#AddtoCartDiv");;
+    var loadCart = $("#LoadCartData");
+    if (checkUserSignIn()) {
+        window.open("/Items/BuyItemView?Userid=" + $('#CheckLogin').val(), "_self");
+    } else {
+        alert("Please SignIn first !");
+    }
+  
+}
 function AddToCart(itemId) {
     alert(itemId);
+  
 }
 function showItemDetails(itemId) {
     var itemView = $('#itemViewFromAllSide');

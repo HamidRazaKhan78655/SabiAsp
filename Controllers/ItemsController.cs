@@ -316,22 +316,32 @@ namespace SabiAsp.Controllers
         [HttpGet]
         public ActionResult BuyItemView(int ? Userid=0)
         {
-            List<UserItemCard> itemslist = new List<UserItemCard>();
-            List<item> buyitemslist =new  List<item>();
+            List<Cart> cartList = new List<Cart>();
+   
             if (Userid==0)
             {
                 ViewBag.noItemSelect = "";
             }
             else
             {
-                itemslist = Db.UserItemCards.Where(x => x.UesrId == Userid && x.isDeleted != "true").ToList();
-                foreach (var itm in itemslist)
-                {
-                    buyitemslist.Add(Db.items.Where(x => x.ItemId == itm.ItemId && x.isDeleted != "true").Select(e=>e).FirstOrDefault());  
+                
+                var itemslist = Db.UserItemCards.Where(x => x.UesrId == Userid && x.isDeleted != "true").ToList();
+                foreach (var item in itemslist) {
+                    Cart crt = new Cart();
+                    var itemselect = Db.items.Where(x=>x.ItemId == item.ItemId).FirstOrDefault();
+                    var subCatelect = Db.SubCategories.Where(x => x.SubCategorieId == itemselect.SubCategorieId).FirstOrDefault();
+                    var shopSelect = Db.Shops.Where(x => x.Shopid == subCatelect.Shopid).FirstOrDefault();
+                    crt.itemDetails = itemselect;
+                    crt.Shop = shopSelect;
+                    crt.SubCat = subCatelect;
+                    crt.cartDetail = item;
+                    cartList.Add(crt);
                 }
+
+
             }
             
-            return View(buyitemslist);
+            return View(cartList);
         }
        
         public bool SaveBuyProducts(string userid,string itemid)

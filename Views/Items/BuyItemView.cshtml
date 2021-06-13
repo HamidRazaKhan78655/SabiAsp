@@ -1,73 +1,16 @@
-﻿@model IList<SabiAsp.Models.item>
+﻿@model IEnumerable<SabiAsp.Models.Cart>
 
-@{
-    ViewBag.Title = "BuyItemView";
-    @*   Layout = "~/Views/Shared/_Layout.cshtml";*@
-    ViewBag.LayoutPage = "sub";
-    Layout = "~/Views/Shared/LayoutSub.cshtml";
-}
-<style>
-    .rowinnner1 {
-        justify-content: space-between;
-        width: 100%;
-    }
-
-        .rowinnner1 div:first-child {
-            float: left;
-        }
-
-    .rowinnner2 {
-        float: right;
-    }
-</style>
-@if (ViewBag.noItemSelect == "")
-{
-    <h3>First item select than buy</h3>
-}
-else
-{
-    <div class="container">
-        <div class="row" style="padding-top: 30px;">
-            <h6 style="color: rgba(0, 0, 0, 0.87); font-size: 1.25rem;  font-weight: 500; line-height: 1.6;">My Cart</h6>
-            <p style="margin: 6px; color: rgba(0, 0, 0, 0.87); font-size: 1rem; font-weight: 400; line-height: 1.5;">6 Items</p>
-        </div>
-        <div class="row">
-            <div class="rowinnner1">
-                <div><p>Sub Total</p></div>
-                <div class="rowinnner2"><p>500</p></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="rowinnner1">
-                <div><p>Delivery Charges</p></div>
-                <div class="rowinnner2"><p>Free</p></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="rowinnner1">
-                <div><p>Total Bill</p></div>
-                <div class="rowinnner2"><p>500</p></div>
-            </div>
-        </div>
-
-        @foreach (var itm in Model)
+    <div class="container-fluid">
+        
+        @foreach (var item in Model)
         {
+
             <div class="row">
-                <div class="col-md-4">
-                    <div class="shoes_icon">
-                        <img src="/Content/Template/images/shoes-img4.png" style="max-width: 60%;">
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="">
-                        <p class="best_text" style="text-align:left;padding-left: 25px;">@itm.name</p>
-                        <p class="best_text" style="text-align:left;padding-left: 25px;">@itm.Price</p>
-                        <p class="best_text" style="text-align:left;padding-left: 25px;">@itm.Shopid</p>
-                    </div>
-                </div>
+                <div class="col-4">@item.itemDetails.name</div>
+                <div class="col-4">@item.itemDetails.Price</div>
+                <div class="col-4">@item.cartDetail.quantity</div>
             </div>
+
         }
     </div>
-}
-
 
