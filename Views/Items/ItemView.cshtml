@@ -1,0 +1,36 @@
+﻿@model SabiAsp.Models.ItemViewGen
+
+<div>
+    <div class="container-fluid">
+        <div class="row" style="margin-bottom:20px">
+            <div class="col-12">
+                <div style="text-align:center">
+                    @if (Model.itemDetails.image == null)
+                    {
+                        <img src="~/Content/Template/images/shoes-img9.png" style="height:200px; width:200px;" />
+                    }
+                    else
+                    {
+                        <img src="@string.Format("/CompanyImages/{0}", Model.itemDetails.image)" style="height: 200px; width: 200px;" />
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6" style="color: #ffc107;">Item Name : <span style="color: #0b0124;"> @Html.DisplayFor(model => model.itemDetails.name)</span></div>
+            <div class="col-6" style="color: #ffc107;">Item Price: <span style="color: #0b0124;">@Html.DisplayFor(model => model.itemDetails.Price)</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6" style="color: #ffc107;">Shop Name : <span style="color: #0b0124;"> @Html.DisplayFor(model => model.ShopName)</span></div>
+            <div class="col-6" style="color: #ffc107;">Category Name:<span style="color: #0b0124;"> @Html.DisplayFor(model => model.SubCategoryName)</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6" style="color: #ffc107;">Item Availible: <span style="color: #0b0124;"> @Html.DisplayFor(model => model.itemDetails.itemAvailible)</span></div>
+            <div class="col-6" style="color: #ffc107;">Sold Items : <span style="color: #0b0124;">@Html.DisplayFor(model => model.itemDetails.SoldItems)</span></div>
+        </div>
+        <div class="row">
+            <div class="col-6" style="color: #ffc107;">Delivery Fee:  <span style="color: #0b0124;">@Html.DisplayFor(model => model.itemDetails.DeliveryFee)</span></div>
+            <div class="col-6"><input type="button" value="Add To Cart" class="btn btn-warning" onclick="AddToCart(@Model.itemDetails.ItemId);"/></div>
+        </div>
+    </div>
+</div>

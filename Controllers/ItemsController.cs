@@ -18,6 +18,18 @@ namespace SabiAsp.Controllers
         {
             return View();
         }
+        
+        public ActionResult ItemView(int itemID)
+        {
+            var query = Db.items.Where(x => x.ItemId == itemID).FirstOrDefault();
+            var querySub = Db.SubCategories.Where(x => x.SubCategorieId == query.SubCategorieId).FirstOrDefault();
+            var queryShop = Db.Shops.Where(x => x.Shopid == querySub.Shopid).FirstOrDefault();
+            ItemViewGen itemView = new ItemViewGen();
+            itemView.ShopName = queryShop.shopname;
+            itemView.SubCategoryName = querySub.name;
+            itemView.itemDetails = query;
+            return PartialView("ItemView", itemView);
+        }
 
         [HttpGet]
         public ActionResult GetCategories(int id)
@@ -304,22 +316,32 @@ namespace SabiAsp.Controllers
         [HttpGet]
         public ActionResult BuyItemView(int ? Userid=0)
         {
-            List<UserItemCard> itemslist = new List<UserItemCard>();
-            List<item> buyitemslist =new  List<item>();
+            List<Cart> cartList = new List<Cart>();
+   
             if (Userid==0)
             {
                 ViewBag.noItemSelect = "";
             }
             else
             {
-                itemslist = Db.UserItemCards.Where(x => x.UesrId == Userid && x.isDeleted != "true").ToList();
-                foreach (var itm in itemslist)
-                {
-                    buyitemslist.Add(Db.items.Where(x => x.ItemId == itm.ItemId && x.isDeleted != "true").Select(e=>e).FirstOrDefault());  
+                
+                var itemslist = Db.UserItemCards.Where(x => x.UesrId == Userid && x.isDeleted != "true").ToList();
+                foreach (var item in itemslist) {
+                    Cart crt = new Cart();
+                    var itemselect = Db.items.Where(x=>x.ItemId == item.ItemId).FirstOrDefault();
+                    var subCatelect = Db.SubCategories.Where(x => x.SubCategorieId == itemselect.SubCategorieId).FirstOrDefault();
+                    var shopSelect = Db.Shops.Where(x => x.Shopid == subCatelect.Shopid).FirstOrDefault();
+                    crt.itemDetails = itemselect;
+                    crt.Shop = shopSelect;
+                    crt.SubCat = subCatelect;
+                    crt.cartDetail = item;
+                    cartList.Add(crt);
                 }
+
+
             }
             
-            return View(buyitemslist);
+            return View(cartList);
         }
        
         public bool SaveBuyProducts(string userid,string itemid)

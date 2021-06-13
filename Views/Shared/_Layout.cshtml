@@ -268,19 +268,8 @@
             var userType = $('#SignInType').val();
             window.location.href = "/Login/SabiLogin?type=" + userType;
         }
-       
 
-        function BuyItemView()
-        {
-            debugger;
-            var mySession = '<%=@Session["UserId"]=%>';
-            if (mySession =='<%==%>')
-            {
-                alert("First item select than buy");
-            } else {
-                window.open("/Items/BuyItemView?Userid=@Session["UserId"]", "_self");
-            }
-        }
+
 
         function LogoutUser()
         {
@@ -288,12 +277,44 @@
         }
 
     </script>
-  
+
 
 </head>
+
 <!-- body -->
 <body class="main-layout">
+    <input value="@Session["UserId"]" id="CheckLogin" type="hidden"/>
+    <div class="AddtoCartDiv">
+        <div id="LoadCartData">
 
+        </div>
+    </div>
+    @*//modal Item View*@
+
+    <input id="ItemViewTrigger" type="hidden" data-target="#ItemView" data-toggle="modal" />
+
+
+    <div class="modal fade " id="ItemView">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="        background: #f5aa1c;
+        height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Item Details</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="itemViewFromAllSide"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*
+        //modal to tem View*@
     <!-- header section start -->
     <div class="header_section">
         <div class="container">
@@ -354,7 +375,7 @@
                                     <div class="jss261">
                                         <div class="jss439 jss262">0</div>
                                     </div>
-                                    <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
+                                    <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart" >
                                         <span class="jss310">
                                             <img src="~/Content/Template/images/shop_icon.png">
                                         </span>

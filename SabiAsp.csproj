@@ -164,6 +164,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
@@ -171,6 +172,7 @@
     <Compile Include="Models\item.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ItemViewGen.cs" />
     <Compile Include="Models\Role.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
@@ -513,12 +515,13 @@
     <Content Include="Views\SubCategory\ShowSubCategoriesByCategory.cshtml" />
     <Content Include="Views\SubCategory\SortedSubCategories.cshtml" />
     <Content Include="Views\Items\SortedItems.cshtml" />
-    <Content Include="Views\Items\BuyItemView.cshtml" />
     <Content Include="Views\SubCategory\GetShopSubCategories.cshtml" />
     <Content Include="Views\Items\SearchItem.cshtml" />
     <Content Include="Views\Items\ItemBySubCategories.cshtml" />
     <Content Include="Views\Items\SearchItemBySubCategories.cshtml" />
     <Content Include="Views\Vendor\VendorView.cshtml" />
+    <Content Include="Views\Items\ItemView.cshtml" />
+    <Content Include="Views\Items\BuyItemView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
