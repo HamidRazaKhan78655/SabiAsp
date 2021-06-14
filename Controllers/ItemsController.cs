@@ -253,7 +253,6 @@ namespace SabiAsp.Controllers
                 item.name = name;
                 item.Weight = weight;
                 item.Price = price;
-                item.SubCategorieId = shopId;
                 item.SubCategorieId = subCategoryId;
                 item.isDeleted = "false";
                 item.ModifiedBy = logedinUserId;
@@ -380,7 +379,6 @@ namespace SabiAsp.Controllers
                     {
                         return false;
                     }
-                    return false;
                 }
             }
             catch (Exception e)
