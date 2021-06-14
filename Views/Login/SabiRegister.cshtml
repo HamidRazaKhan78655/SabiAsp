@@ -110,7 +110,13 @@
                     debugger;
                     if (data == "success") {
                         alert("User added successfully.");
-                        window.location.href = '/Home/Index';
+                        if (@ViewBag.type == 3) {
+                            window.location.href = '/Vendor/VendorView';
+                        }
+                        else {
+                            window.location.href = '/Home/Index';
+                        }
+                        
                     }
                     else {
                         alert("User already exist.");
