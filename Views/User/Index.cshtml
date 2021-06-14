@@ -686,20 +686,20 @@
                                                     <input type="text" class="form-control" id="itemPrice" name="itemPrice" required />
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <label>Shop :</label>
+                                                    <select class="form-control" id="shopIddrp" name="shopIddrp" onchange="GetAllSubCategoriesList()" required>
+                                                        @foreach (var item in ViewBag.Shops)
+                                                        {
+                                                            <option value="@item.Shopid">@item.shopname</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12" id="adminSubcategoryDrop">
                                                     <label>Sub Category :</label>
                                                     <select class="form-control" id="SubCategorydrp" name="SubCategorydrp" required>
                                                         @foreach (var item in ViewBag.SubCategories)
                                                         {
                                                             <option value="@item.SubCategorieId">@item.name</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <label>Shop :</label>
-                                                    <select class="form-control" id="shopIddrp" name="shopIddrp" required>
-                                                        @foreach (var item in ViewBag.Shops)
-                                                        {
-                                                            <option value="@item.Shopid">@item.shopname</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -923,8 +923,6 @@
             }
 
             function DeleteUser(userId) {
-                //location.href = '../User/DeleteUser?userId=' + userId;
-
                 $.ajax({
                     url: '/User/DeleteUser?userId=' + userId,
                     type: 'POST',
@@ -1181,8 +1179,7 @@
             }
 
             function DeleteCategory(categoryId) {
-                //location.href = '../Categories/DeleteCategory?categoryId=' + categoryId;
-
+                debugger;
                 $.ajax({
                     url: '/Categories/DeleteCategory?categoryId=' + categoryId,
                     type: 'POST',
@@ -1387,7 +1384,7 @@
                     type: "POST",
                     async: "true",
                     data: f,
-                    url: "/SubCategory/AddSubCategory",
+                    url: "/SubCategory/AdminAddSubCategory",
                     processData: false,
                     contentType: false,
                     success: function (data) {
@@ -1445,6 +1442,20 @@
                     error: function () {
                         debugger;
                         alert("Error");
+                    }
+                });
+            }
+
+            function GetAllSubCategoriesList() {
+                debugger;
+                //shopSubCategorydrpDiv
+               var shopid =  $("#shopIddrp").val();
+                $.ajax({
+                    type: "GET",
+                    url: '/SubCategory/GetAllSubCategoriesListByShopId?shopid=' + shopid,
+                    success: function (response) {
+                        debugger;
+                        $("#adminSubcategoryDrop").html(response);
                     }
                 });
             }
@@ -1683,7 +1694,6 @@
 
             function AddShopItemData(userId) {
                 debugger;
-                //shopSubCategorydrpDiv
                 $("#shopUserId").val(userId);
                 $.ajax({
                     type: "GET",

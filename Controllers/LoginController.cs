@@ -97,13 +97,11 @@ namespace SabiAsp.Controllers
         {
             FormsAuthentication.SignOut();
             Session.Clear();
-            Session["UserId"] = "";
+            Session["UserId"] = 0;
             Session["Username"] = "";
             Session["Name"] = "";
             Session["RoleType"] = "";
-            Session["RoleID"] = "";
-            Session["DateFormate"] = "";
-            Session["ShortDateFormate"] = "";
+            Session["RoleID"] = 0;
             return RedirectToAction("SabiLogin");
         }
         public ActionResult SabiRegister(int type)
