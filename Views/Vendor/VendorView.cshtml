@@ -360,6 +360,7 @@
 @*//modal to edit shop*@
 
 
+<input type="hidden" id="showUpdateShopModalDiv" data-target="#editshop" data-toggle="modal" />
 
 <div class="modal fade " id="editshop">
     <div class="modal-dialog">
@@ -415,11 +416,17 @@
 
                             <div class="row">
                                 <div class="col-6">
-                                    <label>Time</label>
-                                    <input class="form-control" id="DeliveryTime" name="DeliveryTime" value="@ViewBag.ShopData.DeliveryTime" />
+                                    <label>Minimum Delivery Time</label>
+                                    <input class="form-control" id="DeliveryTimeMin" name="DeliveryTimeMin" value="@ViewBag.ShopData.DeliveryTime" />
                                 </div>
                                 <div class="col-6">
 
+                                    <label>Maximum Delivery Time</label>
+                                    <input class="form-control" id="DeliveryTimeMax" name="DeliveryTimeMax" value="@ViewBag.ShopData.DeliveryTime" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
                                     <label>Discription</label>
                                     <input class="form-control" id="Description" name="Description" value="@ViewBag.ShopData.Description" />
                                 </div>
@@ -452,7 +459,7 @@
 @*
     //modal to edit shop*@
 <div class="ShopView">
-    <div style=" color: #150247; font-size: 24px;" data-target="#editshop" data-toggle="modal">
+    <div style=" color: #150247; font-size: 24px;" onclick="showUpdateShopModal();">
         <i class="fas fa-edit" style="position:relative;left:-15px;"></i>
     </div>
     @if (ViewBag.ShopData.Logo == null)
@@ -887,6 +894,15 @@
                 alert("Error");
             }
         });
+    }
+
+    function showUpdateShopModal() {
+        debugger;
+        var t = "@ViewBag.ShopData.DeliveryTime";
+        var res = t.split(" - ");
+        $("#DeliveryTimeMin").val(res[0]);
+        $("#DeliveryTimeMax").val(res[1]);
+        $("#showUpdateShopModalDiv").trigger("click");
     }
 
 
