@@ -1,16 +1,29 @@
 ﻿@model IEnumerable<SabiAsp.Models.Cart>
-
-    <div class="container-fluid">
-        
-        @foreach (var item in Model)
-        {
-
-            <div class="row">
-                <div class="col-4">@item.itemDetails.name</div>
-                <div class="col-4">@item.itemDetails.Price</div>
-                <div class="col-4">@item.cartDetail.quantity</div>
-            </div>
-
-        }
+@{ 
+    Layout = null;
+}
+<div class="container-fluid">
+    <h3 style="color: #e0ab09;text-align:center">Here Is Your Basket !</h3>
+    <div class="row">
+        <div class="col-4" style="color: #e0ab09;">Product Name</div>
+        <div class="col-4" style="color: #e0ab09;">Price</div>
+        <div class="col-4"style="color: #e0ab09;">Quantity</div>
     </div>
+    @foreach (var item in Model)
+    {
+
+        <div class="row">
+            <div class="col-4">@item.itemDetails.name</div>
+            <div class="col-4">@item.itemDetails.Price</div>
+            <div class="col-4">@item.cartDetail.quantity</div>
+        </div>
+
+    }
+    <div class="row">
+        <div class="col-12">
+            <input type="button" value="Buy these items" class="btn btn-warning" />
+        </div>
+
+    </div>
+</div>
 

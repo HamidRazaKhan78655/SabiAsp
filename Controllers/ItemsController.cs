@@ -1,4 +1,5 @@
-﻿using SabiAsp.Models;
+﻿using Newtonsoft.Json;
+using SabiAsp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -337,7 +338,27 @@ namespace SabiAsp.Controllers
             }
             
             return View(cartList);
-        }  
+        }
+        public string AddtoCart(string itemId, string userID)
+        {
+            int itemID = int.Parse(itemId);
+            int userId = int.Parse(userID);
+            UserItemCard cartitem = new UserItemCard();
+            var itemSelected = Db.items.Where(x => x.ItemId == itemID).FirstOrDefault();
+            var UserSelected = Db.users.Where(x => x.UserId == userId).FirstOrDefault();
+            cartitem.ItemId = itemSelected.ItemId;
+            cartitem.UesrId = UserSelected.UserId;
+            cartitem.quantity = 1;
+            try {
+                Db.UserItemCards.Add(cartitem);
+                Db.SaveChanges();
+                return JsonConvert.SerializeObject("ok");
+            }
+            catch {
+                return JsonConvert.SerializeObject("no");
+            }
+        }
+
         public bool SaveBuyProducts(string userid,string itemid)
         {
             try
