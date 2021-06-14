@@ -928,7 +928,6 @@
                 $.ajax({
                     url: '/User/DeleteUser?userId=' + userId,
                     type: 'POST',
-                    data: f,
                     processData: false,
                     contentType: false,
                     success: function (data) {
@@ -1187,7 +1186,6 @@
                 $.ajax({
                     url: '/Categories/DeleteCategory?categoryId=' + categoryId,
                     type: 'POST',
-                    data: f,
                     processData: false,
                     contentType: false,
                     success: function (data) {
@@ -1333,12 +1331,10 @@
             }
 
             function DeleteSubCategory(subCategoryId) {
-                //location.href = '../SubCategory/DeleteSubCategory?subCategoryId=' + subCategoryId;
-
+                debugger;
                 $.ajax({
                     url: '/SubCategory/DeleteSubCategory?subCategoryId=' + subCategoryId,
                     type: 'POST',
-                    data: f,
                     processData: false,
                     contentType: false,
                     success: function (data) {
