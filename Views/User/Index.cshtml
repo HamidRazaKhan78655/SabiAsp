@@ -1659,12 +1659,10 @@
 
             function DeleteItem(itemId) {
                 debugger;
-                //location.href = '../Items/DeleteItem?itemId=' + itemId;
 
                 $.ajax({
                     url: '/Items/DeleteItem?itemId=' + itemId,
                     type: 'POST',
-                    data: f,
                     processData: false,
                     contentType: false,
                     success: function (data) {
