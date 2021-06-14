@@ -351,8 +351,10 @@ body {
     }
 
 .AddtoCartDiv {
+    display: none;
     min-height: 200px;
-    width: 230px;
+    width: 400px;
+    z-index: 10;
     background: white;
     position: absolute;
     right: 0px;
