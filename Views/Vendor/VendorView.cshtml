@@ -313,7 +313,7 @@
             </div>
             <div style="width:100%; overflow:auto" class="ModelTrack">
                 <div class="modal-body" style="width:100%">
-                    @using (Html.BeginForm("AddItem", "Items", FormMethod.Post, new { id = "addItemVendorForm" }))
+                    @using (Html.BeginForm("UpdateItem", "Items", FormMethod.Post, new { id = "updateItemVendorForm" }))
                     {
                         <input type="hidden" id="updateItemId" name="updateItemId" />
                         <input type="hidden" id="UpdateSubCategorydrp" name="UpdateSubCategorydrp" />
@@ -345,7 +345,7 @@
                                 <div class="col-6">
                                 </div>
                                 <div class="col-6">
-                                    <input class="btn btn-warning right" type="button" value="Update" onclick="SaveVendorItemInfo();" style="margin: 10px 10px 0px 10px; float: right;" />
+                                    <input class="btn btn-warning right" type="button" value="Update" onclick="UpdateItemInfo();" style="margin: 10px 10px 0px 10px; float: right;" />
                                 </div>
                             </div>
                         </div>
@@ -1104,6 +1104,51 @@
         $("#updateItemWeight").val(Weight);
         $("#itemImage").val(image);
         $("#showEditItemVendorModal").trigger("click");
+    }
+
+    function UpdateItemInfo() {
+        debugger;
+        if (document.getElementById('updateItemName').value == "") {
+            alert("Please enter Item Name.");
+            return;
+        }
+        if (document.getElementById('updateItemWeight').value == "") {
+            alert("Please enter Item Weight.");
+            return;
+        }
+        if (document.getElementById('updateItemPrice').value == "") {
+            alert("Please enter Item Price.");
+            return;
+        }
+        if (document.getElementById('UpdateSubCategorydrp').value == "") {
+            alert("Select one Sub Category.");
+            return;
+        }
+
+        f = new FormData($("#updateItemVendorForm")[0]);
+
+        $.ajax({
+            url: '/Items/UpdateItem',
+            type: 'POST',
+            data: f,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                debugger;
+                if (data == "success") {
+                    alert("Item updated successfully.");
+                    window.location.href = '/Vendor/VendorView';
+                }
+                else {
+                    alert("Record not updated.");
+                    return;
+                }
+            },
+            error: function () {
+                debugger;
+                alert("Error");
+            }
+        });
     }
 
 </script>
