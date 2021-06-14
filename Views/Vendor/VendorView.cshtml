@@ -594,7 +594,7 @@
                                         <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
                                         <div class="best_shoes" style="height: 200px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
-                                            <div><i class="fas fa-edit" style="float: right; position: absolute; margin: 13px; font-size: 20px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId); showEdititemModal(@subCate.ItemId, @subCate.SubCategorieId, '@subCate.name', '@subCate.Price', '@subCate.Weight', '@subCate.image');"></i></div>
+                                            <div><i class="fas fa-edit" style="float: right; position: absolute; margin: 13px; font-size: 20px; color: #e0ab09;" onclick="showEdititemModal(@subCate.ItemId, @subCate.SubCategorieId, '@subCate.name', '@subCate.Price', '@subCate.Weight', '@subCate.image');"></i></div>
                                             <p class="best_text" style=" margin-bottom: 5px;">@subCate.name</p>
                                             <div class="shoes_icon" style="min-height: 10px;">
                                                 @if (subCate.image == null)
