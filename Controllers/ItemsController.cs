@@ -379,7 +379,6 @@ namespace SabiAsp.Controllers
                     {
                         return false;
                     }
-                    return false;
                 }
             }
             catch (Exception e)
