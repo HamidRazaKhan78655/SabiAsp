@@ -95,7 +95,7 @@ namespace SabiAsp.Controllers
         public ActionResult GetAllItemsBySubCategory(int subCategorieId)
         {
             var item = new List<item>();
-            if (subCategorieId == 0)
+            if (subCategorieId != 0)
                 item = Db.items.Where(x => x.SubCategorieId == subCategorieId && x.isDeleted != "true").ToList();
             else
                 item = Db.items.Where(x => x.isDeleted != "true").ToList();
