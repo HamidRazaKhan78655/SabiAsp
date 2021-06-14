@@ -218,8 +218,6 @@ namespace SabiAsp.Controllers
             int itemId = int.Parse(updateItemId);
             string weight = fm["updateItemWeight"].ToString();
             string price = fm["updateItemPrice"].ToString();
-            string updateshopId = fm["UpdateShopIddrp"].ToString();
-            int shopId = int.Parse(updateshopId);
             string updateSubCategoryId = fm["UpdateSubCategorydrp"].ToString();
             int subCategoryId = int.Parse(updateSubCategoryId);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);

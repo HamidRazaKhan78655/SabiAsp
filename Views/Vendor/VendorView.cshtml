@@ -306,21 +306,38 @@
         <div class="modal-content">
             <!--Header-->
             <div class="modal-header" style="background: #f5aa1c;height: 60px;">
-                <h4 id="changeheader" class="title" style="color:white;">Add Category</h4>
+                <h4 id="changeheader" class="title" style="color:white;">Update Item</h4>
                 <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <i class="fas fa-times" style="color:white;"></i>
                 </button>
             </div>
             <div style="width:100%; overflow:auto" class="ModelTrack">
                 <div class="modal-body" style="width:100%">
-                    @using (Html.BeginForm("AddSubCategory", "SubCategory", FormMethod.Post, new { id = "addSubCategoryForm" }))
+                    @using (Html.BeginForm("AddItem", "Items", FormMethod.Post, new { id = "addItemVendorForm" }))
                     {
-                        <input type="hidden" id="VendorShopDrp" name="VendorShopDrp" value="@ViewBag.ShopData.Shopid" />
+                        <input type="hidden" id="updateItemId" name="updateItemId" />
+                        <input type="hidden" id="UpdateSubCategorydrp" name="UpdateSubCategorydrp" />
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
-                                    <label>Category Name</label>
-                                    <input class="form-control" id="SubCategoryName" name="SubCategoryName"/>
+                                    <label>Item Name</label>
+                                    <input type="text" class="form-control" id="updateItemName" name="updateItemName" required />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>Weight</label>
+                                    <input type="text" class="form-control" id="updateItemWeight" name="updateItemWeight" required />
+                                </div>
+                                <div class="col-6">
+                                    <label>Price</label>
+                                    <input type="text" class="form-control" id="updateItemPrice" name="updateItemPrice" required />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>Item Image</label>
+                                    <input type="file" class="form-control" id="itemImage" name="itemImage" required />
                                 </div>
                             </div>
 
@@ -328,7 +345,7 @@
                                 <div class="col-6">
                                 </div>
                                 <div class="col-6">
-                                    <input class="btn btn-warning right" type="button" value="Save" onclick="SaveSubCategoryInfo();" style="margin: 10px 10px 0px 10px; float: right;" />
+                                    <input class="btn btn-warning right" type="button" value="Update" onclick="SaveVendorItemInfo();" style="margin: 10px 10px 0px 10px; float: right;" />
                                 </div>
                             </div>
                         </div>
@@ -577,7 +594,7 @@
                                         <input type="hidden" value="@subCate.name" class="GetSubCategorieName" />
 
                                         <div class="best_shoes" style="height: 200px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
-                                            <div><i class="fas fa-edit" style="float: right; position: absolute; margin: 13px; font-size: 20px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId); showEdititemModal();"></i></div>
+                                            <div><i class="fas fa-edit" style="float: right; position: absolute; margin: 13px; font-size: 20px; color: #e0ab09;" onclick="AddtoBasket(@subCate.ItemId); showEdititemModal(@subCate.ItemId, @subCate.SubCategorieId, '@subCate.name', '@subCate.Price', '@subCate.Weight', '@subCate.image');"></i></div>
                                             <p class="best_text" style=" margin-bottom: 5px;">@subCate.name</p>
                                             <div class="shoes_icon" style="min-height: 10px;">
                                                 @if (subCate.image == null)
@@ -1078,8 +1095,14 @@
         });
     }
 
-    function showEdititemModal() {
+    function showEdititemModal(ItemId, SubCategorieId, name, Price, Weight, image) {
         debugger;
+        $("#updateItemId").val(ItemId);
+        $("#UpdateSubCategorydrp").val(SubCategorieId);
+        $("#updateItemName").val(name);
+        $("#updateItemPrice").val(Price);
+        $("#updateItemWeight").val(Weight);
+        $("#itemImage").val(image);
         $("#showEditItemVendorModal").trigger("click");
     }
 
