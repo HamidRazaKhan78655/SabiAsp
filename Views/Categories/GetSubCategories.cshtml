@@ -58,6 +58,23 @@
             //
         }
     }
+    function getVendorPhoneNumber(shopid) {
+        var options = {
+            type: "POST",
+            url: '/Items/getVendorNum?shopid=' + shopid,
+            async: false,
+            cache: false,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                alert(response);
+                $('#vendorNumDiv').show();
+                $('#vendorPhone').text(response);
+                debugger
+            }
+        };
+        $.ajax(options);
+    }
 </script>
 
 <!-- New Arrivals section start -->
@@ -147,8 +164,8 @@
                     <div class="right_part" style="width:35%">
                         <div class="shoes_price" style="text-align:left;font-size:15px;font-weight:400">Location : <span style="color: #ff4e5b;">@ViewBag.ShopData.location</span></div>
                         <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400">Delivery Fee : <span style="color: #ff4e5b;">$@ViewBag.ShopData.DeliveryFee</span></div>
-                        <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400">Min-Order : <span style="color: #ff4e5b;">60</span></div>
-                        <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400;white-space: nowrap;">Time :  <span style="color: #ff4e5b;">Next Day delivery</span></div>
+                        <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400">Min-Order : <span style="color: #ff4e5b;">@ViewBag.ShopData.MinOrder</span></div>
+                        <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400;white-space: nowrap;">Time :  <span style="color: #ff4e5b;">@ViewBag.ShopData.DeliveryTime mins</span></div>
                     </div>
                 </div>
             </div>
@@ -201,6 +218,32 @@
                     {
                         <div class="sideNavtab" onclick="showItemByCategory(@sub.SubCategorieId)" style="margin: 10px;font-size: 20px;color: #e0ab09; cursor:pointer"><span style=" padding-left: 10px;">@sub.name</span></div>
                     }
+                </div>
+                <div style=" text-align: center; padding: 15px;">
+                    <input type="button" class="btn btn-dark" value="Contact Shop Owner" onclick="getVendorPhoneNumber(@ViewBag.ShopData.Shopid);">
+                    <div id="vendorNumDiv" style="
+    background: white;
+    height: 60px;
+    border-radius: 7px;
+    margin-top: 10px;
+    display:none;
+">
+                        <div style="
+    height: 20px;
+    width: 20px;
+    /* margin-top: 12px; */
+    position: relative;
+    background: white;
+    top: -8px;
+    transform: rotate(45deg);
+    left: 135px;
+"></div>
+                        <p id="vendorPhone" style="
+    font-size: 27px;
+    position: relative;
+    top: -21px;
+">00000000000</p>
+                    </div>
                 </div>
             </div>
             <div class="col-9">

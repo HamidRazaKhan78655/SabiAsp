@@ -357,6 +357,20 @@ namespace SabiAsp.Controllers
                 return JsonConvert.SerializeObject("no");
             }
         }
+        
+        public string getVendorNum(int shopid)
+        {
+            var shop = Db.Shops.Where(x => x.Shopid == shopid).FirstOrDefault();
+            var vendor = Db.vendors.Where(x => x.vendorid == shop.vendorid).FirstOrDefault();
+            var user = Db.users.Where(x => x.UserId == vendor.UserId).FirstOrDefault();
+            if (user.Contact == null)
+                return "number not Availble!";
+            else
+                return user.Contact;
+
+
+
+        }
 
         public bool SaveBuyProducts(string userid,string itemid)
         {

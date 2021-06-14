@@ -52,7 +52,7 @@ namespace SabiAsp.Controllers
             //}
 
             ViewBag.ShopData = Db.Shops.Where(d => d.Shopid == shopid).FirstOrDefault();
-
+            
             var subCategory = Db.SubCategories.Where(x => x.Shopid == shopid).ToList();
             ViewBag.SubCategorylist = subCategory;
             var itemList = new List<SubCategoryItems>();
