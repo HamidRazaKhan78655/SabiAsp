@@ -283,13 +283,19 @@
 
 <!-- body -->
 <body class="main-layout">
-    <input value="@Session["UserId"]" id="CheckLogin" type="hidden"/>
+    <input value="@Session["UserId"]" id="CheckLogin" type="hidden" />
     <div class="AddtoCartDiv">
         <div id="LoadCartData">
 
         </div>
     </div>
     @*//modal Item View*@
+
+    @*customalert*@
+    <div id="H-Custom-Alert" style="display:none;">
+
+    </div>
+    @*customalert*@
 
     <input id="ItemViewTrigger" type="hidden" data-target="#ItemView" data-toggle="modal" />
 
@@ -375,7 +381,7 @@
                                     <div class="jss261">
                                         <div class="jss439 jss262">0</div>
                                     </div>
-                                    <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart" >
+                                    <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
                                         <span class="jss310">
                                             <img src="~/Content/Template/images/shop_icon.png">
                                         </span>
@@ -986,6 +992,7 @@
     <script src="~/Content/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/Content/wwwroot/js/site.js" asp-append-version="true"></script>
     <script src="~/Content/wwwroot/js/script.js" asp-append-version="true"></script>
+    <script src="~/Content/wwwroot/js/customAlert.js"></script>
     <script>
         $(document).ready(function () {
             debugger;

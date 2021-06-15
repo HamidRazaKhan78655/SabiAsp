@@ -224,7 +224,9 @@ function BuyItemView() {
             loadCart.html(data);
         });
     } else {
-        alert("Please SignIn first !");
+       // alert("Please SignIn first !");
+
+        HConfirmCustom('Please SignIn first !', 'warning', 'Ok', function(){ }, '', '', '', '');
     }
   
 }
@@ -249,7 +251,8 @@ function AddToCart(itemId) {
                 };
                 $.ajax(options);
     } else {
-        alert("Please SignIn first !");
+        //alert("Please SignIn first !");
+        HConfirmCustom('Please SignIn first !', 'warning', 'Ok', '', '', '', '', '');
     }
   
 }
