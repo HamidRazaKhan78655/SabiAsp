@@ -45,56 +45,68 @@
             debugger;
             //User/Index
             if (document.getElementById('FirstName').value == "") {
-                alert("Please enter First Name.");
+
+                HConfirmCustom('Please enter First Name.', 'warning', 'Ok', function () { }, '', '', '', '');
                 return;
             }
             if (document.getElementById('LastName').value == "") {
-                alert("Please enter Last Name.");
+
+                HConfirmCustom('Please enter Last Name.', 'warning', 'Ok', function () { }, '', '', '', '');
                 return;
             }
             if (document.getElementById('EmailAddress').value == "") {
-                alert("Please enter Email Address.");
+
+                HConfirmCustom('Please enter Email Address.', 'warning', 'Ok', function () { }, '', '', '', '');
                 return;
             }
             if (document.getElementById('Username').value == "") {
-                alert("Please enter Username.");
+
+                HConfirmCustom('Please enter Username.', 'warning', 'Ok', function () { }, '', '', '', '');
                 return;
             }
             if (document.getElementById('Password').value == "") {
-                alert("Please enter Password.");
+
+                HConfirmCustom('Please enter Password.', 'warning', 'Ok', function () { }, '', '', '', '');
                 return;
             }
             if (@ViewBag.type == 3) {
                 if (document.getElementById('Category').value == "") {
-                    alert("Select one Category.");
+
+                    HConfirmCustom('Select one Category.', 'warning', 'Ok', function () { }, '', '', '', '');
                     return;
                 }
                 if (document.getElementById('Location').value == "") {
-                    alert("Select one Location.");
+
+                    HConfirmCustom('Select one Location.', 'warning', 'Ok', function () { }, '', '', '', '');
                     return;
                 }
                 if (document.getElementById('ShopName').value == "") {
-                    alert("Please enter ShopName.");
+
+                    HConfirmCustom('Please enter ShopName.', 'warning', 'Ok', function () { }, '', '', '', '');
                     return;
                 }
                 if (document.getElementById('Description').value == "") {
-                    alert("Please enter Description.");
+
+                    HConfirmCustom('Please enter Description.', 'warning', 'Ok', function () { }, '', '', '', '');
                     return;
                 }
                 if (document.getElementById('DeliveryFee').value == "") {
-                    alert("Please enter DeliveryFee.");
+                    HConfirmCustom('Please enter DeliveryFee.', 'warning', 'Ok', function () { }, '', '', '', '');
                     return;
                 }
                 if (document.getElementById('DeliveryTimeMax').value == "") {
-                    alert("Please enter Maximum Delivery Time.");
+
+                    HConfirmCustom('Please enter Maximum Delivery Time.', 'warning', 'Ok', function () { }, '', '', '', '');
                     return;
                 }
                 if (document.getElementById('DeliveryTimeMin').value == "") {
-                    alert("Please enter Minimum Delivery Time.");
+
+                    HConfirmCustom('Please enter Minimum Delivery Time.', 'warning', 'Ok', function () { }, '', '', '', '');
                     return;
                 }
                 if (document.getElementById('MinOrder').value == "") {
-                    alert("Please enter Minimum Order.");
+
+                    HConfirmCustom('Please enter Minimum Order.', 'warning', 'Ok', function () { }, '', '', '', '');
                     return;
                 }
             }
@@ -108,18 +120,23 @@
                 contentType: false,
                 success: function (data) {
                     debugger;
-                    if (data == "success") {
-                        alert("User added successfully.");
-                        if (@ViewBag.type == 3) {
+                    if (data == "success")
+                    {
+                       
+                        HConfirmCustom('User added successfully.', 'success', 'Ok', function () {  if (@ViewBag.type == 3)
+                        {
                             window.location.href = '/Vendor/VendorView';
                         }
                         else {
                             window.location.href = '/Home/Index';
                         }
-                        
+                        }, '', '', '', '');
+
+
                     }
                     else {
-                        alert("User already exist.");
+
+                        HConfirmCustom('User already exist.', 'warning', 'Ok', function () { }, '', '', '', '');
                         return;
                     }
                 },
