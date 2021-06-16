@@ -931,12 +931,13 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("User deleted successfully.");
+                            Swal.fire('User deleted successfully.', '', 'success');
                             $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
-                            alert("User not deleted.");
+                        
+                            Swal.fire('User not deleted.', '', 'warning');
                             return;
                         }
                     },
@@ -951,27 +952,33 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('FirstName').value == "") {
-                    alert("Please enter First Name.");
+                   
+                    Swal.fire('Please enter First Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('LastName').value == "") {
-                    alert("Please enter Last Name.");
+                  
+                    Swal.fire('Please enter Last Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('EmailAddress').value == "") {
-                    alert("Please enter Email Address.");
+                    
+                    Swal.fire('Please enter Email Address.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('Username').value == "") {
-                    alert("Please enter Username.");
+                  
+                    Swal.fire('Please enter Username.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('Password').value == "") {
-                    alert("Please enter Password.");
+                    
+                    Swal.fire('Please enter Password.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('RoleType').value == "") {
-                    alert("Select one Type.");
+                    
+                    Swal.fire('Select one Type.', '', 'warning');
                     return;
                 }
 
@@ -985,12 +992,13 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("User added successfully.");
+                            
+                            Swal.fire('User added successfully.', '', 'success');
                             $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
-                            alert("User already exist.");
+                            Swal.fire('User already exist.', '', 'warning');
                             return;
                         }
                     },
@@ -1005,19 +1013,23 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('UpdateUserName').value == "") {
-                    alert("Please enter Name.");
+                    
+                    Swal.fire('Please enter Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateUserEmailAddress').value == "") {
-                    alert("Please enter Email Address.");
+              
+                    Swal.fire('Please enter Email Address.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateUserUsername').value == "") {
-                    alert("Please enter Username.");
+                    
+                    Swal.fire('Please enter Username.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateRoleType').value == "") {
-                    alert("Select one Type.");
+                   
+                    Swal.fire('Select one Type.', '', 'warning');
                     return;
                 }
 
@@ -1031,12 +1043,13 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("User updated successfully.");
+                            Swal.fire('User updated successfully.', '', 'success');
                             $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
-                            alert("Record not updated.");
+                           
+                            Swal.fire('Record not updated.', '', 'warning');
                             return;
                         }
                     },
@@ -1188,12 +1201,14 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("Category deleted successfully.");
+                         
+                            Swal.fire('Category deleted successfully.', '','success');
                             $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
-                            alert("Category not deleted.");
+                            
+                            Swal.fire('Category not deleted.', '', 'warning');
                             return;
                         }
                     },
@@ -1220,7 +1235,8 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('CategoryName').value == "") {
-                    alert("Plaese enter Category Name");
+                    
+                    Swal.fire('Plaese enter Category Name','','warning');
                     return;
                 }
 
@@ -1234,12 +1250,14 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("Category added successfully.");
+                            
+                            Swal.fire('Category added successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
-                            alert("Category already exist.");
+                            
+                            Swal.fire('Category already exist','','warning');
                             return;
                         }
                     },
@@ -1254,7 +1272,8 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('CategoryName').value == "") {
-                    alert("Plaese enter Category Name");
+                   
+                    Swal.fire('Plaese enter Category Name', '', 'warning');
                     return;
                 }
 
@@ -1268,12 +1287,14 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("Category updated successfully.");
+                           
+                            Swal.fire('Category updated successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
-                            alert("Record not updated.");
+                            
+                            Swal.fire('Record not updated.', '', 'warning');
                             return;
                         }
                     },
@@ -1337,12 +1358,13 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("Sub Category deleted successfully.");
+                            Swal.fire('Sub Category deleted successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
-                            alert("Sub Category not deleted.");
+                            
+                            Swal.fire('Sub Category not deleted.', '', 'warning');
                             return;
                         }
                     },
@@ -1370,11 +1392,13 @@
                 //User/Index
 
                 if (document.getElementById('SubCategoryName').value == "") {
-                    alert("Please enter Sub Category Name.");
+                    
+                    Swal.fire('Please enter Sub Category Name.','','warning');
                     return;
                 }
                 if (document.getElementById('VendorShopDrp').value == "") {
-                    alert("Select one Shop.");
+                    
+                    Swal.fire('Select one Shop.', '', 'warning');
                     return;
                 }
 
@@ -1390,12 +1414,14 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("Sub Category added successfully.");
+                            
+                            Swal.fire('Sub Category added successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
-                            alert("Sub Category already exist.");
+                            
+                            Swal.fire('Sub Category already exist.', '', 'warning');
                             return;
                         }
                     },
@@ -1410,11 +1436,13 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('UpdateSubCategoryName').value == "") {
-                    alert("Please enter Sub Category Name.");
+                    
+                    Swal.fire('Please enter Sub Category Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateSVendorShopDrp').value == "") {
-                    alert("Select one Shop.");
+                    
+                    Swal.fire('Select one Shop.', '', 'warning');
                     return;
                 }
 
@@ -1430,12 +1458,14 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("Sub Category updated successfully.");
+                            
+                            Swal.fire('Sub Category updated successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
-                            alert("Record not updated.");
+                            
+                            Swal.fire('Record not updated.', '', 'warning');
                             return;
                         }
                     },
@@ -1509,19 +1539,23 @@
             function SaveShopItemInfo() {
                 debugger;
                 if (document.getElementById('shopItemName').value == "") {
-                    alert("Please enter Item Name.");
+                    
+                    Swal.fire('Please enter Item Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopItemWeight').value == "") {
-                    alert("Please enter Item Weight.");
+                    
+                    Swal.fire('Please enter Item Weight.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopItemPrice').value == "") {
-                    alert("Please enter Item Price.");
+                    
+                    Swal.fire('Please enter Item Price.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopSubCategorydrp').value == "") {
-                    alert("Select one Sub Category.");
+                    
+                    Swal.fire('Select one Sub Category.', '', 'warning');
                     return;
                 }
 
@@ -1541,7 +1575,8 @@
                             GetAllItems();
                         }
                         else {
-                            alert("Item already exist.");
+                            
+                            Swal.fire('Item already exist.','','warning');
                             return;
                         }
                     },
@@ -1555,23 +1590,28 @@
             function SaveItemInfo() {
                 debugger;
                 if (document.getElementById('itemName').value == "") {
-                    alert("Please enter Item Name.");
+                    
+                    Swal.fire('Please enter Item Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('itemWeight').value == "") {
-                    alert("Please enter Item Weight.");
+                   
+                    Swal.fire('Please enter Item Weight.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('itemPrice').value == "") {
-                    alert("Please enter Item Price.");
+                    
+                    Swal.fire('Please enter Item Price.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopIddrp').value == "") {
-                    alert("Select one Shop.");
+                    
+                    Swal.fire('Select one Shop.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('SubCategorydrp').value == "") {
-                    alert("Select one Sub Category.");
+                    
+                    Swal.fire('Select one Sub Category.', '', 'warning');
                     return;
                 }
 
@@ -1586,12 +1626,14 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("Item added successfully.");
+                            
+                            Swal.fire('Item added successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
-                            alert("Item already exist.");
+                            
+                            Swal.fire('Item already exist.', '', 'warning');
                             return;
                         }
                     },
@@ -1617,23 +1659,28 @@
             function UpdateItemInfo() {
                 debugger;
                 if (document.getElementById('updateItemName').value == "") {
-                    alert("Please enter Item Name.");
+                    
+                    Swal.fire('Please enter Item Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('updateItemWeight').value == "") {
-                    alert("Please enter Item Weight.");
+                    
+                    Swal.fire('Please enter Item Weight.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('updateItemPrice').value == "") {
-                    alert("Please enter Item Price.");
+                    
+                    Swal.fire('Please enter Item Price.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateShopIddrp').value == "") {
-                    alert("Select one Shop.");
+                    
+                    Swal.fire('Select one Shop.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateSubCategorydrp').value == "") {
-                    alert("Select one Sub Category.");
+                    
+                    Swal.fire('Select one Sub Category.', '', 'warning');
                     return;
                 }
 
@@ -1648,12 +1695,14 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("Item updated successfully.");
+                            
+                            Swal.fire('Item updated successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
-                            alert("Record not updated.");
+                            Swal.fire('Record not updated.', '', 'warning');
+                            
                             return;
                         }
                     },
@@ -1675,12 +1724,14 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            alert("Item deleted successfully.");
+                            
+                            Swal.fire('Item deleted successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
-                            alert("Item not deleted.");
+                            
+                            Swal.fire('Item not deleted.', '', 'warning');
                             return;
                         }
                     },

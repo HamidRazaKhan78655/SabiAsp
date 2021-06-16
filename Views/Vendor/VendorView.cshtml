@@ -12,7 +12,8 @@
         var u = @ViewBag.logedinUserId;
         if (u==0)
         {
-            alert('Please sign in first');
+            
+            Swal.fire('Please sign in first', '', 'warning');
         }
         else {
 
@@ -31,7 +32,9 @@
                         $('#totalitemlist').val(listofitem);
                     } else
                     {
-                        alert("Item already exist");
+                        
+                        Swal.fire('Item already exist', '', 'warning');
+
                     }
                 }
             });
@@ -79,7 +82,8 @@
         //User/Index
         var subCategoryName = $('#subCatInputId_' + subCategoryId).val();
         if (subCategoryName == "") {
-            alert("Please enter Category Name.");
+            
+            Swal.fire('Please enter Category Name.','','warning');
             return;
         }
         $("#UpdateSubCategoryName").val(subCategoryName);
@@ -97,11 +101,13 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    alert("Sub Category updated successfully.");
+                    
+                    Swal.fire('Sub Category updated successfully.', '', 'success');
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    alert("Record not updated.");
+                   
+                    Swal.fire('Record not updated.', '', 'warning');
                     return;
                 }
             },
@@ -796,19 +802,23 @@
     function addVendorItemData() {
         debugger;
         if (document.getElementById('shopItemName').value == "") {
-            alert("Please enter Item Name.");
+            Swal.fire('Please enter Item Name.', '', 'warning');
+            
             return;
         }
         if (document.getElementById('shopItemWeight').value == "") {
-            alert("Please enter Item Weight.");
+            Swal.fire('Please enter Item Weight.', '', 'warning');
+            
             return;
         }
         if (document.getElementById('shopItemPrice').value == "") {
-            alert("Please enter Item Price.");
+            Swal.fire('Please enter Item Price.', '', 'warning');
+            
             return;
         }
         if (document.getElementById('shopSubCategorydrp').value == "") {
-            alert("Select one Sub Category.");
+            Swal.fire('ISelect one Sub Category.', '', 'warning');
+            
             return;
         }
 
@@ -827,7 +837,8 @@
                     window.location.reload();
                 }
                 else {
-                    alert("Item already exist.");
+                    
+                    Swal.fire('Item already exist.','','warning');
                     return;
                 }
             },
@@ -853,19 +864,23 @@
     function updateVendorItemData() {
         debugger;
         if (document.getElementById('updateItemName').value == "") {
-            alert("Please enter Item Name.");
+            
+            Swal.fire('Please enter Item Name.', '', 'warning');
             return;
         }
         if (document.getElementById('updateItemWeight').value == "") {
-            alert("Please enter Item Weight.");
+            
+            Swal.fire('Please enter Item Weight.', '', 'warning');
             return;
         }
         if (document.getElementById('updateItemPrice').value == "") {
-            alert("Please enter Item Price.");
+            
+            Swal.fire('Please enter Item Price.', '', 'warning');
             return;
         }
         if (document.getElementById('UpdateSubCategorydrp').value == "") {
-            alert("Select one Sub Category.");
+            
+            Swal.fire('Select one Sub Category.', '', 'warning');
             return;
         }
 
@@ -880,12 +895,14 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    alert("Item updated successfully.");
+                    
+                    Swal.fire('Item updated successfully.', '', 'success');
                     $(".close").trigger("click");
                     window.location.reload();
                 }
                 else {
-                    alert("Record not updated.");
+                    
+                    Swal.fire('Record not updated.', '', 'warning');
                     return;
                 }
             },
@@ -910,35 +927,42 @@
         debugger;
         //Vendor/VendorView
         if (document.getElementById('ShopName').value == "") {
-            alert("Please enter ShopName.");
+            
+            Swal.fire('Please enter Shop Name.', '', 'warning');
             return;
         }
         if (document.getElementById('Category').value == "") {
-            alert("Select one Category.");
+            Swal.fire('Select one Category.', '', 'warning');
             return;
         }
         if (document.getElementById('Location').value == "") {
-            alert("Select one Location.");
+            
+            
+            Swal.fire('Select one Location.', '', 'warning');
             return;
         }
         if (document.getElementById('Description').value == "") {
-            alert("Please enter Description.");
+            
+            Swal.fire('Please enter Description.', '', 'warning');
             return;
         }
         if (document.getElementById('DeliveryFee').value == "") {
-            alert("Please enter DeliveryFee.");
+            
+            Swal.fire('Please enter Delivery Fee', '', 'warning');
             return;
         }
         if (document.getElementById('DeliveryTimeMax').value == "") {
-            alert("Please enter Maximum Delivery Time.");
+            Swal.fire('Please enter Maximum Delivery Time.', '', 'warning');
             return;
         }
         if (document.getElementById('DeliveryTimeMin').value == "") {
-            alert("Please enter Minimum Delivery Time.");
+            
+            Swal.fire('Please enter Minimum Delivery Time.', '', 'warning');
             return;
         }
         if (document.getElementById('MinOrder').value == "") {
-            alert("Please enter Minimum Order.");
+            
+            Swal.fire('Please enter Minimum Order.', '', 'warning');
             return;
         }
 
@@ -953,11 +977,13 @@
                 success: function (data) {
                     debugger;
                     if (data == "success") {
-                        alert("Shop updated successfully.");
+                        
+                        Swal.fire('Shop updated successfully.', '', 'success');
                         window.location.href = '/Vendor/VendorView';
                     }
                     else {
-                        alert("Record not updated.");
+                        
+                        Swal.fire('Record not updated.', '', 'warning');
                         return;
                     }
                 },
@@ -973,7 +999,8 @@
         //User/Index
 
         if (document.getElementById('SubCategoryName').value == "") {
-            alert("Please enter Sub Category Name.");
+            
+            Swal.fire('Please enter Sub Category Name', '', 'warning');
             return;
         }
 
@@ -989,11 +1016,13 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    alert("Sub Category added successfully.");
+                    
+                    Swal.fire('Sub Category added successfully.', '', 'success');
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    alert("Sub Category already exist.");
+                    
+                    Swal.fire('Sub Category already exist.', '', 'warning');
                     return;
                 }
             },
@@ -1007,7 +1036,8 @@
     function UpdateSubCategoryInfo() {
         debugger;
         if (document.getElementById('UpdateSubCategoryName').value == "") {
-            alert("Please enter Category Name.");
+            
+            Swal.fire('Please enter Category Name.', '', 'warning');
             return;
         }
 
@@ -1023,11 +1053,13 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    alert("Sub Category updated successfully.");
+                    
+                    Swal.fire('Sub Category updated successfully.', '', 'success');
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    alert("Record not updated.");
+                    
+                    Swal.fire('Record not updated.', '', 'warning');
                     return;
                 }
             },
@@ -1049,11 +1081,13 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    alert("Sub Category deleted successfully.");
+                    
+                    Swal.fire('Sub Category deleted successfully.', '', 'success');
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    alert("Sub Category not deleted.");
+                    
+                    Swal.fire('Sub Category not deleted.', '', 'warning');
                     return;
                 }
             },
@@ -1073,15 +1107,18 @@
     function SaveVendorItemInfo() {
         debugger;
         if (document.getElementById('itemName').value == "") {
-            alert("Please enter Item Name.");
+            
+            Swal.fire('Please enter Item Name.', '', 'warning');
             return;
         }
         if (document.getElementById('itemWeight').value == "") {
-            alert("Please enter Item Weight.");
+            
+            Swal.fire('Please enter Item Weight.', '', 'warning');
             return;
         }
         if (document.getElementById('itemPrice').value == "") {
-            alert("Please enter Item Price.");
+            
+            Swal.fire('Please enter Item Price.', '', 'warning');
             return;
         }
 
@@ -1096,11 +1133,13 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    alert("Item added successfully.");
+                    
+                    Swal.fire('Item added successfully..', '', 'success');
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    alert("Item already exist.");
+                    
+                    Swal.fire('Item already exist.', '', 'warning');
                     return;
                 }
             },
@@ -1125,19 +1164,23 @@
     function UpdateItemInfo() {
         debugger;
         if (document.getElementById('updateItemName').value == "") {
-            alert("Please enter Item Name.");
+            
+            Swal.fire('Please enter Item Name.', '', 'warning');
             return;
         }
         if (document.getElementById('updateItemWeight').value == "") {
-            alert("Please enter Item Weight.");
+            
+            Swal.fire('Please enter Item Weight.', '', 'warning');
             return;
         }
         if (document.getElementById('updateItemPrice').value == "") {
-            alert("Please enter Item Price.");
+            
+            Swal.fire('Please enter Item Price.', '', 'warning');
             return;
         }
         if (document.getElementById('UpdateSubCategorydrp').value == "") {
-            alert("Select one Sub Category.");
+            
+            Swal.fire('Select one Sub Category.', '', 'warning');
             return;
         }
 
@@ -1152,11 +1195,13 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    alert("Item updated successfully.");
+                    
+                    Swal.fire('Item updated successfully.', '', 'success');
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    alert("Record not updated.");
+                    
+                    Swal.fire('Record not updated.', '', 'warning');
                     return;
                 }
             },

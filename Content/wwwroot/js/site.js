@@ -224,12 +224,7 @@ function BuyItemView() {
             loadCart.html(data);
         });
     } else {
-     
- //       HConfirmCustom('Please SignIn first !', 'warning', 'Ok', function () { }, '', '', '', '');
-        Swal.fire(
-            'Please SignIn first !','',
-            'warning'
-        )
+        Swal.fire('Please SignIn first !','','warning')
     }
   
 }
@@ -245,23 +240,17 @@ function AddToCart(itemId) {
                     contentType: "application/json; charset=utf-8",
            success: function (response) {
                if (response == "ok") {
-                   
-                   HConfirmCustom('Item Added To cart !', 'success', 'Ok', '', '', '', '', '');
+                   Swal.fire('Item Added To cart !', '', 'success');
                } else {
-                   
-                   HConfirmCustom('Can t add to cart this item', 'warning', 'Ok', '', '', '', '', '');
+
+                   Swal.fire('Can t add to cart this item', '', 'warning');
                }
                debugger
                     }
                 };
                 $.ajax(options);
     } else {
-        Swal.fire(
-            'Please SignIn first !',
-            '',
-            'warning'
-        )
-  //      HConfirmCustom('Please SignIn first !', 'warning', 'Ok', '', '', '', '', '');
+        Swal.fire('Please SignIn first !','','warning')
     }
   
 }
@@ -280,31 +269,32 @@ function UpdateUserProfileInfo() {
     debugger;
     if (document.getElementById('ProfileUserName').value == "")
     {
-       
-        HConfirmCustom('Please enter Name.', 'warning', 'Ok', function () { }, '', '', '', '');
+      
+        Swal.fire('Please enter Name.', '','warning');
         return;
     }
     if (document.getElementById('ProfileUserEmailAddress').value == "")
     {
-        HConfirmCustom('Please enter Email Address.', 'warning', 'Ok', function () { }, '', '', '', '');
+        Swal.fire('Please enter Email Address.', '', 'warning');
+       
         return;
     }
     if (document.getElementById('ProfileUserContact').value == "")
     {
+        Swal.fire('Please enter Contact.', '', 'warning');
        
-        HConfirmCustom('Please enter Contact.', 'warning', 'Ok', function () { }, '', '', '', '');
         return;
     }
     if (document.getElementById('ProfileUserUsername').value == "")
     {
+        Swal.fire('Please enter Username.', '', 'warning');
        
-        HConfirmCustom('Please enter Username.', 'warning', 'Ok', function () { }, '', '', '', '');
         return;
     }
     if (document.getElementById('ProfileUserAddress').value == "")
     {
-
-        HConfirmCustom('Please enter Address.', 'warning', 'Ok', function () { }, '', '', '', '');
+        Swal.fire('Please enter Address.', '', 'warning');
+      
         return;
     }
 
@@ -321,13 +311,12 @@ function UpdateUserProfileInfo() {
             debugger;
             if (data == "success")
             {
-                HConfirmCustom('User profile updated successfully.', 'success', 'Ok', function () { }, '', '', '', '');
+                Swal.fire('User profile updated successfully.', '','success');
                 $(".close").trigger("click");
                 window.location.reload();
             }
             else {
-              
-                HConfirmCustom('Profile not updated.', 'warning', 'Ok', function () { }, '', '', '', '');
+                Swal.fire('Profile not updated.', '', 'warning');
                 return;
             }
         },
