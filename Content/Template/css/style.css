@@ -499,7 +499,7 @@ body{
 }
 
 
-.shoes_img{ width: 100%; float: left; padding-top: 30px; }
+.shoes_img{ width: 100%; float: left; }
 
 .shoes-img2{
 	width: 100%;
@@ -536,7 +536,7 @@ body{
 .collection_text {
     width: 100%;
     float: left;
-    color: #ffffff;
+    color: #e0ab09;
     text-align: center;
     font-weight: bold;
     font-size: 40px;
