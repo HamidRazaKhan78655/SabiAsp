@@ -2,28 +2,47 @@
 @{ 
     Layout = null;
 }
-<div class="container-fluid">
-    <h3 style="color: #e0ab09;text-align:center">Here Is Your Basket !</h3>
-    <div class="row">
-        <div class="col-4" style="color: #e0ab09;">Product Name</div>
-        <div class="col-4" style="color: #e0ab09;">Price</div>
-        <div class="col-4"style="color: #e0ab09;">Quantity</div>
-    </div>
-    @foreach (var item in Model)
-    {
+<div class="container-fluid" style="padding:0px;">
+    <div class="card" style="height:100vh">
+        <div class="card-header">
 
-        <div class="row">
-            <div class="col-4">@item.itemDetails.name</div>
-            <div class="col-4">@item.itemDetails.Price</div>
-            <div class="col-4">@item.cartDetail.quantity</div>
+            <h3 style="color: #e0ab09;text-align:center">Here Is Your Basket !</h3>
         </div>
+        <div class="card-body">
+            @foreach (var item in Model)
+            {
 
-    }
-    <div class="row">
-        <div class="col-12">
-            <input type="button" value="Buy these items" class="btn btn-warning" />
+                <div class="row" style="  margin: 0px 0px 10px 0px;
+">
+                    <div class="col"2>
+                        <img style="max-width: 25px; height: 25px; border-radius: 50%;" src="~/CompanyImages/@item.itemDetails.image" />
+                    </div>
+                    <div class="col-6" style="color:black;font-weight:500">
+                        @item.itemDetails.name
+                                        <span style="display: block; font-size: 12px; color: #666666; line-height: 2px;">@item.itemDetails.Price $</span>
+                                    </div>
+                    <div class="col-4">
+                        <div style=" box-shadow: 0 -1px 7px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%); float: right; border-radius: 5px; padding: 1px 8px 1px 8px;">
+                            <i class="far fa-trash-alt" style="margin:5px"></i>
+                            @item.cartDetail.quantity
+                            <i class="fas fa-plus" style="margin:5px"></i>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+
+            }
         </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-12">
+                    <input type="button" value="Go Pay" class="btn btn-warning"  style=" float: right; color: white;"/>
+                </div>
 
+            </div>
+        </div>
     </div>
+   
+   
 </div>
 

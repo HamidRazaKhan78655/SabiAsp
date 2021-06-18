@@ -165,6 +165,7 @@
     </Compile>
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Category.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>

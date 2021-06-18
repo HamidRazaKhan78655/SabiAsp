@@ -351,15 +351,15 @@ body {
     }
 
 .AddtoCartDiv {
-    display: none;
-    min-height: 200px;
     width: 400px;
     z-index: 10;
     background: white;
     position: absolute;
     right: 0px;
     box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);
-    top: 10px;
+    top: 0px;
+    height: auto;
+    overflow: auto;
 }
 .addtocartbtn {
     font-size: 25px;
