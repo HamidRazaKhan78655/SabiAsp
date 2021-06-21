@@ -502,16 +502,19 @@
                 <div class="star_text" style="margin-left: 40px;">
                     <div class="left_part" style="padding:0px;width:50%">
                         <h4 style="text-align:left; padding:10px; font-size:30px;">@ViewBag.ShopData.shopname</h4>
+                        <h4 style="text-align:left; padding:10px; font-size:30px;">@ViewBag.ShopData.Ratings</h4>
                         <p class="best_text" style="text-align:left;padding-left: 10px; font-weight:500; margin:0px; font-size:14px">@ViewBag.ShopData.Description</p>
                         <ul>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            @for (int i = 1; i <= ViewBag.Ratings; i++)
+                            {
+                                <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            }
+                            @for (int i = 1; i <= ViewBag.WithoutRatings; i++)
+                            {
+                                <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            }
                         </ul>
                     </div>
-                    <div class="right_part" style="width:35%">
                         <div class="shoes_price" style="text-align:left;font-size:15px;font-weight:400">Location : <span style="color: #ff4e5b;">@ViewBag.ShopData.location</span></div>
                         <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400">Delivery Fee : <span style="color: #ff4e5b;">$@ViewBag.ShopData.DeliveryFee</span></div>
                         <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400">Min-Order : <span style="color: #ff4e5b;">60</span></div>

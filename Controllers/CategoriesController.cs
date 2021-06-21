@@ -46,13 +46,9 @@ namespace SabiAsp.Controllers
         public ActionResult GetSubCategories(string location, string shopname, int shopid)
         {
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
-            //if (logedinUserId == 0)
-            //{
-            //    return RedirectToAction("SabiLogin", "Login");//HRE, BRQ
-            //}
-
-            ViewBag.ShopData = Db.Shops.Where(d => d.Shopid == shopid).FirstOrDefault();
-            
+            int logedinRoleID = Convert.ToInt32(Session["RoleID"]);
+            var shop = Db.Shops.Where(d => d.Shopid == shopid).FirstOrDefault();
+            ViewBag.ShopData = shop;
             var subCategory = Db.SubCategories.Where(x => x.Shopid == shopid).ToList();
             ViewBag.SubCategorylist = subCategory;
             var itemList = new List<SubCategoryItems>();
@@ -68,7 +64,10 @@ namespace SabiAsp.Controllers
 
             ViewBag.Category = shopname;
             ViewBag.SubCategoryId = shopid;
+            ViewBag.Ratings = Convert.ToInt32(shop.Ratings);
+            ViewBag.WithoutRatings = 5 - ViewBag.Ratings;
             ViewBag.logedinUserId = logedinUserId;
+            ViewBag.logedinRoleID = logedinRoleID;
             //ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.Shopid == shopid).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
             //list = ViewBag.SubCategorylist;
             //ViewBag.SCats = items;

@@ -239,6 +239,8 @@ namespace SabiAsp.Controllers
 
             ViewBag.Category = shop.shopname;
             ViewBag.SubCategoryId = shop.Shopid;
+            ViewBag.Ratings = Convert.ToInt32(shop.Ratings);
+            ViewBag.WithoutRatings = 5 - ViewBag.Ratings;
             ViewBag.logedinUserId = logedinUserId;
             //ViewBag.SubCategorylist = Db.SubCategories.Where(d => d.Shopid == shopid).Select(d => new SelectListItem{ Text = d.name, Value = d.SubCategorieId.ToString() }).ToList();
             //list = ViewBag.SubCategorylist;

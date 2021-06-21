@@ -155,12 +155,22 @@
                         <h4 style="text-align:left; padding:10px; font-size:30px;">@ViewBag.ShopData.shopname</h4>
                         <p class="best_text" style="text-align:left;padding-left: 10px; font-weight:500; margin:0px; font-size:14px">@ViewBag.ShopData.Description</p>
                         <ul>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
-                            <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            @for (int i = 1; i <= ViewBag.Ratings; i++)
+                            {
+                                <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            }
+                            @for (int i = 1; i <= ViewBag.WithoutRatings; i++)
+                            {
+                                <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                            }
                         </ul>
+                        @if (ViewBag.logedinRoleID != 0)
+                        {
+                            if (ViewBag.ShopData.Ratings == null || ViewBag.ShopData.Ratings == "")
+                            {
+                                <input type="button" id="shopRating" value="Rate Us" class="btn btn-primary" />
+                            }
+                        }
                     </div>
                     <div class="right_part" style="width:35%">
                         <div class="shoes_price" style="text-align:left;font-size:15px;font-weight:400">Location : <span style="color: #ff4e5b;">@ViewBag.ShopData.location</span></div>
