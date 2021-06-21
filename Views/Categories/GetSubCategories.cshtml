@@ -161,14 +161,14 @@
                             }
                             @for (int i = 1; i <= ViewBag.WithoutRatings; i++)
                             {
-                                <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/star-icon.png"></a></li>
+                                <li style="height: 30px;"><a style="font-size: 15px;vertical-align: top;" href="#"><img src="~/Content/Template/images/gray-star-icon.png"></a></li>
                             }
                         </ul>
-                        @if (ViewBag.logedinRoleID != 0)
+                        @if (ViewBag.logedinRoleID == 2)
                         {
                             if (ViewBag.ShopData.Ratings == null || ViewBag.ShopData.Ratings == "")
                             {
-                                <input type="button" id="shopRating" value="Rate Us" class="btn btn-primary" />
+                                <input type="button" onclick="showRatingsModal();" value="Rate Us" class="btn btn-primary" style="background: #ffa800; border: none; margin-top: -38px;" />
                             }
                         }
                     </div>
@@ -221,7 +221,7 @@
 
         </div>
         <div class="row" id="NormalView">
-           
+
             <div class="col-3 ">
                 <div style="background:white; padding:5px;">
                     <div class="sideNavtab" style="margin: 10px;font-size: 20px;color: #e0ab09; cursor:pointer; border-left: 4px solid; "><span style=" padding-left: 10px;" onclick="showItemByCategory(0)">All</span></div>
@@ -314,8 +314,8 @@
 
                 </div>
             </div>
-        
-           
+
+
         </div>
 
 
@@ -325,6 +325,54 @@
     </div>
 </div>
 <!-- New Arrivals section end -->
+
+<input type="hidden" id="openRatingsModal" data-target="#ratingsBootstrapModal" data-toggle="modal" />
+
+<div id="ratings">
+    @{
+        using (Html.BeginForm("SaveUserRatings", "Vendor", FormMethod.Post, new { id = "saveRatingsForm" }))
+        {
+            @*item strat*@
+            <div class="modal fade " id="ratingsBootstrapModal">
+                <div class="modal-dialog w-item-modal-dialog">
+                    <div class="modal-content">
+                        <!--Header-->
+                        <div class="modal-header light-blue darken-3 white-text" style="background: #ffd700;">
+                            <h4 class="title" style="color:white;">Rating Us</h4>
+
+                            <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <i class="fas fa-times" style="color:white;"></i>
+                            </button>
+                        </div>
+                        <div style="width:100%; overflow:auto" class="ModelTrack">
+                            <div class="modal-body" style="width:100%">
+                                <div id="ItemDiv">
+                                    <input type="hidden" id="UserRatings" name="UserRatings" value="0" />
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="rating">
+                                                <a class="star star5" href="#" onclick="star(5)"><span>★</span></a>
+                                                <a class="star star4" href="#" onclick="star(4)"><span>★</span></a>
+                                                <a class="star star3" href="#" onclick="star(3)"><span>★</span></a>
+                                                <a class="star star2" href="#" onclick="star(2)"><span>★</span></a>
+                                                <a class="star star1" href="#" onclick="star(1)"><span>★</span></a>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <input type="button" class="btn btn-info" value="Ratings" onclick="SaveUserRatings();" style="float:right;margin:10px 0;background:#ffd700;border:none;" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*item end*@
+        }
+    }
+</div>
+
 @* add/update item start*@
 <input type="hidden" id="openVendorItemModal" data-target="#updateVendorItemBootstrapModal" data-toggle="modal" />
 
@@ -475,12 +523,12 @@
     function addVendorItemData() {
         debugger;
         if (document.getElementById('shopItemName').value == "") {
-           
+
             Swal.fire('Please enter Item Name.', '', 'warning');
             return;
         }
         if (document.getElementById('shopItemWeight').value == "") {
-           
+
             Swal.fire('Please enter Item Weight.', '', 'warning');
             return;
         }
@@ -489,7 +537,7 @@
             return;
         }
         if (document.getElementById('shopSubCategorydrp').value == "") {
-           
+
             Swal.fire('Select one Sub Category.', '', 'warning');
             return;
         }
@@ -535,12 +583,12 @@
     function updateVendorItemData() {
         debugger;
         if (document.getElementById('updateItemName').value == "") {
-            
+
             Swal.fire('Please enter Item Name.', '', 'warning');
             return;
         }
         if (document.getElementById('updateItemWeight').value == "") {
-            
+
             Swal.fire('Please enter Item Weight.', '', 'warning');
             return;
         }
@@ -549,7 +597,7 @@
             return;
         }
         if (document.getElementById('UpdateSubCategorydrp').value == "") {
-            
+
             Swal.fire('Select one Sub Category.', '', 'warning');
             return;
         }
@@ -565,7 +613,7 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    
+
                     Swal.fire('Item updated successfully.', '', 'success');
                     $(".close").trigger("click");
                     window.location.reload();
@@ -582,3 +630,63 @@
         });
     }
 </script>
+
+<script>
+    function showRatingsModal() {
+        debugger;
+        $(".star").css("color", "gray");
+        $("#openRatingsModal").trigger("click");
+    }
+
+    function star(count) {
+        debugger;
+        $("#UserRatings").val(count);
+        for (var i = 1; i <= count; i++) {
+            $(".star" + i).css("color", "gold");
+        }
+
+    }
+
+    function SaveUserRatings() {
+        debugger;
+        var ratings = $("#UserRatings").val();
+        $.ajax({
+            type: "POST",
+            url: '/Vendor/SaveUserRatings?shopId=' + @ViewBag.ShopId + "&&ratings=" + ratings,
+            success: function (response) {
+                debugger;
+                $(".close").trigger("click");
+                window.location.reload();
+            }
+        });
+    }
+</script>
+
+<style>
+    .rating {
+        unicode-bidi: bidi-override;
+        direction: rtl;
+        text-align: center;
+    }
+
+        .rating > .star {
+            display: inline-block;
+            position: relative;
+            width: 29px;
+            color: gray;
+            font-size: 30px;
+        }
+
+            .rating > .star:hover,
+            .rating > .star:hover ~ .star {
+                color: transparent;
+            }
+
+                .rating > .star:hover:before,
+                .rating > .star:hover ~ .star:before {
+                    content: "\2605";
+                    position: absolute;
+                    left: 0;
+                    color: gold;
+                }
+</style>

@@ -64,6 +64,7 @@ namespace SabiAsp.Controllers
 
             ViewBag.Category = shopname;
             ViewBag.SubCategoryId = shopid;
+            ViewBag.ShopId = shopid;
             ViewBag.Ratings = Convert.ToInt32(shop.Ratings);
             ViewBag.WithoutRatings = 5 - ViewBag.Ratings;
             ViewBag.logedinUserId = logedinUserId;

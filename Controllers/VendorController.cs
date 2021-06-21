@@ -250,6 +250,17 @@ namespace SabiAsp.Controllers
             //}
         }
 
+        public string SaveUserRatings(int shopId, int ratings)
+        {
+            var shop = Db.Shops.Where(s=> s.Shopid == shopId).FirstOrDefault();
+            if (shop != null)
+            {
+                shop.Ratings = ratings.ToString();
+                Db.Entry(shop).State = EntityState.Modified;
+                Db.SaveChanges();
+            }
+            return "success";
+        }
 
 
         #region CRUD for Vendor
