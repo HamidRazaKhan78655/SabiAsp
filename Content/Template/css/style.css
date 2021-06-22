@@ -574,7 +574,8 @@ body{
 .gallery_section {
     width: 100%;
     float: left;
-    background-color: #E0AB09;
+    //background-color: #E0AB09;
+    background-color: #140247;
     height: auto;
 }
 

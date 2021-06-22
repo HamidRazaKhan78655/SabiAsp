@@ -502,7 +502,6 @@
                 <div class="star_text" style="margin-left: 40px;">
                     <div class="left_part" style="padding:0px;width:50%">
                         <h4 style="text-align:left; padding:10px; font-size:30px;">@ViewBag.ShopData.shopname</h4>
-                        <h4 style="text-align:left; padding:10px; font-size:30px;">@ViewBag.ShopData.Ratings</h4>
                         <p class="best_text" style="text-align:left;padding-left: 10px; font-weight:500; margin:0px; font-size:14px">@ViewBag.ShopData.Description</p>
                         <ul>
                             @for (int i = 1; i <= ViewBag.Ratings; i++)
@@ -515,19 +514,22 @@
                             }
                         </ul>
                     </div>
+                    <div class="right_part" style="width:35%">
                         <div class="shoes_price" style="text-align:left;font-size:15px;font-weight:400">Location : <span style="color: #ff4e5b;">@ViewBag.ShopData.location</span></div>
                         <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400">Delivery Fee : <span style="color: #ff4e5b;">$@ViewBag.ShopData.DeliveryFee</span></div>
                         <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400">Min-Order : <span style="color: #ff4e5b;">60</span></div>
                         <div class="shoes_price" style="text-align: left;font-size: 15px;font-weight: 400;white-space: nowrap;">Time :  <span style="color: #ff4e5b;">Next Day delivery</span></div>
+
                     </div>
                 </div>
             </div>
-            <div></div>
         </div>
+        <div></div>
     </div>
+    <input type="text" class="form-control" id="searchItemsInshop" style="position: absolute; margin-top:200px;margin-left: 15px; width: 300px;" placeholder="Search Items In Shop!" />
 </div>
 <div class="layout_padding gallery_section">
-    <input type="text" class="form-control" id="searchItemsInshop" style="position: absolute; margin: -70px; margin-left: 15px; width: 300px;" placeholder="Search Items In Shop!" />
+   
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
@@ -566,13 +568,13 @@
 
             <div class="col-3 ">
                 <div style="background:white; padding:5px;">
-                    <div class="sideNavtab" style="margin: 10px;font-size: 20px;color: #e0ab09; cursor:pointer; border-left: 4px solid; ">
+                    <div class="sideNavtab" style="margin: 10px;font-size: 20px;color: #140247; cursor:pointer; border-left: 4px solid; ">
                         <span style=" padding-left: 10px;" onclick="showItemByCategory(0)">All</span>
                         <i class="fas fa-plus-circle" id="" style="float:right" data-target="#AddSubCat" data-toggle="modal"></i>
                     </div>
                     @foreach (var sub in Model)
                     {
-                        <div class="sideNavtab" style="margin: 10px;font-size: 20px;color: #e0ab09; cursor:pointer">
+                        <div class="sideNavtab" style="margin: 10px;font-size: 20px;color: #140247; cursor:pointer">
                             <span class="subCatName" id="subCatId_@sub.SubCategorieId" style=" padding-left: 10px;" onclick="showItemByCategory(@sub.SubCategorieId)">
                                 @sub.name
                             </span>
