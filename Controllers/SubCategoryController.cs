@@ -42,6 +42,16 @@ namespace SabiAsp.Controllers
             var subCategory = Db.SubCategories.Where(x => x.Shopid == shopid && x.isDeleted != "true").ToList();
             return PartialView("GetAllSubCategoriesListByShopId", subCategory);
         }
+        public ActionResult GetUpdateSubCategoriesByShopId(int shopid)
+        {
+            var subCategory = Db.SubCategories.Where(x => x.Shopid == shopid && x.isDeleted != "true").ToList();
+            return PartialView("GetUpdateSubCategoriesByShopId", subCategory);
+        }
+        public ActionResult GetShopSubCategoriesByShopId(int shopid)
+        {
+            var subCategory = Db.SubCategories.Where(x => x.Shopid == shopid && x.isDeleted != "true").ToList();
+            return PartialView("GetShopSubCategoriesByShopId", subCategory);
+        }
         public ActionResult GetAllSubCategories()
         {
             var subCategory = Db.SubCategories.Where(x => x.isDeleted != "true").ToList();

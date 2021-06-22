@@ -759,20 +759,20 @@
                                                     <input type="text" class="form-control" id="updateItemPrice" name="updateItemPrice" required />
                                                 </div>
                                                 <div class="col-md-6">
+                                                    <label>Shop :</label>
+                                                    <select class="form-control" id="UpdateShopIddrp" name="UpdateShopIddrp" onchange="GetAllUpdateSubCategoriesList()" required>
+                                                        @foreach (var item in ViewBag.Shops)
+                                                        {
+                                                            <option value="@item.Shopid">@item.shopname</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12" id="adminUpdateSubcategoryDrop">
                                                     <label>Sub Category :</label>
                                                     <select class="form-control" id="UpdateSubCategorydrp" name="UpdateSubCategorydrp" required>
                                                         @foreach (var item in ViewBag.SubCategories)
                                                         {
                                                             <option value="@item.SubCategorieId">@item.name</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <label>Shop :</label>
-                                                    <select class="form-control" id="UpdateShopIddrp" name="UpdateShopIddrp" required>
-                                                        @foreach (var item in ViewBag.Shops)
-                                                        {
-                                                            <option value="@item.Shopid">@item.shopname</option>
                                                         }
                                                     </select>
                                                 </div>
@@ -830,7 +830,20 @@
                                                     <label>Item Price :</label>
                                                     <input type="text" class="form-control" id="shopItemPrice" name="shopItemPrice" required />
                                                 </div>
-                                                <div class="col-md-6" id="shopSubCategorydrpDiv">
+                                                <div class="col-md-6">
+                                                    <label>Shop :</label>
+                                                    <input type="text" class="form-control" id="itemShopName" name="itemShopName" readonly />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label>Shop :</label>
+                                                    <select class="form-control" id="itemShopName" name="itemShopName" onchange="GetShopSubCategories()" required>
+                                                        @foreach (var item in ViewBag.Shops)
+                                                        {
+                                                            <option value="@item.Shopid">@item.shopname</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12" id="shopSubCategorydrpDiv">
                                                     <label>Sub Category :</label>
                                                     <select class="form-control" id="shopSubCategorydrp" name="shopSubCategorydrp" required>
                                                         @foreach (var item in ViewBag.SubCategories)
@@ -838,11 +851,6 @@
                                                             <option value="@item.SubCategorieId">@item.name</option>
                                                         }
                                                     </select>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <label>Shop :</label>
-                                                    <input type="text" class="form-control" id="itemShopName" name="itemShopName" readonly />
-
                                                 </div>
                                                 <div class="col-md-12">
                                                     <label>Image :</label>
@@ -1489,6 +1497,34 @@
                     }
                 });
             }
+
+            function GetAllUpdateSubCategoriesList() {
+                debugger;
+                //shopSubCategorydrpDiv
+                var shopid = $("#UpdateShopIddrp").val();
+                $.ajax({
+                    type: "GET",
+                    url: '/SubCategory/GetUpdateSubCategoriesByShopId?shopid=' + shopid,
+                    success: function (response) {
+                        debugger;
+                        $("#adminUpdateSubcategoryDrop").html(response);
+                    }
+                });
+            }
+
+            function GetShopSubCategories() {
+                debugger;
+                //shopSubCategorydrpDiv
+                var shopid = $("#itemShopName").val();
+                $.ajax({
+                    type: "GET",
+                    url: '/SubCategory/GetShopSubCategoriesByShopId?shopid=' + shopid,
+                    success: function (response) {
+                        debugger;
+                        $("#shopSubCategorydrpDiv").html(response);
+                    }
+                });
+            }
         </script>
 
         <script>
@@ -1539,22 +1575,18 @@
             function SaveShopItemInfo() {
                 debugger;
                 if (document.getElementById('shopItemName').value == "") {
-                    
                     Swal.fire('Please enter Item Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopItemWeight').value == "") {
-                    
                     Swal.fire('Please enter Item Weight.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopItemPrice').value == "") {
-                    
                     Swal.fire('Please enter Item Price.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopSubCategorydrp').value == "") {
-                    
                     Swal.fire('Select one Sub Category.', '', 'warning');
                     return;
                 }
@@ -1575,7 +1607,6 @@
                             GetAllItems();
                         }
                         else {
-                            
                             Swal.fire('Item already exist.','','warning');
                             return;
                         }
@@ -1626,13 +1657,13 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            
+                            debugger;
                             Swal.fire('Item added successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
-                            
+                            debugger;
                             Swal.fire('Item already exist.', '', 'warning');
                             return;
                         }
@@ -1644,16 +1675,24 @@
                 });
             }
 
-            function GetUpdateItem(itemId, itemName, itemWeight, itemPrice, itemImage, shopId, subCategoryId) {
+            function GetUpdateItem(itemId, itemName, itemWeight, itemPrice, itemImage, subCategoryId) {
                 debugger;
                 $("#updateItemId").val(itemId);
                 $("#updateItemName").val(itemName);
                 $("#updateItemWeight").val(itemWeight);
                 $("#updateItemPrice").val(itemPrice);
                 $("#updateItemImage").val(itemImage);
-                $("#UpdateShopIddrp").val(shopId);
                 $("#UpdateSubCategorydrp").val(subCategoryId);
-                $("#openItemModal").trigger("click");
+                $.ajax({
+                    type: "GET",
+                    url: '/Items/GetShopId?subCategoryId=' + subCategoryId,
+                    success: function (response) {
+                        debugger;
+                        $("#UpdateShopIddrp").val(response);
+                        $("#openItemModal").trigger("click");
+                    }
+                });
+                
             }
 
             function UpdateItemInfo() {

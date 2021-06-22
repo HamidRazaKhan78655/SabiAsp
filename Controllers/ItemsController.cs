@@ -112,8 +112,6 @@ namespace SabiAsp.Controllers
             string name = fm["shopItemName"].ToString();
             string weight = fm["shopItemWeight"].ToString();
             string price = fm["shopItemPrice"].ToString();
-            string updateShopUserId = fm["shopUserId"].ToString();
-            int shopUserId = int.Parse(updateShopUserId);
             string updateSubCategoryId = fm["shopSubCategorydrp"].ToString();
             int subCategoryId = int.Parse(updateSubCategoryId);
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
@@ -145,13 +143,10 @@ namespace SabiAsp.Controllers
 
                     }
                 }
-                var vendor = Db.vendors.Where(x => x.UserId == shopUserId).SingleOrDefault();
-                var shop = Db.Shops.Where(x => x.vendorid == vendor.vendorid).SingleOrDefault();
 
                 item.name = name;
                 item.Weight = weight;
                 item.Price = price;
-                item.SubCategorieId = shop.Shopid;
                 item.SubCategorieId = subCategoryId;
                 item.isDeleted = "false";
                 item.CreatedDate = DateTime.Now;
@@ -283,11 +278,16 @@ namespace SabiAsp.Controllers
         }
         #endregion
 
-        public string GetShopName(int userId)
+        public int GetShopName(int userId)
         {
             var vendor = Db.vendors.Where(x => x.UserId == userId).SingleOrDefault();
             var shop = Db.Shops.Where(x => x.vendorid == vendor.vendorid).SingleOrDefault();
-            return shop.shopname;
+            return shop.Shopid;
+        }
+        public int GetShopId(int subCategoryId)
+        {
+            var subCategory = Db.SubCategories.Where(x => x.SubCategorieId == subCategoryId).FirstOrDefault();
+            return (int)subCategory.Shopid;
         }
         public ActionResult SortItemList(string value, string subCategoryId)
         {

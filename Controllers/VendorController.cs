@@ -293,12 +293,6 @@ namespace SabiAsp.Controllers
             return "success";
         }
 
-        private static double RoundValueAndAdd(double value)
-        {
-            Console.WriteLine("{0} --> {1}", value, Math.Round(value));
-            return value + .1;
-        }
-
         #region CRUD for Vendor
         public ActionResult GetAllVendor()
         {

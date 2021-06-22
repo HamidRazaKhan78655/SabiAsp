@@ -529,6 +529,8 @@
     <Content Include="Views\Items\ItemView.cshtml" />
     <Content Include="Views\Items\BuyItemView.cshtml" />
     <Content Include="Views\SubCategory\GetAllSubCategoriesListByShopId.cshtml" />
+    <Content Include="Views\SubCategory\GetUpdateSubCategoriesByShopId.cshtml" />
+    <Content Include="Views\SubCategory\GetShopSubCategoriesByShopId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
