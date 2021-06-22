@@ -215,6 +215,9 @@
     <Compile Include="Models\UserItemCard.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserRating.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vendor.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>

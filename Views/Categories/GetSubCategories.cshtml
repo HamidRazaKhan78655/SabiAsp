@@ -166,10 +166,7 @@
                         </ul>
                         @if (ViewBag.logedinRoleID == 2)
                         {
-                            if (ViewBag.ShopData.Ratings == null || ViewBag.ShopData.Ratings == "")
-                            {
-                                <input type="button" onclick="showRatingsModal();" value="Rate Us" class="btn btn-primary" style="background: #ffa800; border: none; margin-top: -38px;" />
-                            }
+                            <input type="button" onclick="showRatingsModal();" value="Rate Us" class="btn btn-primary" style="background: #ffa800; border: none; margin-top: -38px;" />
                         }
                     </div>
                     <div class="right_part" style="width:35%">

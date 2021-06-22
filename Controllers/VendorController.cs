@@ -252,16 +252,52 @@ namespace SabiAsp.Controllers
 
         public string SaveUserRatings(int shopId, int ratings)
         {
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+            var userRating = Db.UserRatings.Where(s=> s.ShopId == shopId && s.UserId == logedinUserId).FirstOrDefault();
+            UserRating ur = new UserRating();
+            if (userRating == null)
+            {
+                ur.UserId = logedinUserId;
+                ur.ShopId = shopId;
+                ur.Ratings = ratings.ToString();
+                ur.isDeleted = "false";
+                ur.CreatedBy = logedinUserId;
+                ur.CreatedDate = DateTime.Now;
+                Db.UserRatings.Add(ur);
+                Db.SaveChanges();
+            }
+            else
+            {
+                userRating.Ratings = ratings.ToString();
+                userRating.ModifiedBy = logedinUserId;
+                userRating.ModifiedDate = DateTime.Now;
+                Db.Entry(userRating).State = EntityState.Modified;
+                Db.SaveChanges();
+            }
+
+            var userRatingList = Db.UserRatings.Where(s => s.ShopId == shopId).ToList();
+            var totalUser = userRatingList.Count();
+            var totalRatings = userRatingList.Sum(u=> Convert.ToInt32(u.Ratings));
+            var rating = totalRatings / totalUser;
+
+            double value = rating;
+            rating = (int)Math.Round(value);
+
             var shop = Db.Shops.Where(s=> s.Shopid == shopId).FirstOrDefault();
             if (shop != null)
             {
-                shop.Ratings = ratings.ToString();
+                shop.Ratings = rating.ToString();
                 Db.Entry(shop).State = EntityState.Modified;
                 Db.SaveChanges();
             }
             return "success";
         }
 
+        private static double RoundValueAndAdd(double value)
+        {
+            Console.WriteLine("{0} --> {1}", value, Math.Round(value));
+            return value + .1;
+        }
 
         #region CRUD for Vendor
         public ActionResult GetAllVendor()
@@ -274,20 +310,12 @@ namespace SabiAsp.Controllers
         {
             string firstName = fm["FirstName"].ToString();
             string lastName = fm["LastName"].ToString();
-            //string adminId = fm["adminId"].ToString();
             string username = fm["Username"].ToString();
             string emailAddress = fm["EmailAddress"].ToString();
             string contact = fm["Contact"].ToString();
             string address = fm["Address"].ToString();
             string password = fm["Password"].ToString();
             vendor v = new vendor();
-            //v.name = firstName + " " + lastName;
-            //v.EmailAddress = emailAddress;
-            //v.Contact = contact;
-            //v.username = username;
-            //v.password = Encryption.Encrypto.EncryptString(password.Trim());
-            //v.Address = address;
-            //u.RoleID = 2;
             v.CreatedBy = 1;
             v.CreatedDate = DateTime.Now;
             v.isDeleted = "false";
@@ -308,11 +336,6 @@ namespace SabiAsp.Controllers
             var vendor = Db.vendors.Where(x => x.vendorid == vendorId).SingleOrDefault();
             if (vendor != null)
             {
-                //vendor.name = name;
-                //vendor.EmailAddress = emailAddress;
-                //vendor.Contact = contact;
-                //vendor.Address = address;
-                //vendor.username = userName;
                 vendor.ModifiedBy = 1;
                 vendor.ModifiedDate = DateTime.Now;
                 vendor.isDeleted = "false";

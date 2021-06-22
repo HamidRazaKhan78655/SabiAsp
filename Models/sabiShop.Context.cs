@@ -36,6 +36,7 @@ namespace SabiAsp.Models
         public virtual DbSet<UserItemCard> UserItemCards { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<vendor> vendors { get; set; }
+        public virtual DbSet<UserRating> UserRatings { get; set; }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

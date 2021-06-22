@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1ff52a987fb843089759f4101316aed9" Name="Diagram1" ZoomLevel="107">
+      <Diagram DiagramId="1ff52a987fb843089759f4101316aed9" Name="Diagram1" ZoomLevel="104">
         <EntityTypeShape EntityType="sabiShopModel.Category" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
         <EntityTypeShape EntityType="sabiShopModel.item" Width="1.5" PointX="12" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="sabiShopModel.Role" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
@@ -22,6 +22,9 @@
         <AssociationConnector Association="sabiShopModel.FK_SubCategories_Shops" ManuallyRouted="false" />
         <AssociationConnector Association="sabiShopModel.FK_UserItemCard_users" ManuallyRouted="false" />
         <AssociationConnector Association="sabiShopModel.FK_vendor_users" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="sabiShopModel.UserRating" Width="1.5" PointX="9.75" PointY="3.375" />
+        <AssociationConnector Association="sabiShopModel.FK_UserRating_Shops" />
+        <AssociationConnector Association="sabiShopModel.FK_UserRating_users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

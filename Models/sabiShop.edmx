@@ -110,6 +110,20 @@
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="UserRating">
+          <Key>
+            <PropertyRef Name="UserRatingId" />
+          </Key>
+          <Property Name="UserRatingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="ShopId" Type="int" />
+          <Property Name="Ratings" Type="nvarchar(max)" />
+          <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="users">
           <Key>
             <PropertyRef Name="UserId" />
@@ -220,6 +234,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserRating_Shops">
+          <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
+          <End Role="UserRating" Type="Self.UserRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="Shopid" />
+            </Principal>
+            <Dependent Role="UserRating">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRating_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="UserRating" Type="Self.UserRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_users_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -283,6 +321,7 @@
           <EntitySet Name="SubCategories" EntityType="Self.SubCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserItemCard" EntityType="Self.UserItemCard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRating" EntityType="Self.UserRating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vendor" EntityType="Self.vendor" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_items_SubCategories" Association="Self.FK_items_SubCategories">
@@ -308,6 +347,14 @@
           <AssociationSet Name="FK_UserItemCard_users" Association="Self.FK_UserItemCard_users">
             <End Role="users" EntitySet="users" />
             <End Role="UserItemCard" EntitySet="UserItemCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRating_Shops" Association="Self.FK_UserRating_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="UserRating" EntitySet="UserRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRating_users" Association="Self.FK_UserRating_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserRating" EntitySet="UserRating" />
           </AssociationSet>
           <AssociationSet Name="FK_users_Role" Association="Self.FK_users_Role">
             <End Role="Role" EntitySet="Role" />
@@ -394,6 +441,7 @@
           <Property Name="Ratings" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MinOrder" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRatings" Relationship="sabiShopModel.FK_UserRating_Shops" FromRole="Shop" ToRole="UserRating" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -465,6 +513,7 @@
           <NavigationProperty Name="Role" Relationship="Self.FK_users_Role" FromRole="users" ToRole="Role" />
           <NavigationProperty Name="UserItemCards" Relationship="Self.FK_UserItemCard_users" FromRole="users" ToRole="UserItemCard" />
           <NavigationProperty Name="vendors" Relationship="Self.FK_vendor_users" FromRole="users" ToRole="vendor" />
+          <NavigationProperty Name="UserRatings" Relationship="sabiShopModel.FK_UserRating_users" FromRole="user" ToRole="UserRating" />
         </EntityType>
         <EntityType Name="vendor">
           <Key>
@@ -649,6 +698,15 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="UserRatings" EntityType="sabiShopModel.UserRating" />
+          <AssociationSet Name="FK_UserRating_Shops" Association="sabiShopModel.FK_UserRating_Shops">
+            <End Role="Shop" EntitySet="Shops" />
+            <End Role="UserRating" EntitySet="UserRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRating_users" Association="sabiShopModel.FK_UserRating_users">
+            <End Role="user" EntitySet="users" />
+            <End Role="UserRating" EntitySet="UserRatings" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -661,6 +719,46 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="UserRating">
+          <Key>
+            <PropertyRef Name="UserRatingId" />
+          </Key>
+          <Property Name="UserRatingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ShopId" Type="Int32" />
+          <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Shop" Relationship="sabiShopModel.FK_UserRating_Shops" FromRole="UserRating" ToRole="Shop" />
+          <NavigationProperty Name="user" Relationship="sabiShopModel.FK_UserRating_users" FromRole="UserRating" ToRole="user" />
+          <Property Name="Ratings" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_UserRating_Shops">
+          <End Type="sabiShopModel.Shop" Role="Shop" Multiplicity="0..1" />
+          <End Type="sabiShopModel.UserRating" Role="UserRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shopid" />
+            </Principal>
+            <Dependent Role="UserRating">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRating_users">
+          <End Type="sabiShopModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="sabiShopModel.UserRating" Role="UserRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRating">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -843,6 +941,21 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="sabiShopModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="sabiShopModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="UserRatings">
+            <EntityTypeMapping TypeName="sabiShopModel.UserRating">
+              <MappingFragment StoreEntitySet="UserRating">
+                <ScalarProperty Name="Ratings" ColumnName="Ratings" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserRatingId" ColumnName="UserRatingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

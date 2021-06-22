@@ -18,6 +18,7 @@ namespace SabiAsp.Models
         public Shop()
         {
             this.SubCategories = new HashSet<SubCategory>();
+            this.UserRatings = new HashSet<UserRating>();
         }
     
         public int Shopid { get; set; }
@@ -42,5 +43,7 @@ namespace SabiAsp.Models
         public virtual vendor vendor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SubCategory> SubCategories { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserRating> UserRatings { get; set; }
     }
 }
