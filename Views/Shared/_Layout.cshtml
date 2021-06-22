@@ -276,6 +276,77 @@
             window.location.href = '/Login/Logout/';
         }
 
+
+        function rightsideclickevent() {
+            debugger;
+
+            for (var i = 0; i < $('.slider').length; i++) {
+                debugger;
+                if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
+                    var slider1 = $('.slider:eq(' + i + ')');
+                    var sliderno = slider1.attr('data-number');
+                    if (sliderno == "3") {
+                        for (var i = 0; i < $('.slider').length; i++) {
+                            if ($('.slider:eq(' + i + ')').attr('data-number') == '1') {
+                                $('.slider').hide();
+                                $('.slider').attr('data-status', 'off');
+                                $('.slider:eq(' + i + ')').show();
+                                $('.slider:eq(' + i + ')').attr('data-status', 'on');
+                            }
+                        }
+                    }
+                    else {
+                        var slidernoint = parseInt(sliderno);
+                        slidernoint = slidernoint + 1;
+                        slidernoint = slidernoint.toString();
+                        for (var i = 0; i < $('.slider').length; i++) {
+                            if ($('.slider:eq(' + i + ')').attr('data-number') == slidernoint) {
+                                $('.slider').hide();
+                                $('.slider').attr('data-status', 'off');
+                                $('.slider:eq(' + i + ')').show();
+                                $('.slider:eq(' + i + ')').attr('data-status', 'on');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        function leftsideclickevent() {
+            debugger;
+
+            for (var i = 0; i < $('.slider').length; i++) {
+                debugger;
+                if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
+                    var slider1 = $('.slider:eq(' + i + ')');
+                    var sliderno = slider1.attr('data-number');
+                    if (sliderno == "1") {
+                        for (var i = 0; i < $('.slider').length; i++) {
+                            if ($('.slider:eq(' + i + ')').attr('data-number') == '3') {
+                                $('.slider').hide();
+                                $('.slider').attr('data-status', 'off');
+                                $('.slider:eq(' + i + ')').show();
+                                $('.slider:eq(' + i + ')').attr('data-status', 'on');
+                            }
+                        }
+                    }
+                    else {
+                        var slidernoint = parseInt(sliderno);
+                        slidernoint = slidernoint - 1;
+                        slidernoint = slidernoint.toString();
+                        for (var i = 0; i < $('.slider').length; i++) {
+                            if ($('.slider:eq(' + i + ')').attr('data-number') == slidernoint) {
+                                $('.slider').hide();
+                                $('.slider').attr('data-status', 'off');
+                                $('.slider:eq(' + i + ')').show();
+                                $('.slider:eq(' + i + ')').attr('data-status', 'on');
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -595,7 +666,7 @@
     </div>
     <!-- Courasek 2 section start -->
     <div class="collection_section">
-        <div class="container">
+        <div class="container stylenone">
 
             <style>
                 .sabiCurausal {
@@ -713,11 +784,104 @@
 
             </div>
         </div>
+
+        <style>
+            .svgset {
+                text-align: center;
+                font-size: xxx-large;
+                margin: auto;
+            }
+        </style>
+        <div class="container" style="height:100%;">
+            <div class="row">
+                <div class="col-12">
+                    <p style="color: #150247;font-weight: 500; text-align: center; font-size: 35px;">Meet our some of our Partner Merchants:</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1 svgset" onclick="leftsideclickevent()">
+                    <i class="fas fa-chevron-left" style="color:#e0ab09;cursor:pointer;"></i>
+                </div>
+                <div class="col-10">
+                    @*slider 1*@
+                    <div class="container-fluid slider" data-number="1" data-status="on">
+                        <div class="row">
+                            <div class="col-4" style="text-align: center;">
+                                <img src="/Content/Template/images/shoes-img1.png" style="height: 150px; margin: 25px;">
+                            </div>
+                            <div class="col-8">
+                                <p style="font-size: 15px; text-align: center; font-weight: 600; color: black; padding: 30px;">
+                                    It is a long established fact that a reader will be distracted by the
+                                    readable content of a page when looking at its layout. The point of using
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:center;">
+                            <div class="col-4">
+
+                            </div>
+                            <div class="col-8">
+                                <input type="button" class="btn btn-info" value="Shop Now">
+                            </div>
+                        </div>
+                    </div>
+                    @*slider 2*@
+                    <div class="container-fluid slider" style="display:none;" data-number="2" data-status="off">
+                        <div class="row">
+                            <div class="col-4" style="text-align: center;">
+                                <img src="/Content/Template/images/shoes-img2.png" style="height: 150px; margin: 25px;">
+
+                            </div>
+                            <div class="col-8">
+                                <p style="font-size: 15px; text-align: center; font-weight: 600; color: black; padding: 30px;">
+                                    It is a long established fact that a reader will be distracted by the
+                                    readable content of a page when looking at its layout. The point of using
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:center;">
+                            <div class="col-4">
+
+                            </div>
+                            <div class="col-8">
+                                <input type="button" class="btn btn-info" value="Shop Now">
+                            </div>
+                        </div>
+                    </div>
+                    @*slider 3*@
+                    <div class="container-fluid slider" style="display:none;" data-number="3" data-status="off">
+                        <div class="row">
+                            <div class="col-4" style="text-align: center;">
+                                <img src="/Content/Template/images/shoes-img3.png" style="height: 150px; margin: 25px;">
+                            </div>
+                            <div class="col-8">
+                                <p style="font-size: 15px; text-align: center; font-weight: 600; color: black; padding: 30px;">
+                                    It is a long established fact that a reader will be distracted by the
+                                    readable content of a page when looking at its layout. The point of using
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align:center;">
+                            <div class="col-4">
+
+                            </div>
+                            <div class="col-8">
+                                <input type="button" class="btn btn-info" value="Shop Now">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-1 svgset"  onclick="rightsideclickevent()">
+                    <i class="fas fa-chevron-right" style="color:#e0ab09;cursor:pointer;"></i>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Download App section start -->
     <div class="layout_padding collection_section">
         <div class="container">
-            <img src="~/Images/Downloadapp.png" />
+            <img src="~/Images/Downloadapp.png" style="max-width: 100%;"/>
         </div>
     </div>
     <div class="layout_padding collection_section">

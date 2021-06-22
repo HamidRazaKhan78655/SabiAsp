@@ -77,9 +77,13 @@ namespace SabiAsp.Controllers
                     {
                         return RedirectToAction("Index", "Home");
                     }
-                    else
+                    else if (User.RoleID == 3)
                     {
                         return RedirectToAction("VendorView", "Vendor");
+                    }
+                    else
+                    {
+                        return View();
                     }
                 }
                 else
