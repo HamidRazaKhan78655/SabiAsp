@@ -127,6 +127,9 @@ $(document).ready(function ()
     });
 
 });
+setInterval(function () {
+    rightsideclickevent();
+},10000);
 $('.sideNavtab').click(function () {
     $('.sideNavtab').css('border-left', '0px solid');
     $(this).css('border-left', '4px solid');
@@ -325,5 +328,84 @@ function UpdateUserProfileInfo() {
             alert("Error");
         }
     });
+}
+
+function rightsideclickevent() {
+    debugger;
+
+    for (var i = 0; i < $('.slider').length; i++) {
+        debugger;
+        if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
+            var slider1 = $('.slider:eq(' + i + ')');
+            var sliderno = slider1.attr('data-number');
+            if (sliderno == "3") {
+                for (var i = 0; i < $('.slider').length; i++) {
+                    if ($('.slider:eq(' + i + ')').attr('data-number') == '1') {
+                        $('.slider').hide();
+                        $('.slider').attr('data-status', 'off');
+                        $('.slider:eq(' + i + ')').show();
+                        $('.slider:eq(' + i + ')').attr('data-status', 'on');
+                        $('.slider:eq(' + i + ')').attr('class', 'container-fluid slider');
+                        $('.slider:eq(' + i + ')').addClass('animate__animated animate__slideInRight');
+                        
+                    }
+                }
+            }
+            else {
+                var slidernoint = parseInt(sliderno);
+                slidernoint = slidernoint + 1;
+                slidernoint = slidernoint.toString();
+                for (var i = 0; i < $('.slider').length; i++) {
+                    if ($('.slider:eq(' + i + ')').attr('data-number') == slidernoint) {
+                        $('.slider').hide();
+                        $('.slider').attr('data-status', 'off');
+                        $('.slider:eq(' + i + ')').show();
+                        $('.slider:eq(' + i + ')').attr('data-status', 'on');
+                        $('.slider:eq(' + i + ')').attr('class', 'container-fluid slider');
+                        $('.slider:eq(' + i + ')').addClass('animate__animated animate__slideInRight');
+                    }
+                }
+            }
+        }
+    }
+}
+function leftsideclickevent() {
+    debugger;
+
+    for (var i = 0; i < $('.slider').length; i++) {
+        debugger;
+        if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
+            var slider1 = $('.slider:eq(' + i + ')');
+            var sliderno = slider1.attr('data-number');
+            if (sliderno == "1") {
+                for (var i = 0; i < $('.slider').length; i++) {
+                    if ($('.slider:eq(' + i + ')').attr('data-number') == '3') {
+                        $('.slider').hide();
+                        $('.slider').attr('data-status', 'off');
+                        $('.slider:eq(' + i + ')').show();
+                        $('.slider:eq(' + i + ')').attr('data-status', 'on');
+                        $('.slider:eq(' + i + ')').attr('class', 'container-fluid slider');
+                        $('.slider:eq(' + i + ')').addClass('animate__animated animate__slideInLeft');
+                    }
+                }
+            }
+            else {
+                var slidernoint = parseInt(sliderno);
+                slidernoint = slidernoint - 1;
+                slidernoint = slidernoint.toString();
+                for (var i = 0; i < $('.slider').length; i++) {
+                    if ($('.slider:eq(' + i + ')').attr('data-number') == slidernoint) {
+                        $('.slider').hide();
+                        $('.slider').attr('data-status', 'off');
+                        $('.slider:eq(' + i + ')').show();
+                        $('.slider:eq(' + i + ')').attr('data-status', 'on');
+                        $('.slider:eq(' + i + ')').attr('class', 'container-fluid slider');
+                        $('.slider:eq(' + i + ')').addClass('animate__animated animate__slideInLeft');
+
+                    }
+                }
+            }
+        }
+    }
 }
 

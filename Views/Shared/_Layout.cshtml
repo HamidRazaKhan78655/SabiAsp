@@ -175,7 +175,7 @@
             //LayoutSub
             var password = document.getElementById('UserPassword').value;
             if (password == "") {
-                Swal.fire('Please enter Password.', '','warning');
+                Swal.fire('Please enter Password.', '', 'warning');
                 return;
             }
             else {
@@ -193,8 +193,7 @@
                     },
                     success: function (data) {
                         debugger;
-                        if (data == "success")
-                        {
+                        if (data == "success") {
                             Swal.fire('User added successfully.', '', 'success');
                             window.location.href = "/Home/Index/";
                         }
@@ -277,79 +276,12 @@
         }
 
 
-        function rightsideclickevent() {
-            debugger;
 
-            for (var i = 0; i < $('.slider').length; i++) {
-                debugger;
-                if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
-                    var slider1 = $('.slider:eq(' + i + ')');
-                    var sliderno = slider1.attr('data-number');
-                    if (sliderno == "3") {
-                        for (var i = 0; i < $('.slider').length; i++) {
-                            if ($('.slider:eq(' + i + ')').attr('data-number') == '1') {
-                                $('.slider').hide();
-                                $('.slider').attr('data-status', 'off');
-                                $('.slider:eq(' + i + ')').show();
-                                $('.slider:eq(' + i + ')').attr('data-status', 'on');
-                            }
-                        }
-                    }
-                    else {
-                        var slidernoint = parseInt(sliderno);
-                        slidernoint = slidernoint + 1;
-                        slidernoint = slidernoint.toString();
-                        for (var i = 0; i < $('.slider').length; i++) {
-                            if ($('.slider:eq(' + i + ')').attr('data-number') == slidernoint) {
-                                $('.slider').hide();
-                                $('.slider').attr('data-status', 'off');
-                                $('.slider:eq(' + i + ')').show();
-                                $('.slider:eq(' + i + ')').attr('data-status', 'on');
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        function leftsideclickevent() {
-            debugger;
-
-            for (var i = 0; i < $('.slider').length; i++) {
-                debugger;
-                if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
-                    var slider1 = $('.slider:eq(' + i + ')');
-                    var sliderno = slider1.attr('data-number');
-                    if (sliderno == "1") {
-                        for (var i = 0; i < $('.slider').length; i++) {
-                            if ($('.slider:eq(' + i + ')').attr('data-number') == '3') {
-                                $('.slider').hide();
-                                $('.slider').attr('data-status', 'off');
-                                $('.slider:eq(' + i + ')').show();
-                                $('.slider:eq(' + i + ')').attr('data-status', 'on');
-                            }
-                        }
-                    }
-                    else {
-                        var slidernoint = parseInt(sliderno);
-                        slidernoint = slidernoint - 1;
-                        slidernoint = slidernoint.toString();
-                        for (var i = 0; i < $('.slider').length; i++) {
-                            if ($('.slider:eq(' + i + ')').attr('data-number') == slidernoint) {
-                                $('.slider').hide();
-                                $('.slider').attr('data-status', 'off');
-                                $('.slider:eq(' + i + ')').show();
-                                $('.slider:eq(' + i + ')').attr('data-status', 'on');
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
 
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 
 <!-- body -->
@@ -400,7 +332,8 @@
                     <div class="logo">
                         <a href="/Home/Index">
                             @*<img src="~/Content/Template/images/logo.png">*@
-                            <img src="~/Images/MainSabilogo.png" style="width: 220px; height: 220px; position: relative; top: -40px;" />
+                            @* <img src="~/Images/MainSabilogo.png" style="width: 220px; height: 220px; position: relative; top: -40px;" />*@
+                            <img src="~/Images/logoWhite.png" style="width: 220px; height: 220px; position: relative; top: -40px;" />
                         </a>
                     </div>
                 </div>

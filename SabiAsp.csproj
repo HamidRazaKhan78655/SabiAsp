@@ -362,6 +362,8 @@
     <Content Include="Images\Groceries.png" />
     <Content Include="Images\less.png" />
     <Content Include="Images\loginSabi.png" />
+    <Content Include="Images\logoblue.png" />
+    <Content Include="Images\logoWhite.png" />
     <Content Include="Images\MainSabilogo.png" />
     <Content Include="Images\noimage.jpg" />
     <Content Include="Images\Pharmacy.png" />
