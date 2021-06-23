@@ -22,25 +22,13 @@ namespace SabiAsp.Controllers
         public ActionResult GetSubCategoriesByCategory(int id, string name)
         {
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
-            //if (logedinUserId == 0)
-            //{
-            //    return RedirectToAction("SabiLogin", "Login");
-            //}
             int logedinRoleID = Convert.ToInt32(Session["RoleID"]);
             ViewBag.Category = name;
             ViewBag.logedinRoleID = logedinRoleID;
-            //if (logedinRoleID == 2)
-            //{
-            //    ViewBag.itemsList = Db.items.OrderByDescending(x => x.CreatedBy).ToList();
-            //    return View();
-            //}
-            //else
-            //{
             var location = Session["Location"].ToString();
             ViewBag.CategoryId = id;
-            ViewBag.SubCategorylist = Db.Shops.Where(d => d.CategoryId == id && d.location == location).ToList();
+            ViewBag.Shop = Db.Shops.Where(d => d.CategoryId == id && d.location == location).ToList();
             return View();
-            //}
         }
 
         public ActionResult GetSubCategories(string location, string shopname, int shopid)

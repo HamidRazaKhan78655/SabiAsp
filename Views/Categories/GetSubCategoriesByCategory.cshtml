@@ -13,34 +13,35 @@
             <div class="row">
                 <div class="col-sm-6">
                     <input type="hidden" value="@ViewBag.CategoryId" id="GetCategoryId" />
-                    @*<span style="color:white;font-size:large;">Sort By :</span>
+                    <span style="color:white;font-size:large;">Sort By :</span>
                     @Html.DropDownList("SortList", new List<SelectListItem>{
-               new SelectListItem{ Text="Date", Value = "1" },
-               new SelectListItem{ Text="Name", Value = "2" },
-               }, "All", new { onchange = "SortSubCategorylistChange(this)", @class = "form-control", @style = "display:initial;width:auto;" })*@
+               new SelectListItem{ Text="Date", Value = "Date" },
+               new SelectListItem{ Text="Name", Value = "Name" },
+               new SelectListItem{ Text="Ratings", Value = "Ratings" },
+               new SelectListItem{ Text="Delivery Fee", Value = "DeliveryFee" },
+               }, "All", new { onchange = "SortShopList(this)", @class = "form-control", @style = "display:initial;width:auto;" })
                 </div>
             </div>
-            <div class="row">
-
-                @foreach (var subCate in ViewBag.SubCategorylist)
+            <div class="row" id="shopList">
+                @foreach (var shop in ViewBag.Shop)
                 {
-                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories('@subCate.location', '@subCate.shopname', @subCate.Shopid)" style="padding: 0px;margin: 10px;height: 100px;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%)">
-                        <input type="hidden" value="@subCate.Shopid" class="GetSubCategorieId" />
-                        <input type="hidden" value="@subCate.shopname" class="GetSubCategorieName" />
+                    <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories('@shop.location', '@shop.shopname', @shop.Shopid)" style="padding: 0px;margin: 10px;height: 100px;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%)">
+                        <input type="hidden" value="@shop.Shopid" class="GetSubCategorieId" />
+                        <input type="hidden" value="@shop.shopname" class="GetSubCategorieName" />
 
                         <div class="row best_shoes" style="padding:0px; margin:0px; height:100px">
                             <div class="col-md-4" style="padding:0px; margin:0px; height:100px;max-width:200px">
 
-                                @if (subCate.image == null)
+                                @if (shop.image == null)
                                 {
                                 <div style="background-image:url('../../Content/Template/images/banner.png');background-size:cover;height:100px">
-                                    @if (subCate.Logo == null)
+                                    @if (shop.Logo == null)
                                     {
                                         <img src="~/Content/Template/images/natural.png" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
                                     }
                                     else
                                     {
-                                        <img src="@string.Format("/CompanyImages/{0}", subCate.Logo)" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                        <img src="@string.Format("/CompanyImages/{0}", shop.Logo)" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
                                     }
 
                                 </div>
@@ -48,43 +49,41 @@
                                 else
                                 {
                                     
-                            <div style="background-image:url('@string.Format("/CompanyImages/{0}", subCate.image)');background-size:cover;height:100px">
-                                @if (subCate.Logo == null)
+                            <div style="background-image:url('@string.Format("/CompanyImages/{0}", shop.image)');background-size:cover;height:100px">
+                                @if (shop.Logo == null)
                                 {
                                     <img src="~/Content/Template/images/natural.png" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
                                 }
                                 else
                                 {
                                     
-                                    <img src="@string.Format("/CompanyImages/{0}", subCate.Logo)" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                    <img src="@string.Format("/CompanyImages/{0}", shop.Logo)" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
                                 }
 
                             </div>
                                 }
                                 
-                                @*<div style="background-image:url('../../Content/Template/images/banner.png');background-size:cover;height:100px">
-
-        </div>*@
                             </div>
                             <div class="col-md-4" style="padding:0px; margin:0px; height:100px">
                                 <div class="best_shoes" style="padding: 0px;margin: 0px;height: 100px;padding: 0px;margin: 0px;margin-left: 30px;height: 100px;">
 
-                                    <p class="best_text" style="text-align:left;padding-left: 25px; font-weight:500 ; margin:0px; margin-top:10px">@subCate.shopname</p>
-                                    <p class="best_text" style="text-align:left;padding-left: 25px; font-weight:500; margin:0px; font-size:14px">@subCate.Description</p>
+                                    <p class="best_text" style="text-align:left;padding-left: 25px; font-weight:500 ; margin:0px; margin-top:10px">@shop.shopname</p>
+                                    <p class="best_text" style="text-align:left;padding-left: 25px; font-weight:500; margin:0px; font-size:14px">@shop.Description</p>
 
                                     <div class="star_text" >
                                         <div class="left_part" style="padding-top:5px">
                                             <ul>
-                                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
-                                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
-                                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
-                                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
-                                                <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                                @for (int i = 1; i <= Convert.ToInt32(shop.Ratings); i++)
+                                                {
+                                                    <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                                }
+                                                @for (int i = 1; i <= 5 - Convert.ToInt32(shop.Ratings); i++)
+                                                {
+                                                    <li><a href="#"><img src="~/Content/Template/images/gray-star-icon.png" /></a></li>
+                                                }
                                             </ul>
                                         </div>
-                                        @*<div class="right_part">
-                                                <div class="shoes_price">Items : <span style="color: #ff4e5b;">60</span></div>
-                                            </div>*@
+
                                     </div>
                                 </div>
                             </div>
@@ -92,9 +91,9 @@
                                 <div >
 
                                     <div class="best_shoes" style="padding: 0px;margin: 0px;height: 100px;padding: 0px; margin: 0px;margin-left: 30px;height: 100px;padding-top:10px;">
-                                       <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Delivery Fee  : @subCate.DeliveryFee</p>
-                                       <p class="best_text" style="text-align:left;padding-left: 25px; margin:0px; font-size:14px">Delivery Time : @subCate.DeliveryTime</p>
-                                       <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Location : @subCate.location</p>
+                                       <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Delivery Fee  : @shop.DeliveryFee</p>
+                                       <p class="best_text" style="text-align:left;padding-left: 25px; margin:0px; font-size:14px">Delivery Time : @shop.DeliveryTime</p>
+                                       <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Location : @shop.location</p>
 
                                     </div>
                                 </div>
@@ -104,9 +103,7 @@
                     </div>
                 }
             </div>
-            @*        <div id="item_View" style="">
 
-                </div>*@
         </div>
     </div>
     <!-- New Arrivals section end -->
@@ -115,16 +112,16 @@
 
 
 <script>
-    function SortSubCategorylistChange(selectedValue) {
+    function SortShopList(selectedValue) {
         debugger;
         var selectedValueId = document.getElementById('SortList').value;
         var categoryId = document.getElementById('GetCategoryId').value;
         $.ajax({
             type: "GET",
-            url: '/SubCategory/SortSubCategoryList?value=' + selectedValueId + "&&categoryId=" + categoryId,
+            url: '/SubCategory/SortShopList?value=' + selectedValueId + "&&categoryId=" + categoryId,
             success: function (response) {
                 debugger;
-                $("#subCategoryList").html(response);
+                $("#shopList").html(response);
             }
         });
     }

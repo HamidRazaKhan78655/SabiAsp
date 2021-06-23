@@ -1,0 +1,88 @@
+﻿@model List<SabiAsp.Models.Shop>
+
+@{
+    if (Model.Count > 0)
+    {
+        foreach (var shop in Model)
+        {
+            <div id="subCategoryList" class="col-sm-12 showItemsOfSubCategories" onclick="loadCategories('@shop.location', '@shop.shopname', @shop.Shopid)" style="padding: 0px;margin: 10px;height: 100px;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%)">
+                <input type="hidden" value="@shop.Shopid" class="GetSubCategorieId" />
+                <input type="hidden" value="@shop.shopname" class="GetSubCategorieName" />
+
+                <div class="row best_shoes" style="padding:0px; margin:0px; height:100px">
+                    <div class="col-md-4" style="padding:0px; margin:0px; height:100px;max-width:200px">
+
+                        @if (shop.image == null)
+                        {
+                            <div style="background-image:url('../../Content/Template/images/banner.png');background-size:cover;height:100px">
+                                @if (shop.Logo == null)
+                                {
+                                    <img src="~/Content/Template/images/natural.png" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                }
+                                else
+                                {
+                                    <img src="@string.Format("/CompanyImages/{0}", shop.Logo)" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                }
+
+                            </div>
+                        }
+                        else
+                        {
+
+                            <div style="background-image:url('@string.Format("/CompanyImages/{0}", shop.image)');background-size:cover;height:100px">
+                                @if (shop.Logo == null)
+                                {
+                                    <img src="~/Content/Template/images/natural.png" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                }
+                                else
+                                {
+
+                                    <img src="@string.Format("/CompanyImages/{0}", shop.Logo)" style=" height: 70px;float: right;position: relative;top: 14px;left: 51px;z-index: 10;height: 80px;width: 80px;float: right;position: relative; top: 9px; left: 30px; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);z-index: 10;">
+                                }
+                            </div>
+                        }
+
+                    </div>
+                    <div class="col-md-4" style="padding:0px; margin:0px; height:100px">
+                        <div class="best_shoes" style="padding: 0px;margin: 0px;height: 100px;padding: 0px;margin: 0px;margin-left: 30px;height: 100px;">
+
+                            <p class="best_text" style="text-align:left;padding-left: 25px; font-weight:500 ; margin:0px; margin-top:10px">@shop.shopname</p>
+                            <p class="best_text" style="text-align:left;padding-left: 25px; font-weight:500; margin:0px; font-size:14px">@shop.Description</p>
+
+                            <div class="star_text">
+                                <div class="left_part" style="padding-top:5px">
+                                    <ul>
+                                        @for (int i = 1; i <= Convert.ToInt32(shop.Ratings); i++)
+                                        {
+                                            <li><a href="#"><img src="~/Content/Template/images/star-icon.png" /></a></li>
+                                        }
+                                        @for (int i = 1; i <= 5 - Convert.ToInt32(shop.Ratings); i++)
+                                        {
+                                            <li><a href="#"><img src="~/Content/Template/images/gray-star-icon.png" /></a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4" style="padding:0px; margin:0px; height:100px">
+                        <div>
+
+                            <div class="best_shoes" style="padding: 0px;margin: 0px;height: 100px;padding: 0px; margin: 0px;margin-left: 30px;height: 100px;padding-top:10px;">
+                                <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Delivery Fee  : @shop.DeliveryFee</p>
+                                <p class="best_text" style="text-align:left;padding-left: 25px; margin:0px; font-size:14px">Delivery Time : @shop.DeliveryTime</p>
+                                <p class="best_text" style="text-align:left;padding-left: 25px;  margin:0px; font-size:14px">Location : @shop.location</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        }
+    }
+    else
+    {
+        <div class="w-empty-list">Record Not Found</div>
+    }
+}

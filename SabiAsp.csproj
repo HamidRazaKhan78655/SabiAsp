@@ -533,6 +533,7 @@
     <Content Include="Views\SubCategory\GetAllSubCategoriesListByShopId.cshtml" />
     <Content Include="Views\SubCategory\GetUpdateSubCategoriesByShopId.cshtml" />
     <Content Include="Views\SubCategory\GetShopSubCategoriesByShopId.cshtml" />
+    <Content Include="Views\SubCategory\SortShopList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
