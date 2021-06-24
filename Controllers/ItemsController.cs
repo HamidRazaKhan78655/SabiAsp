@@ -410,8 +410,9 @@ namespace SabiAsp.Controllers
         {
             using (var db = new sabiShopEntities())
             {
-                var data= db.items.Where(t => t.location.Contains(id) || t.name.Contains(id)).Select(p => p).ToList();
-                return View(data);
+               // var data= db.items.Where(t => t.location.Contains(id) || t.name.Contains(id)).Select(p => p).ToList();
+                var data= db.Shops.Where(t => t.location.Contains(id) || t.shopname.Contains(id)).Select(p => p).ToList();
+                return PartialView("SearchItempartialview", data);
             }
         }
         public ActionResult ItemBySubCategories(int Sid)
