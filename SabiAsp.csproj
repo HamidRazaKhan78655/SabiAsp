@@ -354,6 +354,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\appDownload.png" />
     <Content Include="Images\Bakery.png" />
+    <Content Include="Images\clicklogoblue.png" />
     <Content Include="Images\Downloadapp.png" />
     <Content Include="Images\FacebookIcon.png" />
     <Content Include="Images\Gifts.png" />

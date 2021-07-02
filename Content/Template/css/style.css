@@ -148,7 +148,7 @@ a,
 }
 
 img {
-    max-width: 500px; /*100%*/
+    max-width: 550px; /*100%*/
     height: auto;
 }
 
@@ -284,6 +284,15 @@ button {
 	color: #fefefe;
 	margin-left: 0px;
 }
+.Indicators {
+    display: grid;
+    position: absolute;
+    right: 0px;
+    top: 150px;
+}
+.Indicators i{
+    padding:5px;
+}
 
 .buy_bt {
     width: 32%;
@@ -292,6 +301,7 @@ button {
     background-color: #e0ab09;
     color: #ffffff;
     font-size: 16pt;
+    border-radius: 30px;
 }
 .stylenone{
     display:none!important ;

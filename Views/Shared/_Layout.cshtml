@@ -405,8 +405,8 @@
                                         <ul>
                                             @if (Session["Name"].ToString() == "")
                                             {
-                                                <li onclick="openSignModal(1)">Sign In as Vendor</li>
-                                                <li onclick="openSignModal(2)">Sign In as Buyer</li>
+                                                <li onclick="openSignModal(1)">PM Sign In</li>
+                                                <li onclick="openSignModal(2)">Customer Sign In</li>
                                             }
                                             else
                                             {
@@ -426,19 +426,19 @@
                                             <li onclick="login()">
                                                 <div class="flex1">
                                                     <img src="~/Images/GoogleIcon.png" class="signinimg" />
-                                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn With Google" type="button" id="GoogleLogin" />
+                                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Sign In With Google" type="button" id="GoogleLogin" />
                                                 </div>
                                             </li>
                                             <li onclick="facebooklogin();">
                                                 <div class="flex1">
                                                     <img src="~/Images/FacebookIcon.png" class="signinimg" />
-                                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Facebook" type="button" />
+                                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Sign In with Facebook" type="button" />
                                                 </div>
                                             </li>
                                             <li onclick="loginWithSabi();">
                                                 <div class="flex1">
-                                                    <img src="~/Images/loginSabi.png" class="signinimg" />
-                                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="SignIn with Sabi" type="button" />
+                                                    <img src="~/Images/clicklogoblue.png" @*class="signinimg"*@  style=" position: absolute; height: 40px; width: 40px; margin-left: -7px; top: 70px;"/>
+                                                    <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px;    margin-left: 26px; " value="Sign In with Sabi" type="button" />
                                                 </div>
                                             </li>
                                         </ul>
@@ -486,12 +486,18 @@
                     <div class="container-fluid">
                         <div id="myCarousel" class="carousel slide" data-ride="carousel" style="top: -65px;">
                             <!-- Indicators -->
-                            <ol class="carousel-indicators stylenone">
-                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                <li data-target="#myCarousel" data-slide-to="1"></li>
-                                <li data-target="#myCarousel" data-slide-to="2"></li>
-                                <li data-target="#myCarousel" data-slide-to="3"></li>
-                            </ol>
+                         @*   <ol class="carousel-indicators">
+                                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                            </ol>*@
+                            <div class="Indicators">
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                                <i class="fas fa-circle"></i>
+                            </div>
 
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner">
@@ -585,8 +591,8 @@
                             <div class="container" id="catimg" style=" width: 38%;position: absolute; left: -30px; top: 295px;">
                                 <div class="row">
                                     <div class="col-3" onclick="loadSubCategories(1,'Groceries')"><b style="padding-left: 45px;color:#e0ab09">Groceries</b><img src="~/Images/Groceries.png" style="cursor:pointer;max-width: 160px;" /></div>
-                                    <div class="col-3" onclick="loadSubCategories(2, 'Pharmacy')"><b style="padding-left: 45px;color:#e0ab09">Pharmacy</b><img src="~/Images/Pharmacy.png" style="cursor:pointer;max-width: 160px;" /></div>
-                                    <div class="col-3" onclick="loadSubCategories(3,'Bakery')"><b style="padding-left: 45px;color:#e0ab09">Bakery</b><img src="~/Images/Bakery.png" style="cursor:pointer;max-width: 160px;" /></div>
+                                    <div class="col-3" onclick="loadSubCategories(2, 'Pharmacy')"><b style="padding-left: 50px;color:#e0ab09">Pharmacy</b><img src="~/Images/Pharmacy.png" style="cursor:pointer;max-width: 160px;" /></div>
+                                    <div class="col-3" onclick="loadSubCategories(3,'Bakery')"><b style="padding-left: 60px;color:#e0ab09">Bakery</b><img src="~/Images/Bakery.png" style="cursor:pointer;max-width: 160px;" /></div>
                                     <div class="col-3" onclick="loadSubCategories(4,'Hampers+Gifts')"><b style="padding-left: 30px; color: #e0ab09;white-space:nowrap;">Hampers + Gifts</b><img src="~/Images/Gifts.png" style="cursor:pointer;max-width: 160px;" /></div>
                                 </div>
                             </div>
@@ -724,7 +730,8 @@
                 font-size: xxx-large;
                 margin: auto;
             }
-            .btn1{
+
+            .btn1 {
                 background: #e0ab09;
                 color: white;
             }
@@ -809,7 +816,7 @@
                     </div>
 
                 </div>
-                <div class="col-1 svgset"  onclick="rightsideclickevent()">
+                <div class="col-1 svgset" onclick="rightsideclickevent()">
                     <i class="fas fa-chevron-right" style="color:#e0ab09;cursor:pointer;"></i>
                 </div>
             </div>
@@ -818,7 +825,7 @@
     <!-- Download App section start -->
     <div class="layout_padding collection_section">
         <div class="container">
-            <img src="~/Images/Downloadapp.png" style="max-width: 100%;"/>
+            <img src="~/Images/Downloadapp.png" style="max-width: 100%;" />
         </div>
     </div>
     <div class="layout_padding collection_section">
