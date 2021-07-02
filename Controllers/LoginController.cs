@@ -41,6 +41,15 @@ namespace SabiAsp.Controllers
             else
                 ViewBag.Type = Convert.ToInt32(type);
 
+            if (type=="1")
+            {
+                ViewBag.subTitleLogin = " Partner Merchant Login";
+            }
+            else if (type == "2")
+            {
+                ViewBag.subTitleLogin = "Customer Login";
+            }
+
             return View();
         }
 

@@ -227,7 +227,14 @@ function BuyItemView() {
             loadCart.html(data);
         });
     } else {
-        Swal.fire('Please SignIn first !','','warning')
+        
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Please SignIn first !',
+            showConfirmButton: false,
+            timer: 1500
+        });
     }
   
 }
@@ -243,17 +250,38 @@ function AddToCart(itemId) {
                     contentType: "application/json; charset=utf-8",
            success: function (response) {
                if (response == "ok") {
-                   Swal.fire('Item Added To cart !', '', 'success');
+                 
+                   Swal.fire({
+                       position: 'top-end',
+                       icon: 'success',
+                       title: 'Item Added To cart !',
+                       showConfirmButton: false,
+                       timer: 1500
+                   });
                } else {
 
-                   Swal.fire('Can t add to cart this item', '', 'warning');
+                   
+                   Swal.fire({
+                       position: 'top-end',
+                       icon: 'warning',
+                       title: 'Can t add to cart this item',
+                       showConfirmButton: false,
+                       timer: 1500
+                   });
                }
                debugger
                     }
                 };
                 $.ajax(options);
     } else {
-        Swal.fire('Please SignIn first !','','warning')
+        
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Please SignIn first !',
+            showConfirmButton: false,
+            timer: 1500
+        });
     }
   
 }
@@ -273,31 +301,61 @@ function UpdateUserProfileInfo() {
     if (document.getElementById('ProfileUserName').value == "")
     {
       
-        Swal.fire('Please enter Name.', '','warning');
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Please enter Name.',
+            showConfirmButton: false,
+            timer: 1500
+        });
         return;
     }
     if (document.getElementById('ProfileUserEmailAddress').value == "")
     {
-        Swal.fire('Please enter Email Address.', '', 'warning');
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Please enter Email Address.',
+            showConfirmButton: false,
+            timer: 1500
+        });
        
         return;
     }
     if (document.getElementById('ProfileUserContact').value == "")
     {
-        Swal.fire('Please enter Contact.', '', 'warning');
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Please enter Contact.',
+            showConfirmButton: false,
+            timer: 1500
+        });
        
         return;
     }
     if (document.getElementById('ProfileUserUsername').value == "")
     {
-        Swal.fire('Please enter Username.', '', 'warning');
+        
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Please enter Username.',
+            showConfirmButton: false,
+            timer: 1500
+        });
        
         return;
     }
     if (document.getElementById('ProfileUserAddress').value == "")
     {
-        Swal.fire('Please enter Address.', '', 'warning');
-      
+        Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: 'Please enter Address.',
+            showConfirmButton: false,
+            timer: 1500
+        });
         return;
     }
 
@@ -314,12 +372,24 @@ function UpdateUserProfileInfo() {
             debugger;
             if (data == "success")
             {
-                Swal.fire('User profile updated successfully.', '','success');
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'User profile updated successfully.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 $(".close").trigger("click");
                 window.location.reload();
             }
             else {
-                Swal.fire('Profile not updated.', '', 'warning');
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'warning',
+                    title: 'Profile not updated.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 return;
             }
         },
