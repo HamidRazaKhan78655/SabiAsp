@@ -12,7 +12,13 @@
         var u = @ViewBag.logedinUserId;
         if (u==0)
         {
-            Swal.fire('Please sign in first', '', 'warning');
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please sign in first',
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
         else {
 
@@ -31,7 +37,14 @@
                         $('#totalitemlist').val(listofitem);
                     } else
                     {
-                        Swal.fire('Item already exist', '', 'warning');
+                        
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'warning',
+                            title: 'Item already exist',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
                 }
             });
@@ -68,7 +81,13 @@
             contentType: "application/json; charset=utf-8",
             success: function (response)
             {
-                Swal.fire(response);
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: response,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 $('#vendorNumDiv').show();
                 $('#vendorPhone').text(response);
                 debugger
@@ -529,21 +548,46 @@
         debugger;
         if (document.getElementById('shopItemName').value == "") {
 
-            Swal.fire('Please enter Item Name.', '', 'warning');
+            
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please enter Item Name.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             return;
         }
         if (document.getElementById('shopItemWeight').value == "") {
 
-            Swal.fire('Please enter Item Weight.', '', 'warning');
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please enter Item Weight.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             return;
         }
         if (document.getElementById('shopItemPrice').value == "") {
-            Swal.fire('Please enter Item Price.', '', 'warning');
+            
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please enter Item Price.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             return;
         }
         if (document.getElementById('shopSubCategorydrp').value == "") {
-
-            Swal.fire('Select one Sub Category.', '', 'warning');
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Select one Sub Category.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             return;
         }
 
@@ -562,7 +606,13 @@
                     window.location.reload();
                 }
                 else {
-                    Swal.fire('Item already exist.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Item already exist.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
             },
@@ -589,21 +639,46 @@
         debugger;
         if (document.getElementById('updateItemName').value == "") {
 
-            Swal.fire('Please enter Item Name.', '', 'warning');
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please enter Item Name.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             return;
         }
         if (document.getElementById('updateItemWeight').value == "") {
 
-            Swal.fire('Please enter Item Weight.', '', 'warning');
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please enter Item Weight.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             return;
         }
         if (document.getElementById('updateItemPrice').value == "") {
-            Swal.fire('Please enter Item Price.', '', 'warning');
+            
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please enter Item Price.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             return;
         }
         if (document.getElementById('UpdateSubCategorydrp').value == "") {
 
-            Swal.fire('Select one Sub Category.', '', 'warning');
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Select one Sub Category.',
+                showConfirmButton: false,
+                timer: 1500
+            });
             return;
         }
 
@@ -618,13 +693,25 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-
-                    Swal.fire('Item updated successfully.', '', 'success');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Item updated successfully.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     $(".close").trigger("click");
                     window.location.reload();
                 }
                 else {
-                    Swal.fire('Record not updated.', '', 'warning');
+                    
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Record not updated.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
             },
