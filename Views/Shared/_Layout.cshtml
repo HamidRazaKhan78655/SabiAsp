@@ -175,7 +175,13 @@
             //LayoutSub
             var password = document.getElementById('UserPassword').value;
             if (password == "") {
-                Swal.fire('Please enter Password.', '', 'warning');
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'warning',
+                    title: 'Please enter Password.',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 return;
             }
             else {
@@ -194,11 +200,24 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            Swal.fire('User added successfully.', '', 'success');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'User added successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+
                             window.location.href = "/Home/Index/";
                         }
                         else {
-                            Swal.fire('User already exist.', '', 'warning');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'User already exist.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
