@@ -224,7 +224,7 @@ namespace SabiAsp.Controllers
             var shop = Db.Shops.Where(d => d.vendorid == vendor.vendorid).FirstOrDefault();
             ViewBag.ShopData = shop;
             ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").ToList();
-            var subCategory = Db.SubCategories.Where(x => x.Shopid == shop.Shopid).ToList();
+            var subCategory = Db.SubCategories.Where(x => x.Shopid == shop.Shopid && x.isDeleted!="true").ToList();
             ViewBag.SubCategorylist = subCategory;
             var itemList = new List<SubCategoryItems>();
             foreach (var sub in subCategory)
