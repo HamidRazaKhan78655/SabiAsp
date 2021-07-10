@@ -851,7 +851,7 @@
 
         <input type="hidden" id="openShopItemModal" data-target="#shopItemBootstrapModal" data-toggle="modal" />
         <div id="addShopItem">
-            @{ 
+            @{
                 using (Html.BeginForm("AddShopItem", "Items", FormMethod.Post, new { id = "addShopItemForm" }))
                 {
 
@@ -994,13 +994,25 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            Swal.fire('User deleted successfully.', '', 'success');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'User deleted successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
-                        
-                            Swal.fire('User not deleted.', '', 'warning');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'User not deleted.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1015,33 +1027,67 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('FirstName').value == "") {
-                   
-                    Swal.fire('Please enter First Name.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter First Name.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('LastName').value == "") {
-                  
-                    Swal.fire('Please enter Last Name.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Last Name.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('EmailAddress').value == "") {
-                    
-                    Swal.fire('Please enter Email Address.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Email Address.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('Username').value == "") {
-                  
-                    Swal.fire('Please enter Username.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Username.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('Password').value == "") {
-                    
-                    Swal.fire('Please enter Password.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Password.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('RoleType').value == "") {
-                    
-                    Swal.fire('Select one Type.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Select one Type.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
 
@@ -1055,13 +1101,25 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            
-                            Swal.fire('User added successfully.', '', 'success');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'User added successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
-                            Swal.fire('User already exist.', '', 'warning');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'User already exist.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1076,23 +1134,46 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('UpdateUserName').value == "") {
-                    
-                    Swal.fire('Please enter Name.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Name.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('UpdateUserEmailAddress').value == "") {
-              
-                    Swal.fire('Please enter Email Address.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Email Address.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('UpdateUserUsername').value == "") {
-                    
-                    Swal.fire('Please enter Username.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Username.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('UpdateRoleType').value == "") {
-                   
-                    Swal.fire('Select one Type.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Select one Type.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
 
@@ -1106,13 +1187,24 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            Swal.fire('User updated successfully.', '', 'success');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'User updated successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
-                           
-                            Swal.fire('Record not updated.', '', 'warning');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Record not updated.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1237,7 +1329,7 @@
 
             function GetShoplist() {
                 var roleId = document.getElementById("RoleType").value;
-                if (roleId == "3") 
+                if (roleId == "3")
                     $("#vendorCategoryDrpDiv").show();
                 else
                     $("#vendorCategoryDrpDiv").hide();
@@ -1264,14 +1356,25 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                         
-                            Swal.fire('Category deleted successfully.', '','success');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Category deleted successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
-                            
-                            Swal.fire('Category not deleted.', '', 'warning');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Category not deleted.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1298,8 +1401,13 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('CategoryName').value == "") {
-                    
-                    Swal.fire('Plaese enter Category Name','','warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Plaese enter Category Name',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
 
@@ -1313,14 +1421,25 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            
-                            Swal.fire('Category added successfully.', '', 'success');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Category added successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
-                            
-                            Swal.fire('Category already exist','','warning');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Category already exist',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1335,8 +1454,14 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('CategoryName').value == "") {
-                   
-                    Swal.fire('Plaese enter Category Name', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Plaese enter Category Name',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
 
@@ -1350,14 +1475,25 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                           
-                            Swal.fire('Category updated successfully.', '', 'success');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Category updated successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
-                            
-                            Swal.fire('Record not updated.', '', 'warning');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Record not updated.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1421,13 +1557,25 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            Swal.fire('Sub Category deleted successfully.', '', 'success');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Sub Category deleted successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
-                            
-                            Swal.fire('Sub Category not deleted.', '', 'warning');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Sub Category not deleted.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1455,13 +1603,26 @@
                 //User/Index
 
                 if (document.getElementById('SubCategoryName').value == "") {
-                    
-                    Swal.fire('Please enter Sub Category Name.','','warning');
+
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Sub Category Name.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('VendorShopDrp').value == "") {
-                    
-                    Swal.fire('Select one Shop.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Select one Shop.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
 
@@ -1477,14 +1638,25 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            
-                            Swal.fire('Sub Category added successfully.', '', 'success');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Sub Category added successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
-                            
-                            Swal.fire('Sub Category already exist.', '', 'warning');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Sub Category already exist.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1499,13 +1671,23 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('UpdateSubCategoryName').value == "") {
-                    
-                    Swal.fire('Please enter Sub Category Name.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Sub Category Name.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('UpdateSVendorShopDrp').value == "") {
-                    
-                    Swal.fire('Select one Shop.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Select one Shop.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
 
@@ -1521,14 +1703,26 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            
-                            Swal.fire('Sub Category updated successfully.', '', 'success');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Sub Category updated successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
-                            
-                            Swal.fire('Record not updated.', '', 'warning');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Record not updated.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1542,7 +1736,7 @@
             function GetAllSubCategoriesList() {
                 debugger;
                 //shopSubCategorydrpDiv
-               var shopid =  $("#shopIddrp").val();
+                var shopid = $("#shopIddrp").val();
                 $.ajax({
                     type: "GET",
                     url: '/SubCategory/GetAllSubCategoriesListByShopId?shopid=' + shopid,
@@ -1630,19 +1824,46 @@
             function SaveShopItemInfo() {
                 debugger;
                 if (document.getElementById('shopItemName').value == "") {
-                    Swal.fire('Please enter Item Name.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'CPlease enter Item Name.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('shopItemWeight').value == "") {
-                    Swal.fire('Please enter Item Weight.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Item Weight.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('shopItemPrice').value == "") {
-                    Swal.fire('Please enter Item Price.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Item Price.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('shopSubCategorydrp').value == "") {
-                    Swal.fire('Select one Sub Category.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Select one Sub Category.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
 
@@ -1662,7 +1883,14 @@
                             GetAllItems();
                         }
                         else {
-                            Swal.fire('Item already exist.','','warning');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Item already exist.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1676,28 +1904,57 @@
             function SaveItemInfo() {
                 debugger;
                 if (document.getElementById('itemName').value == "") {
-                    
-                    Swal.fire('Please enter Item Name.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Item Name.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('itemWeight').value == "") {
-                   
-                    Swal.fire('Please enter Item Weight.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Item Weight.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('itemPrice').value == "") {
-                    
-                    Swal.fire('Please enter Item Price.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Item Price.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('shopIddrp').value == "") {
-                    
-                    Swal.fire('Select one Shop.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Select one Shop.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('SubCategorydrp').value == "") {
-                    
-                    Swal.fire('Select one Sub Category.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Select one Sub Category.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
 
@@ -1713,13 +1970,26 @@
                         debugger;
                         if (data == "success") {
                             debugger;
-                            Swal.fire('Item added successfully.', '', 'success');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Item added successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
                             debugger;
-                            Swal.fire('Item already exist.', '', 'warning');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Item already exist.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
@@ -1747,34 +2017,60 @@
                         $("#openItemModal").trigger("click");
                     }
                 });
-                
+
             }
 
             function UpdateItemInfo() {
                 debugger;
                 if (document.getElementById('updateItemName').value == "") {
-                    
-                    Swal.fire('Please enter Item Name.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Item Name.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('updateItemWeight').value == "") {
-                    
-                    Swal.fire('Please enter Item Weight.', '', 'warning');
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Item Weight.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('updateItemPrice').value == "") {
-                    
-                    Swal.fire('Please enter Item Price.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Please enter Item Price.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('UpdateShopIddrp').value == "") {
-                    
-                    Swal.fire('Select one Shop.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Select one Shop.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
                 if (document.getElementById('UpdateSubCategorydrp').value == "") {
-                    
-                    Swal.fire('Select one Sub Category.', '', 'warning');
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Select one Sub Category.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                     return;
                 }
 
@@ -1789,14 +2085,26 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            
-                            Swal.fire('Item updated successfully.', '', 'success');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Item updated successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
-                            Swal.fire('Record not updated.', '', 'warning');
-                            
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Record not updated.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+
                             return;
                         }
                     },
@@ -1818,14 +2126,25 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            
-                            Swal.fire('Item deleted successfully.', '', 'success');
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Item deleted successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
-                            
-                            Swal.fire('Item not deleted.', '', 'warning');
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Item not deleted.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                             return;
                         }
                     },
