@@ -490,3 +490,13 @@ function leftsideclickevent() {
     }
 }
 
+function getTrackingHistory(Shopid) {
+    var trackingView = $('#History-container');
+    console.log(Shopid);
+    var url = '/user/getHistoryofUser?shopid=' + Shopid;
+    $.get(url, function (data) {
+        debugger;
+        trackingView.html(data);
+        trackingView.show();
+    });
+}

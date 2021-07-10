@@ -552,6 +552,7 @@
     <Content Include="Views\SubCategory\GetShopSubCategoriesByShopId.cshtml" />
     <Content Include="Views\SubCategory\SortShopList.cshtml" />
     <Content Include="Views\Items\SearchItempartialview.cshtml" />
+    <Content Include="Views\User\getHistoryofUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

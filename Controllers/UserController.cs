@@ -44,7 +44,14 @@ namespace SabiAsp.Controllers
                 }
             }
         }
-
+        [HttpGet]
+        public ActionResult getHistoryofUser(int shopid)
+        {
+            var shop = Db.Shops.Where(x => x.Shopid == shopid).FirstOrDefault();
+            var vendorid = shop.vendorid;
+            var trackings = Db.Trackings.Where(t => t.from == vendorid).ToList();
+            return View(trackings);
+        }
         public ActionResult GetUserByName(string Name)
         {
             var userList = new List<user>();
