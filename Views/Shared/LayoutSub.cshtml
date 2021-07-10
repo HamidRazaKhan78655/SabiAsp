@@ -258,6 +258,8 @@
         }
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AT6ubOW17AlwGOw22glX_r81d51tNupbTDHLrvyS6GUZEmI0ZmvRMwZv7oSBwUuk87dtBuTvKwqSMfVn">
+    </script>
 </head>
 <!-- body -->
 <body class="main-layout">
@@ -293,6 +295,25 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade " id="paypalModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Payment</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @*
         //modal to tem View*@
     <!-- header section start -->
@@ -304,7 +325,7 @@
                         <a href="/Home/Index">
                             @*  <img src="~/Content/Template/images/logo.png">*@
                             @*<img src="~/Images/MainSabilogo.png" style="width: 220px; height: 220px; position: relative; top: -40px;" />*@
-                            <img src="~/Images/logoWhite.png" style="width: 220px; height: 220px; position: relative; top: -40px;"/>
+                            <img src="~/Images/logoWhite.png" style="width: 220px; height: 220px; position: relative; top: -40px;" />
                         </a>
                     </div>
                 </div>
@@ -355,7 +376,7 @@
                                     @*<a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>*@
                                     <a class="jss109 nav-item nav-link last" onclick="BuyItemView()">
                                         <div class="jss261">
-                                            <div class="jss439 jss262">0</div>
+                                            <div class="jss439 jss262">@Session["CartCount"].ToString()</div>
                                         </div>
                                         <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
                                             <span class="jss310">
@@ -408,7 +429,7 @@
                                         </li>
                                         <li onclick="loginWithSabi();">
                                             <div class="flex1">
-                                                <img src="~/Images/clicklogoblue.png" @*class="signinimg"*@ style=" position: absolute; height: 40px; width: 40px; margin-left: -7px; top: 70px;"/>
+                                                <img src="~/Images/clicklogoblue.png" @*class="signinimg"*@ style=" position: absolute; height: 40px; width: 40px; margin-left: -7px; top: 70px;" />
                                                 <input class="btn" style=" margin-left: 26px; background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Sign In with Click Sabi" type="button" />
                                             </div>
                                         </li>
@@ -467,40 +488,40 @@
                                 <li>Become a Sabi Sender</li>
                             </ul>
                         </div>
+                    </div>
+                    <div class="col-3">
+                        <h2 class="shop_text">Legal</h2>
+                        <div class="delivery_text">
+                            <ul>
+                                <li>Terms and conditions</li>
+                                <li>Privacy</li>
+                                <li>Cookies</li>
+                                <li>Modren Slavery Statements</li>
+                                <li>Tax Strategy</li>
+                            </ul>
                         </div>
-                        <div class="col-3">
-                            <h2 class="shop_text">Legal</h2>
-                            <div class="delivery_text">
-                                <ul>
-                                    <li>Terms and conditions</li>
-                                    <li>Privacy</li>
-                                    <li>Cookies</li>
-                                    <li>Modren Slavery Statements</li>
-                                    <li>Tax Strategy</li>
-                                </ul>
-                            </div>
+                    </div>
+                    <div class="col-3">
+                        <h2 class="shop_text">Support</h2>
+                        <div class="delivery_text">
+                            <ul>
+                                <li>Contact us</li>
+                                <li>FAQs</li>
+                            </ul>
                         </div>
-                        <div class="col-3">
-                            <h2 class="shop_text">Support</h2>
-                            <div class="delivery_text">
-                                <ul>
-                                    <li>Contact us</li>
-                                    <li>FAQs</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <h2 class="adderess_text">Follow US</h2>
-                            <div class="container" style="display: contents;">
-                                <div class="row">
-                                    <div class="col-3"><i class="fab fa-facebook" style="color: white; font-size: 40px;"></i></div>
-                                    <div class="col-3"><i class="fab fa-instagram" style="color: white; font-size: 40px;"></i></div>
-                                    <div class="col-3"><i class="fab fa-linkedin" style="color: white; font-size: 40px;"></i></div>
-                                    <div class="col-3"><i class="fab fa-twitter" style="color: white; font-size: 40px;"></i></div>
-                                </div>
+                    </div>
+                    <div class="col-3">
+                        <h2 class="adderess_text">Follow US</h2>
+                        <div class="container" style="display: contents;">
+                            <div class="row">
+                                <div class="col-3"><i class="fab fa-facebook" style="color: white; font-size: 40px;"></i></div>
+                                <div class="col-3"><i class="fab fa-instagram" style="color: white; font-size: 40px;"></i></div>
+                                <div class="col-3"><i class="fab fa-linkedin" style="color: white; font-size: 40px;"></i></div>
+                                <div class="col-3"><i class="fab fa-twitter" style="color: white; font-size: 40px;"></i></div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -679,6 +700,7 @@
 
             //scroll slides on swipe for touch enabled devices
 
+            $('#searchItemsInshop').val("");
             $("#myCarousel").on("touchstart", function (event) {
                 var yClick = event.originalEvent.touches[0].pageY;
                 $(this).one("touchmove", function (event) {

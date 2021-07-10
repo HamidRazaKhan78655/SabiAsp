@@ -18,6 +18,7 @@ namespace SabiAsp.Models
         public vendor()
         {
             this.Shops = new HashSet<Shop>();
+            this.Trackings = new HashSet<Tracking>();
         }
     
         public int vendorid { get; set; }
@@ -33,5 +34,7 @@ namespace SabiAsp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shop> Shops { get; set; }
         public virtual user user { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tracking> Trackings { get; set; }
     }
 }

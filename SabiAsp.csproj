@@ -161,6 +161,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
@@ -215,6 +216,9 @@
     </Compile>
     <Compile Include="Models\SubCategoryItems.cs" />
     <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Tracking.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\user.cs">
@@ -552,6 +556,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CompanyImages\" />
+    <Folder Include="Views\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
