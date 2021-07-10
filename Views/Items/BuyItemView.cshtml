@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<SabiAsp.Models.Cart>
-@{ 
+@{
     Layout = null;
 }
 <div class="container-fluid" style="padding:0px;">
@@ -14,13 +14,13 @@
 
                 <div class="row" style="  margin: 0px 0px 10px 0px;
 ">
-                    <div class="col"2>
+                    <div class="col" 2>
                         <img style="max-width: 25px; height: 25px; border-radius: 50%;" src="~/CompanyImages/@item.itemDetails.image" />
                     </div>
                     <div class="col-6" style="color:black;font-weight:500">
                         @item.itemDetails.name
-                                        <span style="display: block; font-size: 12px; color: #666666; line-height: 2px;">@item.itemDetails.Price $</span>
-                                    </div>
+                        <span style="display: block; font-size: 12px; color: #666666; line-height: 2px;">@item.itemDetails.Price $</span>
+                    </div>
                     <div class="col-4">
                         <div style=" box-shadow: 0 -1px 7px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%); float: right; border-radius: 5px; padding: 1px 8px 1px 8px;">
                             <i class="far fa-trash-alt" style="margin:5px"></i>
@@ -43,15 +43,44 @@
                             price = price + int.Parse(@item.itemDetails.Price);
                         }
 
-                                        <h3 style="display:inline">Total : @price $</h3>
+                        <h3 style="display:inline">Total : @price $</h3>
+                        <input type="hidden" id="totalAmount" value="@price"/>
                     }
-                    <input type="button" value="Go Pay" class="btn btn-warning" style=" float: right; color: white;" />
+                    <input type="button" value="Go Pay" class="btn btn-warning" style=" float: right; color: white;" data-target="#paypalModal" data-toggle="modal" onclick="createPaypalButtons()" />
                 </div>
 
             </div>
         </div>
     </div>
-   
-   
+    <script>
+        function createPaypalButtons() {
+            debugger;
+            var amount = $('#totalAmount').val();
+            $('#paypal-button-container').html('');
+            paypal.Buttons({
+                createOrder: function (data, actions) {
+                    // This function sets up the details of the transaction, including the amount and line item details.
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                
+                                value: amount
+                            }
+                        }]
+                    });
+                },
+                onApprove: function (data, actions) {
+                    // This function captures the funds from the transaction.
+                    return actions.order.capture().then(function (details) {
+                        debugger;
+                        // This function shows a transaction success message to your buyer.
+                        alert('Transaction completed by ' + details.payer.name.given_name);
+                    });
+                }
+            }).render('#paypal-button-container');
+        }
+          //This function displays Smart Payment Buttons on your web page.
+    </script>
+
 </div>
 

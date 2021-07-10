@@ -301,12 +301,14 @@
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <script src="https://www.paypal.com/sdk/js?client-id=AT6ubOW17AlwGOw22glX_r81d51tNupbTDHLrvyS6GUZEmI0ZmvRMwZv7oSBwUuk87dtBuTvKwqSMfVn">
+    </script>
 </head>
 
 <!-- body -->
 <body class="main-layout">
     <input value="@Session["UserId"]" id="CheckLogin" type="hidden" />
-    <div class="AddtoCartDiv">
+    <div class="AddtoCartDiv" style="display:none">
         <div id="LoadCartData">
 
         </div>
@@ -456,7 +458,7 @@
                                             </li>
                                             <li onclick="loginWithSabi();">
                                                 <div class="flex1">
-                                                    <img src="~/Images/clicklogoblue.png" @*class="signinimg"*@  style=" position: absolute; height: 40px; width: 40px; margin-left: -7px; top: 70px;"/>
+                                                    <img src="~/Images/clicklogoblue.png" @*class="signinimg"*@ style=" position: absolute; height: 40px; width: 40px; margin-left: -7px; top: 70px;" />
                                                     <input class="btn" style="background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px;    margin-left: 26px; " value="Sign In with Sabi" type="button" />
                                                 </div>
                                             </li>
@@ -505,12 +507,12 @@
                     <div class="container-fluid">
                         <div id="myCarousel" class="carousel slide" data-ride="carousel" style="top: -65px;">
                             <!-- Indicators -->
-                         @*   <ol class="carousel-indicators">
-                                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                                    <li data-target="#myCarousel" data-slide-to="3"></li>
-                            </ol>*@
+                            @*   <ol class="carousel-indicators">
+                                     <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                                        <li data-target="#myCarousel" data-slide-to="3"></li>
+                                </ol>*@
                             <div class="Indicators">
                                 <i class="fas fa-circle"></i>
                                 <i class="fas fa-circle"></i>
@@ -952,6 +954,24 @@
 
     <input type="hidden" id="SignInType" value="" />
 
+    <div class="modal fade " id="paypalModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Payment</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade " id="MyModal">
         <div class="modal-dialog">
             <div class="modal-content">
