@@ -302,6 +302,9 @@
     <Content Include="Content\Template\images\gray-star-icon.png" />
     <Content Include="Content\Template\images\Grocceries.png" />
     <Content Include="Content\Template\images\hamper.png" />
+    <Content Include="Content\Template\images\images %281%29.jpg" />
+    <Content Include="Content\Template\images\images %282%29.jpg" />
+    <Content Include="Content\Template\images\images.jpg" />
     <Content Include="Content\Template\images\in-icon.png" />
     <Content Include="Content\Template\images\logo.png" />
     <Content Include="Content\Template\images\map-icon.png" />
