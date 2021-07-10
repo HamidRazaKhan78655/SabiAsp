@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SabiAsp.Models.Tracking>
+@{
+    Layout = null;
+}
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.user.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.step1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.step2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.step3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>
+        <th>
+            Item Name
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+
+    <td>
+        @Html.DisplayFor(modelItem => item.user.name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.step1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.step2)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.step3)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.state)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.item.name)
+    </td>
+    <td>
+        @Html.ActionLink("Report", "Report", new { id = item.trackingId }) |
+        @Html.ActionLink("Details", "Details", new { id = item.trackingId })
+    </td>
+</tr>
+}
+
+</table>
