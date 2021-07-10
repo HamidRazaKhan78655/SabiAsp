@@ -20,10 +20,65 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3" style="background: #130347 !important">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white"><i class="far fa-snowflake"></i> Sabi | Admin Panel <i class="far fa-snowflake"></i></a>
+                <div style="float:left" onclick="ShowNotifications();">
+                    @if (ViewBag.VendorsShopCount != null || ViewBag.VendorsShopCount != 0)
+                    {
+                        <span id="counternotification" style="cursor: pointer; top:-17px" class="counternotificationMobile">@ViewBag.VendorsShopCount</span>
+                    }
+                    else
+                    {
+                        <span id="counternotification" style="cursor: pointer;display:none" class="counternotificationMobile">0</span>
+                    }
+                    <a id="ntfglobal" style="cursor: pointer;" title="Notification">
+                        <i class="fas fa-bell topicon"></i>
+                    </a>
+                </div>
             </div>
         </nav>
     </header>
     <div class="MainDivAdmin">
+
+        <div id="ShopDataDiv" style="display:none;">
+            <div id="ShopData" style="display:none;">
+                <table class="table table-hover">
+                    <thead class="w-thead-bg">
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filterShop">
+                        @{
+                            if (ViewBag.VendorsShop.Count > 0)
+                            {
+                                foreach (var shop in ViewBag.VendorsShop)
+                                {
+                                    <tr>
+                                        <td>@shop.Shopid</td>
+                                        <td>@shop.shopname</td>
+                                        <td>@shop.CreatedDate</td>
+                                        <td>
+                                            <input type="button" id="acceptShop" value="Accept" onclick="AcceptRejectShop(@shop.Shopid, 'Accepted');" />
+                                            <input type="button" id="rejectShop" value="Reject" onclick="AcceptRejectShop(@shop.Shopid, 'Rejected');" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="w-empty-list">Record Not Found</div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
         <div style="padding:10px;">
             <h2 id="w-head-text">Users</h2>
@@ -939,25 +994,13 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'User deleted successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('User deleted successfully.', '', 'success');
                             $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'User not deleted.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                        
+                            Swal.fire('User not deleted.', '', 'warning');
                             return;
                         }
                     },
@@ -973,66 +1016,32 @@
                 //User/Index
                 if (document.getElementById('FirstName').value == "") {
                    
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter First Name.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter First Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('LastName').value == "") {
                   
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Last Name.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter Last Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('EmailAddress').value == "") {
                     
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Email Address.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter Email Address.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('Username').value == "") {
                   
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Username.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter Username.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('Password').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Password.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Please enter Password.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('RoleType').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Select one Type.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Select one Type.', '', 'warning');
                     return;
                 }
 
@@ -1047,24 +1056,12 @@
                         debugger;
                         if (data == "success") {
                             
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'User added successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('User added successfully.', '', 'success');
                             $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'User already exist.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('User already exist.', '', 'warning');
                             return;
                         }
                     },
@@ -1080,45 +1077,22 @@
                 //User/Index
                 if (document.getElementById('UpdateUserName').value == "") {
                     
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Name.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateUserEmailAddress').value == "") {
               
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Email Address.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter Email Address.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateUserUsername').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Username.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Please enter Username.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateRoleType').value == "") {
                    
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Select one Type.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Select one Type.', '', 'warning');
                     return;
                 }
 
@@ -1132,24 +1106,13 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'User updated successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('User updated successfully.', '', 'success');
                             $(".close").trigger("click");
                             window.location.reload();
                         }
                         else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Record not updated.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                           
+                            Swal.fire('Record not updated.', '', 'warning');
                             return;
                         }
                     },
@@ -1302,24 +1265,13 @@
                         debugger;
                         if (data == "success") {
                          
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Category deleted successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Category deleted successfully.', '','success');
                             $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Category not deleted.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            
+                            Swal.fire('Category not deleted.', '', 'warning');
                             return;
                         }
                     },
@@ -1346,13 +1298,8 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('CategoryName').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Plaese enter Category Name',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Plaese enter Category Name','','warning');
                     return;
                 }
 
@@ -1367,24 +1314,13 @@
                         debugger;
                         if (data == "success") {
                             
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Category added successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Category added successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Category already exist',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            
+                            Swal.fire('Category already exist','','warning');
                             return;
                         }
                     },
@@ -1399,14 +1335,8 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('CategoryName').value == "") {
-                    
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Plaese enter Category Name',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                   
+                    Swal.fire('Plaese enter Category Name', '', 'warning');
                     return;
                 }
 
@@ -1421,24 +1351,13 @@
                         debugger;
                         if (data == "success") {
                            
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Category updated successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Category updated successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllCategories();
                         }
                         else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Record not updated.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            
+                            Swal.fire('Record not updated.', '', 'warning');
                             return;
                         }
                     },
@@ -1502,25 +1421,13 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Sub Category deleted successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Sub Category deleted successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
-
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Sub Category not deleted.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            
+                            Swal.fire('Sub Category not deleted.', '', 'warning');
                             return;
                         }
                     },
@@ -1549,25 +1456,12 @@
 
                 if (document.getElementById('SubCategoryName').value == "") {
                     
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Sub Category Name.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter Sub Category Name.','','warning');
                     return;
                 }
                 if (document.getElementById('VendorShopDrp').value == "") {
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Select one Shop.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Select one Shop.', '', 'warning');
                     return;
                 }
 
@@ -1584,24 +1478,13 @@
                         debugger;
                         if (data == "success") {
                             
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Sub Category added successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Sub Category added successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Sub Category already exist.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            
+                            Swal.fire('Sub Category already exist.', '', 'warning');
                             return;
                         }
                     },
@@ -1616,23 +1499,13 @@
                 debugger;
                 //User/Index
                 if (document.getElementById('UpdateSubCategoryName').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Sub Category Name.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Please enter Sub Category Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateSVendorShopDrp').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Select one Shop.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Select one Shop.', '', 'warning');
                     return;
                 }
 
@@ -1649,25 +1522,13 @@
                         debugger;
                         if (data == "success") {
                             
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Sub Category updated successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Sub Category updated successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllSubCategories();
                         }
                         else {
-
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Record not updated.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            
+                            Swal.fire('Record not updated.', '', 'warning');
                             return;
                         }
                     },
@@ -1769,46 +1630,19 @@
             function SaveShopItemInfo() {
                 debugger;
                 if (document.getElementById('shopItemName').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'CPlease enter Item Name.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter Item Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopItemWeight').value == "") {
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Item Weight.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter Item Weight.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopItemPrice').value == "") {
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Item Price.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Please enter Item Price.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopSubCategorydrp').value == "") {
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Select one Sub Category.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    Swal.fire('Select one Sub Category.', '', 'warning');
                     return;
                 }
 
@@ -1828,14 +1662,7 @@
                             GetAllItems();
                         }
                         else {
-
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Item already exist.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Item already exist.','','warning');
                             return;
                         }
                     },
@@ -1849,57 +1676,28 @@
             function SaveItemInfo() {
                 debugger;
                 if (document.getElementById('itemName').value == "") {
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Item Name.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Please enter Item Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('itemWeight').value == "") {
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Item Weight.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                   
+                    Swal.fire('Please enter Item Weight.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('itemPrice').value == "") {
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Item Price.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Please enter Item Price.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('shopIddrp').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Select one Shop.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Select one Shop.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('SubCategorydrp').value == "") {
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Select one Sub Category.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Select one Sub Category.', '', 'warning');
                     return;
                 }
 
@@ -1915,26 +1713,13 @@
                         debugger;
                         if (data == "success") {
                             debugger;
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Item added successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Item added successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
                             debugger;
-
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Item already exist.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Item already exist.', '', 'warning');
                             return;
                         }
                     },
@@ -1968,54 +1753,28 @@
             function UpdateItemInfo() {
                 debugger;
                 if (document.getElementById('updateItemName').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Item Name.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Please enter Item Name.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('updateItemWeight').value == "") {
-
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Item Weight.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Please enter Item Weight.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('updateItemPrice').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Please enter Item Price.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Please enter Item Price.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateShopIddrp').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Select one Shop.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Select one Shop.', '', 'warning');
                     return;
                 }
                 if (document.getElementById('UpdateSubCategorydrp').value == "") {
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Select one Sub Category.',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    
+                    Swal.fire('Select one Sub Category.', '', 'warning');
                     return;
                 }
 
@@ -2031,24 +1790,12 @@
                         debugger;
                         if (data == "success") {
                             
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Item updated successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Item updated successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Record not updated.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Record not updated.', '', 'warning');
                             
                             return;
                         }
@@ -2072,24 +1819,13 @@
                         debugger;
                         if (data == "success") {
                             
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'Item deleted successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            Swal.fire('Item deleted successfully.', '', 'success');
                             $(".close").trigger("click");
                             GetAllItems();
                         }
                         else {
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'warning',
-                                title: 'Item not deleted.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
+                            
+                            Swal.fire('Item not deleted.', '', 'warning');
                             return;
                         }
                     },
@@ -2124,6 +1860,27 @@
                 $("#openShopItemModal").trigger("click");
             }
 
+        </script>
+
+        <script>
+            function ShowNotifications() {
+                debugger;
+                $("#ShopDataDiv").show();
+            }
+
+            function AcceptRejectShop(shopId, status) {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: '/Vendor/AcceptRejectShop?shopId=' + shopId + '&&status=' + status,
+                    success: function (response) {
+                        debugger;
+                        $("#ShopDataDiv").hide();
+                        //$("#filterItems").html(response);
+                    }
+                });
+
+            }
         </script>
 
     </div>

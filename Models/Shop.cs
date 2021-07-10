@@ -38,6 +38,7 @@ namespace SabiAsp.Models
         public string Ratings { get; set; }
         public string Logo { get; set; }
         public string MinOrder { get; set; }
+        public string Status { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual vendor vendor { get; set; }

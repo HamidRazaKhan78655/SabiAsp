@@ -65,6 +65,7 @@
           <Property Name="DeliveryTime" Type="nvarchar" MaxLength="100" />
           <Property Name="MinOrder" Type="nvarchar" MaxLength="100" />
           <Property Name="Ratings" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -156,6 +157,7 @@
           <Property Name="vendorid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" />
           <Property Name="vIDSocial" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -442,6 +444,7 @@
           <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MinOrder" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserRatings" Relationship="sabiShopModel.FK_UserRating_Shops" FromRole="Shop" ToRole="UserRating" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -529,6 +532,7 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Shops" Relationship="Self.FK_Shops_vendor" FromRole="vendor" ToRole="Shops" />
           <NavigationProperty Name="user" Relationship="Self.FK_vendor_users" FromRole="vendor" ToRole="users" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Shops_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
@@ -815,6 +819,7 @@
           <EntitySetMapping Name="Shops">
             <EntityTypeMapping TypeName="sabiShopModel.Shop">
               <MappingFragment StoreEntitySet="Shops">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
                 <ScalarProperty Name="Logo" ColumnName="Logo" />
                 <ScalarProperty Name="Ratings" ColumnName="Ratings" />
@@ -906,6 +911,7 @@
           <EntitySetMapping Name="vendors">
             <EntityTypeMapping TypeName="sabiShopModel.vendor">
               <MappingFragment StoreEntitySet="vendor">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="vendorid" ColumnName="vendorid" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="vIDSocial" ColumnName="vIDSocial" />

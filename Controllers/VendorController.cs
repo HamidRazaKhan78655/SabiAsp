@@ -421,5 +421,18 @@ namespace SabiAsp.Controllers
 
             return "error";
         }
+
+
+        public string AcceptRejectShop(int shopId, string status) 
+        {
+            var s = Db.Shops.Where(sh => sh.Shopid == shopId).FirstOrDefault();
+            int logedinUserId = Convert.ToInt32(Session["UserId"]);
+            s.Status = status;
+            s.ModifiedBy = logedinUserId;
+            s.ModifiedDate = DateTime.Now;
+            Db.Entry(s).State = EntityState.Modified;
+            Db.SaveChanges();
+            return "success";
+        }
     }
 }
