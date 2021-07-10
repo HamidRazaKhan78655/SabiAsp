@@ -218,9 +218,19 @@ function BuyItemView() {
     debugger;
     var cartDiv = $(".AddtoCartDiv");
   
-        cartDiv.show();
-        var loadCart = $("#LoadCartData");
-        if (checkUserSignIn()) {
+      
+    if (checkUserSignIn()) {
+        if (cartDiv.css('display') == 'block') {
+            cartDiv.removeClass('animate__bounceInRight');
+            cartDiv.addClass('animate__animated animate__bounceOutRight');
+            setTimeout(function () {
+                cartDiv.hide();
+            },1000);
+           
+        } else {
+            cartDiv.show();
+            var loadCart = $("#LoadCartData");
+            cartDiv.removeClass('animate__bounceOutRight');
             cartDiv.addClass('animate__animated animate__bounceInRight');
             var url = "/Items/BuyItemView?Userid=" + $('#CheckLogin').val();
             $.get(url, function (data) {
@@ -228,6 +238,8 @@ function BuyItemView() {
                 debugger;
                 loadCart.html(data);
             });
+        }
+            
         } else {
 
             Swal.fire({
