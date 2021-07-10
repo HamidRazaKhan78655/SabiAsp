@@ -26,11 +26,16 @@ namespace SabiAsp.Controllers
                 int logedinRoleID = Convert.ToInt32(Session["RoleID"]);
                 if (logedinRoleID == 1)
                 {
-                    ViewBag.Users = Db.users.OrderByDescending(x => x.CreatedBy).ToList();
+                    var u = Db.users.OrderByDescending(x => x.CreatedBy).ToList();
+                    ViewBag.Users = u;
                     ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
                     ViewBag.SubCategories = Db.SubCategories.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
                     ViewBag.Items = Db.items.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
-                    ViewBag.Shops = Db.Shops.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+                    var s = Db.Shops.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+                    ViewBag.Shops = s;
+                    var v = s.Where(x => x.Status != "Accepted").OrderByDescending(x => x.CreatedBy).ToList();
+                    ViewBag.VendorsShop = v;
+                    ViewBag.VendorsShopCount = v.Count();
                     return View();
                 }
                 else

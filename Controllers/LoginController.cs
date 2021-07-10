@@ -60,9 +60,16 @@ namespace SabiAsp.Controllers
             string username = admin["username"].ToString();
             string password = admin["pass"].ToString();
 
-            var User = Db.users.Where(x => x.username.ToLower() == username.ToLower()).FirstOrDefault();
+            var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.isDeleted != "true").FirstOrDefault();
             if (User != null)
             {
+                if (User.RoleID == 3)
+                {
+                    var vendor = Db.vendors.Where(v => v.Status == "Accepted").SingleOrDefault();
+                    if (vendor == null)
+                        return View();
+                }
+
                 string DecryptPassword = Encrypto.DecryptString(User.password);
                 if (password == DecryptPassword)
                 {
