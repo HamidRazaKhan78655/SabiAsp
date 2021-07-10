@@ -1,6 +1,8 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
+import { Alert } from "../lib/bootstrap/dist/js/bootstrap.bundle";
+
 // Write your JavaScript code.
 
 
@@ -227,14 +229,7 @@ function BuyItemView() {
             loadCart.html(data);
         });
     } else {
-        
-        Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: 'Please SignIn first !',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        warningAlert('Please SignIn first !');
     }
   
 }
@@ -250,38 +245,16 @@ function AddToCart(itemId) {
                     contentType: "application/json; charset=utf-8",
            success: function (response) {
                if (response == "ok") {
-                 
-                   Swal.fire({
-                       position: 'top-end',
-                       icon: 'success',
-                       title: 'Item Added To cart !',
-                       showConfirmButton: false,
-                       timer: 1500
-                   });
+                   successAlert('Item Added To cart !');
                } else {
-
-                   
-                   Swal.fire({
-                       position: 'top-end',
-                       icon: 'warning',
-                       title: 'Can t add to cart this item',
-                       showConfirmButton: false,
-                       timer: 1500
-                   });
+                   warningAlert('Can t add to cart this item');
                }
                debugger
                     }
                 };
                 $.ajax(options);
     } else {
-        
-        Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: 'Please SignIn first !',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        warningAlert('Please SignIn first !');
     }
   
 }
@@ -300,62 +273,29 @@ function UpdateUserProfileInfo() {
     debugger;
     if (document.getElementById('ProfileUserName').value == "")
     {
-      
-        Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: 'Please enter Name.',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        warningAlert('Please enter Name.');
         return;
     }
     if (document.getElementById('ProfileUserEmailAddress').value == "")
     {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: 'Please enter Email Address.',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        warningAlert('Please enter Email Address.');
        
         return;
     }
     if (document.getElementById('ProfileUserContact').value == "")
     {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: 'Please enter Contact.',
-            showConfirmButton: false,
-            timer: 1500
-        });
-       
+        warningAlert('Please enter Contact.');
         return;
     }
     if (document.getElementById('ProfileUserUsername').value == "")
     {
-        
-        Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: 'Please enter Username.',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        warningAlert('Please enter Username.');
        
         return;
     }
     if (document.getElementById('ProfileUserAddress').value == "")
     {
-        Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: 'Please enter Address.',
-            showConfirmButton: false,
-            timer: 1500
-        });
+        warningAlert('Please enter Address.');
         return;
     }
 
@@ -372,24 +312,12 @@ function UpdateUserProfileInfo() {
             debugger;
             if (data == "success")
             {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'User profile updated successfully.',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                successAlert('User profile updated successfully.');
                 $(".close").trigger("click");
                 window.location.reload();
             }
             else {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'warning',
-                    title: 'Profile not updated.',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                warningAlert('Profile not updated.');
                 return;
             }
         },
@@ -479,3 +407,28 @@ function leftsideclickevent() {
     }
 }
 
+/*Custom Alert Function start*/
+function successAlert(alerttitle) {
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: alerttitle,
+        showConfirmButton: false,
+        timer: 1500
+    });
+}
+
+function warningAlert(alerttitle)
+{
+    Swal.fire({
+        position: 'top-end',
+        icon: 'warning',
+        title: alerttitle,
+        showConfirmButton: false,
+        timer: 1500
+    });
+}
+
+
+
+/*Custom Alert Function start*/

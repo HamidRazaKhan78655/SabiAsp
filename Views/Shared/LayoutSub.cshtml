@@ -157,8 +157,7 @@
             //LayoutSub
             var password = document.getElementById('UserPassword').value;
             if (password == "") {
-
-                Swal.fire('Please enter Password.', '', 'warning');
+                warningAlert('Please enter Password.');
                 return;
             }
             else {
@@ -177,11 +176,12 @@
                     success: function (data) {
                         debugger;
                         if (data == "success") {
-                            Swal.fire('User added successfully.', '', 'success');
+                            
+                            successAlert('User added successfully.');
                             window.location.href = "/Home/Index/";
                         }
                         else {
-                            Swal.fire('User already exist.', '', 'warning');
+                            warningAlert('User already exist.');
                             return;
                         }
                     },
