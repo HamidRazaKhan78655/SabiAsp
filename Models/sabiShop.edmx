@@ -96,6 +96,23 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Tracking">
+          <Key>
+            <PropertyRef Name="trackingId" />
+          </Key>
+          <Property Name="trackingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="to" Type="int" />
+          <Property Name="from" Type="int" />
+          <Property Name="ItemId" Type="int" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="step1" Type="nvarchar" MaxLength="50" />
+          <Property Name="step2" Type="nvarchar" MaxLength="50" />
+          <Property Name="step3" Type="nvarchar" MaxLength="50" />
+          <Property Name="state" Type="nvarchar" MaxLength="50" />
+          <Property Name="isDeleted" Type="int" />
+          <Property Name="isModified" Type="int" />
+          <Property Name="isCreated" Type="int" />
+        </EntityType>
         <EntityType Name="UserItemCard">
           <Key>
             <PropertyRef Name="UserItemId" />
@@ -176,30 +193,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shops_Categories">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="0..1" />
-          <End Role="Shops" Type="Self.Shops" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categories">
-              <PropertyRef Name="CategoryId" />
-            </Principal>
-            <Dependent Role="Shops">
-              <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Shops_vendor">
-          <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
-          <End Role="Shops" Type="Self.Shops" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="vendor">
-              <PropertyRef Name="vendorid" />
-            </Principal>
-            <Dependent Role="Shops">
-              <PropertyRef Name="vendorid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SubCategories_Shops">
           <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="*" />
@@ -209,6 +202,42 @@
             </Principal>
             <Dependent Role="SubCategories">
               <PropertyRef Name="Shopid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracking_items">
+          <End Role="items" Type="Self.items" Multiplicity="0..1" />
+          <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="items">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracking_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="to" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracking_vendor">
+          <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
+          <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendor">
+              <PropertyRef Name="vendorid" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="from" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -322,6 +351,7 @@
           <EntitySet Name="Shops" EntityType="Self.Shops" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategories" EntityType="Self.SubCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tracking" EntityType="Self.Tracking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserItemCard" EntityType="Self.UserItemCard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRating" EntityType="Self.UserRating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
@@ -330,17 +360,21 @@
             <End Role="SubCategories" EntitySet="SubCategories" />
             <End Role="items" EntitySet="items" />
           </AssociationSet>
-          <AssociationSet Name="FK_Shops_Categories" Association="Self.FK_Shops_Categories">
-            <End Role="Categories" EntitySet="Categories" />
-            <End Role="Shops" EntitySet="Shops" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Shops_vendor" Association="Self.FK_Shops_vendor">
-            <End Role="vendor" EntitySet="vendor" />
-            <End Role="Shops" EntitySet="Shops" />
-          </AssociationSet>
           <AssociationSet Name="FK_SubCategories_Shops" Association="Self.FK_SubCategories_Shops">
             <End Role="Shops" EntitySet="Shops" />
             <End Role="SubCategories" EntitySet="SubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracking_items" Association="Self.FK_Tracking_items">
+            <End Role="items" EntitySet="items" />
+            <End Role="Tracking" EntitySet="Tracking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracking_users" Association="Self.FK_Tracking_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="Tracking" EntitySet="Tracking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracking_vendor" Association="Self.FK_Tracking_vendor">
+            <End Role="vendor" EntitySet="vendor" />
+            <End Role="Tracking" EntitySet="Tracking" />
           </AssociationSet>
           <AssociationSet Name="FK_UserItemCard_items" Association="Self.FK_UserItemCard_items">
             <End Role="items" EntitySet="items" />
@@ -409,6 +443,7 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="SubCategory" Relationship="Self.FK_items_SubCategories" FromRole="items" ToRole="SubCategories" />
           <NavigationProperty Name="UserItemCards" Relationship="Self.FK_UserItemCard_items" FromRole="items" ToRole="UserItemCard" />
+          <NavigationProperty Name="Trackings" Relationship="sabiShopModel.FK_Tracking_items" FromRole="item" ToRole="Tracking" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -517,6 +552,7 @@
           <NavigationProperty Name="UserItemCards" Relationship="Self.FK_UserItemCard_users" FromRole="users" ToRole="UserItemCard" />
           <NavigationProperty Name="vendors" Relationship="Self.FK_vendor_users" FromRole="users" ToRole="vendor" />
           <NavigationProperty Name="UserRatings" Relationship="sabiShopModel.FK_UserRating_users" FromRole="user" ToRole="UserRating" />
+          <NavigationProperty Name="Trackings" Relationship="sabiShopModel.FK_Tracking_users" FromRole="user" ToRole="Tracking" />
         </EntityType>
         <EntityType Name="vendor">
           <Key>
@@ -533,6 +569,7 @@
           <NavigationProperty Name="Shops" Relationship="Self.FK_Shops_vendor" FromRole="vendor" ToRole="Shops" />
           <NavigationProperty Name="user" Relationship="Self.FK_vendor_users" FromRole="vendor" ToRole="users" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Trackings" Relationship="sabiShopModel.FK_Tracking_vendor" FromRole="vendor" ToRole="Tracking" />
         </EntityType>
         <Association Name="FK_Shops_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
@@ -711,6 +748,19 @@
             <End Role="user" EntitySet="users" />
             <End Role="UserRating" EntitySet="UserRatings" />
           </AssociationSet>
+          <EntitySet Name="Trackings" EntityType="sabiShopModel.Tracking" />
+          <AssociationSet Name="FK_Tracking_items" Association="sabiShopModel.FK_Tracking_items">
+            <End Role="item" EntitySet="items" />
+            <End Role="Tracking" EntitySet="Trackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracking_users" Association="sabiShopModel.FK_Tracking_users">
+            <End Role="user" EntitySet="users" />
+            <End Role="Tracking" EntitySet="Trackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracking_vendor" Association="sabiShopModel.FK_Tracking_vendor">
+            <End Role="vendor" EntitySet="vendors" />
+            <End Role="Tracking" EntitySet="Trackings" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -760,6 +810,62 @@
             </Principal>
             <Dependent Role="UserRating">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tracking">
+          <Key>
+            <PropertyRef Name="trackingId" />
+          </Key>
+          <Property Name="trackingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="to" Type="Int32" />
+          <Property Name="from" Type="Int32" />
+          <Property Name="ItemId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="step1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="step2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="step3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="isModified" Type="Int32" />
+          <Property Name="isCreated" Type="Int32" />
+          <NavigationProperty Name="item" Relationship="sabiShopModel.FK_Tracking_items" FromRole="Tracking" ToRole="item" />
+          <NavigationProperty Name="user" Relationship="sabiShopModel.FK_Tracking_users" FromRole="Tracking" ToRole="user" />
+          <NavigationProperty Name="vendor" Relationship="sabiShopModel.FK_Tracking_vendor" FromRole="Tracking" ToRole="vendor" />
+        </EntityType>
+        <Association Name="FK_Tracking_items">
+          <End Type="sabiShopModel.item" Role="item" Multiplicity="0..1" />
+          <End Type="sabiShopModel.Tracking" Role="Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="item">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracking_users">
+          <End Type="sabiShopModel.user" Role="user" Multiplicity="0..1" />
+          <End Type="sabiShopModel.Tracking" Role="Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="to" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracking_vendor">
+          <End Type="sabiShopModel.vendor" Role="vendor" Multiplicity="0..1" />
+          <End Type="sabiShopModel.Tracking" Role="Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendor">
+              <PropertyRef Name="vendorid" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="from" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -959,6 +1065,24 @@
                 <ScalarProperty Name="ShopId" ColumnName="ShopId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserRatingId" ColumnName="UserRatingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trackings">
+            <EntityTypeMapping TypeName="sabiShopModel.Tracking">
+              <MappingFragment StoreEntitySet="Tracking">
+                <ScalarProperty Name="isCreated" ColumnName="isCreated" />
+                <ScalarProperty Name="isModified" ColumnName="isModified" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="step3" ColumnName="step3" />
+                <ScalarProperty Name="step2" ColumnName="step2" />
+                <ScalarProperty Name="step1" ColumnName="step1" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="to" ColumnName="to" />
+                <ScalarProperty Name="trackingId" ColumnName="trackingId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -417,10 +417,8 @@ function UpdateUserProfileInfo() {
 }
 
 function rightsideclickevent() {
-    debugger;
 
     for (var i = 0; i < $('.slider').length; i++) {
-        debugger;
         if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
             var slider1 = $('.slider:eq(' + i + ')');
             var sliderno = slider1.attr('data-number');
@@ -456,10 +454,7 @@ function rightsideclickevent() {
     }
 }
 function leftsideclickevent() {
-    debugger;
-
     for (var i = 0; i < $('.slider').length; i++) {
-        debugger;
         if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
             var slider1 = $('.slider:eq(' + i + ')');
             var sliderno = slider1.attr('data-number');

@@ -56,28 +56,54 @@
         function createPaypalButtons() {
             debugger;
             var amount = $('#totalAmount').val();
-            $('#paypal-button-container').html('');
-            paypal.Buttons({
-                createOrder: function (data, actions) {
-                    // This function sets up the details of the transaction, including the amount and line item details.
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                
-                                value: amount
-                            }
-                        }]
-                    });
-                },
-                onApprove: function (data, actions) {
-                    // This function captures the funds from the transaction.
-                    return actions.order.capture().then(function (details) {
-                        debugger;
-                        // This function shows a transaction success message to your buyer.
-                        alert('Transaction completed by ' + details.payer.name.given_name);
-                    });
-                }
-            }).render('#paypal-button-container');
+            if (amount != "0") {
+                $('#paypal-button-container').html('');
+                paypal.Buttons({
+                    createOrder: function (data, actions) {
+                        // This function sets up the details of the transaction, including the amount and line item details.
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+
+                                    value: amount
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        // This function captures the funds from the transaction.
+                        return actions.order.capture().then(function (details) {
+                            debugger;
+                            // This function shows a transaction success message to your buyer.
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Transaction completed by ' + details.payer.name.given_name,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            sendingEmailToVendor();
+                        });
+                    }
+                }).render('#paypal-button-container');
+            } else {
+
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'warning',
+                    title: 'No Items In Cart To Pay For...',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+            }
+        }
+        function sendingEmailToVendor() {
+            debugger;
+            var url = '/Email/sendEmailTOVendors';
+            $.get(url, function (data) {
+                location.reload();
+            });
         }
           //This function displays Smart Payment Buttons on your web page.
     </script>
