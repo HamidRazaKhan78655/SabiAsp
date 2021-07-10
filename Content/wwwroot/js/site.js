@@ -217,25 +217,29 @@ function checkUserSignIn() {
 function BuyItemView() {
     debugger;
     var cartDiv = $(".AddtoCartDiv");
-    cartDiv.show();
-    var loadCart = $("#LoadCartData");
-    if (checkUserSignIn()) {
-        var url = "/Items/BuyItemView?Userid=" + $('#CheckLogin').val();
-        $.get(url, function (data) {
+  
+        cartDiv.show();
+        var loadCart = $("#LoadCartData");
+        if (checkUserSignIn()) {
+            cartDiv.addClass('animate__animated animate__bounceInRight');
+            var url = "/Items/BuyItemView?Userid=" + $('#CheckLogin').val();
+            $.get(url, function (data) {
 
-            debugger;
-            loadCart.html(data);
-        });
-    } else {
-        
-        Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: 'Please SignIn first !',
-            showConfirmButton: false,
-            timer: 1500
-        });
+                debugger;
+                loadCart.html(data);
+            });
+        } else {
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please SignIn first !',
+                showConfirmButton: false,
+                timer: 1500
+            });
+       
     }
+    
   
 }
 function AddToCart(itemId) {

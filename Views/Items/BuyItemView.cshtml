@@ -6,7 +6,7 @@
     <div class="card" style="height:100vh">
         <div class="card-header">
 
-            <h3 style="color: #e0ab09;text-align:center">Here Is Your Basket !</h3>
+            <h3 style="color: #e0ab09;text-align:center">Your Shopping Basket !</h3>
         </div>
         <div class="card-body">
             @foreach (var item in Model)
@@ -36,7 +36,16 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-12">
-                    <input type="button" value="Go Pay" class="btn btn-warning"  style=" float: right; color: white;"/>
+                    @{
+                        var price = 0;
+                        foreach (var item in Model)
+                        {
+                            price = price + int.Parse(@item.itemDetails.Price);
+                        }
+
+                                        <h3 style="display:inline">Total : @price $</h3>
+                    }
+                    <input type="button" value="Go Pay" class="btn btn-warning" style=" float: right; color: white;" />
                 </div>
 
             </div>
