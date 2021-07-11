@@ -143,6 +143,27 @@
             }
         });
     }
+
+    function getvendorsorders(Shopid) {
+        var trackingView = $('#Order-container');
+        console.log(Shopid);
+        var url = '/user/getvendors?shopid=' + Shopid;
+        $.get(url, function (data) {
+            debugger;
+            trackingView.html(data);
+            trackingView.show();
+        });
+    }
+    function vendorActions(id) {
+        var trackingView = $('#TrackingActions-container');
+        console.log(Shopid);
+        var url = '/user/Actions?id=' + id;
+        $.get(url, function (data) {
+            debugger;
+            trackingView.html(data);
+            trackingView.show();
+        });
+    }
 </script>
 
 <!-- New Arrivals section start -->
@@ -559,7 +580,9 @@
     </div>
 </div>
 <div class="layout_padding gallery_section">
-   
+    <div class="HistoryOfUser" data-target="#VendorOrders" data-toggle="modal" onclick="getvendorsorders(@ViewBag.ShopData.Shopid)">
+        <span>Orders</span><i class="fas fa-shopping-cart"></i></i>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
