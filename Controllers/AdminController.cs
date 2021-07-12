@@ -60,7 +60,7 @@ namespace SabiAsp.Controllers
                 {
                     Session["UserId"] = User.UserId.ToString();
                     Session["Username"] = User.username.ToString();
-                    Session["Name"] = User.name.ToString();
+                    Session["Name"] = User.name.ToString().Split(' ')[0];
                     Session["RoleType"] = User.RoleType.ToString();
                     Session["RoleID"] = User.RoleID.ToString();
                     Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";

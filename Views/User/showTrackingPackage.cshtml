@@ -1,0 +1,64 @@
+﻿@model SabiAsp.Models.Tracking
+@{
+    Layout = null;
+}
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+           Item name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.item.name)
+        </dd>
+
+        <dt>
+            Buyer Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.step1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.step1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.step2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.step2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.step3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.step3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.state)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.state)
+        </dd>
+
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Report", "Report", new { id = Model.trackingId }) 
+</p>

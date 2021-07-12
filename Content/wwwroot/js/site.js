@@ -500,3 +500,16 @@ function getTrackingHistory(Shopid) {
         trackingView.show();
     });
 }
+function showTrackingPackage() {
+    var trackingView = $('#TrackPackageContainer');
+    var trackingid = $('#TrackingValue').val();
+    trackingView.hide();
+    if (trackingid != null) {
+        var url = '/user/showTrackingPackage?TrackingId=' + trackingid;
+        $.get(url, function (data) {
+            debugger;
+            trackingView.html(data);
+            trackingView.show();
+        });
+    }
+}

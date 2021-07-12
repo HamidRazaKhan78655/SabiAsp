@@ -296,7 +296,19 @@
 
 
 
-
+        function showTrackingPackage() {
+            var trackingView = $('#TrackPackageContainer');
+            var trackingid = $('#TrackingValue').val();
+            trackingView.hide();
+            if (trackingid != null) {
+                var url = '/user/showTrackingPackage?TrackingId=' + trackingid;
+                $.get(url, function (data) {
+                    debugger;
+                    trackingView.html(data);
+                    trackingView.show();
+                });
+            }
+        }
 
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -324,6 +336,43 @@
     <input id="ItemViewTrigger" type="hidden" data-target="#ItemView" data-toggle="modal" />
 
 
+    <div class="modal fade " id="TrackPackage">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style=" background: #150247; height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Track Package</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div >
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label>Enter Tracking ID:</label>
+                                        <input id="TrackingValue" class="form-control" type="number" placeholder="Tracking ID..." />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12" style="text-align:center">
+                                        <input type="button" class="btn btn-info" value="Track" style="margin-top:10px" onclick="showTrackingPackage();" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div id="TrackPackageContainer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade " id="ItemView">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -393,6 +442,8 @@
 
                                         </div>
                                     </div>
+                                </a>
+                                <a class="nav-item nav-link last" href="#" data-target="#TrackPackage" data-toggle="modal">Track
                                 </a>
                                 <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
                                     @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>
