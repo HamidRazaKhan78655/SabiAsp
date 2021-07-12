@@ -555,6 +555,7 @@
     <Content Include="Views\User\getHistoryofUser.cshtml" />
     <Content Include="Views\User\getvendors.cshtml" />
     <Content Include="Views\User\Actions.cshtml" />
+    <Content Include="Views\User\showTrackingPackage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

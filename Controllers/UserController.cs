@@ -62,6 +62,12 @@ namespace SabiAsp.Controllers
             return View(trackings);
         }
         [HttpGet]
+        public ActionResult showTrackingPackage(int TrackingId)
+        {
+            var tracking = Db.Trackings.Where(t => t.trackingId == TrackingId).FirstOrDefault();
+            return View(tracking);
+        }
+        [HttpGet]
         public ActionResult Actions(int id)
         {
              var tracking  =  Db.Trackings.Where(t => t.trackingId == id).FirstOrDefault();
