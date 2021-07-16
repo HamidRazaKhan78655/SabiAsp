@@ -218,10 +218,17 @@ namespace SabiAsp.Controllers
                     else
                         user.ShopName = name + "'" + " " + "Shop";
                 }
+                if (user.isDeleted=="true")
+                {
 
+                }
+                else
+                {
+                    user.isDeleted = "false";
+                }
                 user.ModifiedBy = logedinUserId;
                 user.ModifiedDate = DateTime.Now;
-                user.isDeleted = "false";
+                
                 Db.Entry(user).State = EntityState.Modified;
                 Db.SaveChanges();
                 return "success";

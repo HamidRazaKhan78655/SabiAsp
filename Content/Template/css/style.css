@@ -550,7 +550,7 @@ body{
     text-align: center;
     font-weight: bold;
     font-size: 40px;
-    background-color: #0c0116;
+    background-color: #140247;
     padding: 30px 0px;
 }
 
@@ -849,5 +849,5 @@ a:hover {
 .header_main {
     width: 100%;
     height: auto;
-    background: #0c0116;
+    background: #140247;
 }
