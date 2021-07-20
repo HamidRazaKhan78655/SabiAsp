@@ -217,8 +217,6 @@ function checkUserSignIn() {
 function BuyItemView() {
     debugger;
     var cartDiv = $(".AddtoCartDiv");
-  
-      
     if (checkUserSignIn()) {
         if (cartDiv.css('display') == 'block') {
             cartDiv.removeClass('animate__bounceInRight');
@@ -230,13 +228,16 @@ function BuyItemView() {
         } else {
             cartDiv.show();
             var loadCart = $("#LoadCartData");
+            loadCart.html('<div class="Loader"></div>');
             cartDiv.removeClass('animate__bounceOutRight');
             cartDiv.addClass('animate__animated animate__bounceInRight');
             var url = "/Items/BuyItemView?Userid=" + $('#CheckLogin').val();
-            $.get(url, function (data) {
-
+            $.get(url, function (data)
+            {
                 debugger;
+                loadCart.html('');
                 loadCart.html(data);
+                
             });
         }
             
