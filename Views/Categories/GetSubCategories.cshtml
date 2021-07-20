@@ -58,7 +58,7 @@
         } else {
             $('#itemsList').hide();
             $('#itemsbyCategory').show();
-            //
+            $('#itemsbyCategory').html('<div class="Loader"></div>');
             $.ajax({
                 type: "GET",
                 url: "/Items/ItemBySubCategories?Sid=" + Sid,
@@ -252,7 +252,7 @@
 
             <div class="col-3 ">
                 <div style="background:white; padding:5px;">
-                    <div class="sideNavtab" style="margin: 10px;font-size: 20px;color: #140247; cursor:pointer; border-left: 4px solid; "><span style=" padding-left: 10px;" onclick="showItemByCategory(0)">All</span></div>
+                    <div class="sideNavtab" onclick="showItemByCategory(0)" style="margin: 10px;font-size: 20px;color: #140247; cursor:pointer; border-left: 4px solid; "><span style=" padding-left: 10px;">All</span></div>
                     @foreach (var sub in Model)
                     {
                         <div class="sideNavtab" onclick="showItemByCategory(@sub.SubCategorieId)" style="margin: 10px;font-size: 20px;color:#140247; cursor:pointer"><span style=" padding-left: 10px;">@sub.name</span></div>

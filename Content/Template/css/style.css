@@ -851,3 +851,12 @@ a:hover {
     height: auto;
     background: #140247;
 }
+
+/*Loader start*/
+.Loader {
+    min-height: 400px;
+    min-width: 150px;
+    background: url(/Images/loadercolor51.gif) no-repeat;
+    background-position: center;
+}
+/*Loader End*/
