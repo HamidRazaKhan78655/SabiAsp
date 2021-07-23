@@ -21,11 +21,18 @@ namespace SabiAsp.Controllers
         }
         public ActionResult GetSubCategoriesByCategory(int id, string name)
         {
-            int logedinUserId = Convert.ToInt32(Session["UserId"]);
-            int logedinRoleID = Convert.ToInt32(Session["RoleID"]);
+            int logedinUserId = 0;
+            int logedinRoleID = 0;
+            try
+            {
+                 logedinUserId = Convert.ToInt32(Session["UserId"]);
+                 logedinRoleID = Convert.ToInt32(Session["RoleID"]);
+            }
+            catch { }
             ViewBag.Category = name;
             ViewBag.logedinRoleID = logedinRoleID;
-            var location = Session["Location"].ToString();
+            string location="";
+            try { location=Session["Location"].ToString(); } catch { }
             ViewBag.CategoryId = id;
             ViewBag.Shop = Db.Shops.Where(d => d.CategoryId == id && d.location == location).ToList();
             return View();
