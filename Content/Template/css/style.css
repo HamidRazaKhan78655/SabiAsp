@@ -509,16 +509,23 @@ body{
 }
 
 
-.shoes_img{ width: 100%; float: left; }
-
-.shoes-img2{
-	width: 100%;
-	float: left;
-	text-align: center;
-	padding-top: 100px;
-	padding-bottom: 40px;
-	margin: 0px
+.shoes_img {
+    width: 100%;
+    float: left;
 }
+    .shoes_img img {
+        display: block;
+        float: right;
+    }
+
+    .shoes-img2 {
+        width: 100%;
+        float: left;
+        text-align: center;
+        padding-top: 100px;
+        padding-bottom: 40px;
+        margin: 0px
+    }
 
 .seemore_bt{
 	width: 32%;

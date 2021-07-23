@@ -262,11 +262,17 @@ width: 30%;
     background: white;
 }
 
-.bg-light {
-    background-color: #0c0116!important;
-    width: 50%;
-}
-.out_shop_bt { width: 60%;}
+    .bg-light {
+        background-color: #0c011600 !important;
+        width: 50%;
+        float: right;
+    }
+    .navbar-expand-lg .navbar-nav .nav-link {
+        background: #15072fe6 !important;
+    }
+    .out_shop_bt {
+        width: 60%;
+    }
 .email_box {
     width: 100%; padding: 20px 0px;}
 
@@ -276,78 +282,143 @@ width: 30%;
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
-    .last {display: none;}
-    .banner-main .carousel-caption {top: 0%;}
-.titlepage h2 {
-font-size: 42px;
-display: block; 
-}
-#main_slider a.carousel-control-prev {
-    position: absolute;
-    left: 25%;
-    top: 64%;
-    display: none;
-}
-.btn_main { margin-top: 58px; width: 80%;}
-#main_slider a.carousel-control-next {
-    position: absolute;
-    left: 50px;
-    top: 64%;
-    display: none;
-}
-.btn-primary {
-    margin-top: 0px;
-    margin-left: -7px;
-}
-.menu_main {
-    width: 95%;}
+    .last {
+        display: none;
+    }
 
-.banner-main .carousel-caption h1 {
-    font-size: 50px;
-}
-.titlepage h2::after {
-width: 88%;
-}
+    .banner-main .carousel-caption {
+        top: 0%;
+    }
 
-.about-box .titlepage h2::after {width: 45%;
-right: -281px;}
-.sporrt_text { margin-top: 0px;}
-.Nursery-img .text-box h3 {
-font-size: 36px;
-padding: 126px 40px;
-}
-.main {
-    width: 20%;}
+    .titlepage h2 {
+        font-size: 42px;
+        display: block;
+    }
 
-.contact .titlepage h2::after {
-    left: -234px;
-width: 55%;
-}
+    #main_slider a.carousel-control-prev {
+        position: absolute;
+        left: 25%;
+        top: 64%;
+        display: none;
+    }
+
+    .btn_main {
+        margin-top: 58px;
+        width: 80%;
+    }
+
+    #main_slider a.carousel-control-next {
+        position: absolute;
+        left: 50px;
+        top: 64%;
+        display: none;
+    }
+
+    .btn-primary {
+        margin-top: 0px;
+        margin-left: -7px;
+    }
+
+    .menu_main {
+        width: 95%;
+    }
+
+    .banner-main .carousel-caption h1 {
+        font-size: 50px;
+    }
+
+    .titlepage h2::after {
+        width: 88%;
+    }
+
+    .about-box .titlepage h2::after {
+        width: 45%;
+        right: -281px;
+    }
+
+    .sporrt_text {
+        margin-top: 0px;
+    }
+
+    .Nursery-img .text-box h3 {
+        font-size: 36px;
+        padding: 126px 40px;
+    }
+
+    .main {
+        width: 20%;
+    }
+
+    .contact .titlepage h2::after {
+        left: -234px;
+        width: 55%;
+    }
 
 
-.banner_taital { display: none;}
-.padding_0 { display: none;}
-.about-img { margin-left: 0px;}
-.new_bt { margin-left: 0px;}
-.about-img2 { margin-left: 0px; margin-top: 0px; margin-bottom: 70px;}
-.left_part { padding-left: 2px;}
-.left_part li { padding-left: 0px;}
-.shoes_price { font-size: 13pt; padding-top: 17px;}
-.buy_text { width: 50%; }
-.shop_banner { margin-top: 20px;}
+    .banner_taital {
+        display: none;
+    }
 
-.navbar-light .navbar-toggler {
-    color: #ffffff;
-    border-color: #fff;
-    background: white;
-}
+    .padding_0 {
+        display: none;
+    }
 
-.bg-light {
-    background-color: #0c0116!important;
-    width: 50%;
-}
+    .about-img {
+        margin-left: 0px;
+    }
 
-.star_icon li { padding-right: 8px;}
+    .new_bt {
+        margin-left: 0px;
+    }
+
+    .about-img2 {
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-bottom: 70px;
+    }
+
+    .left_part {
+        padding-left: 2px;
+    }
+
+        .left_part li {
+            padding-left: 0px;
+        }
+
+    .shoes_price {
+        font-size: 13pt;
+        padding-top: 17px;
+    }
+
+    .buy_text {
+        width: 50%;
+    }
+
+    .shop_banner {
+        margin-top: 20px;
+    }
+
+    .navbar-light .navbar-toggler {
+        color: #ffffff;
+        border-color: #fff;
+        background: white;
+    }
+
+    .bg-light {
+        background-color: #0c011600 !important;
+        width: 50%;
+        float: right;
+        z-index: 999999999 !important;
+    }
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: 0.9rem;
+        padding-left: 1.6rem;
+        background: #0d0248e6;
+    }
+
+    .star_icon li {
+        padding-right: 8px;
+    }
 
 
 
@@ -442,7 +513,9 @@ ul.link li {
 .mens_taital { display: none; }
 .mens_taital_2 { display: none; }
 .page_no { display: none;}
-.bg-light { background-color: #db5660!important;  }
+.bg-light { background-color: #db5660!important; 
+            z-index:999999 !important;
+}
 .header_section { background-size: cover;}
 .header_section { background-size: cover; background-repeat: no-repeat;}
 .buy_text { width: 100%; }
