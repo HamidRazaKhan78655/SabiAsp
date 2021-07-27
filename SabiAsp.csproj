@@ -57,7 +57,22 @@
     <Reference Include="FireSharp, Version=2.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\FireSharp.2.0.4\lib\portable-net45+sl5+wp8+win8\FireSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.4.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.Core.2.4.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.4.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.SignalR.SystemWeb.2.4.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=2.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -66,6 +81,9 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -161,9 +179,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -172,6 +192,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartItem.cs" />
@@ -179,10 +200,25 @@
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FireBaseLogin.cs" />
+    <Compile Include="Models\GetUserChat_Result.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetUserInfoByVendorId_Result.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetUserWithGroup_Result.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Group.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\item.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ItemViewGen.cs" />
+    <Compile Include="Models\Location.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Role.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
@@ -204,12 +240,6 @@
     <Compile Include="Models\Shop.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>sabiShop.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>sabiShop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\SubCategory.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
@@ -217,11 +247,26 @@
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Tracking.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\user.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserChat.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserFacebookInfoModal.cs" />
+    <Compile Include="Models\UserGroup.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserItemCard.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserMessage.cs">
+      <DependentUpon>sabiShop.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserMessageRecipient.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserRating.cs">
@@ -231,6 +276,7 @@
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\css\main.css" />
@@ -490,6 +536,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.4.2.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -545,6 +593,11 @@
     <Content Include="Views\SubCategory\GetShopSubCategoriesByShopId.cshtml" />
     <Content Include="Views\SubCategory\SortShopList.cshtml" />
     <Content Include="Views\Items\SearchItempartialview.cshtml" />
+    <Content Include="Views\Chat\Chat.cshtml" />
+    <Content Include="Views\Location\GetAllLocation.cshtml" />
+    <Content Include="Views\Vendor\GetAllUnacceptedShops.cshtml" />
+    <Content Include="Views\Chat\GetUserWithGroup.cshtml" />
+    <Content Include="Views\Chat\VendorChat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

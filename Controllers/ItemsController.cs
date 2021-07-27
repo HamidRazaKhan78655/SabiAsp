@@ -358,18 +358,18 @@ namespace SabiAsp.Controllers
             }
         }
         
-        public string getVendorNum(int shopid)
+        public string getVendorNum(int vendorid)
         {
-            var shop = Db.Shops.Where(x => x.Shopid == shopid).FirstOrDefault();
-            var vendor = Db.vendors.Where(x => x.vendorid == shop.vendorid).FirstOrDefault();
-            var user = Db.users.Where(x => x.UserId == vendor.UserId).FirstOrDefault();
-            if (user.Contact == null)
-                return "number not Availble!";
+            var usr = Db.GetUserInfoByVendorId(vendorid).SingleOrDefault();
+            if (usr == null)
+            {
+                return "error";
+            }
             else
-                return user.Contact;
-
-
-
+            {
+                Session["VendorName"] = usr.name;
+                return usr.UserId.ToString();
+            }
         }
 
         public bool SaveBuyProducts(string userid,string itemid)

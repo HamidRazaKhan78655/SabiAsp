@@ -17,6 +17,7 @@ namespace SabiAsp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public item()
         {
+            this.Trackings = new HashSet<Tracking>();
             this.UserItemCards = new HashSet<UserItemCard>();
         }
     
@@ -40,6 +41,8 @@ namespace SabiAsp.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual SubCategory SubCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tracking> Trackings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserItemCard> UserItemCards { get; set; }
     }

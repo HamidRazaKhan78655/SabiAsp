@@ -1,0 +1,23 @@
+﻿@model List<SabiAsp.Models.Location>
+
+@{
+    if (Model.Count > 0)
+    {
+        foreach (var loc in Model)
+        {
+            <tr>
+                <td>@loc.LocationId</td>
+                <td>@loc.LocationName</td>
+                <td>@loc.CreatedDate</td>
+                <td>
+                    <input type="button" id="editLocation" value="Edit" onclick="GetUpdateLocation(@loc.LocationId, '@loc.LocationName');" />
+                    <input type="button" id="deleteLocation" value="Delete" onclick="DeleteLocation(@loc.LocationId);" />
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+
+    }
+}

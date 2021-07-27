@@ -20,65 +20,63 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-white border-bottom box-shadow mb-3" style="background: #130347 !important">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="color:white"><i class="far fa-snowflake"></i> Sabi | Admin Panel <i class="far fa-snowflake"></i></a>
-                <div style="float:left" onclick="ShowNotifications();">
+                <div id="showNotifications" style="float:left">
                     @if (ViewBag.VendorsShopCount != null || ViewBag.VendorsShopCount != 0)
                     {
-                        <span id="counternotification" style="cursor: pointer; top:-17px" class="counternotificationMobile">@ViewBag.VendorsShopCount</span>
+                        <span id="counternotification" style="cursor: pointer; top: -17px; color: white; background: red; border-radius: 50%;" class="counternotificationMobile">@ViewBag.VendorsShopCount</span>
                     }
                     else
                     {
                         <span id="counternotification" style="cursor: pointer;display:none" class="counternotificationMobile">0</span>
                     }
                     <a id="ntfglobal" style="cursor: pointer;" title="Notification">
-                        <i class="fas fa-bell topicon"></i>
+                        <i class="fas fa-bell topicon" style="color:white;"></i>
                     </a>
+                    <div id="ShopDataDiv" style="display:none;float: right;margin-top: 28px;">
+                        <div id="ShopData" class="shopStatus_Div" style="background: #e0ab09; width: 225px; padding: 10px; overflow-x: hidden; box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%); border-radius: 5px;display:none;">
+                            <table class="table table-hover">
+                                <thead class="w-thead-bg">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="filterShop">
+                                    @{
+                                        if (ViewBag.VendorsShop.Count > 0)
+                                        {
+                                            foreach (var shop in ViewBag.VendorsShop)
+                                            {
+                                                <tr>
+                                                    <td>@shop.Shopid</td>
+                                                    <td>@shop.shopname</td>
+                                                    <td>
+                                                        <input type="button" id="acceptShop" value="Accept" onclick="AcceptRejectShop(@shop.Shopid, 'Accepted');" />
+                                                        <input type="button" id="rejectShop" value="Reject" onclick="AcceptRejectShop(@shop.Shopid, 'Rejected');" />
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="3">
+                                                    <div class="w-empty-list">Record Not Found</div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
     <div class="MainDivAdmin">
 
-        <div id="ShopDataDiv" style="display:none;">
-            <div id="ShopData" style="display:none;">
-                <table class="table table-hover">
-                    <thead class="w-thead-bg">
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="filterShop">
-                        @{
-                            if (ViewBag.VendorsShop.Count > 0)
-                            {
-                                foreach (var shop in ViewBag.VendorsShop)
-                                {
-                                    <tr>
-                                        <td>@shop.Shopid</td>
-                                        <td>@shop.shopname</td>
-                                        <td>@shop.CreatedDate</td>
-                                        <td>
-                                            <input type="button" id="acceptShop" value="Accept" onclick="AcceptRejectShop(@shop.Shopid, 'Accepted');" />
-                                            <input type="button" id="rejectShop" value="Reject" onclick="AcceptRejectShop(@shop.Shopid, 'Rejected');" />
-                                        </td>
-                                    </tr>
-                                }
-                            }
-                            else
-                            {
-                                <tr>
-                                    <td colspan="4">
-                                        <div class="w-empty-list">Record Not Found</div>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
 
         <div style="padding:10px;">
             <h2 id="w-head-text">Users</h2>
@@ -88,6 +86,7 @@
                     <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Category" id="addCategoryBtn" data-target="#categoryBootstrapModal" data-toggle="modal" style="display:none;" />
                     <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Sub Category" id="addSubCategoryBtn" data-target="#subCategoryBootstrapModal" data-toggle="modal" style="display:none;" />
                     <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Item" id="addItemBtn" data-target="#itemBootstrapModal" data-toggle="modal" style="display:none;" />
+                    <input type="button" class="btn btn-primary w-pull-right w-margin-left-10" value="Add Location" id="addLocationBtn" data-target="#locationBootstrapModal" data-toggle="modal" style="display:none;" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchName" onkeyup="SearchUsersByName();" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchSubCategoryName" onkeyup="SearchSubCategoryByName();" style="display:none;" />
                     <input type="text" class="form-control w-pull-right w-width-200 w-margin-left-10" placeholder="Search" id="searchItemName" onkeyup="SearchItemsByName();" style="display:none;" />
@@ -102,6 +101,7 @@
                         <option value="Category">Category</option>
                         <option value="SubCategory">Sub Category</option>
                         <option value="Items">Items</option>
+                        <option value="Location">Locations</option>
                     </select>
                 </div>
                 <div id="usersData">
@@ -311,6 +311,46 @@
                                 {
                                     <tr>
                                         <td colspan="7">
+                                            <div class="w-empty-list">Record Not Found</div>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="locationData" style="display:none;">
+                    <table class="table table-hover">
+                        <thead class="w-thead-bg">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="filterLocation">
+                            @{
+                                if (ViewBag.Location.Count > 0)
+                                {
+                                    foreach (var location in ViewBag.Location)
+                                    {
+                                        <tr>
+                                            <td>@location.LocationId</td>
+                                            <td>@location.LocationName</td>
+                                            <td>@location.CreatedDate</td>
+                                            <td>
+                                                <input type="button" id="editLocation" value="Edit" onclick="GetUpdateLocation(@location.LocationId, '@location.LocationName');" />
+                                                <input type="button" id="deleteLocation" value="Delete" onclick="DeleteLocation(@location.LocationId);" />
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4">
                                             <div class="w-empty-list">Record Not Found</div>
                                         </td>
                                     </tr>
@@ -928,6 +968,93 @@
         </div>
         @* add/update item end*@
 
+        @* add/update location start*@
+        <div id="addLocation">
+        @{
+            using (Html.BeginForm("AddLocation", "Location", FormMethod.Post, new { id = "addLocationForm" }))
+            {
+
+                @*location strat*@
+                <div class="modal fade " id="locationBootstrapModal">
+                    <div class="modal-dialog w-category-modal-dialog">
+                        <div class="modal-content">
+                            <!--Header-->
+                            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                <h4 class="title" style="color:white;">Add Location</h4>
+
+                                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <i class="fas fa-times" style="color:white;"></i>
+                                </button>
+                            </div>
+                            <div style="width:100%; overflow:auto" class="ModelTrack">
+                                <div class="modal-body" style="width:100%">
+                                    <div id="LocationDiv">
+                                        <div class="row">
+
+                                            <div class="col-md-12">
+                                                <label>Location Name :</label>
+                                                <input type="text" class="form-control" id="LocationName" name="LocationName" required />
+                                            </div>
+                                        </div>
+
+                                        <input type="button" class="btn btn-info" value="Add" onclick="SaveLocationData();" style="float:right;margin:10px 0;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*location end*@
+
+
+            }
+        }
+    </div>
+
+        <input type="hidden" id="openLocationModal" data-target="#updateLocationBootstrapModal" data-toggle="modal" />
+
+        <div id="editLocation">
+            @{
+                using (Html.BeginForm("UpdateLocation", "Location", FormMethod.Post, new { id = "updateLocationForm" }))
+                {
+                    @*category strat*@
+                    <div class="modal fade " id="updateLocationBootstrapModal">
+                        <div class="modal-dialog w-location-modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                    <h4 class="title" style="color:white;">Update Location</h4>
+
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times" style="color:white;"></i>
+                                    </button>
+                                </div>
+                                <div style="width:100%; overflow:auto" class="ModelTrack">
+                                    <div class="modal-body" style="width:100%">
+                                        <div id="LocationDiv">
+                                            <input type="hidden" id="updateLocationId" name="updateLocationId" />
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label>Location Name :</label>
+                                                    <input type="text" class="form-control" id="updateLocationName" name="updateLocationName" />
+                                                </div>
+                                            </div>
+
+                                            <input type="button" class="btn btn-info" value="Update" onclick="UpdateLocationData();" style="float:right;margin:10px 0;" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*location end*@
+
+
+                }
+            }
+        </div>
+        @* add/update location end*@
+
         <style>
             .w-width-200 {
                 width: 200px;
@@ -968,6 +1095,17 @@
                 cursor: pointer;
                 text-decoration: underline !important;
                 color: #1b6ec2 !important;
+            }
+
+            .shopStatus_Div {
+                width: 500px !important;
+                min-height: 300px;
+                max-height: 65vh;
+                position: absolute;
+                margin: auto;
+                z-index: 10;
+                overflow-y: auto;
+                margin-left: -381px;
             }
         </style>
 
@@ -1264,6 +1402,7 @@
                     $("#categoryData").hide();
                     $("#subCategoryData").hide();
                     $("#ItemsData").hide();
+                    $("#locationData").hide();
                     $("#filterUserByType").show();
                     $("#searchName").show();
                     $("#searchSubCategoryName").hide();
@@ -1272,6 +1411,7 @@
                     $("#addCategoryBtn").hide();
                     $("#addSubCategoryBtn").hide();
                     $("#addItemBtn").hide();
+                    $("#addLocationBtn").hide();
                     $("#w-head-text").text("Users");
                     $("#filterUserByType").val("All");
                     $("#searchName").val("");
@@ -1282,6 +1422,7 @@
                     $("#categoryData").show();
                     $("#subCategoryData").hide();
                     $("#ItemsData").hide();
+                    $("#locationData").hide();
                     $("#filterUserByType").hide();
                     $("#searchName").hide();
                     $("#searchSubCategoryName").hide();
@@ -1290,6 +1431,7 @@
                     $("#addCategoryBtn").show();
                     $("#addSubCategoryBtn").hide();
                     $("#addItemBtn").hide();
+                    $("#addLocationBtn").hide();
                     $("#w-head-text").text("Categories");
                     GetAllCategories();
                 }
@@ -1298,6 +1440,7 @@
                     $("#categoryData").hide();
                     $("#subCategoryData").show();
                     $("#ItemsData").hide();
+                    $("#locationData").hide();
                     $("#filterUserByType").hide();
                     $("#searchName").hide();
                     $("#searchSubCategoryName").show();
@@ -1306,14 +1449,34 @@
                     $("#addCategoryBtn").hide();
                     $("#addSubCategoryBtn").show();
                     $("#addItemBtn").hide();
+                    $("#addLocationBtn").hide();
                     $("#w-head-text").text("Sub Categories");
                     ViewSubCategory(0);
+                }
+                else if (name == "Location") {
+                    $("#usersData").hide();
+                    $("#categoryData").hide();
+                    $("#subCategoryData").hide();
+                    $("#ItemsData").hide();
+                    $("#locationData").show();
+                    $("#filterUserByType").hide();
+                    $("#searchName").hide();
+                    $("#searchSubCategoryName").hide();
+                    $("#searchItemName").hide();
+                    $("#addUsersBtn").hide();
+                    $("#addCategoryBtn").hide();
+                    $("#addSubCategoryBtn").hide();
+                    $("#addLocationBtn").show();
+                    $("#addItemBtn").hide();
+                    $("#w-head-text").text("Locations");
+                    GetAllLocation();
                 }
                 else {
                     $("#usersData").hide();
                     $("#categoryData").hide();
                     $("#subCategoryData").hide();
                     $("#ItemsData").show();
+                    $("#locationData").hide();
                     $("#filterUserByType").hide();
                     $("#searchName").hide();
                     $("#searchSubCategoryName").hide();
@@ -1322,6 +1485,7 @@
                     $("#addCategoryBtn").hide();
                     $("#addSubCategoryBtn").hide();
                     $("#addItemBtn").show();
+                    $("#addLocationBtn").hide();
                     $("#w-head-text").text("Items");
                     ViewItems(0);
                 }
@@ -2182,10 +2346,6 @@
         </script>
 
         <script>
-            function ShowNotifications() {
-                debugger;
-                $("#ShopDataDiv").show();
-            }
 
             function AcceptRejectShop(shopId, status) {
                 debugger;
@@ -2194,12 +2354,188 @@
                     url: '/Vendor/AcceptRejectShop?shopId=' + shopId + '&&status=' + status,
                     success: function (response) {
                         debugger;
-                        $("#ShopDataDiv").hide();
-                        //$("#filterItems").html(response);
+                        //$("#ShopDataDiv").hide();
+                        //$(".shopStatus_Div").hide();
+                        if (status == "Accepted") {
+                            var notificationCount = $("#counternotification").text();
+                            var count = parseInt(notificationCount);
+                            count = count - 1;
+                            $("#counternotification").text(count);
+                        }      
+                        $("#filterShop").html(response);
                     }
                 });
 
             }
+        </script>
+
+        <script>
+            //Location
+            function GetUpdateLocation(locationId, name) {
+                debugger;
+                $("#updateLocationId").val(locationId);
+                $("#updateLocationName").val(name);
+                $("#openLocationModal").trigger("click");
+            }
+
+            function DeleteLocation(locationId) {
+                debugger;
+                $.ajax({
+                    url: '/Location/DeleteLocation?locationId=' + locationId,
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Location deleted successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            $(".close").trigger("click");
+                            GetAllLocation();
+                        }
+                        else {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Location not deleted.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+            }
+
+            function GetAllLocation() {
+                debugger;
+                $.ajax({
+                    type: "GET",
+                    url: '/Location/GetAllLocation',
+                    success: function (response) {
+                        debugger;
+                        $("#filterLocation").html(response);
+                    }
+                });
+            }
+
+            function SaveLocationData() {
+                debugger;
+                //User/Index
+                if (document.getElementById('LocationName').value == "") {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Plaese enter Location Name',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    async: "true",
+                    data: $("#addLocationForm").serialize(),
+                    url: "/Location/AddLocation",
+                    contenttype: 'application/html; charset=utf-8',
+                    datatype: 'html',
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Location added successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            $(".close").trigger("click");
+                            GetAllLocation();
+                        }
+                        else {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Location already exist',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+            }
+
+            function UpdateLocationData() {
+                debugger;
+                //User/Index
+                if (document.getElementById('updateLocationName').value == "") {
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Plaese enter Location Name',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    async: "true",
+                    data: $("#updateLocationForm").serialize(),
+                    url: "/Location/UpdateLocation",
+                    contenttype: 'application/html; charset=utf-8',
+                    datatype: 'html',
+                    success: function (data) {
+                        debugger;
+                        if (data == "success") {
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Location updated successfully.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            $(".close").trigger("click");
+                            GetAllLocation();
+                        }
+                        else {
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: 'Record not updated.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            return;
+                        }
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+            }
+
         </script>
 
     </div>

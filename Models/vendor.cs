@@ -18,20 +18,26 @@ namespace SabiAsp.Models
         public vendor()
         {
             this.Shops = new HashSet<Shop>();
+            this.Trackings = new HashSet<Tracking>();
+            this.UserChats = new HashSet<UserChat>();
         }
     
         public int vendorid { get; set; }
         public Nullable<int> UserId { get; set; }
         public string vIDSocial { get; set; }
+        public string Status { get; set; }
         public string isDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shop> Shops { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tracking> Trackings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserChat> UserChats { get; set; }
         public virtual user user { get; set; }
     }
 }

@@ -85,6 +85,15 @@ $(document).ready(function ()
         
     });*/
 
+    $("#showNotifications").hover(function () {
+        //debugger;
+        $("#ShopDataDiv").show();
+        $(".shopStatus_Div").show();
+    }, function () {
+        $("#ShopDataDiv").hide();
+        $(".shopStatus_Div").hide();
+    });
+
     $("#SignInbtn").hover(function () {
         $("#SignIn").show();
     }, function () {
@@ -401,7 +410,7 @@ function UpdateUserProfileInfo() {
 }
 
 function rightsideclickevent() {
-    debugger;
+    //debugger;
 
     for (var i = 0; i < $('.slider').length; i++) {
         debugger;

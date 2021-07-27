@@ -12,20 +12,23 @@ namespace SabiAsp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UserItemCard
+    public partial class Tracking
     {
-        public int UserItemId { get; set; }
-        public Nullable<int> UesrId { get; set; }
+        public int trackingId { get; set; }
+        public Nullable<int> to { get; set; }
+        public Nullable<int> from { get; set; }
         public Nullable<int> ItemId { get; set; }
-        public Nullable<int> quantity { get; set; }
-        public Nullable<bool> IsLogedin { get; set; }
-        public string isDeleted { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public string Description { get; set; }
+        public string step1 { get; set; }
+        public string step2 { get; set; }
+        public string step3 { get; set; }
+        public string state { get; set; }
+        public Nullable<int> isDeleted { get; set; }
+        public Nullable<int> isModified { get; set; }
+        public Nullable<int> isCreated { get; set; }
     
         public virtual item item { get; set; }
         public virtual user user { get; set; }
+        public virtual vendor vendor { get; set; }
     }
 }

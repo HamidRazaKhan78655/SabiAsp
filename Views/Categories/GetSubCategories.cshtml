@@ -37,7 +37,7 @@
                         $('#totalitemlist').val(listofitem);
                     } else
                     {
-                        
+
                         Swal.fire({
                             position: 'top-end',
                             icon: 'warning',
@@ -71,26 +71,25 @@
             //
         }
     }
-    function getVendorPhoneNumber(shopid) {
+    function getVendorPhoneNumber(vendorid) {
+        debugger;
         var options = {
-            type: "POST",
-            url: '/Items/getVendorNum?shopid=' + shopid,
-            async: false,
-            cache: false,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
+            type: "GET",
+            url: '/Items/getVendorNum?vendorid=' + vendorid,
             success: function (response)
             {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: response,
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                $('#vendorNumDiv').show();
-                $('#vendorPhone').text(response);
-                debugger
+                debugger;
+                if (response == "error") {
+
+                }
+                else {
+                    $("#chatBootstrapModal #chatDiv").load("/Chat/Chat?userId=" + response, function () {
+                        $("#openChatItemModal").trigger("click");
+                    });
+                }
+
+                //$('#vendorNumDiv').show();
+                //$('#vendorPhone').text(response);
             }
         };
         $.ajax(options);
@@ -206,10 +205,10 @@
         <span class="fa fa-search form-control-feedback"></span>
         <input type="text" class="form-control" id="searchItemsInshop" style="height: 50px; border-radius: 50px;" placeholder="Search Items In Shop!" />
     </div>
-    
+
 </div>
 <div class="layout_padding gallery_section">
-   
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
@@ -255,29 +254,10 @@
                     }
                 </div>
                 <div style=" text-align: center; padding: 15px;">
-                    <input type="button" class="btn btn-dark" value="Contact Shop Owner" onclick="getVendorPhoneNumber(@ViewBag.ShopData.Shopid);">
-                    <div id="vendorNumDiv" style="
-    background: white;
-    height: 60px;
-    border-radius: 7px;
-    margin-top: 10px;
-    display:none;
-">
-                        <div style="
-    height: 20px;
-    width: 20px;
-    /* margin-top: 12px; */
-    position: relative;
-    background: white;
-    top: -8px;
-    transform: rotate(45deg);
-    left: 135px;
-"></div>
-                        <p id="vendorPhone" style="
-    font-size: 27px;
-    position: relative;
-    top: -21px;
-">00000000000</p>
+                    <input type="button" class="btn btn-dark" value="Contact Shop Owner" onclick="getVendorPhoneNumber(@ViewBag.ShopData.vendorid);">
+                    <div id="vendorNumDiv" style="background: white;height: 60px;border-radius: 7px;margin-top: 10px;display:none;">
+                        <div style="height: 20px;width: 20px;position: relative;background: white;top: -8px;transform: rotate(45deg);left: 135px;"></div>
+                        <p id="vendorPhone" style="font-size: 27px;position: relative;top: -21px;">00000000000</p>
                     </div>
                 </div>
             </div>
@@ -294,11 +274,8 @@
                                 if (sub.items.Count == 0)
                                 {
                                     <div class="best_shoes" style="height: 90px; width: 200px; margin: 15px; border-radius: 12px; padding: 0px;">
-                                        <p class="best_text" style="        margin-bottom: 5px;
-        color: #e0ab09;
-">No Item In This Category !</p>
+                                        <p class="best_text" style="margin-bottom: 5px;color: #e0ab09;">No Item In This Category !</p>
                                     </div>
-
                                 }
                                 else
                                 {
@@ -528,6 +505,34 @@
 @* add/update item end*@
 
 
+<input type="hidden" id="openChatItemModal" data-target="#chatBootstrapModal" data-toggle="modal" />
+<div id="chatModalDiv">
+    @*chat strat*@
+    <div class="modal fade " id="chatBootstrapModal">
+        <div class="modal-dialog w-item-modal-dialog" style="max-width: 60%;">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                    <h4 class="title" style="color:white;">Chat</h4>
+
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="chatDiv">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*chat end*@
+</div>
+
+
 <script>
     function SortItemslistChange(value) {
         debugger;
@@ -548,7 +553,7 @@
         debugger;
         if (document.getElementById('shopItemName').value == "") {
 
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -570,7 +575,7 @@
             return;
         }
         if (document.getElementById('shopItemPrice').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -660,7 +665,7 @@
             return;
         }
         if (document.getElementById('updateItemPrice').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -704,7 +709,7 @@
                     window.location.reload();
                 }
                 else {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'warning',
