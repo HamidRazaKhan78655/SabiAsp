@@ -502,13 +502,17 @@ function getTrackingHistory(Shopid) {
     });
 }
 function showTrackingPackage() {
+    debugger;
+    $('.loadingMod').show();
     var trackingView = $('#TrackPackageContainer');
     var trackingid = $('#TrackingValue').val();
     trackingView.hide();
     if (trackingid != null) {
         var url = '/user/showTrackingPackage?TrackingId=' + trackingid;
-        $.get(url, function (data) {
+        $.get(url, function (data)
+        {
             debugger;
+            $('.loadingMod').hide();
             trackingView.html(data);
             trackingView.show();
         });
