@@ -295,21 +295,6 @@
         }
 
 
-
-        function showTrackingPackage() {
-            var trackingView = $('#TrackPackageContainer');
-            var trackingid = $('#TrackingValue').val();
-            trackingView.hide();
-            if (trackingid != null) {
-                var url = '/user/showTrackingPackage?TrackingId=' + trackingid;
-                $.get(url, function (data) {
-                    debugger;
-                    trackingView.html(data);
-                    trackingView.show();
-                });
-            }
-        }
-
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -448,7 +433,7 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a class="nav-item nav-link last" href="#" data-target="#TrackPackage" data-toggle="modal">Track
+                                <a class="nav-item nav-link last" href="#" data-target="#TrackPackage" data-toggle="modal" onclick="RemoveData();">Track
                                 </a>
                                 <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
                                     @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>
@@ -1177,6 +1162,10 @@
     <script src="~/Content/wwwroot/js/script.js" asp-append-version="true"></script>
     <script src="~/Content/wwwroot/js/customAlert.js"></script>
     <script>
+        function RemoveData()
+        {
+            $('#TrackPackageContainer').html('');
+        }
         $(document).ready(function () {
             debugger;
 
