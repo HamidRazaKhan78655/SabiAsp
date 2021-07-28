@@ -42,7 +42,7 @@ namespace SabiAsp.Controllers
                       return View("GetSubCategories");*/
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 
