@@ -65,7 +65,7 @@ namespace SabiAsp.Controllers
             {
                 /*if (User.RoleID == 3)
                 {
-                    var vendor = Db.vendors.Where(v => v.Status == "Accepted").SingleOrDefault();
+                    var vendor = Db.vendors.Where(v => v.UserId == User.UserId && v.Status == "Accepted").SingleOrDefault();
                     if (vendor == null)
                         return View();
                 }

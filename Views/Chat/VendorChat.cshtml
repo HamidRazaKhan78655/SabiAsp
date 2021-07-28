@@ -1,0 +1,96 @@
+﻿@model List<SabiAsp.Models.GetUserChat_Result>
+@{
+    ViewBag.Title = "Chat";
+    Layout = null;
+}
+
+<div class="form-group col-xl-12">
+    <label style="color: blue;font-style:oblique;font-size:medium" id="label2">Group Chat Conversations History</label>
+    <div class="container chatArea">
+        <input type="hidden" id="displayname" />
+        <ul id="discussion">
+            @if (Model.Count > 0)
+            {
+                foreach (var chat in Model)
+                {
+
+                    <ul style="list-style-type:square">
+                        <li>
+
+                            <strong style="color:red;font-style:normal;font-size:medium;text-transform:uppercase;float:right;">
+                                by : @chat.name
+                            </strong>
+
+                            <br />
+                            @if (chat.RecipientId == ViewBag.logedinUserId)
+                            {
+                                <strong style="color:blue;font-style:oblique;font-size:medium;float:right;">@chat.Message</strong>
+                            }
+                            else
+                            {
+                                <strong style="color:blue;font-style:oblique;font-size:medium">@chat.Message</strong>
+                            }
+
+                        </li>
+                    </ul>
+                }
+            }
+        </ul>
+    </div>
+    <br />
+    <br />
+    <label style="color: blue; font-style: oblique;font-size: medium" id="label1">Write Your Message Here!</label><br />
+    <textarea class="form-control" rows="4" cols="40" id="message" placeholder="Share what's in your mind..."></textarea>
+    <br />
+    <input type="button" class="btn btn-primary" id="sendmessage" value="Send" />
+
+
+</div>
+
+
+<script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
+<script src="~/signalr/hubs"></script>
+<script>
+    $(function () {
+        var chat = $.connection.chatHub;
+        chat.client.addNewMessageToPage = function (name, message) {
+            debugger;
+            $('#discussion').append('<ul style="list-style-type:square"><li><strong style="color:red;font-style:normal;font-size:medium;text-transform:uppercase">' + htmlEncode(name) + '  ' + '<strong style="color:black;font-style:normal;font-size:medium;text-transform:lowercase">said</strong>'
+                + '</strong>: ' + '<strong style="color:blue;font-style:oblique;font-size:medium;float:right;">' + htmlEncode(message) + '</strong>' + '</li></ul>');
+        };
+        //$('#displayname').val(prompt('Your Good Name Please:', ''));
+        $('#displayname').val('@ViewBag.logedinUserName');
+        $('#message').focus();
+        $.connection.hub.start().done(function () {
+            $('#sendmessage').click(function () {
+                debugger;
+                chat.server.send($('#displayname').val(), $('#message').val());
+                var logedinUserId = '@ViewBag.logedinUserId';
+                var userId = '@ViewBag.userId';
+                var logedinUserName = '@ViewBag.logedinUserName';
+                var groupId = '@ViewBag.GroupId';
+                var message = $('#message').val();
+                $.ajax({
+                    url: '/Chat/PostVendorChat?logedinUserId=' + logedinUserId + '&&userId=' + userId + '&&groupId=' + groupId + '&&message=' + message,
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+
+                    },
+                    error: function () {
+                        debugger;
+                        alert("Error");
+                    }
+                });
+                $('#message').val('').focus();
+            });
+        });
+    });
+    function htmlEncode(value) {
+        var encodedValue = $('<div />').text(value).html();
+        return encodedValue;
+    }
+</script>
+

@@ -17,14 +17,23 @@ namespace SabiAsp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public user()
         {
-            this.UserItemCards = new HashSet<UserItemCard>();
-            this.vendors = new HashSet<vendor>();
-            this.UserRatings = new HashSet<UserRating>();
             this.Trackings = new HashSet<Tracking>();
+            this.UserChats = new HashSet<UserChat>();
+            this.UserGroups = new HashSet<UserGroup>();
+            this.UserItemCards = new HashSet<UserItemCard>();
+            this.UserMessages = new HashSet<UserMessage>();
+            this.UserMessageRecipients = new HashSet<UserMessageRecipient>();
+            this.UserRatings = new HashSet<UserRating>();
+
+            this.vendors = new HashSet<vendor>();
+
+            this.Trackings = new HashSet<Tracking>();
+
         }
     
         public int UserId { get; set; }
         public Nullable<int> RoleID { get; set; }
+        public Nullable<int> LocationId { get; set; }
         public string name { get; set; }
         public string EmailAddress { get; set; }
         public string username { get; set; }
@@ -44,14 +53,27 @@ namespace SabiAsp.Models
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
+        public virtual Location Location1 { get; set; }
         public virtual Role Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tracking> Trackings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserChat> UserChats { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserItemCard> UserItemCards { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<vendor> vendors { get; set; }
+        public virtual ICollection<UserMessage> UserMessages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserMessageRecipient> UserMessageRecipients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRating> UserRatings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        public virtual ICollection<vendor> vendors { get; set; }
+
         public virtual ICollection<Tracking> Trackings { get; set; }
+
     }
 }

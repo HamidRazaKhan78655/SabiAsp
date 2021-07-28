@@ -17,13 +17,13 @@ namespace SabiAsp.Models
         public int UserItemId { get; set; }
         public Nullable<int> UesrId { get; set; }
         public Nullable<int> ItemId { get; set; }
+        public Nullable<int> quantity { get; set; }
         public Nullable<bool> IsLogedin { get; set; }
         public string isDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public Nullable<int> quantity { get; set; }
     
         public virtual item item { get; set; }
         public virtual user user { get; set; }

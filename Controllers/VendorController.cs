@@ -423,7 +423,7 @@ namespace SabiAsp.Controllers
         }
 
 
-        public string AcceptRejectShop(int shopId, string status) 
+        public ActionResult AcceptRejectShop(int shopId, string status) 
         {
             var s = Db.Shops.Where(sh => sh.Shopid == shopId).FirstOrDefault();
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
@@ -432,7 +432,24 @@ namespace SabiAsp.Controllers
             s.ModifiedDate = DateTime.Now;
             Db.Entry(s).State = EntityState.Modified;
             Db.SaveChanges();
-            return "success";
+
+            var v = Db.vendors.Where(vn => vn.vendorid == s.vendorid).FirstOrDefault();
+            v.Status = status;
+            v.ModifiedBy = logedinUserId;
+            v.ModifiedDate = DateTime.Now;
+            Db.Entry(s).State = EntityState.Modified;
+            Db.SaveChanges();
+            return GetAllUnacceptedShops();
+        }
+
+        public ActionResult GetAllUnacceptedShops()
+        {
+            var s = Db.Shops.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
+            ViewBag.Shops = s;
+            var v = s.Where(x => x.Status != "Accepted").OrderByDescending(x => x.CreatedBy).ToList();
+            ViewBag.VendorsShop = v;
+            ViewBag.VendorsShopCount = v.Count();
+            return PartialView("GetAllUnacceptedShops", v);
         }
     }
 }

@@ -26,19 +26,19 @@ namespace SabiAsp.Models
         public Nullable<int> CategoryId { get; set; }
         public string shopname { get; set; }
         public string image { get; set; }
+        public string Logo { get; set; }
+        public string location { get; set; }
+        public string Description { get; set; }
+        public string DeliveryFee { get; set; }
+        public string DeliveryTime { get; set; }
+        public string MinOrder { get; set; }
+        public string Ratings { get; set; }
+        public string Status { get; set; }
         public string isDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string location { get; set; }
-        public string Description { get; set; }
-        public string DeliveryFee { get; set; }
-        public string DeliveryTime { get; set; }
-        public string Ratings { get; set; }
-        public string Logo { get; set; }
-        public string MinOrder { get; set; }
-        public string Status { get; set; }
     
         public virtual Category Category { get; set; }
         public virtual vendor vendor { get; set; }

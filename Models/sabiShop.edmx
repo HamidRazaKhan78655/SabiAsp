@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="sabiShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="sabiShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -13,6 +13,18 @@
           <Property Name="CategoryName" Type="nvarchar" MaxLength="100" />
           <Property Name="image" Type="nvarchar(max)" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
@@ -35,6 +47,18 @@
           <Property Name="minOrder" Type="nvarchar" MaxLength="50" />
           <Property Name="itemAvailible" Type="int" />
           <Property Name="SoldItems" Type="int" />
+          <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar" MaxLength="150" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
@@ -113,6 +137,35 @@
           <Property Name="isModified" Type="int" />
           <Property Name="isCreated" Type="int" />
         </EntityType>
+        <EntityType Name="UserChat">
+          <Key>
+            <PropertyRef Name="ChatId" />
+          </Key>
+          <Property Name="ChatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="VendorId" Type="int" />
+          <Property Name="CustomerName" Type="nvarchar(max)" />
+          <Property Name="VendorName" Type="nvarchar(max)" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="UserGroupId" />
+          </Key>
+          <Property Name="UserGroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="GroupId" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="UserItemCard">
           <Key>
             <PropertyRef Name="UserItemId" />
@@ -123,6 +176,35 @@
           <Property Name="quantity" Type="int" />
           <Property Name="IsLogedin" Type="bit" />
           <Property Name="isDeleted" Type="nvarchar" MaxLength="5" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserMessage">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="ParentMessageId" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserMessageRecipient">
+          <Key>
+            <PropertyRef Name="MessageRecipientId" />
+          </Key>
+          <Property Name="MessageRecipientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="MessageId" Type="int" />
+          <Property Name="UserGroupId" Type="int" />
+          <Property Name="IsRead" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
@@ -148,6 +230,7 @@
           </Key>
           <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleID" Type="int" />
+          <Property Name="LocationId" Type="int" />
           <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" />
           <Property Name="username" Type="nvarchar" MaxLength="50" />
@@ -241,6 +324,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tracking_items">
+          <End Role="items" Type="Self.items" Multiplicity="0..1" />
+          <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="items">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracking_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="to" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracking_vendor">
+          <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
+          <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendor">
+              <PropertyRef Name="vendorid" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="from" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserChat_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="UserChat" Type="Self.UserChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserChat">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserChat_vendor">
+          <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
+          <End Role="UserChat" Type="Self.UserChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendor">
+              <PropertyRef Name="vendorid" />
+            </Principal>
+            <Dependent Role="UserChat">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroup_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="GroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroup_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserItemCard_items">
           <End Role="items" Type="Self.items" Multiplicity="0..1" />
           <End Role="UserItemCard" Type="Self.UserItemCard" Multiplicity="*" />
@@ -265,6 +432,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserMessage_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="UserMessage" Type="Self.UserMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMessage">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessageRecipient_UserGroup">
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="0..1" />
+          <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="UserGroupId" />
+            </Principal>
+            <Dependent Role="UserMessageRecipient">
+              <PropertyRef Name="UserGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessageRecipient_UserMessage">
+          <End Role="UserMessage" Type="Self.UserMessage" Multiplicity="0..1" />
+          <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMessage">
+              <PropertyRef Name="MessageId" />
+            </Principal>
+            <Dependent Role="UserMessageRecipient">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessageRecipient_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMessageRecipient">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserRating_Shops">
           <End Role="Shops" Type="Self.Shops" Multiplicity="0..1" />
           <End Role="UserRating" Type="Self.UserRating" Multiplicity="*" />
@@ -286,6 +501,18 @@
             </Principal>
             <Dependent Role="UserRating">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -314,6 +541,21 @@
           </ReferentialConstraint>
         </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="GetUserChat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GroupId" Type="int" Mode="In" />
+          <Parameter Name="SenderId" Type="int" Mode="In" />
+          <Parameter Name="RecipientId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUserGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SenderId" Type="int" Mode="In" />
+          <Parameter Name="RecipientId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUserInfoByVendorId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Vendorid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUserWithGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="RecipientId" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
           <Parameter Name="owner_id" Type="int" Mode="In" />
@@ -346,13 +588,21 @@
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="sabiShopModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="items" EntityType="Self.items" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shops" EntityType="Self.Shops" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SubCategories" EntityType="Self.SubCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tracking" EntityType="Self.Tracking" Schema="dbo" store:Type="Tables" />
+
+          <EntitySet Name="UserChat" EntityType="Self.UserChat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
+
           <EntitySet Name="UserItemCard" EntityType="Self.UserItemCard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMessage" EntityType="Self.UserMessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMessageRecipient" EntityType="Self.UserMessageRecipient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRating" EntityType="Self.UserRating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vendor" EntityType="Self.vendor" Schema="dbo" store:Type="Tables" />
@@ -376,6 +626,24 @@
             <End Role="vendor" EntitySet="vendor" />
             <End Role="Tracking" EntitySet="Tracking" />
           </AssociationSet>
+
+          <AssociationSet Name="FK_UserChat_users" Association="Self.FK_UserChat_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserChat" EntitySet="UserChat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserChat_vendor" Association="Self.FK_UserChat_vendor">
+            <End Role="vendor" EntitySet="vendor" />
+            <End Role="UserChat" EntitySet="UserChat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroup_Group" Association="Self.FK_UserGroup_Group">
+            <End Role="Group" EntitySet="Group" />
+            <End Role="UserGroup" EntitySet="UserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroup_users" Association="Self.FK_UserGroup_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserGroup" EntitySet="UserGroup" />
+          </AssociationSet>
+
           <AssociationSet Name="FK_UserItemCard_items" Association="Self.FK_UserItemCard_items">
             <End Role="items" EntitySet="items" />
             <End Role="UserItemCard" EntitySet="UserItemCard" />
@@ -384,6 +652,22 @@
             <End Role="users" EntitySet="users" />
             <End Role="UserItemCard" EntitySet="UserItemCard" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserMessage_users" Association="Self.FK_UserMessage_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserMessage" EntitySet="UserMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessageRecipient_UserGroup" Association="Self.FK_UserMessageRecipient_UserGroup">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="UserMessageRecipient" EntitySet="UserMessageRecipient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessageRecipient_UserMessage" Association="Self.FK_UserMessageRecipient_UserMessage">
+            <End Role="UserMessage" EntitySet="UserMessage" />
+            <End Role="UserMessageRecipient" EntitySet="UserMessageRecipient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessageRecipient_users" Association="Self.FK_UserMessageRecipient_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserMessageRecipient" EntitySet="UserMessageRecipient" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserRating_Shops" Association="Self.FK_UserRating_Shops">
             <End Role="Shops" EntitySet="Shops" />
             <End Role="UserRating" EntitySet="UserRating" />
@@ -391,6 +675,10 @@
           <AssociationSet Name="FK_UserRating_users" Association="Self.FK_UserRating_users">
             <End Role="users" EntitySet="users" />
             <End Role="UserRating" EntitySet="UserRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_Location" Association="Self.FK_users_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="users" EntitySet="users" />
           </AssociationSet>
           <AssociationSet Name="FK_users_Role" Association="Self.FK_users_Role">
             <End Role="Role" EntitySet="Role" />
@@ -401,7 +689,8 @@
             <End Role="vendor" EntitySet="vendor" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sabiShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -418,6 +707,19 @@
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Shops" Relationship="Self.FK_Shops_Categories" FromRole="Categories" ToRole="Shops" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserGroups" Relationship="Self.FK_UserGroup_Group" FromRole="Group" ToRole="UserGroup" />
         </EntityType>
         <EntityType Name="item">
           <Key>
@@ -442,8 +744,22 @@
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="SubCategory" Relationship="Self.FK_items_SubCategories" FromRole="items" ToRole="SubCategories" />
+          <NavigationProperty Name="Trackings" Relationship="Self.FK_Tracking_items" FromRole="items" ToRole="Tracking" />
           <NavigationProperty Name="UserItemCards" Relationship="Self.FK_UserItemCard_items" FromRole="items" ToRole="UserItemCard" />
           <NavigationProperty Name="Trackings" Relationship="sabiShopModel.FK_Tracking_items" FromRole="item" ToRole="Tracking" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="users" Relationship="Self.FK_users_Location" FromRole="Location" ToRole="users" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -463,6 +779,14 @@
           <Property Name="CategoryId" Type="Int32" />
           <Property Name="shopname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryFee" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryTime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MinOrder" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Ratings" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
@@ -471,15 +795,7 @@
           <NavigationProperty Name="Category" Relationship="Self.FK_Shops_Categories" FromRole="Shops" ToRole="Categories" />
           <NavigationProperty Name="vendor" Relationship="Self.FK_Shops_vendor" FromRole="Shops" ToRole="vendor" />
           <NavigationProperty Name="SubCategories" Relationship="Self.FK_SubCategories_Shops" FromRole="Shops" ToRole="SubCategories" />
-          <Property Name="location" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryFee" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="DeliveryTime" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Ratings" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MinOrder" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserRatings" Relationship="sabiShopModel.FK_UserRating_Shops" FromRole="Shop" ToRole="UserRating" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRatings" Relationship="Self.FK_UserRating_Shops" FromRole="Shops" ToRole="UserRating" />
         </EntityType>
         <EntityType Name="SubCategory">
           <Key>
@@ -507,6 +823,60 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
+        <EntityType Name="Tracking">
+          <Key>
+            <PropertyRef Name="trackingId" />
+          </Key>
+          <Property Name="trackingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="to" Type="Int32" />
+          <Property Name="from" Type="Int32" />
+          <Property Name="ItemId" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="step1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="step2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="step3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isDeleted" Type="Int32" />
+          <Property Name="isModified" Type="Int32" />
+          <Property Name="isCreated" Type="Int32" />
+          <NavigationProperty Name="item" Relationship="Self.FK_Tracking_items" FromRole="Tracking" ToRole="items" />
+          <NavigationProperty Name="user" Relationship="Self.FK_Tracking_users" FromRole="Tracking" ToRole="users" />
+          <NavigationProperty Name="vendor" Relationship="Self.FK_Tracking_vendor" FromRole="Tracking" ToRole="vendor" />
+        </EntityType>
+        <EntityType Name="UserChat">
+          <Key>
+            <PropertyRef Name="ChatId" />
+          </Key>
+          <Property Name="ChatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="VendorId" Type="Int32" />
+          <Property Name="CustomerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VendorName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="user" Relationship="Self.FK_UserChat_users" FromRole="UserChat" ToRole="users" />
+          <NavigationProperty Name="vendor" Relationship="Self.FK_UserChat_vendor" FromRole="UserChat" ToRole="vendor" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="UserGroupId" />
+          </Key>
+          <Property Name="UserGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="GroupId" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Group" Relationship="Self.FK_UserGroup_Group" FromRole="UserGroup" ToRole="Group" />
+          <NavigationProperty Name="user" Relationship="Self.FK_UserGroup_users" FromRole="UserGroup" ToRole="users" />
+          <NavigationProperty Name="UserMessageRecipients" Relationship="Self.FK_UserMessageRecipient_UserGroup" FromRole="UserGroup" ToRole="UserMessageRecipient" />
+        </EntityType>
         <EntityType Name="UserItemCard">
           <Key>
             <PropertyRef Name="UserItemId" />
@@ -514,6 +884,7 @@
           <Property Name="UserItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UesrId" Type="Int32" />
           <Property Name="ItemId" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
           <Property Name="IsLogedin" Type="Boolean" />
           <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int32" />
@@ -522,7 +893,56 @@
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="item" Relationship="Self.FK_UserItemCard_items" FromRole="UserItemCard" ToRole="items" />
           <NavigationProperty Name="user" Relationship="Self.FK_UserItemCard_users" FromRole="UserItemCard" ToRole="users" />
-          <Property Name="quantity" Type="Int32" />
+        </EntityType>
+        <EntityType Name="UserMessage">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ParentMessageId" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="user" Relationship="Self.FK_UserMessage_users" FromRole="UserMessage" ToRole="users" />
+          <NavigationProperty Name="UserMessageRecipients" Relationship="Self.FK_UserMessageRecipient_UserMessage" FromRole="UserMessage" ToRole="UserMessageRecipient" />
+        </EntityType>
+        <EntityType Name="UserMessageRecipient">
+          <Key>
+            <PropertyRef Name="MessageRecipientId" />
+          </Key>
+          <Property Name="MessageRecipientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="MessageId" Type="Int32" />
+          <Property Name="UserGroupId" Type="Int32" />
+          <Property Name="IsRead" Type="Boolean" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserGroup" Relationship="Self.FK_UserMessageRecipient_UserGroup" FromRole="UserMessageRecipient" ToRole="UserGroup" />
+          <NavigationProperty Name="UserMessage" Relationship="Self.FK_UserMessageRecipient_UserMessage" FromRole="UserMessageRecipient" ToRole="UserMessage" />
+          <NavigationProperty Name="user" Relationship="Self.FK_UserMessageRecipient_users" FromRole="UserMessageRecipient" ToRole="users" />
+        </EntityType>
+        <EntityType Name="UserRating">
+          <Key>
+            <PropertyRef Name="UserRatingId" />
+          </Key>
+          <Property Name="UserRatingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="ShopId" Type="Int32" />
+          <Property Name="Ratings" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Shop" Relationship="Self.FK_UserRating_Shops" FromRole="UserRating" ToRole="Shops" />
+          <NavigationProperty Name="user" Relationship="Self.FK_UserRating_users" FromRole="UserRating" ToRole="users" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -530,6 +950,7 @@
           </Key>
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleID" Type="Int32" />
+          <Property Name="LocationId" Type="Int32" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -548,11 +969,20 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Location1" Relationship="Self.FK_users_Location" FromRole="users" ToRole="Location" />
           <NavigationProperty Name="Role" Relationship="Self.FK_users_Role" FromRole="users" ToRole="Role" />
+          <NavigationProperty Name="Trackings" Relationship="Self.FK_Tracking_users" FromRole="users" ToRole="Tracking" />
+          <NavigationProperty Name="UserChats" Relationship="Self.FK_UserChat_users" FromRole="users" ToRole="UserChat" />
+          <NavigationProperty Name="UserGroups" Relationship="Self.FK_UserGroup_users" FromRole="users" ToRole="UserGroup" />
           <NavigationProperty Name="UserItemCards" Relationship="Self.FK_UserItemCard_users" FromRole="users" ToRole="UserItemCard" />
+          <NavigationProperty Name="UserMessages" Relationship="Self.FK_UserMessage_users" FromRole="users" ToRole="UserMessage" />
+          <NavigationProperty Name="UserMessageRecipients" Relationship="Self.FK_UserMessageRecipient_users" FromRole="users" ToRole="UserMessageRecipient" />
+          <NavigationProperty Name="UserRatings" Relationship="Self.FK_UserRating_users" FromRole="users" ToRole="UserRating" />
           <NavigationProperty Name="vendors" Relationship="Self.FK_vendor_users" FromRole="users" ToRole="vendor" />
+
           <NavigationProperty Name="UserRatings" Relationship="sabiShopModel.FK_UserRating_users" FromRole="user" ToRole="UserRating" />
           <NavigationProperty Name="Trackings" Relationship="sabiShopModel.FK_Tracking_users" FromRole="user" ToRole="Tracking" />
+
         </EntityType>
         <EntityType Name="vendor">
           <Key>
@@ -561,15 +991,20 @@
           <Property Name="vendorid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="Int32" />
           <Property Name="vIDSocial" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Shops" Relationship="Self.FK_Shops_vendor" FromRole="vendor" ToRole="Shops" />
+          <NavigationProperty Name="Trackings" Relationship="Self.FK_Tracking_vendor" FromRole="vendor" ToRole="Tracking" />
+          <NavigationProperty Name="UserChats" Relationship="Self.FK_UserChat_vendor" FromRole="vendor" ToRole="UserChat" />
           <NavigationProperty Name="user" Relationship="Self.FK_vendor_users" FromRole="vendor" ToRole="users" />
+
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Trackings" Relationship="sabiShopModel.FK_Tracking_vendor" FromRole="vendor" ToRole="Tracking" />
+
         </EntityType>
         <Association Name="FK_Shops_Categories">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
@@ -580,6 +1015,18 @@
             </Principal>
             <Dependent Role="Shops">
               <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroup_Group">
+          <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="GroupId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -595,6 +1042,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tracking_items">
+          <End Role="items" Type="Self.item" Multiplicity="0..1" />
+          <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="items">
+              <PropertyRef Name="ItemId" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserItemCard_items">
           <End Role="items" Type="Self.item" Multiplicity="0..1" />
           <End Role="UserItemCard" Type="Self.UserItemCard" Multiplicity="*" />
@@ -604,6 +1063,18 @@
             </Principal>
             <Dependent Role="UserItemCard">
               <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -643,6 +1114,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserRating_Shops">
+          <End Role="Shops" Type="Self.Shop" Multiplicity="0..1" />
+          <End Role="UserRating" Type="Self.UserRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shops">
+              <PropertyRef Name="Shopid" />
+            </Principal>
+            <Dependent Role="UserRating">
+              <PropertyRef Name="ShopId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracking_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="to" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tracking_vendor">
+          <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
+          <End Role="Tracking" Type="Self.Tracking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendor">
+              <PropertyRef Name="vendorid" />
+            </Principal>
+            <Dependent Role="Tracking">
+              <PropertyRef Name="from" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserChat_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="UserChat" Type="Self.UserChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserChat">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserChat_vendor">
+          <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
+          <End Role="UserChat" Type="Self.UserChat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="vendor">
+              <PropertyRef Name="vendorid" />
+            </Principal>
+            <Dependent Role="UserChat">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroup_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserGroup">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessageRecipient_UserGroup">
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="0..1" />
+          <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="UserGroupId" />
+            </Principal>
+            <Dependent Role="UserMessageRecipient">
+              <PropertyRef Name="UserGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserItemCard_users">
           <End Role="users" Type="Self.user" Multiplicity="0..1" />
           <End Role="UserItemCard" Type="Self.UserItemCard" Multiplicity="*" />
@@ -652,6 +1207,54 @@
             </Principal>
             <Dependent Role="UserItemCard">
               <PropertyRef Name="UesrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessage_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="UserMessage" Type="Self.UserMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMessage">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessageRecipient_UserMessage">
+          <End Role="UserMessage" Type="Self.UserMessage" Multiplicity="0..1" />
+          <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMessage">
+              <PropertyRef Name="MessageId" />
+            </Principal>
+            <Dependent Role="UserMessageRecipient">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserMessageRecipient_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserMessageRecipient">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRating_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="UserRating" Type="Self.UserRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserRating">
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -669,25 +1272,45 @@
         </Association>
         <EntityContainer Name="sabiShopEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
           <EntitySet Name="items" EntityType="Self.item" />
+          <EntitySet Name="Locations" EntityType="Self.Location" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="Shops" EntityType="Self.Shop" />
           <EntitySet Name="SubCategories" EntityType="Self.SubCategory" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Trackings" EntityType="Self.Tracking" />
+          <EntitySet Name="UserChats" EntityType="Self.UserChat" />
+          <EntitySet Name="UserGroups" EntityType="Self.UserGroup" />
           <EntitySet Name="UserItemCards" EntityType="Self.UserItemCard" />
+          <EntitySet Name="UserMessages" EntityType="Self.UserMessage" />
+          <EntitySet Name="UserMessageRecipients" EntityType="Self.UserMessageRecipient" />
+          <EntitySet Name="UserRatings" EntityType="Self.UserRating" />
           <EntitySet Name="users" EntityType="Self.user" />
           <EntitySet Name="vendors" EntityType="Self.vendor" />
           <AssociationSet Name="FK_Shops_Categories" Association="Self.FK_Shops_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Shops" EntitySet="Shops" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserGroup_Group" Association="Self.FK_UserGroup_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="UserGroup" EntitySet="UserGroups" />
+          </AssociationSet>
           <AssociationSet Name="FK_items_SubCategories" Association="Self.FK_items_SubCategories">
             <End Role="SubCategories" EntitySet="SubCategories" />
             <End Role="items" EntitySet="items" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tracking_items" Association="Self.FK_Tracking_items">
+            <End Role="items" EntitySet="items" />
+            <End Role="Tracking" EntitySet="Trackings" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserItemCard_items" Association="Self.FK_UserItemCard_items">
             <End Role="items" EntitySet="items" />
             <End Role="UserItemCard" EntitySet="UserItemCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_Location" Association="Self.FK_users_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="users" EntitySet="users" />
           </AssociationSet>
           <AssociationSet Name="FK_users_Role" Association="Self.FK_users_Role">
             <End Role="Role" EntitySet="Roles" />
@@ -701,14 +1324,73 @@
             <End Role="Shops" EntitySet="Shops" />
             <End Role="SubCategories" EntitySet="SubCategories" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserRating_Shops" Association="Self.FK_UserRating_Shops">
+            <End Role="Shops" EntitySet="Shops" />
+            <End Role="UserRating" EntitySet="UserRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracking_users" Association="Self.FK_Tracking_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="Tracking" EntitySet="Trackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tracking_vendor" Association="Self.FK_Tracking_vendor">
+            <End Role="vendor" EntitySet="vendors" />
+            <End Role="Tracking" EntitySet="Trackings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserChat_users" Association="Self.FK_UserChat_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserChat" EntitySet="UserChats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserChat_vendor" Association="Self.FK_UserChat_vendor">
+            <End Role="vendor" EntitySet="vendors" />
+            <End Role="UserChat" EntitySet="UserChats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroup_users" Association="Self.FK_UserGroup_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserGroup" EntitySet="UserGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessageRecipient_UserGroup" Association="Self.FK_UserMessageRecipient_UserGroup">
+            <End Role="UserGroup" EntitySet="UserGroups" />
+            <End Role="UserMessageRecipient" EntitySet="UserMessageRecipients" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserItemCard_users" Association="Self.FK_UserItemCard_users">
             <End Role="users" EntitySet="users" />
             <End Role="UserItemCard" EntitySet="UserItemCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessage_users" Association="Self.FK_UserMessage_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserMessage" EntitySet="UserMessages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessageRecipient_UserMessage" Association="Self.FK_UserMessageRecipient_UserMessage">
+            <End Role="UserMessage" EntitySet="UserMessages" />
+            <End Role="UserMessageRecipient" EntitySet="UserMessageRecipients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserMessageRecipient_users" Association="Self.FK_UserMessageRecipient_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserMessageRecipient" EntitySet="UserMessageRecipients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRating_users" Association="Self.FK_UserRating_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="UserRating" EntitySet="UserRatings" />
           </AssociationSet>
           <AssociationSet Name="FK_vendor_users" Association="Self.FK_vendor_users">
             <End Role="users" EntitySet="users" />
             <End Role="vendor" EntitySet="vendors" />
           </AssociationSet>
+          <FunctionImport Name="GetUserChat" ReturnType="Collection(sabiShopModel.GetUserChat_Result)">
+            <Parameter Name="GroupId" Mode="In" Type="Int32" />
+            <Parameter Name="SenderId" Mode="In" Type="Int32" />
+            <Parameter Name="RecipientId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserGroup" ReturnType="Collection(Int32)">
+            <Parameter Name="SenderId" Mode="In" Type="Int32" />
+            <Parameter Name="RecipientId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserInfoByVendorId" ReturnType="Collection(sabiShopModel.GetUserInfoByVendorId_Result)">
+            <Parameter Name="Vendorid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserWithGroup" ReturnType="Collection(sabiShopModel.GetUserWithGroup_Result)">
+            <Parameter Name="RecipientId" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -725,11 +1407,11 @@
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(sabiShopModel.sp_helpdiagramdefinition_Result)">
+          <FunctionImport Name="sp_helpdiagramdefinition">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(sabiShopModel.sp_helpdiagrams_Result)">
+          <FunctionImport Name="sp_helpdiagrams">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -739,6 +1421,7 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+
           <EntitySet Name="UserRatings" EntityType="sabiShopModel.UserRating" />
           <AssociationSet Name="FK_UserRating_Shops" Association="sabiShopModel.FK_UserRating_Shops">
             <End Role="Shop" EntitySet="Shops" />
@@ -761,18 +1444,63 @@
             <End Role="vendor" EntitySet="vendors" />
             <End Role="Tracking" EntitySet="Trackings" />
           </AssociationSet>
+
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
+        <ComplexType Name="GetUserChat_Result">
+          <Property Type="Int32" Name="MessageId" Nullable="false" />
+          <Property Type="String" Name="Message" Nullable="true" />
+          <Property Type="Int32" Name="UserId" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="RecipientId" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        <ComplexType Name="GetUserInfoByVendorId_Result">
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="RoleID" Nullable="true" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="password" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Contact" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="String" Name="RoleType" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="location" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="itemsBuyed" Nullable="true" />
+          <Property Type="String" Name="lastLogin" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SocialLoginType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ShopName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="isDeleted" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ModifiedBy" Nullable="true" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
         </ComplexType>
+        <ComplexType Name="GetUserWithGroup_Result">
+          <Property Type="Int32" Name="GroupId" Nullable="true" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int32" Name="RoleID" Nullable="true" />
+          <Property Type="Int32" Name="LocationId" Nullable="true" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="username" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="password" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Contact" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="image" Nullable="true" />
+          <Property Type="String" Name="RoleType" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="location" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="itemsBuyed" Nullable="true" />
+          <Property Type="String" Name="lastLogin" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SocialLoginType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ShopName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="isDeleted" Nullable="true" MaxLength="5" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ModifiedBy" Nullable="true" />
+          <Property Type="DateTime" Name="ModifiedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+
         <EntityType Name="UserRating">
           <Key>
             <PropertyRef Name="UserRatingId" />
@@ -869,6 +1597,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -882,6 +1611,19 @@
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
                 <ScalarProperty Name="image" ColumnName="image" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="sabiShopModel.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
@@ -913,6 +1655,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="sabiShopModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="sabiShopModel.Role">
               <MappingFragment StoreEntitySet="Role">
@@ -925,19 +1680,19 @@
           <EntitySetMapping Name="Shops">
             <EntityTypeMapping TypeName="sabiShopModel.Shop">
               <MappingFragment StoreEntitySet="Shops">
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
-                <ScalarProperty Name="Logo" ColumnName="Logo" />
-                <ScalarProperty Name="Ratings" ColumnName="Ratings" />
-                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
-                <ScalarProperty Name="DeliveryFee" ColumnName="DeliveryFee" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="Shopid" ColumnName="Shopid" />
                 <ScalarProperty Name="vendorid" ColumnName="vendorid" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="shopname" ColumnName="shopname" />
                 <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DeliveryFee" ColumnName="DeliveryFee" />
+                <ScalarProperty Name="DeliveryTime" ColumnName="DeliveryTime" />
+                <ScalarProperty Name="MinOrder" ColumnName="MinOrder" />
+                <ScalarProperty Name="Ratings" ColumnName="Ratings" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -972,14 +1727,109 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Trackings">
+            <EntityTypeMapping TypeName="sabiShopModel.Tracking">
+              <MappingFragment StoreEntitySet="Tracking">
+                <ScalarProperty Name="trackingId" ColumnName="trackingId" />
+                <ScalarProperty Name="to" ColumnName="to" />
+                <ScalarProperty Name="from" ColumnName="from" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="step1" ColumnName="step1" />
+                <ScalarProperty Name="step2" ColumnName="step2" />
+                <ScalarProperty Name="step3" ColumnName="step3" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="isModified" ColumnName="isModified" />
+                <ScalarProperty Name="isCreated" ColumnName="isCreated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserChats">
+            <EntityTypeMapping TypeName="sabiShopModel.UserChat">
+              <MappingFragment StoreEntitySet="UserChat">
+                <ScalarProperty Name="ChatId" ColumnName="ChatId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="VendorName" ColumnName="VendorName" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroups">
+            <EntityTypeMapping TypeName="sabiShopModel.UserGroup">
+              <MappingFragment StoreEntitySet="UserGroup">
+                <ScalarProperty Name="UserGroupId" ColumnName="UserGroupId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="UserItemCards">
             <EntityTypeMapping TypeName="sabiShopModel.UserItemCard">
               <MappingFragment StoreEntitySet="UserItemCard">
-                <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="UserItemId" ColumnName="UserItemId" />
                 <ScalarProperty Name="UesrId" ColumnName="UesrId" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="IsLogedin" ColumnName="IsLogedin" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMessages">
+            <EntityTypeMapping TypeName="sabiShopModel.UserMessage">
+              <MappingFragment StoreEntitySet="UserMessage">
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="ParentMessageId" ColumnName="ParentMessageId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMessageRecipients">
+            <EntityTypeMapping TypeName="sabiShopModel.UserMessageRecipient">
+              <MappingFragment StoreEntitySet="UserMessageRecipient">
+                <ScalarProperty Name="MessageRecipientId" ColumnName="MessageRecipientId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="UserGroupId" ColumnName="UserGroupId" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRatings">
+            <EntityTypeMapping TypeName="sabiShopModel.UserRating">
+              <MappingFragment StoreEntitySet="UserRating">
+                <ScalarProperty Name="UserRatingId" ColumnName="UserRatingId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ShopId" ColumnName="ShopId" />
+                <ScalarProperty Name="Ratings" ColumnName="Ratings" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -993,6 +1843,7 @@
               <MappingFragment StoreEntitySet="users">
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
                 <ScalarProperty Name="username" ColumnName="username" />
@@ -1017,10 +1868,10 @@
           <EntitySetMapping Name="vendors">
             <EntityTypeMapping TypeName="sabiShopModel.vendor">
               <MappingFragment StoreEntitySet="vendor">
-                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="vendorid" ColumnName="vendorid" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="vIDSocial" ColumnName="vIDSocial" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -1029,30 +1880,81 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetUserChat" FunctionName="sabiShopModel.Store.GetUserChat">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="sabiShopModel.GetUserChat_Result">
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="RecipientId" ColumnName="RecipientId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUserGroup" FunctionName="sabiShopModel.Store.GetUserGroup" />
+          <FunctionImportMapping FunctionImportName="GetUserInfoByVendorId" FunctionName="sabiShopModel.Store.GetUserInfoByVendorId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="sabiShopModel.GetUserInfoByVendorId_Result">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="RoleType" ColumnName="RoleType" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="itemsBuyed" ColumnName="itemsBuyed" />
+                <ScalarProperty Name="lastLogin" ColumnName="lastLogin" />
+                <ScalarProperty Name="SocialLoginType" ColumnName="SocialLoginType" />
+                <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetUserWithGroup" FunctionName="sabiShopModel.Store.GetUserWithGroup">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="sabiShopModel.GetUserWithGroup_Result">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="Contact" ColumnName="Contact" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="RoleType" ColumnName="RoleType" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="itemsBuyed" ColumnName="itemsBuyed" />
+                <ScalarProperty Name="lastLogin" ColumnName="lastLogin" />
+                <ScalarProperty Name="SocialLoginType" ColumnName="SocialLoginType" />
+                <ScalarProperty Name="ShopName" ColumnName="ShopName" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="sabiShopModel.Store.sp_alterdiagram" />
           <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="sabiShopModel.Store.sp_creatediagram" />
           <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="sabiShopModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="sabiShopModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="sabiShopModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="sabiShopModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="sabiShopModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="sabiShopModel.Store.sp_helpdiagramdefinition" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="sabiShopModel.Store.sp_helpdiagrams" />
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="sabiShopModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="sabiShopModel.Store.sp_upgraddiagrams" />
+
           <EntitySetMapping Name="UserRatings">
             <EntityTypeMapping TypeName="sabiShopModel.UserRating">
               <MappingFragment StoreEntitySet="UserRating">
@@ -1086,6 +1988,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

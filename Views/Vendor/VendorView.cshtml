@@ -91,7 +91,7 @@
         //User/Index
         var subCategoryName = $('#subCatInputId_' + subCategoryId).val();
         if (subCategoryName == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -116,7 +116,7 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -293,7 +293,7 @@
 @*//modal to Add Item Vendor*@
 
 
-<input type="hidden" id="showAddItemVendor" data-target="#AddItemVendor" data-toggle="modal"/>
+<input type="hidden" id="showAddItemVendor" data-target="#AddItemVendor" data-toggle="modal" />
 <div class="modal fade " id="AddItemVendor">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -429,7 +429,7 @@
                 <div class="modal-body" style="width:100%">
                     @using (Html.BeginForm("UpdateShop", "Vendor", FormMethod.Post, new { id = "UpdateShopForm" }))
                     {
-                        <input type="hidden" id="Shopid" name="Shopid" value="@ViewBag.ShopData.Shopid"/>
+                        <input type="hidden" id="Shopid" name="Shopid" value="@ViewBag.ShopData.Shopid" />
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-12">
@@ -582,6 +582,8 @@
     </div>
 </div>
 <div class="layout_padding gallery_section">
+
+
     <div class="HistoryOfUser" data-target="#VendorOrders" data-toggle="modal" onclick="getvendorsorders(@ViewBag.ShopData.Shopid)">
         <span>Orders</span><i class="fas fa-shopping-cart"></i></i>
     </div>
@@ -634,13 +636,16 @@
                                 @sub.name
                             </span>
                             <span>
-                                    <input type="text" class="form-control subCatInput" style="display:none" id="subCatInputId_@sub.SubCategorieId" value="@sub.name" />
+                                <input type="text" class="form-control subCatInput" style="display:none" id="subCatInputId_@sub.SubCategorieId" value="@sub.name" />
                             </span>
                             <i class="far fa-trash-alt subCatDelete" id="subCatDelete_@sub.SubCategorieId" style="float:right;color: #fc3726;position:relative;left:6px;" onclick="DeleteVendorSubCategory(@sub.SubCategorieId);"></i>
 
                             <i class="fas fa-edit subCatEdit" id="subCatEdit_@sub.SubCategorieId" style="float:right" onclick="editCategory(@sub.SubCategorieId, '@sub.name');"></i>
                         </div>
                     }
+                </div>
+                <div style=" text-align: center; padding: 15px;">
+                    <input type="button" class="btn btn-dark" value="Customers Feedback" onclick="GetUserList(@ViewBag.ShopData.vendorid);">
                 </div>
             </div>
             <div class="col-9">
@@ -843,6 +848,57 @@
 @* add/update item end*@
 
 
+<input type="hidden" id="openUserListModal" data-target="#userListBootstrapModal" data-toggle="modal" />
+<div id="userListModalDiv">
+    <div class="modal fade " id="userListBootstrapModal">
+        <div class="modal-dialog w-userList-modal-dialog" style="max-width: 70%;">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                    <h4 class="title" style="color:white;">Users</h4>
+
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="userListDiv">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="openUserChatModal" data-target="#userChatBootstrapModal" data-toggle="modal" />
+<div id="userListModalDiv">
+    <div class="modal fade " id="userChatBootstrapModal">
+        <div class="modal-dialog w-userChat-modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                    <h4 class="title" style="color:white;">Chat</h4>
+
+                    <button style="color:white;" type="button" onclick="showUserListModal();" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="userChatDiv">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     function SortItemslistChange(value) {
         debugger;
@@ -892,7 +948,7 @@
             return;
         }
         if (document.getElementById('shopSubCategorydrp').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -950,7 +1006,7 @@
     function updateVendorItemData() {
         debugger;
         if (document.getElementById('updateItemName').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -971,7 +1027,7 @@
             return;
         }
         if (document.getElementById('updateItemPrice').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -982,7 +1038,7 @@
             return;
         }
         if (document.getElementById('UpdateSubCategorydrp').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1004,7 +1060,7 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -1047,7 +1103,7 @@
         debugger;
         //Vendor/VendorView
         if (document.getElementById('ShopName').value == "") {
-         
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1058,7 +1114,7 @@
             return;
         }
         if (document.getElementById('Category').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1069,7 +1125,7 @@
             return;
         }
         if (document.getElementById('Location').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1090,7 +1146,7 @@
             return;
         }
         if (document.getElementById('DeliveryFee').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1142,7 +1198,7 @@
                 success: function (data) {
                     debugger;
                     if (data == "success") {
-                        
+
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -1197,7 +1253,7 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -1208,7 +1264,7 @@
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'warning',
@@ -1229,7 +1285,7 @@
     function UpdateSubCategoryInfo() {
         debugger;
         if (document.getElementById('UpdateSubCategoryName').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1262,7 +1318,7 @@
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'warning',
@@ -1301,7 +1357,7 @@
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'warning',
@@ -1328,7 +1384,7 @@
     function SaveVendorItemInfo() {
         debugger;
         if (document.getElementById('itemName').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1349,7 +1405,7 @@
             return;
         }
         if (document.getElementById('itemPrice').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1371,7 +1427,7 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -1413,7 +1469,7 @@
     function UpdateItemInfo() {
         debugger;
         if (document.getElementById('updateItemName').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1424,7 +1480,7 @@
             return;
         }
         if (document.getElementById('updateItemWeight').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1435,7 +1491,7 @@
             return;
         }
         if (document.getElementById('updateItemPrice').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1446,7 +1502,7 @@
             return;
         }
         if (document.getElementById('UpdateSubCategorydrp').value == "") {
-            
+
             Swal.fire({
                 position: 'top-end',
                 icon: 'warning',
@@ -1468,7 +1524,7 @@
             success: function (data) {
                 debugger;
                 if (data == "success") {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -1479,7 +1535,7 @@
                     window.location.href = '/Vendor/VendorView';
                 }
                 else {
-                    
+
                     Swal.fire({
                         position: 'top-end',
                         icon: 'warning',
@@ -1496,6 +1552,41 @@
             }
         });
     }
+
+    function GetUserList(vendorId) {
+        debugger;
+        var options = {
+            type: "GET",
+            url: '/Chat/GetUserWithGroup?vendorId=' + vendorId,
+            success: function (response) {
+                debugger;
+                $("#userListBootstrapModal #userListDiv").html(response);
+                $("#openUserListModal").trigger("click");
+            }
+        };
+        $.ajax(options);
+    }
+
+    function GetUserChat(userId) {
+        debugger;
+        $("#userListBootstrapModal").css("height", "0");
+        var options = {
+            type: "GET",
+            url: '/Chat/VendorChat?userId=' + userId,
+            success: function (response) {
+                debugger;
+                $("#userChatBootstrapModal #userChatDiv").html(response);
+                $("#openUserChatModal").trigger("click");
+            }
+        };
+        $.ajax(options);
+    }
+
+    function showUserListModal() {
+        debugger;
+        $("#userListBootstrapModal").css("height", "100%");
+    }
+
 
 </script>
 

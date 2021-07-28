@@ -12,19 +12,23 @@ namespace SabiAsp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UserRating
+    public partial class Group
     {
-        public int UserRatingId { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public Nullable<int> ShopId { get; set; }
-        public string Ratings { get; set; }
-        public string isDeleted { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Group()
+        {
+            this.UserGroups = new HashSet<UserGroup>();
+        }
+    
+        public int GroupId { get; set; }
+        public string GroupName { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Shop Shop { get; set; }
-        public virtual user user { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserGroup> UserGroups { get; set; }
     }
 }

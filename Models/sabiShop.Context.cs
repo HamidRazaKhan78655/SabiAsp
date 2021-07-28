@@ -28,16 +28,74 @@ namespace SabiAsp.Models
         }
     
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<item> items { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Shop> Shops { get; set; }
         public virtual DbSet<SubCategory> SubCategories { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Tracking> Trackings { get; set; }
+        public virtual DbSet<UserChat> UserChats { get; set; }
+        public virtual DbSet<UserGroup> UserGroups { get; set; }
         public virtual DbSet<UserItemCard> UserItemCards { get; set; }
+        public virtual DbSet<UserMessage> UserMessages { get; set; }
+        public virtual DbSet<UserMessageRecipient> UserMessageRecipients { get; set; }
+        public virtual DbSet<UserRating> UserRatings { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<vendor> vendors { get; set; }
+
+    
+        public virtual ObjectResult<GetUserChat_Result> GetUserChat(Nullable<int> groupId, Nullable<int> senderId, Nullable<int> recipientId)
+        {
+            var groupIdParameter = groupId.HasValue ?
+                new ObjectParameter("GroupId", groupId) :
+                new ObjectParameter("GroupId", typeof(int));
+    
+            var senderIdParameter = senderId.HasValue ?
+                new ObjectParameter("SenderId", senderId) :
+                new ObjectParameter("SenderId", typeof(int));
+    
+            var recipientIdParameter = recipientId.HasValue ?
+                new ObjectParameter("RecipientId", recipientId) :
+                new ObjectParameter("RecipientId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserChat_Result>("GetUserChat", groupIdParameter, senderIdParameter, recipientIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> GetUserGroup(Nullable<int> senderId, Nullable<int> recipientId)
+        {
+            var senderIdParameter = senderId.HasValue ?
+                new ObjectParameter("SenderId", senderId) :
+                new ObjectParameter("SenderId", typeof(int));
+    
+            var recipientIdParameter = recipientId.HasValue ?
+                new ObjectParameter("RecipientId", recipientId) :
+                new ObjectParameter("RecipientId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("GetUserGroup", senderIdParameter, recipientIdParameter);
+        }
+    
+        public virtual ObjectResult<GetUserInfoByVendorId_Result> GetUserInfoByVendorId(Nullable<int> vendorid)
+        {
+            var vendoridParameter = vendorid.HasValue ?
+                new ObjectParameter("Vendorid", vendorid) :
+                new ObjectParameter("Vendorid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserInfoByVendorId_Result>("GetUserInfoByVendorId", vendoridParameter);
+        }
+    
+        public virtual ObjectResult<GetUserWithGroup_Result> GetUserWithGroup(Nullable<int> recipientId)
+        {
+            var recipientIdParameter = recipientId.HasValue ?
+                new ObjectParameter("RecipientId", recipientId) :
+                new ObjectParameter("RecipientId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserWithGroup_Result>("GetUserWithGroup", recipientIdParameter);
+        }
         public virtual DbSet<UserRating> UserRatings { get; set; }
         public virtual DbSet<Tracking> Trackings { get; set; }
+
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {
@@ -94,7 +152,7 @@ namespace SabiAsp.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        public virtual int sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
@@ -104,10 +162,10 @@ namespace SabiAsp.Models
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
         }
     
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        public virtual int sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
         {
             var diagramnameParameter = diagramname != null ?
                 new ObjectParameter("diagramname", diagramname) :
@@ -117,7 +175,7 @@ namespace SabiAsp.Models
                 new ObjectParameter("owner_id", owner_id) :
                 new ObjectParameter("owner_id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
         }
     
         public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)

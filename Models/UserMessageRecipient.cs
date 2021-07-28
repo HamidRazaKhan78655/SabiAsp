@@ -12,19 +12,21 @@ namespace SabiAsp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class UserRating
+    public partial class UserMessageRecipient
     {
-        public int UserRatingId { get; set; }
+        public int MessageRecipientId { get; set; }
         public Nullable<int> UserId { get; set; }
-        public Nullable<int> ShopId { get; set; }
-        public string Ratings { get; set; }
-        public string isDeleted { get; set; }
+        public Nullable<int> MessageId { get; set; }
+        public Nullable<int> UserGroupId { get; set; }
+        public Nullable<bool> IsRead { get; set; }
+        public Nullable<bool> IsDeleted { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual Shop Shop { get; set; }
+        public virtual UserGroup UserGroup { get; set; }
+        public virtual UserMessage UserMessage { get; set; }
         public virtual user user { get; set; }
     }
 }

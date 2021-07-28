@@ -11,12 +11,12 @@ namespace SabiAsp.Models
 {
     using System;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class GetUserChat_Result
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public int MessageId { get; set; }
+        public string Message { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public string name { get; set; }
+        public Nullable<int> RecipientId { get; set; }
     }
 }
