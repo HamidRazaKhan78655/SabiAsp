@@ -63,19 +63,19 @@ namespace SabiAsp.Controllers
             var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.isDeleted != "true").FirstOrDefault();
             if (User != null)
             {
-                if (User.RoleID == 3)
+                /*if (User.RoleID == 3)
                 {
                     var vendor = Db.vendors.Where(v => v.UserId == User.UserId && v.Status == "Accepted").SingleOrDefault();
                     if (vendor == null)
                         return View();
                 }
-
+*/
                 string DecryptPassword = Encrypto.DecryptString(User.password);
                 if (password == DecryptPassword)
                 {
                     Session["UserId"] = User.UserId.ToString();
                     Session["Username"] = User.username.ToString();
-                    Session["Name"] = User.name.ToString();
+                    Session["Name"] = User.name.ToString().Split(' ')[0];
                     Session["EmailAddress"] = User.EmailAddress.ToString();
                     Session["Contact"] = User.Contact.ToString();
                     Session["Address"] = User.Address.ToString();
@@ -250,7 +250,7 @@ namespace SabiAsp.Controllers
 
                     Session["UserId"] = u.UserId.ToString();
                     Session["Username"] = u.username.ToString();
-                    Session["Name"] = u.name.ToString();
+                    Session["Name"] = u.name.ToString().Split(' ')[0];
                     Session["RoleType"] = u.RoleType.ToString();
                     Session["RoleID"] = u.RoleID.ToString();
                     Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
@@ -279,7 +279,7 @@ namespace SabiAsp.Controllers
                 {
                     Session["UserId"] = User.UserId.ToString();
                     Session["Username"] = User.username;
-                    Session["Name"] = User.name;
+                    Session["Name"] = User.name.Split(' ')[0];
                     Session["RoleType"] = User.RoleType;
                     Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                     Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
@@ -345,7 +345,7 @@ namespace SabiAsp.Controllers
 
                         Session["UserId"] = u.UserId.ToString();
                         Session["Username"] = email;
-                        Session["Name"] = name;
+                        Session["Name"] = name.Split(' ')[0];
                         Session["RoleType"] = "Vendor";
                         Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                         Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
@@ -374,7 +374,7 @@ namespace SabiAsp.Controllers
 
                         Session["UserId"] = u.UserId.ToString();
                         Session["Username"] = email;
-                        Session["Name"] = name;
+                        Session["Name"] = name.Split(' ')[0];
                         Session["RoleType"] = "User";
                         Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                         Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
@@ -540,7 +540,7 @@ namespace SabiAsp.Controllers
 
                         Session["UserId"] = u.UserId.ToString();
                         Session["Username"] = email;
-                        Session["Name"] = name;
+                        Session["Name"] = name.Split(' ')[0];
                         Session["RoleType"] = "Vendor";
                         Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                         Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
@@ -570,7 +570,7 @@ namespace SabiAsp.Controllers
 
                         Session["UserId"] = u.UserId.ToString();
                         Session["Username"] = email;
-                        Session["Name"] = name;
+                        Session["Name"] = name.Split(' ')[0];
                         Session["RoleType"] = "User";
                         Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                         Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";

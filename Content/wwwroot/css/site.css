@@ -381,3 +381,17 @@ body {
     position: absolute;
     margin: -4px;
 }
+.HistoryOfUser {
+    height: 35px;
+    width: 120px;
+    background: white;
+    position: absolute;
+    right: 20px;
+    border-radius: 10px;
+    cursor:pointer;
+    z-index:100;
+}
+    .HistoryOfUser span {
+        padding: 12px;
+        font-size: 20px;
+    }

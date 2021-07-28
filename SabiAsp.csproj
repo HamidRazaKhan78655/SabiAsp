@@ -179,7 +179,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+
     <Compile Include="Controllers\ChatController.cs" />
+
+    <Compile Include="Controllers\EmailController.cs" />
+
     <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
@@ -348,6 +352,9 @@
     <Content Include="Content\Template\images\gray-star-icon.png" />
     <Content Include="Content\Template\images\Grocceries.png" />
     <Content Include="Content\Template\images\hamper.png" />
+    <Content Include="Content\Template\images\images %281%29.jpg" />
+    <Content Include="Content\Template\images\images %282%29.jpg" />
+    <Content Include="Content\Template\images\images.jpg" />
     <Content Include="Content\Template\images\in-icon.png" />
     <Content Include="Content\Template\images\logo.png" />
     <Content Include="Content\Template\images\map-icon.png" />
@@ -417,6 +424,7 @@
     <Content Include="Images\greater.png" />
     <Content Include="Images\Groceries.png" />
     <Content Include="Images\less.png" />
+    <Content Include="Images\loadercolor51.gif" />
     <Content Include="Images\loginSabi.png" />
     <Content Include="Images\logoblue.png" />
     <Content Include="Images\logoWhite.png" />
@@ -593,15 +601,23 @@
     <Content Include="Views\SubCategory\GetShopSubCategoriesByShopId.cshtml" />
     <Content Include="Views\SubCategory\SortShopList.cshtml" />
     <Content Include="Views\Items\SearchItempartialview.cshtml" />
+
     <Content Include="Views\Chat\Chat.cshtml" />
     <Content Include="Views\Location\GetAllLocation.cshtml" />
     <Content Include="Views\Vendor\GetAllUnacceptedShops.cshtml" />
     <Content Include="Views\Chat\GetUserWithGroup.cshtml" />
     <Content Include="Views\Chat\VendorChat.cshtml" />
+
+    <Content Include="Views\User\getHistoryofUser.cshtml" />
+    <Content Include="Views\User\getvendors.cshtml" />
+    <Content Include="Views\User\Actions.cshtml" />
+    <Content Include="Views\User\showTrackingPackage.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CompanyImages\" />
+    <Folder Include="Views\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

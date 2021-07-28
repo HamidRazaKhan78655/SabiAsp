@@ -226,25 +226,42 @@ function checkUserSignIn() {
 function BuyItemView() {
     debugger;
     var cartDiv = $(".AddtoCartDiv");
-    cartDiv.show();
-    var loadCart = $("#LoadCartData");
     if (checkUserSignIn()) {
-        var url = "/Items/BuyItemView?Userid=" + $('#CheckLogin').val();
-        $.get(url, function (data) {
+        if (cartDiv.css('display') == 'block') {
+            cartDiv.removeClass('animate__bounceInRight');
+            cartDiv.addClass('animate__animated animate__bounceOutRight');
+            setTimeout(function () {
+                cartDiv.hide();
+            },1000);
+           
+        } else {
+            cartDiv.show();
+            var loadCart = $("#LoadCartData");
+            loadCart.html('<div class="Loader"></div>');
+            cartDiv.removeClass('animate__bounceOutRight');
+            cartDiv.addClass('animate__animated animate__bounceInRight');
+            var url = "/Items/BuyItemView?Userid=" + $('#CheckLogin').val();
+            $.get(url, function (data)
+            {
+                debugger;
+                loadCart.html('');
+                loadCart.html(data);
+                
+            });
+        }
+            
+        } else {
 
-            debugger;
-            loadCart.html(data);
-        });
-    } else {
-        
-        Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: 'Please SignIn first !',
-            showConfirmButton: false,
-            timer: 1500
-        });
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please SignIn first !',
+                showConfirmButton: false,
+                timer: 1500
+            });
+       
     }
+    
   
 }
 function AddToCart(itemId) {
@@ -410,10 +427,9 @@ function UpdateUserProfileInfo() {
 }
 
 function rightsideclickevent() {
-    //debugger;
+
 
     for (var i = 0; i < $('.slider').length; i++) {
-        debugger;
         if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
             var slider1 = $('.slider:eq(' + i + ')');
             var sliderno = slider1.attr('data-number');
@@ -449,10 +465,7 @@ function rightsideclickevent() {
     }
 }
 function leftsideclickevent() {
-    debugger;
-
     for (var i = 0; i < $('.slider').length; i++) {
-        debugger;
         if ($('.slider:eq(' + i + ')').attr('data-status') == 'on') {
             var slider1 = $('.slider:eq(' + i + ')');
             var sliderno = slider1.attr('data-number');
@@ -488,3 +501,30 @@ function leftsideclickevent() {
     }
 }
 
+function getTrackingHistory(Shopid) {
+    var trackingView = $('#History-container');
+    console.log(Shopid);
+    var url = '/user/getHistoryofUser?shopid=' + Shopid;
+    $.get(url, function (data) {
+        debugger;
+        trackingView.html(data);
+        trackingView.show();
+    });
+}
+function showTrackingPackage() {
+    debugger;
+    $('.loadingMod').show();
+    var trackingView = $('#TrackPackageContainer');
+    var trackingid = $('#TrackingValue').val();
+    trackingView.hide();
+    if (trackingid != null) {
+        var url = '/user/showTrackingPackage?TrackingId=' + trackingid;
+        $.get(url, function (data)
+        {
+            debugger;
+            $('.loadingMod').hide();
+            trackingView.html(data);
+            trackingView.show();
+        });
+    }
+}

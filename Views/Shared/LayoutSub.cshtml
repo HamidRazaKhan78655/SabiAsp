@@ -36,7 +36,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link href="~/Content/wwwroot/css/site.css" rel="stylesheet" />
-
+    
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -258,6 +258,8 @@
         }
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AT6ubOW17AlwGOw22glX_r81d51tNupbTDHLrvyS6GUZEmI0ZmvRMwZv7oSBwUuk87dtBuTvKwqSMfVn">
+    </script>
 </head>
 <!-- body -->
 <body class="main-layout">
@@ -293,6 +295,79 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade " id="UserShopHistory">
+        <div class="modal-dialog" style="min-width:70%">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Summary</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="History-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade " id="VendorOrders">
+        <div class="modal-dialog" style="min-width:70%">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Orders</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="Order-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade " id="TrackingActions">
+        <div class="modal-dialog" style="min-width:70%">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Actions</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="TrackingActions-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade " id="paypalModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Payment</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @*
         //modal to tem View*@
     <!-- header section start -->
@@ -304,7 +379,7 @@
                         <a href="/Home/Index">
                             @*  <img src="~/Content/Template/images/logo.png">*@
                             @*<img src="~/Images/MainSabilogo.png" style="width: 220px; height: 220px; position: relative; top: -40px;" />*@
-                            <img src="~/Images/logoWhite.png" style="width: 220px; height: 220px; position: relative; top: -40px;"/>
+                            <img src="~/Images/logoWhite.png" style="width: 220px; height: 220px; position: relative; top: -40px;" />
                         </a>
                     </div>
                 </div>
@@ -355,7 +430,7 @@
                                     @*<a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>*@
                                     <a class="jss109 nav-item nav-link last" onclick="BuyItemView()">
                                         <div class="jss261">
-                                            <div class="jss439 jss262">0</div>
+                                            <div class="jss439 jss262">@Session["CartCount"].ToString()</div>
                                         </div>
                                         <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
                                             <span class="jss310">
@@ -408,7 +483,7 @@
                                         </li>
                                         <li onclick="loginWithSabi();">
                                             <div class="flex1">
-                                                <img src="~/Images/clicklogoblue.png" @*class="signinimg"*@ style=" position: absolute; height: 40px; width: 40px; margin-left: -7px; top: 70px;"/>
+                                                <img src="~/Images/clicklogoblue.png" @*class="signinimg"*@ style=" position: absolute; height: 40px; width: 40px; margin-left: -7px; top: 70px;" />
                                                 <input class="btn" style=" margin-left: 26px; background: white; color: #130347; border-radius: 22px; height: 29px; padding: 1px 13px 21px 13px; font-size: 15px; " value="Sign In with Click Sabi" type="button" />
                                             </div>
                                         </li>
@@ -451,74 +526,54 @@
         </div>
     </div>
 
-    @RenderBody();
+    @RenderBody()
 
     <!-- section footer start -->
     <div class="section_footer">
         <div class="container">
-            <div class="mail_section">
-                <div class="row">
-                    <div class="col-sm-6 col-lg-2">
-                        <div><a href="#"><img src="~/Content/Template/images/footer-logo.png"></a></div>
-                    </div>
-                    <div class="col-sm-6 col-lg-2">
-                        <div class="footer-logo"><img src="~/Content/Template/~/Content/Template/images/phone-icon.png"><span class="map_text">(71) 1234567890</span></div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="footer-logo"><img src="~/Content/Template/images/email-icon.png"><span class="map_text">Demo@gmail.com</span></div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="social_icon">
-                            <ul>
-                                <li><a href="#"><img src="~/Content/Template/images/fb-icon.png"></a></li>
-                                <li><a href="#"><img src="~/Content/Template/images/twitter-icon.png"></a></li>
-                                <li><a href="#"><img src="~/Content/Template/images/in-icon.png"></a></li>
-                                <li><a href="#"><img src="~/Content/Template/images/google-icon.png"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-2"></div>
-                </div>
-            </div>
             <div class="footer_section_2">
                 <div class="row">
-                    <div class="col-sm-4 col-lg-2">
-                        <p class="dummy_text"> ipsum dolor sit amet, consectetur ipsum dolor sit amet, consectetur  ipsum dolor sit amet,</p>
-                    </div>
-                    <div class="col-sm-4 col-lg-2">
-                        <h2 class="shop_text">Address </h2>
-                        <div class="image-icon"><img src="~/Content/Template/images/map-icon.png"><span class="pet_text">No 40 Baria Sreet 15/2 NewYork City, NY, United States.</span></div>
-                    </div>
-                    <div class="col-sm-4 col-md-6 col-lg-3">
-                        <h2 class="shop_text">Our Company </h2>
+                    <div class="col-3">
+                        <h2 class="shop_text">Join Us</h2>
                         <div class="delivery_text">
                             <ul>
-                                <li>Delivery</li>
-                                <li>Legal Notice</li>
-                                <li>About us</li>
-                                <li>Secure payment</li>
-                                <li>Contact us</li>
+                                <li>Careers</li>
+                                <li>Become a Partner Marchant</li>
+                                <li>Become a Sabi Sender</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-lg-3">
-                        <h2 class="adderess_text">Products</h2>
+                    <div class="col-3">
+                        <h2 class="shop_text">Legal</h2>
                         <div class="delivery_text">
                             <ul>
-                                <li>Prices drop</li>
-                                <li>New products</li>
-                                <li>Best sales</li>
-                                <li>Contact us</li>
-                                <li>Sitemap</li>
+                                <li>Terms and conditions</li>
+                                <li>Privacy</li>
+                                <li>Cookies</li>
+                                <li>Modren Slavery Statements</li>
+                                <li>Tax Strategy</li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-lg-2">
-                        <h2 class="adderess_text">Newsletter</h2>
-                        <div class="form-group">
-                            <input type="text" class="enter_email" placeholder="Enter Your email" name="Name">
+                    <div class="col-3">
+                        <h2 class="shop_text">Support</h2>
+                        <div class="delivery_text">
+                            <ul>
+                                <li>Contact us</li>
+                                <li>FAQs</li>
+                            </ul>
                         </div>
-                        <button class="subscribr_bt">Subscribe</button>
+                    </div>
+                    <div class="col-3">
+                        <h2 class="adderess_text">Follow US</h2>
+                        <div class="container" style="display: contents;">
+                            <div class="row">
+                                <div class="col-3"><i class="fab fa-facebook" style="color: white; font-size: 40px;"></i></div>
+                                <div class="col-3"><i class="fab fa-instagram" style="color: white; font-size: 40px;"></i></div>
+                                <div class="col-3"><i class="fab fa-linkedin" style="color: white; font-size: 40px;"></i></div>
+                                <div class="col-3"><i class="fab fa-twitter" style="color: white; font-size: 40px;"></i></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -699,6 +754,7 @@
 
             //scroll slides on swipe for touch enabled devices
 
+            $('#searchItemsInshop').val("");
             $("#myCarousel").on("touchstart", function (event) {
                 var yClick = event.originalEvent.touches[0].pageY;
                 $(this).one("touchmove", function (event) {

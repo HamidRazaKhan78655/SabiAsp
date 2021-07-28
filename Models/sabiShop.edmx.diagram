@@ -22,6 +22,18 @@
         <EntityTypeShape EntityType="sabiShopModel.UserRating" Width="1.5" PointX="5.25" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="sabiShopModel.user" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
         <EntityTypeShape EntityType="sabiShopModel.vendor" Width="1.5" PointX="5.25" PointY="38.375" IsExpanded="true" />
+
+      <Diagram DiagramId="1ff52a987fb843089759f4101316aed9" Name="Diagram1" ZoomLevel="56">
+        <EntityTypeShape EntityType="sabiShopModel.Category" Width="1.5" PointX="5.25" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.item" Width="1.5" PointX="12" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.Role" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.Shop" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.SubCategory" Width="1.5" PointX="9.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.UserItemCard" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.user" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sabiShopModel.vendor" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+
         <AssociationConnector Association="sabiShopModel.FK_Shops_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="sabiShopModel.FK_UserGroup_Group" ManuallyRouted="false" />
         <AssociationConnector Association="sabiShopModel.FK_items_SubCategories" ManuallyRouted="false" />
@@ -44,6 +56,15 @@
         <AssociationConnector Association="sabiShopModel.FK_UserMessageRecipient_users" ManuallyRouted="false" />
         <AssociationConnector Association="sabiShopModel.FK_UserRating_users" ManuallyRouted="false" />
         <AssociationConnector Association="sabiShopModel.FK_vendor_users" ManuallyRouted="false" />
+
+        <EntityTypeShape EntityType="sabiShopModel.UserRating" Width="1.5" PointX="9.75" PointY="3.375" />
+        <AssociationConnector Association="sabiShopModel.FK_UserRating_Shops" />
+        <AssociationConnector Association="sabiShopModel.FK_UserRating_users" />
+        <EntityTypeShape EntityType="sabiShopModel.Tracking" Width="1.5" PointX="14.25" PointY="5.625" />
+        <AssociationConnector Association="sabiShopModel.FK_Tracking_items" />
+        <AssociationConnector Association="sabiShopModel.FK_Tracking_users" />
+        <AssociationConnector Association="sabiShopModel.FK_Tracking_vendor" />
+
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

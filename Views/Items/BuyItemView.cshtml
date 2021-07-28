@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<SabiAsp.Models.Cart>
-@{ 
+@{
     Layout = null;
 }
 <div class="container-fluid" style="padding:0px;">
     <div class="card" style="height:100vh">
         <div class="card-header">
 
-            <h3 style="color: #e0ab09;text-align:center">Here Is Your Basket !</h3>
+            <h3 style="color: #e0ab09;text-align:center">Your Shopping Basket !</h3>
         </div>
         <div class="card-body">
             @foreach (var item in Model)
@@ -14,13 +14,13 @@
 
                 <div class="row" style="  margin: 0px 0px 10px 0px;
 ">
-                    <div class="col"2>
+                    <div class="col" 2>
                         <img style="max-width: 25px; height: 25px; border-radius: 50%;" src="~/CompanyImages/@item.itemDetails.image" />
                     </div>
                     <div class="col-6" style="color:black;font-weight:500">
                         @item.itemDetails.name
-                                        <span style="display: block; font-size: 12px; color: #666666; line-height: 2px;">@item.itemDetails.Price $</span>
-                                    </div>
+                        <span style="display: block; font-size: 12px; color: #666666; line-height: 2px;">@item.itemDetails.Price $</span>
+                    </div>
                     <div class="col-4">
                         <div style=" box-shadow: 0 -1px 7px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%); float: right; border-radius: 5px; padding: 1px 8px 1px 8px;">
                             <i class="far fa-trash-alt" style="margin:5px"></i>
@@ -36,13 +36,77 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-12">
-                    <input type="button" value="Go Pay" class="btn btn-warning"  style=" float: right; color: white;"/>
+                    @{
+                        var price = 0;
+                        foreach (var item in Model)
+                        {
+                            price = price + int.Parse(@item.itemDetails.Price);
+                        }
+
+                        <h3 style="display:inline">Total : @price $</h3>
+                        <input type="hidden" id="totalAmount" value="@price"/>
+                    }
+                    <input type="button" value="Go Pay" class="btn btn-warning" style=" float: right; color: white;" data-target="#paypalModal" data-toggle="modal" onclick="createPaypalButtons()" />
                 </div>
 
             </div>
         </div>
     </div>
-   
-   
+    <script>
+        function createPaypalButtons() {
+            debugger;
+            var amount = $('#totalAmount').val();
+            if (amount != "0") {
+                $('#paypal-button-container').html('');
+                paypal.Buttons({
+                    createOrder: function (data, actions) {
+                        // This function sets up the details of the transaction, including the amount and line item details.
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+
+                                    value: amount
+                                }
+                            }]
+                        });
+                    },
+                    onApprove: function (data, actions) {
+                        // This function captures the funds from the transaction.
+                        return actions.order.capture().then(function (details) {
+                            debugger;
+                            // This function shows a transaction success message to your buyer.
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Transaction completed by ' + details.payer.name.given_name,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            sendingEmailToVendor();
+                        });
+                    }
+                }).render('#paypal-button-container');
+            } else {
+
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'warning',
+                    title: 'No Items In Cart To Pay For...',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+            }
+        }
+        function sendingEmailToVendor() {
+            debugger;
+            var url = '/Email/sendEmailTOVendors';
+            $.get(url, function (data) {
+                location.reload();
+            });
+        }
+          //This function displays Smart Payment Buttons on your web page.
+    </script>
+
 </div>
 

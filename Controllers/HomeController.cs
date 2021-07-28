@@ -17,10 +17,13 @@ namespace SabiAsp.Controllers
         {
             try
             {
+                
                 Session["Login"] = "";
                 Session["Location"] = type == "" ? "HRE" : type;
                 int logedinUserId = Convert.ToInt32(Session["UserId"]);
                 Session["UserId"] = logedinUserId;
+                var count = Db.UserItemCards.Where(x => x.user.UserId == logedinUserId).Count() ;
+                Session["CartCount"] = count;
                 if (logedinUserId == 0)
                 {
                     //Session["Username"] = "";

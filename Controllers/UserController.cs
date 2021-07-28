@@ -45,7 +45,46 @@ namespace SabiAsp.Controllers
                 }
             }
         }
-
+        [HttpGet]
+        public ActionResult getHistoryofUser(int shopid)
+        {
+            int userID = int.Parse(Session["UserId"].ToString());
+            var shop = Db.Shops.Where(x => x.Shopid == shopid).FirstOrDefault();
+            var vendorid = shop.vendorid;
+            var trackings = Db.Trackings.Where(t => t.from == vendorid && t.to== userID).ToList();
+            return View(trackings);
+        }
+        [HttpGet]
+        public ActionResult getvendors(int shopid)
+        {
+            var shop = Db.Shops.Where(x => x.Shopid == shopid).FirstOrDefault();
+            var vendorid = shop.vendorid;
+            var trackings = Db.Trackings.Where(t => t.from == vendorid).ToList();
+            return View(trackings);
+        }
+        [HttpGet]
+        public ActionResult showTrackingPackage(int TrackingId)
+        {
+            var tracking = Db.Trackings.Where(t => t.trackingId == TrackingId).FirstOrDefault();
+            return View(tracking);
+        }
+        [HttpGet]
+        public ActionResult Actions(int id)
+        {
+             var tracking  =  Db.Trackings.Where(t => t.trackingId == id).FirstOrDefault();
+            return View(tracking);
+        }
+        [HttpPost]
+        public ActionResult Actions(Tracking tracking)
+        {
+            var track = Db.Trackings.Where(t=>t.trackingId ==tracking.trackingId).FirstOrDefault();
+            track.step1 = tracking.step1;
+            track.step2 = tracking.step2;
+            track.step3 = tracking.step3;
+            track.state = tracking.state;
+            Db.SaveChanges();
+            return RedirectToAction( "VendorView", "Vendor");
+        }
         public ActionResult GetUserByName(string Name)
         {
             var userList = new List<user>();
@@ -180,10 +219,17 @@ namespace SabiAsp.Controllers
                     else
                         user.ShopName = name + "'" + " " + "Shop";
                 }
+                if (user.isDeleted=="true")
+                {
 
+                }
+                else
+                {
+                    user.isDeleted = "false";
+                }
                 user.ModifiedBy = logedinUserId;
                 user.ModifiedDate = DateTime.Now;
-                user.isDeleted = "false";
+                
                 Db.Entry(user).State = EntityState.Modified;
                 Db.SaveChanges();
                 return "success";

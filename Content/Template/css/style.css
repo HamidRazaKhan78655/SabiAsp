@@ -509,16 +509,23 @@ body{
 }
 
 
-.shoes_img{ width: 100%; float: left; }
-
-.shoes-img2{
-	width: 100%;
-	float: left;
-	text-align: center;
-	padding-top: 100px;
-	padding-bottom: 40px;
-	margin: 0px
+.shoes_img {
+    width: 100%;
+    float: left;
 }
+    .shoes_img img {
+        display: block;
+        float: right;
+    }
+
+    .shoes-img2 {
+        width: 100%;
+        float: left;
+        text-align: center;
+        padding-top: 100px;
+        padding-bottom: 40px;
+        margin: 0px
+    }
 
 .seemore_bt{
 	width: 32%;
@@ -550,7 +557,7 @@ body{
     text-align: center;
     font-weight: bold;
     font-size: 40px;
-    background-color: #0c0116;
+    background-color: #140247;
     padding: 30px 0px;
 }
 
@@ -733,7 +740,7 @@ a:hover {
 .section_footer {
     width: 100%;
     float: left;
-    background-color: #272222;
+    background-color: #150247;
     height: auto;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -849,5 +856,14 @@ a:hover {
 .header_main {
     width: 100%;
     height: auto;
-    background: #0c0116;
+    background: #140247;
 }
+
+/*Loader start*/
+.Loader {
+    min-height: 400px;
+    min-width: 150px;
+    background: url(/Images/loadercolor51.gif) no-repeat;
+    background-position: center;
+}
+/*Loader End*/

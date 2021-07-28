@@ -19,6 +19,7 @@ namespace SabiAsp.Models
         {
             this.Trackings = new HashSet<Tracking>();
             this.UserItemCards = new HashSet<UserItemCard>();
+            this.Trackings = new HashSet<Tracking>();
         }
     
         public int ItemId { get; set; }
@@ -45,5 +46,7 @@ namespace SabiAsp.Models
         public virtual ICollection<Tracking> Trackings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserItemCard> UserItemCards { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tracking> Trackings { get; set; }
     }
 }

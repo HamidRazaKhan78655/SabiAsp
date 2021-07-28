@@ -44,6 +44,7 @@ namespace SabiAsp.Models
         public virtual DbSet<UserRating> UserRatings { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<vendor> vendors { get; set; }
+
     
         public virtual ObjectResult<GetUserChat_Result> GetUserChat(Nullable<int> groupId, Nullable<int> senderId, Nullable<int> recipientId)
         {
@@ -92,6 +93,9 @@ namespace SabiAsp.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserWithGroup_Result>("GetUserWithGroup", recipientIdParameter);
         }
+        public virtual DbSet<UserRating> UserRatings { get; set; }
+        public virtual DbSet<Tracking> Trackings { get; set; }
+
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
         {

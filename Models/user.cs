@@ -24,7 +24,11 @@ namespace SabiAsp.Models
             this.UserMessages = new HashSet<UserMessage>();
             this.UserMessageRecipients = new HashSet<UserMessageRecipient>();
             this.UserRatings = new HashSet<UserRating>();
+
             this.vendors = new HashSet<vendor>();
+
+            this.Trackings = new HashSet<Tracking>();
+
         }
     
         public int UserId { get; set; }
@@ -66,6 +70,10 @@ namespace SabiAsp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRating> UserRatings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
         public virtual ICollection<vendor> vendors { get; set; }
+
+        public virtual ICollection<Tracking> Trackings { get; set; }
+
     }
 }
