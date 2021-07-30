@@ -179,11 +179,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
-
     <Compile Include="Controllers\ChatController.cs" />
-
     <Compile Include="Controllers\EmailController.cs" />
-
     <Compile Include="Controllers\FireBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
@@ -601,18 +598,15 @@
     <Content Include="Views\SubCategory\GetShopSubCategoriesByShopId.cshtml" />
     <Content Include="Views\SubCategory\SortShopList.cshtml" />
     <Content Include="Views\Items\SearchItempartialview.cshtml" />
-
     <Content Include="Views\Chat\Chat.cshtml" />
     <Content Include="Views\Location\GetAllLocation.cshtml" />
     <Content Include="Views\Vendor\GetAllUnacceptedShops.cshtml" />
     <Content Include="Views\Chat\GetUserWithGroup.cshtml" />
     <Content Include="Views\Chat\VendorChat.cshtml" />
-
     <Content Include="Views\User\getHistoryofUser.cshtml" />
     <Content Include="Views\User\getvendors.cshtml" />
     <Content Include="Views\User\Actions.cshtml" />
     <Content Include="Views\User\showTrackingPackage.cshtml" />
-
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,9 +19,7 @@ namespace SabiAsp.Models
         {
             this.Shops = new HashSet<Shop>();
             this.Trackings = new HashSet<Tracking>();
-
             this.UserChats = new HashSet<UserChat>();
-
         }
     
         public int vendorid { get; set; }
@@ -41,7 +39,5 @@ namespace SabiAsp.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserChat> UserChats { get; set; }
         public virtual user user { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Tracking> Trackings { get; set; }
     }
 }
