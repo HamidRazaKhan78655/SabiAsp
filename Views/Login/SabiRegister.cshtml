@@ -33,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/css/util.css">
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/css/main.css">
     <!--===============================================================================================-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         form {
             background: white;
@@ -41,73 +42,136 @@
         }
     </style>
     <script>
+
         function Register() {
             debugger;
             //User/Index
             if (document.getElementById('FirstName').value == "") {
-
-                HConfirmCustom('Please enter First Name.', 'warning', 'Ok', function () { }, '', '', '', '');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please enter First Name.',
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                });
                 return;
             }
             if (document.getElementById('LastName').value == "") {
 
-                HConfirmCustom('Please enter Last Name.', 'warning', 'Ok', function () { }, '', '', '', '');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please enter Last Name.',
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                });
                 return;
             }
             if (document.getElementById('EmailAddress').value == "") {
-
-                HConfirmCustom('Please enter Email Address.', 'warning', 'Ok', function () { }, '', '', '', '');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please enter Email Address.',
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                });
                 return;
             }
             if (document.getElementById('Username').value == "") {
-
-                HConfirmCustom('Please enter Username.', 'warning', 'Ok', function () { }, '', '', '', '');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please enter Username.',
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                });
                 return;
             }
             if (document.getElementById('Password').value == "") {
-
-                HConfirmCustom('Please enter Password.', 'warning', 'Ok', function () { }, '', '', '', '');
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please enter Password.',
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                });
                 return;
             }
             if (@ViewBag.type == 3) {
                 if (document.getElementById('Category').value == "") {
-
-                    HConfirmCustom('Select one Category.', 'warning', 'Ok', function () { }, '', '', '', '');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Select one Category.',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    });
                     return;
                 }
                 if (document.getElementById('Location').value == "") {
-
-                    HConfirmCustom('Select one Location.', 'warning', 'Ok', function () { }, '', '', '', '');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Select one Location.',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    });
                     return;
                 }
                 if (document.getElementById('ShopName').value == "") {
-
-                    HConfirmCustom('Please enter ShopName.', 'warning', 'Ok', function () { }, '', '', '', '');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please enter ShopName.',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    });
                     return;
                 }
                 if (document.getElementById('Description').value == "") {
-
-                    HConfirmCustom('Please enter Description.', 'warning', 'Ok', function () { }, '', '', '', '');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please enter Description.',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    });
                     return;
                 }
                 if (document.getElementById('DeliveryFee').value == "") {
-                    HConfirmCustom('Please enter DeliveryFee.', 'warning', 'Ok', function () { }, '', '', '', '');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please enter DeliveryFee.',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    });
                     return;
                 }
                 if (document.getElementById('DeliveryTimeMax').value == "") {
-
-                    HConfirmCustom('Please enter Maximum Delivery Time.', 'warning', 'Ok', function () { }, '', '', '', '');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please enter Email AddressPlease enter Maximum Delivery Time.',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    });
                     return;
                 }
                 if (document.getElementById('DeliveryTimeMin').value == "") {
-
-                    HConfirmCustom('Please enter Minimum Delivery Time.', 'warning', 'Ok', function () { }, '', '', '', '');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please enter Minimum Delivery Time.',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    });
                     return;
                 }
                 if (document.getElementById('MinOrder').value == "") {
-
-                    HConfirmCustom('Please enter Minimum Order.', 'warning', 'Ok', function () { }, '', '', '', '');
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please enter Minimum Order.',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    });
                     return;
+                }
+                if (document.getElementById('Agreement').checked == false) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Please Check the Check box to Agree our Terms & Conditions',
+                        icon: 'error',
+                        confirmButtonText: 'Cool'
+                    });
                 }
             }
             f = new FormData($("#registerUserForm")[0]);
@@ -122,21 +186,31 @@
                     debugger;
                     if (data == "success")
                     {
-                       
-                        HConfirmCustom('User added successfully.', 'success', 'Ok', function () {  if (@ViewBag.type == 3)
-                        {
-                            window.location.href = '/Vendor/VendorView';
-                        }
-                        else {
-                            window.location.href = '/Home/Index';
-                        }
-                        }, '', '', '', '');
+                        Swal.fire({
+                            title: 'User added successfully.',
+                            confirmButtonText: `OK`,
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                if (@ViewBag.type == 3)
+                                {
+                                    window.location.href = '/Vendor/VendorView';
+                                }
+                                else {
+                                    window.location.href = '/Home/Index';
+                                }
+                            }
+                        })
 
 
                     }
                     else {
-
-                        HConfirmCustom('User already exist.', 'warning', 'Ok', function () { }, '', '', '', '');
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'User already exist.',
+                            icon: 'error',
+                            confirmButtonText: 'Cool'
+                        });
                         return;
                     }
                 },
@@ -272,6 +346,12 @@
                                     <div class="wrap-input100 validate-input" data-validate="Enter Shop Logo">
                                         <input class="input100" type="file" id="ShopLogo" name="ShopLogo" placeholder="Shop Logo" multiple>
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" >
+                                    <div style=" padding: 35px;" class="wrap-input100 validate-input" data-validate="Enter Shop Logo">
+                                        <input required style=" display: inline-block; width: 20px; " class="input100" type="checkbox" id="Agreement" name="Agreement"><span style=" position: relative; top: -15px; left: 5px; ">I accept 1.99 GBP fee applied to all World Remit transfers and their exchange rate to USD on the 28th of every month</span>
+                                      
                                     </div>
                                 </div>
 
