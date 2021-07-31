@@ -315,6 +315,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <script src="https://www.paypal.com/sdk/js?client-id=AT6ubOW17AlwGOw22glX_r81d51tNupbTDHLrvyS6GUZEmI0ZmvRMwZv7oSBwUuk87dtBuTvKwqSMfVn">
     </script>
+    <script>
+        function ViewOrder(orderNumber) {
+            debugger;
+            $('.loadingMod').show();
+            var trackingView = $('#ViewOrdercontainer');
+            trackingView.hide();
+            if (orderNumber != null) {
+                var url = '/user/ViewOrder?orderNumber=' + orderNumber;
+                $.get(url, function (data) {
+                    debugger;
+                    $('.loadingMod').hide();
+                    trackingView.html(data);
+                    trackingView.show();
+                });
+            }
+        }
+    </script>
 </head>
 
 <!-- body -->
@@ -335,7 +352,6 @@
 
     <input id="ItemViewTrigger" type="hidden" data-target="#ItemView" data-toggle="modal" />
 
-
     <div class="modal fade " id="TrackPackage">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -353,12 +369,12 @@
                 </div>
                 <div style="width:100%; overflow:auto" class="ModelTrack">
                     <div class="modal-body" style="width:100%">
-                        <div >
+                        <div>
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-12">
-                                        <label>Enter Tracking ID:</label>
-                                        <input id="TrackingValue" class="form-control" type="number" placeholder="Tracking ID..." />
+                                        <label>Enter Order Number ID:</label>
+                                        <input id="TrackingValue" class="form-control" type="number" placeholder="Order Number..." />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -373,6 +389,24 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade " id="ViewOrderModal">
+        <div class="modal-dialog" style="min-width:70%">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Order Details</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="ViewOrdercontainer"></div>
                     </div>
                 </div>
             </div>
@@ -448,7 +482,8 @@
                                         </div>
                                     </div>
                                 </a>
-                                <a class="nav-item nav-link last" href="#" data-target="#TrackPackage" data-toggle="modal">Track
+                                <a class="nav-item nav-link last" href="#" data-target="#TrackPackage" data-toggle="modal">
+                                    Track
                                 </a>
                                 <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
                                     @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>

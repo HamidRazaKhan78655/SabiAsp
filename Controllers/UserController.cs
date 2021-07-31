@@ -1,4 +1,5 @@
-﻿using SabiAsp.Models;
+﻿using Microsoft.Ajax.Utilities;
+using SabiAsp.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -51,7 +52,7 @@ namespace SabiAsp.Controllers
             int userID = int.Parse(Session["UserId"].ToString());
             var shop = Db.Shops.Where(x => x.Shopid == shopid).FirstOrDefault();
             var vendorid = shop.vendorid;
-            var trackings = Db.Trackings.Where(t => t.from == vendorid && t.to== userID).ToList();
+            var trackings = Db.Trackings.Where(t => t.from == vendorid && t.to== userID).DistinctBy(x => x.ordernumber).ToList();
             return View(trackings);
         }
         [HttpGet]
@@ -59,13 +60,13 @@ namespace SabiAsp.Controllers
         {
             var shop = Db.Shops.Where(x => x.Shopid == shopid).FirstOrDefault();
             var vendorid = shop.vendorid;
-            var trackings = Db.Trackings.Where(t => t.from == vendorid).ToList();
+            var trackings = Db.Trackings.Where(t => t.from == vendorid).DistinctBy(x => x.ordernumber).ToList();
             return View(trackings);
         }
         [HttpGet]
         public ActionResult showTrackingPackage(int TrackingId)
         {
-            var tracking = Db.Trackings.Where(t => t.trackingId == TrackingId).FirstOrDefault();
+            var tracking = Db.Trackings.Where(t => t.ordernumber == TrackingId.ToString()).DistinctBy(x => x.ordernumber).FirstOrDefault();
             return View(tracking);
         }
         [HttpGet]
@@ -74,14 +75,21 @@ namespace SabiAsp.Controllers
              var tracking  =  Db.Trackings.Where(t => t.trackingId == id).FirstOrDefault();
             return View(tracking);
         }
+        [HttpGet]
+        public ActionResult ViewOrder(string orderNumber)
+        {
+             var trackings  =  Db.Trackings.Where(t => t.ordernumber == orderNumber).ToList();
+            return View(trackings);
+        }
         [HttpPost]
         public ActionResult Actions(Tracking tracking)
         {
+            
             var track = Db.Trackings.Where(t=>t.trackingId ==tracking.trackingId).FirstOrDefault();
-            track.step1 = tracking.step1;
-            track.step2 = tracking.step2;
-            track.step3 = tracking.step3;
-            track.state = tracking.state;
+            var orders = Db.Trackings.Where(t => t.ordernumber == track.ordernumber).ToList();
+            foreach (var order in orders) {
+                order.state = tracking.state;
+            }
             Db.SaveChanges();
             return RedirectToAction( "VendorView", "Vendor");
         }

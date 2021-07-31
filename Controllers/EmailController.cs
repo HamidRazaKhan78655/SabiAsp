@@ -17,8 +17,20 @@ namespace SabiAsp.Controllers
             int userid = int.Parse(Session["UserId"].ToString());
             var getAllCarts = db.UserItemCards.Where(carts => carts.UesrId == userid).ToList();
 
-            
-            foreach (var cart in getAllCarts) {
+            string orderNumber = createUniqueOrderNumber();
+            int orderPrice = 0;
+            foreach (var item in getAllCarts)
+            {
+                var selectedItem = db.items.Where(i => i.ItemId == item.ItemId).FirstOrDefault();
+                string itemPrice = selectedItem.Price;
+                try
+                {
+                    orderPrice += int.Parse(itemPrice);
+                }
+                catch { }
+
+            }
+                foreach (var cart in getAllCarts) {
                 var item = db.items.Where(i => i.ItemId==cart.ItemId).FirstOrDefault();
                 var subCategory = db.SubCategories.Where(s => s.SubCategorieId == item.SubCategorieId).FirstOrDefault();
                 var getShop = db.Shops.Where(s => s.Shopid == subCategory.Shopid).FirstOrDefault();
@@ -27,10 +39,12 @@ namespace SabiAsp.Controllers
                 tracking.ItemId = item.ItemId;
                 tracking.to = userid;
                 tracking.from = getVendor.vendorid;
-                tracking.step1 = "incomplete";
-                tracking.step2 = "incomplete";
+                tracking.step1 = getShop.shopname;
+                tracking.step2 = orderPrice.ToString();
                 tracking.step3 = "incomplete";
                 tracking.state = "inprogress";
+                tracking.isCreated = DateTime.Now.ToShortDateString();
+                tracking.ordernumber = orderNumber;
                 db.Trackings.Add(tracking);
                 db.SaveChanges();
 
@@ -61,6 +75,21 @@ namespace SabiAsp.Controllers
             db.SaveChanges();
             Session["CartCount"] = 0;
             return trackingIDs;
+        }
+
+        private string createUniqueOrderNumber()
+        {
+            bool findnewKey = true;
+            string key = "";
+            while (findnewKey) {
+                Random ran = new Random(DateTime.Now.Millisecond);
+                key = ran.Next(1000000000, int.MaxValue).ToString();
+                var res = db.Trackings.Where(x=>x.ordernumber==key).FirstOrDefault();
+                if (res==null) {
+                    findnewKey = false;
+                }
+            }
+            return key;
         }
     }
 }

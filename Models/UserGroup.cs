@@ -14,12 +14,6 @@ namespace SabiAsp.Models
     
     public partial class UserGroup
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserGroup()
-        {
-            this.UserMessageRecipients = new HashSet<UserMessageRecipient>();
-        }
-    
         public int UserGroupId { get; set; }
         public Nullable<int> UserId { get; set; }
         public Nullable<int> GroupId { get; set; }
@@ -31,7 +25,5 @@ namespace SabiAsp.Models
     
         public virtual Group Group { get; set; }
         public virtual user user { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserMessageRecipient> UserMessageRecipients { get; set; }
     }
 }

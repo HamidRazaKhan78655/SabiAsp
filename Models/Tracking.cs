@@ -25,10 +25,11 @@ namespace SabiAsp.Models
         public string state { get; set; }
         public Nullable<int> isDeleted { get; set; }
         public Nullable<int> isModified { get; set; }
-        public Nullable<int> isCreated { get; set; }
+        public string isCreated { get; set; }
+        public string ordernumber { get; set; }
     
         public virtual item item { get; set; }
-        public virtual user user { get; set; }
         public virtual vendor vendor { get; set; }
+        public virtual user user { get; set; }
     }
 }

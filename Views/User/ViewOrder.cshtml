@@ -3,8 +3,6 @@
     Layout = null;
 }
 
-
-<h3 class="OrderTopHeading">Your Orders</h3>
 @foreach (var item in Model)
 {
     <div class="container-fluid containerForOrders">
@@ -17,10 +15,10 @@
                     <div class="col-12"><h3 class="OrderHeadingsValues">@Html.DisplayFor(modelItem => item.isCreated)</h3></div>
                 </div>
                 <div class="row">
-                    <div class="col-12"><h3 class="OrderHeadings">Order Number</h3></div>
+                    <div class="col-12"><h3 class="OrderHeadings">Item Name</h3></div>
                 </div>
                 <div class="row">
-                    <div class="col-12"><h3 class="OrderHeadingsValues"> @Html.DisplayFor(modelItem => item.ordernumber)</h3></div>
+                    <div class="col-12"><h3 class="OrderHeadingsValues"> @Html.DisplayFor(modelItem => item.item.name)</h3></div>
                 </div>
             </div>
 
@@ -43,20 +41,24 @@
                 <div class="row">
                     <div class="col-12">
                         <h3 class="OrderHeadings" style="color: #F6B6DA">
-                            @Html.DisplayFor(modelItem => item.step2)$
+                            @Html.DisplayFor(modelItem => item.item.Price)$
                         </h3>
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-3" style="padding:12px">
                 <div class="row">
-                    <div class="col-12 ">
-                        <div class="ViewOrderButtonextended">
-                            <a data-target="#TrackingActions" data-toggle="modal" onclick="vendorActions(@item.trackingId)">Change Status</a>
-                        </div>
-                        <div class="ViewOrderButtonextended">
-                            <a data-target="#ViewOrderModal" data-toggle="modal" onclick="ViewOrder(@item.ordernumber)">View Order</a>
-                        </div>
+                    <div class="col-12">
+                        <h3 class="OrderHeadings" >
+                            Buyer Name
+                        </h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="OrderHeadingsValues" >
+                            @Html.DisplayFor(modelItem => item.user.name)
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -64,4 +66,3 @@
     </div>
 
 }
-

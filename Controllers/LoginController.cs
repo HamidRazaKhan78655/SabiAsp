@@ -69,7 +69,7 @@ namespace SabiAsp.Controllers
                     if (vendor == null)
                         return View();
                 }
-*/
+                */
                 string DecryptPassword = Encrypto.DecryptString(User.password);
                 if (password == DecryptPassword)
                 {

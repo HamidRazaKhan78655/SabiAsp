@@ -30,8 +30,8 @@ namespace SabiAsp.Models
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserMessageRecipient> UserMessageRecipients { get; set; }
+        public virtual user user { get; set; }
     }
 }

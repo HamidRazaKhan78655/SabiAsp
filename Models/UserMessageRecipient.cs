@@ -25,7 +25,6 @@ namespace SabiAsp.Models
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
     
-        public virtual UserGroup UserGroup { get; set; }
         public virtual UserMessage UserMessage { get; set; }
         public virtual user user { get; set; }
     }

@@ -14,12 +14,6 @@ namespace SabiAsp.Models
     
     public partial class Location
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Location()
-        {
-            this.users = new HashSet<user>();
-        }
-    
         public int LocationId { get; set; }
         public string LocationName { get; set; }
         public string isDeleted { get; set; }
@@ -27,8 +21,5 @@ namespace SabiAsp.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user> users { get; set; }
     }
 }

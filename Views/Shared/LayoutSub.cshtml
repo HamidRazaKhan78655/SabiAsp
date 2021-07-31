@@ -36,7 +36,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link href="~/Content/wwwroot/css/site.css" rel="stylesheet" />
-    
+
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -260,6 +260,23 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://www.paypal.com/sdk/js?client-id=AT6ubOW17AlwGOw22glX_r81d51tNupbTDHLrvyS6GUZEmI0ZmvRMwZv7oSBwUuk87dtBuTvKwqSMfVn">
     </script>
+    <script>
+        function ViewOrder(orderNumber) {
+            debugger;
+            $('.loadingMod').show();
+            var trackingView = $('#ViewOrdercontainer');
+            trackingView.hide();
+            if (orderNumber != null) {
+                var url = '/user/ViewOrder?orderNumber=' + orderNumber;
+                $.get(url, function (data) {
+                    debugger;
+                    $('.loadingMod').hide();
+                    trackingView.html(data);
+                    trackingView.show();
+                });
+            }
+        }
+    </script>
 </head>
 <!-- body -->
 <body class="main-layout">
@@ -332,12 +349,13 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade " id="TrackingActions">
         <div class="modal-dialog" style="min-width:70%">
             <div class="modal-content">
                 <!--Header-->
                 <div class="modal-header" style="background: #130347;height: 60px;">
-                    <h4 id="changeheader" class="title" style="color:white;">Actions</h4>
+                    <h4 id="changeheader" class="title" style="color:white;">Change Product Status</h4>
                     <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <i class="fas fa-times" style="color:white;"></i>
                     </button>
@@ -368,6 +386,25 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade " id="ViewOrderModal">
+        <div class="modal-dialog" style="min-width:70%">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header" style="background: #130347;height: 60px;">
+                    <h4 id="changeheader" class="title" style="color:white;">Order Details</h4>
+                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times" style="color:white;"></i>
+                    </button>
+                </div>
+                <div style="width:100%; overflow:auto" class="ModelTrack">
+                    <div class="modal-body" style="width:100%">
+                        <div id="ViewOrdercontainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     @*
         //modal to tem View*@
     <!-- header section start -->
@@ -390,68 +427,88 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div class="navbar-nav">
-                                @if (Session["RoleID"].ToString() != "3")
-                                {
-                                    <a class="nav-item nav-link" href="/Home/Index">Home</a>
-                                    <a class="nav-item nav-link" id="Aboutbtn">
-                                        About Us<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
-                                        <div id="About" style="display:none;" class="dropdownStyle">
-                                            <ul>
-                                                <li>Our story</li>
-                                                <li>Why sabi?</li>
-                                                <li>community</li>
-                                            </ul>
-                                        </div>
 
-                                    </a>
-                                    <a class="nav-item nav-link" id="Categories" style="cursor:pointer">
-                                        Categories<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
-                                        <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
-                                            <div onclick="loadSubCategories(1,'Groceries')">Groceries</div>
-                                            <div onclick="loadSubCategories(2, 'Pharmacy')">Pharmacy</div>
-                                            <div onclick="loadSubCategories(3,'Bakery')">Bakery</div>
-                                            <div onclick="loadSubCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
-                                        </div>
-                                    </a>
-                                    <a class="nav-item nav-link last" href="#">
-                                        <img src="~/Content/Template/images/search_icon.png" onclick="SearchItems()"> <div class="searchEveryThing" style=" position: absolute; margin-left: -188px; /* margin-top: 10px; */ display:none">
-                                            <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
-                                            <input id="Searchid" class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " onkeyup="Search()" />
-                                            <div class="itemsearchdiv" id="Searchdiv" style="background: #e0ab09;width: 225px;padding: 10px;overflow-x: hidden;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);border-radius:5px;"></div>
-                                        </div>
-                                    </a>
-                                    <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
-                                        @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>
-                                        <div id="LocationTypeDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
-                                            <div onclick="loadLocationType('HRE')">HRE</div>
-                                            <div onclick="loadLocationType('BRQ')">BRQ</div>
-                                        </div>
-                                    </a>
-                                    @*<a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>*@
-                                    <a class="jss109 nav-item nav-link last" onclick="BuyItemView()">
-                                        <div class="jss261">
-                                            <div class="jss439 jss262">@Session["CartCount"].ToString()</div>
-                                        </div>
-                                        <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
-                                            <span class="jss310">
-                                                <img src="~/Content/Template/images/shop_icon.png">
-                                            </span>
-                                            <span class="jss700"></span>
-                                        </button>
-                                    </a>
+                                @if (Session["RoleID"] != null)
+                                {
+                                    if (Session["RoleID"].ToString() != "3")
+                                    {
+                                        <a class="nav-item nav-link" href="/Home/Index">Home</a>
+                                        <a class="nav-item nav-link" id="Aboutbtn">
+                                            About Us<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
+                                            <div id="About" style="display:none;" class="dropdownStyle">
+                                                <ul>
+                                                    <li>Our story</li>
+                                                    <li>Why sabi?</li>
+                                                    <li>community</li>
+                                                </ul>
+                                            </div>
+
+                                        </a>
+                                        <a class="nav-item nav-link" id="Categories" style="cursor:pointer">
+                                            Categories<i class="fas fa-chevron-circle-down" style="margin-left: 8px"></i>
+                                            <div id="categoriesDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
+                                                <div onclick="loadSubCategories(1,'Groceries')">Groceries</div>
+                                                <div onclick="loadSubCategories(2, 'Pharmacy')">Pharmacy</div>
+                                                <div onclick="loadSubCategories(3,'Bakery')">Bakery</div>
+                                                <div onclick="loadSubCategories(4,'Hampers+Gifts')">Hampers+Gifts</div>
+                                            </div>
+                                        </a>
+                                        <a class="nav-item nav-link last" href="#">
+                                            <img src="~/Content/Template/images/search_icon.png" onclick="SearchItems()"> <div class="searchEveryThing" style=" position: absolute; margin-left: -188px; /* margin-top: 10px; */ display:none">
+                                                <div style=" height: 20px; width: 20px; position: relative; /* margin-right: 0px; */ background: white; float: right; transform: rotate(45deg); left: -29px; "></div>
+                                                <input id="Searchid" class="form-control" placeholder="Search..." type="text" style=" position: relative; top: -10px; " onkeyup="Search()" />
+                                                <div class="itemsearchdiv" id="Searchdiv" style="background: #e0ab09;width: 225px;padding: 10px;overflow-x: hidden;box-shadow: 0 10px 20px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%);border-radius:5px;"></div>
+                                            </div>
+                                        </a>
+                                        <a class="nav-item nav-link" id="LocationType" style="cursor:pointer">
+                                            @Session["Location"]<i class="fas fa-map-marker-alt" style="margin-left:8px"></i>
+                                            <div id="LocationTypeDropDiv" style="z-index:1;position: absolute; background: white; color: black; padding: 18px; border-radius: 6px;cursor:pointer;display:none">
+                                                <div onclick="loadLocationType('HRE')">HRE</div>
+                                                <div onclick="loadLocationType('BRQ')">BRQ</div>
+                                            </div>
+                                        </a>
+                                        @*<a class="nav-item nav-link last" href="contact.html"><img src="~/Content/Template/images/shop_icon.png"></a>*@
+                                        <a class="jss109 nav-item nav-link last" onclick="BuyItemView()">
+                                            <div class="jss261">
+                                                <div class="jss439 jss262">@Session["CartCount"].ToString()</div>
+                                            </div>
+                                            <button class="jss311 jss305 jss260" tabindex="0" type="button" aria-label="ShoppingCart">
+                                                <span class="jss310">
+                                                    <img src="~/Content/Template/images/shop_icon.png">
+                                                </span>
+                                                <span class="jss700"></span>
+                                            </button>
+                                        </a>
+                                    }
+                                }
+                                <a id="SignInbtn" class="nav-item nav-link" style="cursor:pointer;">
+                                    @if (Session["Name"] != null)
+                                    {
+                                        if (Session["Name"].ToString() == "")
+                                        {<span>Sign In</span> }
+                                        else
+                                        { <span>Hello, @Session["Name"]</span>}
+                                }
+                                else
+                                {
+                                    <span>Sign In</span>
                                 }
 
-                                <a id="SignInbtn" class="nav-item nav-link" style="cursor:pointer;">
-                                    @if (Session["Name"].ToString() == "")
-                                    {<span>Sign In</span> }
-                                    else
-                                    { <span>Hello, @Session["Name"]</span>}
                                     <div id="SignIn" style="display:none;z-index:1" class="dropdownStyle">
                                         <ul>
-                                            @if (Session["Name"].ToString() == "")
+
+                                            @if (Session["Name"] != null)
                                             {
-                                                <li onclick="openSignModal(1)">Sign In as Vendor</li>
-                                                <li onclick="openSignModal(2)">Sign In as Buyer</li>
+                                                if (Session["Name"].ToString() == "")
+                                                {
+                                                    <li onclick="openSignModal(1)">Sign In as Vendor</li>
+                                                    <li onclick="openSignModal(2)">Sign In as Buyer</li>
+                                                }
+                                                else
+                                                {
+                                                    <li onclick="LoadProfile()">Profile</li>
+                                                    <li onclick="LogoutUser()">Sign Out</li>
+                                                }
                                             }
                                             else
                                             {

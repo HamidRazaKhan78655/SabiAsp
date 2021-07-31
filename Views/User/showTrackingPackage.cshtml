@@ -2,63 +2,56 @@
 @{
     Layout = null;
 }
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-
-
-        <dt>
-           Item name
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.item.name)
-        </dd>
-
-        <dt>
-            Buyer Name
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.user.name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.step1)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.step1)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.step2)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.step2)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.step3)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.step3)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.state)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.state)
-        </dd>
 
 
 
+<div class="container-fluid containerForOrders" style="margin-top:10px">
+    <div class="row">
+        <div class="col-4">
+            <div class="row">
+                <div class="col-12"><h3 class="OrderHeadings"> Order Date</h3></div>
+            </div>
+            <div class="row">
+                <div class="col-12"><h3 class="OrderHeadingsValues">@Html.DisplayFor(modelItem => modelItem.isCreated)</h3></div>
+            </div>
+            <div class="row">
+                <div class="col-12"><h3 class="OrderHeadings">Order Number</h3></div>
+            </div>
+            <div class="row">
+                <div class="col-12"><h3 class="OrderHeadingsValues"> @Html.DisplayFor(modelItem => modelItem.ordernumber)</h3></div>
+            </div>
+        </div>
 
-    </dl>
+        <div class="col-4" style="padding:10px">
+            <div class="row">
+                <div class="col-12"><h3 class="OrderHeadings">Status</h3></div>
+            </div>
+            <div class="row">
+                <div class="col-12">  <h2 style="font-size:22px" class="OrderHeadingsValues">@Html.DisplayFor(modelItem => modelItem.state)</h2> </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="OrderHeadings" style="color: #F6B6DA">
+                        @Html.DisplayFor(modelItem => modelItem.step1)
+                    </h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="OrderHeadings" style="color: #F6B6DA">
+                        @Html.DisplayFor(modelItem => modelItem.step2)$
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <div class="col-12 ViewOrderButton">
+                    <a style="font-size: 12px;"data-target="#ViewOrderModal" data-toggle="modal" onclick="ViewOrder(@Html.DisplayFor(modelItem => modelItem.ordernumber))">View Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Report", "Report", new { id = Model.trackingId }) 
-</p>
+
+ 

@@ -15,7 +15,6 @@ namespace SabiAsp.Models
     {
         public int UserId { get; set; }
         public Nullable<int> RoleID { get; set; }
-        public Nullable<int> LocationId { get; set; }
         public string name { get; set; }
         public string EmailAddress { get; set; }
         public string username { get; set; }
@@ -34,5 +33,6 @@ namespace SabiAsp.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<int> LocationId { get; set; }
     }
 }

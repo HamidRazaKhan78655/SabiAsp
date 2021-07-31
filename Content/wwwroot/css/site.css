@@ -395,3 +395,60 @@ body {
         padding: 12px;
         font-size: 20px;
     }
+<style >
+.OrderTopHeading {
+    color: #130347;
+    font-weight: 700;
+}
+
+.containerForOrders {
+    background: #130347;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.OrderHeadings {
+    color: #F2D57D;
+    font-weight: 800;
+}
+
+.OrderHeadingsValues {
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.ViewOrderButton a {
+    text-decoration: none !important;
+    color: white !important;
+    font-size: 18px;
+    font-weight: 700;
+    background: #da9b15;
+    padding: 10px;
+    border-radius: 40px;
+    position: relative;
+    top: 50px;
+    display:flex;
+    margin:10px;
+}
+.ViewOrderButtonextended {
+    top: 10px;
+    text-align: center !important;
+    text-decoration: none !important;
+    color: white !important;
+    font-size: 18px;
+    font-weight: 700;
+    background: #da9b15;
+    padding: 10px;
+    border-radius: 40px;
+    position: relative;
+    display: flex;
+    margin: 10px;
+    justify-content: center;
+    cursor: pointer;
+}
+
+    .ViewOrderButtonextended a {
+        color: white !important;
+    }

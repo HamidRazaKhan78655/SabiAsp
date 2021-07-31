@@ -245,9 +245,6 @@
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SubCategoryItems.cs" />
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>sabiShop.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Tracking.cs">
       <DependentUpon>sabiShop.tt</DependentUpon>
     </Compile>
@@ -607,6 +604,7 @@
     <Content Include="Views\User\getvendors.cshtml" />
     <Content Include="Views\User\Actions.cshtml" />
     <Content Include="Views\User\showTrackingPackage.cshtml" />
+    <Content Include="Views\User\ViewOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
