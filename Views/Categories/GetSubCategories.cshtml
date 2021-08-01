@@ -73,26 +73,36 @@
     }
     function getVendorPhoneNumber(vendorid) {
         debugger;
-        var options = {
-            type: "GET",
-            url: '/Items/getVendorNum?vendorid=' + vendorid,
-            success: function (response)
-            {
-                debugger;
-                if (response == "error") {
+        if (checkUserSignIn()) {
 
-                }
-                else {
-                    $("#chatBootstrapModal #chatDiv").load("/Chat/Chat?userId=" + response, function () {
-                        $("#openChatItemModal").trigger("click");
-                    });
-                }
+            var options = {
+                type: "GET",
+                url: '/Items/getVendorNum?vendorid=' + vendorid,
+                success: function (response) {
+                    debugger;
+                    if (response == "error") {
 
-                //$('#vendorNumDiv').show();
-                //$('#vendorPhone').text(response);
-            }
-        };
-        $.ajax(options);
+                    }
+                    else {
+                        $("#chatBootstrapModal #chatDiv").load("/Chat/Chat?userId=" + response, function () {
+                            $("#openChatItemModal").trigger("click");
+                        });
+                    }
+
+                    //$('#vendorNumDiv').show();
+                    //$('#vendorPhone').text(response);
+                }
+            };
+            $.ajax(options);
+        } else {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Please SignIn first !',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
     }
 </script>
 
