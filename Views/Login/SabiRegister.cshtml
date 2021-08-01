@@ -187,23 +187,29 @@
                     debugger;
                     if (data == "success")
                     {
-                        Swal.fire({
-                            title: 'User added successfully.',
-                            confirmButtonText: `OK`,
-                        }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                            if (result.isConfirmed) {
-                                if (@ViewBag.type == 3)
-                                {
-                                    window.location.href = '/Vendor/VendorView';
+                        if (@ViewBag.type == 3) {
+                            Swal.fire({
+                                title: 'Account created successfully... Wait for admin Approval .You will get email after account is Approved. We Normally Respond with in 2 days.',
+                                confirmButtonText: `OK`,
+                            }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                if (result.isConfirmed) {
+                                   @* window.location.href = '/Vendor/VendorView';*@
+                                    window.location.href = '/Home/Index';
+                                
                                 }
-                                else {
+                            })
+                        } else {
+                            Swal.fire({
+                                title: 'Account created successfully.',
+                                confirmButtonText: `OK`,
+                            }).then((result) => {
+                                /* Read more about isConfirmed, isDenied below */
+                                if (result.isConfirmed) {
                                     window.location.href = '/Home/Index';
                                 }
-                            }
-                        })
-
-
+                            })
+                        }
                     }
                     else {
                         Swal.fire({

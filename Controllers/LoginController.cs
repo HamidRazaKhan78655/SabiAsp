@@ -248,7 +248,7 @@ namespace SabiAsp.Controllers
                         Db.SaveChanges();
                     }
 
-                    Session["UserId"] = u.UserId.ToString();
+              /*      Session["UserId"] = u.UserId.ToString();
                     Session["Username"] = u.username.ToString();
                     Session["Name"] = u.name.ToString().Split(' ')[0];
                     Session["RoleType"] = u.RoleType.ToString();
@@ -256,7 +256,7 @@ namespace SabiAsp.Controllers
                     Session["DateFormate"] = "{0:MMM dd, yyyy HH:mm tt}";
                     Session["ShortDateFormate"] = "{0:MMM dd, yyyy}";
                     FormsAuthentication.SetAuthCookie(u.username, false);
-
+*/
                     return "success";
                 }
             }
