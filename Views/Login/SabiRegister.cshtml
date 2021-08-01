@@ -165,13 +165,14 @@
                     });
                     return;
                 }
-                if (document.getElementById('Agreement').checked == false) {
+                if (document.getElementById('Agreement').checked == false || document.getElementById('WorldRemit').checked == false ) {
                     Swal.fire({
                         title: 'Error!',
-                        text: 'Please Check the Check box to Agree our Terms & Conditions',
+                        text: 'Please Accept our Terms & Conditions',
                         icon: 'error',
                         confirmButtonText: 'Cool'
                     });
+                    return;
                 }
             }
             f = new FormData($("#registerUserForm")[0]);
@@ -295,7 +296,7 @@
                                     <div class="wrap-input100 validate-input" data-validate="Location">
                                         <select class="input100" id="Location" name="Location">
                                             <option value="HRE">HRE</option>
-                                            <option value="BRQ">BRQ</option>
+                                            <option value="BRQ">BUQ</option>
                                         </select>
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
@@ -312,52 +313,71 @@
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
+                            <div style="display:none">
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Enter Delivery Fee">
-                                        <input class="input100" type="text" id="DeliveryFee" name="DeliveryFee" placeholder="Delivery Fee">
+                                        <input class="input100" type="text" id="DeliveryFee" value="40" name="DeliveryFee" placeholder="Delivery Fee">
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Enter Maximum Delivery Time">
-                                        <input class="input100" type="text" id="DeliveryTimeMax" name="DeliveryTimeMax" placeholder="Maximum Delivery Time">
+                                        <input class="input100" type="text" id="DeliveryTimeMax" name="DeliveryTimeMax" placeholder="Maximum Delivery Time" value="60">
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Enter Minimum Delivery Time">
-                                        <input class="input100" type="text" id="DeliveryTimeMin" name="DeliveryTimeMin" placeholder="Minimum Delivery Time">
+                                        <input class="input100" type="text" id="DeliveryTimeMin" name="DeliveryTimeMin" placeholder="Minimum Delivery Time" value="30">
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="wrap-input100 validate-input" data-validate="Enter Minimum Order">
-                                        <input class="input100" type="text" id="MinOrder" name="MinOrder" placeholder="Minimum Order">
+                                        <input class="input100" type="text" id="MinOrder" name="MinOrder" placeholder="Minimum Order" value="1">
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    </div>
+                                </div>
+                                </div>
+                            <div class="col-md-12">
+                                <div class="row"  style="text-align:center">
+                                    <div class="col-5"><label style="margin:10px">Shop Image</label></div>
+                                    <div class="col-7">
+
+                                        <div style="margin:10px" data-validate="Enter Shop Image">
+                                            <input class="" type="file" id="ShopImage" name="ShopImage" placeholder="Shop Image" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row" style="text-align:center">
+                                        <div class="col-5"><label style="margin:10px;">Shop Logo</label></div>
+                                        <div class="col-7">
+                                            <div style="margin:10px" data-validate="Enter Shop Logo">
+                                                <input class="" type="file" id="ShopLogo" name="ShopLogo" placeholder="Shop Logo" multiple>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div style=" padding: 20px;" class="" data-validate="Enter Shop Logo">
+                                        <input required style=" display: inline-block; width: 20px; " class="input100" type="checkbox" id="WorldRemit" name="Agreement"><span style=" position: relative; top: -15px; left: 5px; ">I accept 1.99 GBP fee applied to all World Remit transfers and their exchange rate to USD on the 28th of every month</span>
+
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="wrap-input100 validate-input" data-validate="Enter Shop Image">
-                                        <input class="input100" type="file" id="ShopImage" name="ShopImage" placeholder="Shop Image" multiple>
-                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="wrap-input100 validate-input" data-validate="Enter Shop Logo">
-                                        <input class="input100" type="file" id="ShopLogo" name="ShopLogo" placeholder="Shop Logo" multiple>
-                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-12" >
-                                    <div style=" padding: 35px;" class="wrap-input100 validate-input" data-validate="Enter Shop Logo">
-                                        <input required style=" display: inline-block; width: 20px; " class="input100" type="checkbox" id="Agreement" name="Agreement"><span style=" position: relative; top: -15px; left: 5px; ">I accept 1.99 GBP fee applied to all World Remit transfers and their exchange rate to USD on the 28th of every month</span>
-                                      
+                                    <div style=" padding: 20px;" class="" data-validate="Enter Shop Logo">
+                                        <input required style=" display: inline-block; width: 20px; " class="input100" type="checkbox" id="Agreement" name="Agreement"><span style=" position: relative; top: -15px; left: 5px; ">I confirm all details are correct. Click Sabi is not responsible and will not reimburse for any details entered incorrectly by the vendor</span>
+
                                     </div>
                                 </div>
 
-                            }
+                                }
 
-                        </div>
+                            </div>
                         <div class="container-login100-form-btn m-t-32">
                             <button type="button" class="login100-form-btn" onclick="Register();">Register</button>
                         </div>
