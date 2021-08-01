@@ -47,6 +47,11 @@ namespace SabiAsp.Controllers
             }
         }
         [HttpGet]
+        public ActionResult GatPaymentDatails(int userId) {
+            var res = Db.vendors.Where(x => x.UserId == userId).FirstOrDefault();
+            return View(res);
+        }
+        [HttpGet]
         public ActionResult getHistoryofUser(int shopid)
         {
             int userID = int.Parse(Session["UserId"].ToString());

@@ -147,8 +147,11 @@ namespace SabiAsp.Controllers
                 string roleType = fm["RoleType"].ToString();
                 int roleId = int.Parse(roleType);
                 int logedinUserId = Convert.ToInt32(Session["UserId"]);
+                string PaymentType = fm["MoneyDeposit"].ToString();
+               
 
 
+                    
                 var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
                 if (User == null)
                 {
@@ -173,7 +176,7 @@ namespace SabiAsp.Controllers
                         else
                             u.ShopName = firstName + "'" + " " + "Shop";
                     }
-
+                    
                     u.CreatedBy = logedinUserId;
                     u.CreatedDate = DateTime.Now;
                     u.isDeleted = "false";
@@ -187,6 +190,24 @@ namespace SabiAsp.Controllers
                         v.isDeleted = "false";
                         v.CreatedBy = u.UserId;
                         v.CreatedDate = DateTime.Now;
+                        v.PaymentType = PaymentType;
+                        switch (PaymentType)
+                        {
+                            case "BankDeposit":
+                                v.BankDepositBankName = fm["BankDepositBankName"].ToString();
+                                v.BankDepositBranchName = fm["BankDepositBranchName"].ToString();
+                                v.BankDepositAccountNumber = fm["BankDepositAccountNumber"].ToString();
+
+                                break;
+                            case "CashPickUp":
+                                v.CashPickUp = "true";
+                                break;
+                            case "MobileMoneyTransfer":
+                                v.EcoCashMobileNumber = fm["MobileMoneyTransferEcoCashMobileNumber"].ToString(); ;
+                                break;
+                            default:
+                                break;
+                        }
                         Db.vendors.Add(v);
                         Db.SaveChanges();
 

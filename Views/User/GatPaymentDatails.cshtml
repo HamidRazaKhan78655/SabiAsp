@@ -1,0 +1,71 @@
+﻿@model SabiAsp.Models.vendor
+@{
+    Layout = null;
+        }
+<div>
+    <dl class="dl-horizontal">
+
+        @if (Model.PaymentType.ToString() == "BankDeposit")
+        {
+            <dt>
+                Payment Type
+            </dt>
+
+            <dd>
+                Bank Deposit
+            </dd>
+            <dt>
+                Bank Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BankDepositBankName)
+            </dd>
+
+            <dt>
+                Branch Name
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BankDepositBranchName)
+            </dd>
+
+            <dt>
+                Account Number
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.BankDepositAccountNumber)
+            </dd>
+        }
+        @if (Model.PaymentType.ToString() == "CashPickUp")
+        {
+            <dt>
+                Payment Type
+            </dt>
+
+            <dd>
+                Cash Pick Up
+            </dd>
+           
+        }
+        @if (Model.PaymentType.ToString() == "MobileMoneyTransfer")
+        {
+            <dt>
+                Payment Type
+            </dt>
+
+            <dd>
+                Mobile Money Transfer
+            </dd>
+            <dt>
+                Eco Cash Mobile Number
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EcoCashMobileNumber)
+            </dd>
+        }
+
+    </dl>
+</div>

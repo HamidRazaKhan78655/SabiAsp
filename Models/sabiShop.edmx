@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="sabiShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="sabiShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -256,6 +256,12 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="PaymentType" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankDepositBankName" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankDepositBranchName" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankDepositAccountNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="CashPickUp" Type="nvarchar" MaxLength="50" />
+          <Property Name="EcoCashMobileNumber" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK__items__SubCatego__4AB81AF0">
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="0..1" />
@@ -621,8 +627,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             <End Role="vendor" EntitySet="vendor" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sabiShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -900,6 +905,12 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <NavigationProperty Name="Trackings" Relationship="Self.FK__Tracking__from__5629CD9C" FromRole="vendor" ToRole="Tracking" />
           <NavigationProperty Name="UserChats" Relationship="Self.FK__UserChat__Vendor__74AE54BC" FromRole="vendor" ToRole="UserChat" />
           <NavigationProperty Name="user" Relationship="Self.FK__vendor__UserId__3E52440B" FromRole="vendor" ToRole="users" />
+          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankDepositBankName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankDepositBranchName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankDepositAccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CashPickUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EcoCashMobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserGroup">
           <Key>
@@ -1263,10 +1274,10 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             <Parameter Name="RecipientId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserInfoByVendorId" ReturnType="Collection(sabiShopModel.GetUserInfoByVendorId_Result)">
-            <Parameter Name="Vendorid" Mode="In" Type="Int32" />
+          <Parameter Name="Vendorid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetUserWithGroup" ReturnType="Collection(sabiShopModel.GetUserWithGroup_Result)">
-            <Parameter Name="RecipientId" Mode="In" Type="Int32" />
+          <Parameter Name="RecipientId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetUserChat_Result">
@@ -1569,6 +1580,12 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <EntitySetMapping Name="vendors">
             <EntityTypeMapping TypeName="sabiShopModel.vendor">
               <MappingFragment StoreEntitySet="vendor">
+                <ScalarProperty Name="EcoCashMobileNumber" ColumnName="EcoCashMobileNumber" />
+                <ScalarProperty Name="CashPickUp" ColumnName="CashPickUp" />
+                <ScalarProperty Name="BankDepositAccountNumber" ColumnName="BankDepositAccountNumber" />
+                <ScalarProperty Name="BankDepositBranchName" ColumnName="BankDepositBranchName" />
+                <ScalarProperty Name="BankDepositBankName" ColumnName="BankDepositBankName" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="vendorid" ColumnName="vendorid" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="vIDSocial" ColumnName="vIDSocial" />

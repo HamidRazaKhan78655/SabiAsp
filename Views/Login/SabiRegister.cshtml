@@ -42,7 +42,28 @@
         }
     </style>
     <script>
-
+        function onSelectPaymentMethod() {
+            debugger;
+            switch ($('#MoneyDeposit').val()) {
+                case 'BankDeposit':
+                    $('#BankDeposit').show();
+                    $('#CashPickUp').hide();
+                    $('#MobileMoneyTransfer').hide();
+                    break;
+                case 'CashPickUp':
+                    $('#BankDeposit').hide();
+                    $('#CashPickUp').show();
+                    $('#MobileMoneyTransfer').hide();
+                    break;
+                case "MobileMoneyTransfer":
+                    $('#BankDeposit').hide();
+                    $('#CashPickUp').hide();
+                    $('#MobileMoneyTransfer').show();
+                    break;
+                default:
+                    break;
+            }
+        }
         function Register() {
             debugger;
             //User/Index
@@ -164,6 +185,67 @@
                         confirmButtonText: 'Cool'
                     });
                     return;
+                }
+
+                switch ($('#MoneyDeposit').val()) {
+                    case 'BankDeposit':
+                        if (document.getElementById('BankDepositBankName').value == "") {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Please Enter Bank Name !',
+                                icon: 'error',
+                                confirmButtonText: 'Cool'
+                            });
+
+                            return;
+                        }
+                        if (document.getElementById('BankDepositBranchName').value == "") {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Please Enter Branch Name !',
+                                icon: 'error',
+                                confirmButtonText: 'Cool'
+                            });
+
+                            return;
+                        }
+                        if (document.getElementById('BankDepositAccountNumber').value == "") {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Please Enter Account Number !',
+                                icon: 'error',
+                                confirmButtonText: 'Cool'
+                            });
+
+                            return;
+                        }
+                        break;
+                    case 'CashPickUp':
+                        if (document.getElementById('CashPickUpAgreement').checked == false) {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Please Accept Cash Pick Up Agreement !',
+                                icon: 'error',
+                                confirmButtonText: 'Cool'
+                            });
+                            return;
+                        }
+                        break;
+                    case "MobileMoneyTransfer":
+                        if (document.getElementById('MobileMoneyTransferEcoCashMobileNumber').value == "") {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: 'Please Enter Eco Cash Mobile Number !',
+                                icon: 'error',
+                                confirmButtonText: 'Cool'
+                            });
+
+                            return;
+                        }
+                        break;
+                    default:
+                        return;
+                        break;
                 }
                 if (document.getElementById('Agreement').checked == false || document.getElementById('WorldRemit').checked == false ) {
                     Swal.fire({
@@ -319,42 +401,42 @@
                                         <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                     </div>
                                 </div>
-                            <div style="display:none">
-                                <div class="col-md-6">
-                                    <div class="wrap-input100 validate-input" data-validate="Enter Delivery Fee">
-                                        <input class="input100" type="text" id="DeliveryFee" value="40" name="DeliveryFee" placeholder="Delivery Fee">
-                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                <div style="display:none">
+                                    <div class="col-md-6">
+                                        <div class="wrap-input100 validate-input" data-validate="Enter Delivery Fee">
+                                            <input class="input100" type="text" id="DeliveryFee" value="40" name="DeliveryFee" placeholder="Delivery Fee">
+                                            <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="wrap-input100 validate-input" data-validate="Enter Maximum Delivery Time">
-                                        <input class="input100" type="text" id="DeliveryTimeMax" name="DeliveryTimeMax" placeholder="Maximum Delivery Time" value="60">
-                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    <div class="col-md-6">
+                                        <div class="wrap-input100 validate-input" data-validate="Enter Maximum Delivery Time">
+                                            <input class="input100" type="text" id="DeliveryTimeMax" name="DeliveryTimeMax" placeholder="Maximum Delivery Time" value="60">
+                                            <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="wrap-input100 validate-input" data-validate="Enter Minimum Delivery Time">
-                                        <input class="input100" type="text" id="DeliveryTimeMin" name="DeliveryTimeMin" placeholder="Minimum Delivery Time" value="30">
-                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                    <div class="col-md-6">
+                                        <div class="wrap-input100 validate-input" data-validate="Enter Minimum Delivery Time">
+                                            <input class="input100" type="text" id="DeliveryTimeMin" name="DeliveryTimeMin" placeholder="Minimum Delivery Time" value="30">
+                                            <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="wrap-input100 validate-input" data-validate="Enter Minimum Order">
-                                        <input class="input100" type="text" id="MinOrder" name="MinOrder" placeholder="Minimum Order" value="1">
-                                        <span class="focus-input100" data-placeholder="&#xe80f;"></span>
-                                    </div>
-                                </div>
-                                </div>
-                            <div class="col-md-12">
-                                <div class="row"  style="text-align:center">
-                                    <div class="col-5"><label style="margin:10px">Shop Image</label></div>
-                                    <div class="col-7">
-
-                                        <div style="margin:10px" data-validate="Enter Shop Image">
-                                            <input class="" type="file" id="ShopImage" name="ShopImage" placeholder="Shop Image" multiple>
+                                    <div class="col-md-6">
+                                        <div class="wrap-input100 validate-input" data-validate="Enter Minimum Order">
+                                            <input class="input100" type="text" id="MinOrder" name="MinOrder" placeholder="Minimum Order" value="1">
+                                            <span class="focus-input100" data-placeholder="&#xe80f;"></span>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="row" style="text-align:center">
+                                        <div class="col-5"><label style="margin:10px">Shop Image</label></div>
+                                        <div class="col-7">
+
+                                            <div style="margin:10px" data-validate="Enter Shop Image">
+                                                <input class="" type="file" id="ShopImage" name="ShopImage" placeholder="Shop Image" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="row" style="text-align:center">
@@ -368,27 +450,72 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-12">
-                                    <div style=" padding: 20px;" class="" data-validate="Enter Shop Logo">
-                                        <input required style=" display: inline-block; width: 20px; " class="input100" type="checkbox" id="WorldRemit" name="Agreement"><span style=" position: relative; top: -15px; left: 5px; ">I accept 1.99 GBP fee applied to all World Remit transfers and their exchange rate to USD on the 28th of every month</span>
 
+
+                              
+                                    <div class="col-md-12">
+                                        <div class="wrap-input100 validate-input" data-validate="Payment">
+                                            <label>Select Payment Method</label>
+                                            <select style="margin-bottom:10px" class="input100" id="MoneyDeposit" name="MoneyDeposit" onchange="onSelectPaymentMethod();">
+                                                <option value="BankDeposit">Bank Deposit</option>
+                                                <option value="CashPickUp">Cash Pick Up</option>
+                                                <option value="MobileMoneyTransfer">Mobile Money Transfer</option>
+                                            </select>
+
+                                            <div id="BankDeposit">
+                                                <div class="row" style="margin-bottom:10px">
+                                                    <div class="col-6">
+                                                        <input class="form-control" type="text" placeholder="Bank Name" name="BankDepositBankName" id="BankDepositBankName" />
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input class="form-control" type="text" placeholder="Branch Name" name="BankDepositBranchName" id="BankDepositBranchName" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <input class="form-control" type="number" placeholder="Account Number" name="BankDepositAccountNumber" id="BankDepositAccountNumber" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="CashPickUp" style="display:none">
+                                                <div class="row">
+                                                    <div class="col-12" style=" padding: 20px;">
+                                                        <input required style=" display: inline-block; width: 20px; " class="input100" type="checkbox" id="CashPickUpAgreement" name="CashPickUpAgreement"><span style=" position: relative; top: -15px; left: 5px; ">I acknowledge that money can only be paid out in multiples of 10USD. Money under this amount will not be deposited</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="MobileMoneyTransfer" style="display:none">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <input class="form-control" type="number" placeholder="EcoCash Mobile Number" name="MobileMoneyTransferEcoCashMobileNumber" id="MobileMoneyTransferEcoCashMobileNumber" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        </div>
+                                    <div class="col-md-12">
+                                        <div style=" padding: 20px;" class="" data-validate="Enter Shop Logo">
+                                            <input required style=" display: inline-block; width: 20px; " class="input100" type="checkbox" id="WorldRemit" name="Agreement"><span style=" position: relative; top: -15px; left: 5px; ">I accept 1.99 GBP fee applied to all World Remit transfers and their exchange rate to USD on the 28th of every month</span>
+
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div style=" padding: 20px;" class="" data-validate="Enter Shop Logo">
-                                        <input required style=" display: inline-block; width: 20px; " class="input100" type="checkbox" id="Agreement" name="Agreement"><span style=" position: relative; top: -15px; left: 5px; ">I confirm all details are correct. Click Sabi is not responsible and will not reimburse for any details entered incorrectly by the vendor</span>
+                                    <div class="col-md-12">
+                                        <div style=" padding: 20px;" class="" data-validate="Enter Shop Logo">
+                                            <input required style=" display: inline-block; width: 20px; " class="input100" type="checkbox" id="Agreement" name="Agreement"><span style=" position: relative; top: -15px; left: 5px; ">I confirm all details are correct. Click Sabi is not responsible and will not reimburse for any details entered incorrectly by the vendor</span>
 
+                                        </div>
                                     </div>
-                                </div>
 
-                                }
+                                    }
+
+                                </div>
+                                <div class="container-login100-form-btn m-t-32">
+                                    <button type="button" class="login100-form-btn" onclick="Register();">Register</button>
+                                </div>
 
                             </div>
-                        <div class="container-login100-form-btn m-t-32">
-                            <button type="button" class="login100-form-btn" onclick="Register();">Register</button>
-                        </div>
-
-                    </div>
 
                 }
 

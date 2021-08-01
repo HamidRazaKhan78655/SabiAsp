@@ -161,6 +161,9 @@
                                             </td>
                                             <td>
                                                 <input type="button" id="editUser" value="Edit" onclick="UpdateUser(@user.UserId, '@user.name', '@user.EmailAddress', '@user.Contact', '@user.username', '@user.RoleID', '@user.Address');" />
+                                                @if (user.RoleType == "Vendor")
+                                                {
+                                                    <input type="button" id="PaymentDetails" value="Payment Details" onclick="PaymentDetails(@user.UserId)" data-target="#PaymentDetilsModal" data-toggle="modal" />}
                                                 <input type="button" id="deleteUser" value="Delete" onclick="DeleteUser(@user.UserId);" />
                                             </td>
                                         </tr>
@@ -977,46 +980,46 @@
 
         @* add/update location start*@
         <div id="addLocation">
-        @{
-            using (Html.BeginForm("AddLocation", "Location", FormMethod.Post, new { id = "addLocationForm" }))
-            {
+            @{
+                using (Html.BeginForm("AddLocation", "Location", FormMethod.Post, new { id = "addLocationForm" }))
+                {
 
-                @*location strat*@
-                <div class="modal fade " id="locationBootstrapModal">
-                    <div class="modal-dialog w-category-modal-dialog">
-                        <div class="modal-content">
-                            <!--Header-->
-                            <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
-                                <h4 class="title" style="color:white;">Add Location</h4>
+                    @*location strat*@
+                    <div class="modal fade " id="locationBootstrapModal">
+                        <div class="modal-dialog w-category-modal-dialog">
+                            <div class="modal-content">
+                                <!--Header-->
+                                <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                                    <h4 class="title" style="color:white;">Add Location</h4>
 
-                                <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <i class="fas fa-times" style="color:white;"></i>
-                                </button>
-                            </div>
-                            <div style="width:100%; overflow:auto" class="ModelTrack">
-                                <div class="modal-body" style="width:100%">
-                                    <div id="LocationDiv">
-                                        <div class="row">
+                                    <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <i class="fas fa-times" style="color:white;"></i>
+                                    </button>
+                                </div>
+                                <div style="width:100%; overflow:auto" class="ModelTrack">
+                                    <div class="modal-body" style="width:100%">
+                                        <div id="LocationDiv">
+                                            <div class="row">
 
-                                            <div class="col-md-12">
-                                                <label>Location Name :</label>
-                                                <input type="text" class="form-control" id="LocationName" name="LocationName" required />
+                                                <div class="col-md-12">
+                                                    <label>Location Name :</label>
+                                                    <input type="text" class="form-control" id="LocationName" name="LocationName" required />
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <input type="button" class="btn btn-info" value="Add" onclick="SaveLocationData();" style="float:right;margin:10px 0;" />
+                                            <input type="button" class="btn btn-info" value="Add" onclick="SaveLocationData();" style="float:right;margin:10px 0;" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                @*location end*@
+                    @*location end*@
 
 
+                }
             }
-        }
-    </div>
+        </div>
 
         <input type="hidden" id="openLocationModal" data-target="#updateLocationBootstrapModal" data-toggle="modal" />
 
@@ -1061,7 +1064,28 @@
             }
         </div>
         @* add/update location end*@
+        {
+        @*category strat*@
+        <div class="modal fade " id="PaymentDetilsModal">
+            <div class="modal-dialog w-location-modal-dialog">
+                <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header light-blue darken-3 white-text" style="background:#0273B6;">
+                        <h4 class="title" style="color:white;">Payment Details</h4>
 
+                        <button style="color:white;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fas fa-times" style="color:white;"></i>
+                        </button>
+                    </div>
+                    <div style="width:100%; overflow:auto" class="ModelTrack">
+                        <div class="modal-body" style="width:100%">
+                            <div id="PaymentDetailsContainer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*location end*@
         <style>
             .w-width-200 {
                 width: 200px;
@@ -1117,7 +1141,30 @@
         </style>
 
         <script>
+            function PaymentDetails(UserId) {
+                $.ajax({
+                    url: '/User/GatPaymentDatails?userId=' + UserId,
+                    type: 'Get',
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        debugger;
+                        $("#PaymentDetailsContainer").html('');
+                        $("#PaymentDetailsContainer").html(data);
 
+                    },
+                    error: function () {
+                        debugger;
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'warning',
+                            title: 'error retreiving data!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            }
             function UpdateUser(userId, name, email, contact, username, roleType, address) {
                 debugger;
                 $("#UpdateUserId").val(userId);
@@ -1136,18 +1183,17 @@
                     type: 'POST',
                     processData: false,
                     contentType: false,
-                    success: function (data)
-                    {
+                    success: function (data) {
                         debugger;
-                            Swal.fire({
-                                position: 'top-end',
-                                icon: 'success',
-                                title: 'User deleted successfully.',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                            $(".close").trigger("click");
-                            window.location.reload();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'User deleted successfully.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        $(".close").trigger("click");
+                        window.location.reload();
                     },
                     error: function () {
                         debugger;
@@ -1617,12 +1663,10 @@
                 });
             }
 
-            function UpdateCategoryData()
-            {
+            function UpdateCategoryData() {
                 debugger;
                 //User/Index
-                if (document.getElementById('UpdateCategoryName').value == "")
-                {
+                if (document.getElementById('UpdateCategoryName').value == "") {
 
                     Swal.fire({
                         position: 'top-end',
@@ -1643,8 +1687,7 @@
                     datatype: 'html',
                     success: function (data) {
                         debugger;
-                        if (data == "success")
-                        {
+                        if (data == "success") {
                             $(".close").trigger("click");
                             GetAllCategories();
                             Swal.fire({
@@ -1654,7 +1697,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                           
+
                         }
                         else {
                             Swal.fire({
@@ -2367,7 +2410,7 @@
                             var count = parseInt(notificationCount);
                             count = count - 1;
                             $("#counternotification").text(count);
-                        }      
+                        }
                         $("#filterShop").html(response);
                     }
                 });
