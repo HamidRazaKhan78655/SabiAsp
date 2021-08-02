@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -38,19 +39,19 @@ namespace SabiAsp.Controllers
             return View();
         }
 
-        public ActionResult GetSubCategories(string location, string shopname, int shopid)
+        public async Task<ActionResult> GetSubCategories(string location, string shopname, int shopid)
         {
             int logedinUserId = Convert.ToInt32(Session["UserId"]);
             int logedinRoleID = Convert.ToInt32(Session["RoleID"]);
-            var shop = Db.Shops.Where(d => d.Shopid == shopid).FirstOrDefault();
+            var shop = await Db.Shops.Where(d => d.Shopid == shopid).FirstOrDefaultAsync();
             ViewBag.ShopData = shop;
-            var subCategory = Db.SubCategories.Where(x => x.Shopid == shopid).ToList();
+            var subCategory = await Db.SubCategories.Where(x => x.Shopid == shopid).ToListAsync();
             ViewBag.SubCategorylist = subCategory;
             var itemList = new List<SubCategoryItems>();
             foreach (var sub in subCategory)
             {
                 var sci = new SubCategoryItems();
-                var it = Db.items.Where(x => x.SubCategorieId == sub.SubCategorieId && x.isDeleted != "true").ToList();
+                var it = await Db.items.Where(x => x.SubCategorieId == sub.SubCategorieId && x.isDeleted != "true").ToListAsync();
                 sci.SubCategorieId = sub.SubCategorieId;
                 sci.name = sub.name;
                 sci.items = it;
