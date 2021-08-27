@@ -49,6 +49,7 @@ namespace SabiAsp.Models
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<int> LocationId { get; set; }
     
+        public virtual Location Location1 { get; set; }
         public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tracking> Trackings { get; set; }

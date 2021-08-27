@@ -31,12 +31,12 @@ namespace SabiAsp.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
-        public string PaymentType { get; set; }
         public string BankDepositBankName { get; set; }
         public string BankDepositBranchName { get; set; }
         public string BankDepositAccountNumber { get; set; }
         public string CashPickUp { get; set; }
         public string EcoCashMobileNumber { get; set; }
+        public string PaymentType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Shop> Shops { get; set; }

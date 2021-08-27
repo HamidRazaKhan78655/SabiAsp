@@ -1,71 +1,80 @@
 ﻿@model SabiAsp.Models.vendor
 @{
     Layout = null;
-        }
+}
 <div>
-    <dl class="dl-horizontal">
 
-        @if (Model.PaymentType.ToString() == "BankDeposit")
-        {
-            <dt>
-                Payment Type
-            </dt>
+    @if (Model.PaymentType== null)
+    {
+        <div style="text-align: center;">No Details Found</div>
+    }
+    else
+    {
 
-            <dd>
-                Bank Deposit
-            </dd>
-            <dt>
-                Bank Name
-            </dt>
+        <dl class="dl-horizontal">
+            @if (Model.PaymentType.ToString() == "BankDeposit")
+            {
+                <dt>
+                    Payment Type
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.BankDepositBankName)
-            </dd>
+                <dd>
+                    Bank Deposit
+                </dd>
+                <dt>
+                    Bank Name
+                </dt>
 
-            <dt>
-                Branch Name
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.BankDepositBankName)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.BankDepositBranchName)
-            </dd>
+                <dt>
+                    Branch Name
+                </dt>
 
-            <dt>
-                Account Number
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.BankDepositBranchName)
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.BankDepositAccountNumber)
-            </dd>
-        }
-        @if (Model.PaymentType.ToString() == "CashPickUp")
-        {
-            <dt>
-                Payment Type
-            </dt>
+                <dt>
+                    Account Number
+                </dt>
 
-            <dd>
-                Cash Pick Up
-            </dd>
-           
-        }
-        @if (Model.PaymentType.ToString() == "MobileMoneyTransfer")
-        {
-            <dt>
-                Payment Type
-            </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.BankDepositAccountNumber)
+                </dd>
+            }
+            @if (Model.PaymentType.ToString() == "CashPickUp")
+            {
+                <dt>
+                    Payment Type
+                </dt>
 
-            <dd>
-                Mobile Money Transfer
-            </dd>
-            <dt>
-                Eco Cash Mobile Number
-            </dt>
+                <dd>
+                    Cash Pick Up
+                </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.EcoCashMobileNumber)
-            </dd>
-        }
+            }
+            @if (Model.PaymentType.ToString() == "MobileMoneyTransfer")
+            {
+                <dt>
+                    Payment Type
+                </dt>
 
-    </dl>
+                <dd>
+                    Mobile Money Transfer
+                </dd>
+                <dt>
+                    Eco Cash Mobile Number
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EcoCashMobileNumber)
+                </dd>
+            }
+
+        </dl>
+    }
+
 </div>

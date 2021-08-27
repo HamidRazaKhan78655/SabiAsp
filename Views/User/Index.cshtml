@@ -26,7 +26,7 @@
 
                 <div id="showNotifications" style="float:left">
 
-                <div style="float:left;color:white;" onclick="ShowNotifications();">
+                <div style="float:left;color:white;" @*onclick="ShowNotifications();"*@>
 
                     @if (ViewBag.VendorsShopCount != null || ViewBag.VendorsShopCount != 0)
                     {
@@ -80,6 +80,7 @@
                     </div>
                 </div>
             </div>
+                </div>
         </nav>
     </header>
     <div class="MainDivAdmin">
@@ -132,6 +133,7 @@
                                 {
                                     foreach (var user in ViewBag.Users)
                                     {
+
                                         <tr>
                                             <td>@user.UserId</td>
                                             <td>@user.name</td>
@@ -2412,6 +2414,8 @@
                             $("#counternotification").text(count);
                         }
                         $("#filterShop").html(response);
+
+                        location.reload();
                     }
                 });
 

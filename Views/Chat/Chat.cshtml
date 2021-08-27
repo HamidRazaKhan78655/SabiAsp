@@ -12,35 +12,44 @@
             {
                 foreach (var chat in Model)
                 {
-                    <div style="list-style-type: square; background: #150247; margin: 10px; padding: 10px; border-radius: 20px 0px 20px 20px;">
-                        <div>
-                            <strong style="color: white;font-style:normal;font-size:medium;text-transform:uppercase;">
-                                @chat.name
-                                <strong style="color: #c4da14;font-style:normal;font-size:medium;text-transform:lowercase;">said</strong>
-                            </strong>:
-                            <strong style="color: #ff6429;font-style:oblique;font-size:medium;">@chat.Message</strong>
+                    if (chat.RecipientId == ViewBag.userId)
+                    {
+                        <div style="width:50%;float:right;list-style-type: square; background: #150247; margin: 10px; padding: 10px; border-radius: 20px 0px 20px 20px;">
+                            <div>
+                                <strong style="color: white;font-style:normal;font-size:medium;text-transform:uppercase;">
+                                    @chat.name
+                                    <strong style="color: #c4da14;font-style:normal;font-size:medium;text-transform:lowercase;">said</strong>
+                                </strong>:
+                                <strong style="color: #ff6429;font-style:oblique;font-size:medium;">@chat.Message</strong>
+                            </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+                        <div style="width: 50%;float: left; list-style-type: square; background: #150247; margin: 10px; padding: 10px; border-radius: 20px 0px 20px 20px;">
+                            <div>
+                                <strong style="color: white;font-style:normal;font-size:medium;text-transform:uppercase;">
+                                    @chat.name
+                                    <strong style="color: #c4da14;font-style:normal;font-size:medium;text-transform:lowercase;">said</strong>
+                                </strong>:
+                                <strong style="color: #ff6429;font-style:oblique;font-size:medium;">@chat.Message</strong>
+                            </div>
+                        </div>
+                    }
+
                 }
             }
         </div>
     </div>
-    <br />
+</div>
+<div class="container" style="float:left;">
     <div class="row" style="margin:10px;">
-        <div class="col-9">
-            <textarea class="form-control" id="message" placeholder="Share what's in your mind..."></textarea>
-            <br />
-        </div>
-        <div class="col-3">
-            <input type="button" style="height:43px" class="btn btn-primary" id="sendmessage" value="Send" />
+        <div class="col-12" style="display:flex;">
+            <textarea class="form-control" id="message" style="height: calc(1.5em + .75rem + 2px) !important;" placeholder="Share what's in your mind..."></textarea>
+            <input type="button" style="margin-left: 15px;" class="btn btn-primary" id="sendmessage" value="Send" />
         </div>
     </div>
-   
-
-
 </div>
-
-
 <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
 <script src="~/signalr/hubs"></script>
 <script>
@@ -48,7 +57,7 @@
         var chat = $.connection.chatHub;
         chat.client.addNewMessageToPage = function (name, message) {
             debugger;
-            $('#discussion').append(` <div style="list-style-type: square; background: #150247; margin: 10px; padding: 10px; border-radius: 20px 0px 20px 20px;">
+            $('#discussion').append(`<div style="width:50%;float: right;list-style-type: square;background: #150247;margin: 10px;padding: 10px;border-radius: 20px 0px 20px 20px;">
                         <div>
                             <strong style="color: white;font-style:normal;font-size:medium;text-transform:uppercase;">
                                 ${htmlEncode(name)}

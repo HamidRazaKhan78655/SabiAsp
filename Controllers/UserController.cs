@@ -28,7 +28,25 @@ namespace SabiAsp.Controllers
                 if (logedinRoleID == 1)
                 {
                     var u = Db.users.OrderByDescending(x => x.CreatedBy).ToList();
-                    ViewBag.Users = u;
+                    var Acceptedvendor = Db.vendors.Where(e => e.Status == "NULL").Select(r => r.UserId).ToList();
+
+                    var list = new List<user>();
+
+                    foreach (var item in u)
+                    {
+                        if (Acceptedvendor.Contains(item.UserId))
+                        {
+
+                        }
+                        else
+                        {
+                            list.Add(item);
+                        }
+
+                    }
+
+                    ViewBag.Users = list;
+
                     ViewBag.Categories = Db.Categories.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
                     ViewBag.Location = Db.Locations.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
                     ViewBag.SubCategories = Db.SubCategories.Where(x => x.isDeleted != "true").OrderByDescending(x => x.CreatedBy).ToList();
@@ -47,7 +65,8 @@ namespace SabiAsp.Controllers
             }
         }
         [HttpGet]
-        public ActionResult GatPaymentDatails(int userId) {
+        public ActionResult GatPaymentDatails(int userId)
+        {
             var res = Db.vendors.Where(x => x.UserId == userId).FirstOrDefault();
             return View(res);
         }
@@ -57,7 +76,7 @@ namespace SabiAsp.Controllers
             int userID = int.Parse(Session["UserId"].ToString());
             var shop = Db.Shops.Where(x => x.Shopid == shopid).FirstOrDefault();
             var vendorid = shop.vendorid;
-            var trackings = Db.Trackings.Where(t => t.from == vendorid && t.to== userID).DistinctBy(x => x.ordernumber).ToList();
+            var trackings = Db.Trackings.Where(t => t.from == vendorid && t.to == userID).DistinctBy(x => x.ordernumber).ToList();
             return View(trackings);
         }
         [HttpGet]
@@ -77,26 +96,27 @@ namespace SabiAsp.Controllers
         [HttpGet]
         public ActionResult Actions(int id)
         {
-             var tracking  =  Db.Trackings.Where(t => t.trackingId == id).FirstOrDefault();
+            var tracking = Db.Trackings.Where(t => t.trackingId == id).FirstOrDefault();
             return View(tracking);
         }
         [HttpGet]
         public ActionResult ViewOrder(string orderNumber)
         {
-             var trackings  =  Db.Trackings.Where(t => t.ordernumber == orderNumber).ToList();
+            var trackings = Db.Trackings.Where(t => t.ordernumber == orderNumber).ToList();
             return View(trackings);
         }
         [HttpPost]
         public ActionResult Actions(Tracking tracking)
         {
-            
-            var track = Db.Trackings.Where(t=>t.trackingId ==tracking.trackingId).FirstOrDefault();
+
+            var track = Db.Trackings.Where(t => t.trackingId == tracking.trackingId).FirstOrDefault();
             var orders = Db.Trackings.Where(t => t.ordernumber == track.ordernumber).ToList();
-            foreach (var order in orders) {
+            foreach (var order in orders)
+            {
                 order.state = tracking.state;
             }
             Db.SaveChanges();
-            return RedirectToAction( "VendorView", "Vendor");
+            return RedirectToAction("VendorView", "Vendor");
         }
         public ActionResult GetUserByName(string Name)
         {
@@ -150,14 +170,15 @@ namespace SabiAsp.Controllers
                 {
                     u.RoleType = "User";
                 }
-                else {
+                else
+                {
                     u.RoleType = "Vendor";
                     if (firstName.Contains("'"))
                         u.ShopName = firstName + " " + "Shop";
                     else
                         u.ShopName = firstName + "'" + " " + "Shop";
                 }
- 
+
                 u.CreatedBy = logedinUserId;
                 u.CreatedDate = DateTime.Now;
                 u.isDeleted = "false";
@@ -232,7 +253,7 @@ namespace SabiAsp.Controllers
                     else
                         user.ShopName = name + "'" + " " + "Shop";
                 }
-                if (user.isDeleted=="true")
+                if (user.isDeleted == "true")
                 {
 
                 }
@@ -242,7 +263,7 @@ namespace SabiAsp.Controllers
                 }
                 user.ModifiedBy = logedinUserId;
                 user.ModifiedDate = DateTime.Now;
-                
+
                 Db.Entry(user).State = EntityState.Modified;
                 Db.SaveChanges();
                 return "success";
@@ -270,7 +291,7 @@ namespace SabiAsp.Controllers
             if (type == "All")
                 users = Db.users.OrderByDescending(x => x.CreatedBy).ToList();
             else
-                users = Db.users.Where(u=> u.RoleType == type).OrderByDescending(x => x.CreatedBy).ToList();
+                users = Db.users.Where(u => u.RoleType == type).OrderByDescending(x => x.CreatedBy).ToList();
 
             if (users.Count == 0)
             {

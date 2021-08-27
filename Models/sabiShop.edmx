@@ -125,8 +125,8 @@
           <Property Name="state" Type="nvarchar" MaxLength="50" />
           <Property Name="isDeleted" Type="int" />
           <Property Name="isModified" Type="int" />
-          <Property Name="isCreated" Type="varchar(max)" />
-          <Property Name="ordernumber" Type="varchar" MaxLength="10" />
+          <Property Name="isCreated" Type="nvarchar" MaxLength="50" />
+          <Property Name="ordernumber" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="UserChat">
           <Key>
@@ -144,8 +144,6 @@
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserGroup">
           <Key>
             <PropertyRef Name="UserGroupId" />
@@ -256,12 +254,12 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="PaymentType" Type="nvarchar" MaxLength="50" />
-          <Property Name="BankDepositBankName" Type="nvarchar" MaxLength="50" />
-          <Property Name="BankDepositBranchName" Type="nvarchar" MaxLength="50" />
-          <Property Name="BankDepositAccountNumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="CashPickUp" Type="nvarchar" MaxLength="50" />
-          <Property Name="EcoCashMobileNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankDepositBankName" Type="nvarchar" MaxLength="1" />
+          <Property Name="BankDepositBranchName" Type="nvarchar" MaxLength="1" />
+          <Property Name="BankDepositAccountNumber" Type="nvarchar" MaxLength="1" />
+          <Property Name="CashPickUp" Type="nvarchar" MaxLength="1" />
+          <Property Name="EcoCashMobileNumber" Type="nvarchar" MaxLength="1" />
+          <Property Name="PaymentType" Type="nvarchar" MaxLength="1" />
         </EntityType>
         <Association Name="FK__items__SubCatego__4AB81AF0">
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="0..1" />
@@ -347,7 +345,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserChat__UserId__73BA3083">
+        <Association Name="FK__UserChat__UserId__787EE5A0">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="UserChat" Type="Self.UserChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -359,7 +357,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserChat__Vendor__74AE54BC">
+        <Association Name="FK__UserChat__Vendor__797309D9">
           <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
           <End Role="UserChat" Type="Self.UserChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -371,7 +369,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserGroup__Group__797309D9">
+        <Association Name="FK__UserGroup__Group__7E37BEF6">
           <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
           <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
           <ReferentialConstraint>
@@ -383,7 +381,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserGroup__UserI__787EE5A0">
+        <Association Name="FK__UserGroup__UserI__7D439ABD">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
           <ReferentialConstraint>
@@ -419,7 +417,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserMessa__Messa__00200768">
+        <Association Name="FK__UserMessa__Messa__04E4BC85">
           <End Role="UserMessage" Type="Self.UserMessage" Multiplicity="0..1" />
           <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
           <ReferentialConstraint>
@@ -431,7 +429,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserMessa__UserI__7C4F7684">
+        <Association Name="FK__UserMessa__UserI__01142BA1">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="UserMessage" Type="Self.UserMessage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -443,7 +441,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserMessa__UserI__7F2BE32F">
+        <Association Name="FK__UserMessa__UserI__03F0984C">
           <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
           <ReferentialConstraint>
@@ -503,19 +501,31 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="GetUserChat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Association Name="FK_users_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="LocationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetUserChat" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="sabiShop">
           <Parameter Name="GroupId" Type="int" Mode="In" />
           <Parameter Name="SenderId" Type="int" Mode="In" />
           <Parameter Name="RecipientId" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetUserGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetUserGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="sabiShop">
           <Parameter Name="SenderId" Type="int" Mode="In" />
           <Parameter Name="RecipientId" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetUserInfoByVendorId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetUserInfoByVendorId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="sabiShop">
           <Parameter Name="Vendorid" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetUserWithGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetUserWithGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="sabiShop">
           <Parameter Name="RecipientId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="sabiShopModelStoreContainer">
@@ -528,24 +538,13 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <EntitySet Name="SubCategories" EntityType="Self.SubCategories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tracking" EntityType="Self.Tracking" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserChat" EntityType="Self.UserChat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserItemCard" EntityType="Self.UserItemCard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMessage" EntityType="Self.UserMessage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMessageRecipient" EntityType="Self.UserMessageRecipient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRating" EntityType="Self.UserRating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="vendor" EntityType="Self.vendor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserGroup" EntityType="Self.UserGroup" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserGroup].[UserGroupId] AS [UserGroupId], 
-    [UserGroup].[UserId] AS [UserId], 
-    [UserGroup].[GroupId] AS [GroupId], 
-    [UserGroup].[IsDeleted] AS [IsDeleted], 
-    [UserGroup].[CreatedBy] AS [CreatedBy], 
-    [UserGroup].[CreatedDate] AS [CreatedDate], 
-    [UserGroup].[ModifiedBy] AS [ModifiedBy], 
-    [UserGroup].[ModifiedDate] AS [ModifiedDate]
-    FROM [dbo].[UserGroup] AS [UserGroup]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__items__SubCatego__4AB81AF0" Association="Self.FK__items__SubCatego__4AB81AF0">
             <End Role="SubCategories" EntitySet="SubCategories" />
             <End Role="items" EntitySet="items" />
@@ -574,19 +573,19 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             <End Role="users" EntitySet="users" />
             <End Role="Tracking" EntitySet="Tracking" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserChat__UserId__73BA3083" Association="Self.FK__UserChat__UserId__73BA3083">
+          <AssociationSet Name="FK__UserChat__UserId__787EE5A0" Association="Self.FK__UserChat__UserId__787EE5A0">
             <End Role="users" EntitySet="users" />
             <End Role="UserChat" EntitySet="UserChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserChat__Vendor__74AE54BC" Association="Self.FK__UserChat__Vendor__74AE54BC">
+          <AssociationSet Name="FK__UserChat__Vendor__797309D9" Association="Self.FK__UserChat__Vendor__797309D9">
             <End Role="vendor" EntitySet="vendor" />
             <End Role="UserChat" EntitySet="UserChat" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserGroup__Group__797309D9" Association="Self.FK__UserGroup__Group__797309D9">
+          <AssociationSet Name="FK__UserGroup__Group__7E37BEF6" Association="Self.FK__UserGroup__Group__7E37BEF6">
             <End Role="Group" EntitySet="Group" />
             <End Role="UserGroup" EntitySet="UserGroup" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserGroup__UserI__787EE5A0" Association="Self.FK__UserGroup__UserI__787EE5A0">
+          <AssociationSet Name="FK__UserGroup__UserI__7D439ABD" Association="Self.FK__UserGroup__UserI__7D439ABD">
             <End Role="users" EntitySet="users" />
             <End Role="UserGroup" EntitySet="UserGroup" />
           </AssociationSet>
@@ -598,15 +597,15 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             <End Role="users" EntitySet="users" />
             <End Role="UserItemCard" EntitySet="UserItemCard" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserMessa__Messa__00200768" Association="Self.FK__UserMessa__Messa__00200768">
+          <AssociationSet Name="FK__UserMessa__Messa__04E4BC85" Association="Self.FK__UserMessa__Messa__04E4BC85">
             <End Role="UserMessage" EntitySet="UserMessage" />
             <End Role="UserMessageRecipient" EntitySet="UserMessageRecipient" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserMessa__UserI__7C4F7684" Association="Self.FK__UserMessa__UserI__7C4F7684">
+          <AssociationSet Name="FK__UserMessa__UserI__01142BA1" Association="Self.FK__UserMessa__UserI__01142BA1">
             <End Role="users" EntitySet="users" />
             <End Role="UserMessage" EntitySet="UserMessage" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserMessa__UserI__7F2BE32F" Association="Self.FK__UserMessa__UserI__7F2BE32F">
+          <AssociationSet Name="FK__UserMessa__UserI__03F0984C" Association="Self.FK__UserMessa__UserI__03F0984C">
             <End Role="users" EntitySet="users" />
             <End Role="UserMessageRecipient" EntitySet="UserMessageRecipient" />
           </AssociationSet>
@@ -625,6 +624,10 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <AssociationSet Name="FK__vendor__UserId__3E52440B" Association="Self.FK__vendor__UserId__3E52440B">
             <End Role="users" EntitySet="users" />
             <End Role="vendor" EntitySet="vendor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_Location" Association="Self.FK_users_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="users" EntitySet="users" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -656,7 +659,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="UserGroups" Relationship="Self.FK__UserGroup__Group__797309D9" FromRole="Group" ToRole="UserGroup" />
+          <NavigationProperty Name="UserGroups" Relationship="Self.FK__UserGroup__Group__7E37BEF6" FromRole="Group" ToRole="UserGroup" />
         </EntityType>
         <EntityType Name="item">
           <Key>
@@ -695,6 +698,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="users" Relationship="Self.FK_users_Location" FromRole="Location" ToRole="users" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -763,8 +767,8 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="Int32" />
           <Property Name="isModified" Type="Int32" />
-          <Property Name="isCreated" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ordernumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="isCreated" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ordernumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="item" Relationship="Self.FK__Tracking__ItemId__571DF1D5" FromRole="Tracking" ToRole="items" />
           <NavigationProperty Name="vendor" Relationship="Self.FK__Tracking__from__5629CD9C" FromRole="Tracking" ToRole="vendor" />
           <NavigationProperty Name="user" Relationship="Self.FK__Tracking__to__5535A963" FromRole="Tracking" ToRole="users" />
@@ -784,8 +788,8 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="user" Relationship="Self.FK__UserChat__UserId__73BA3083" FromRole="UserChat" ToRole="users" />
-          <NavigationProperty Name="vendor" Relationship="Self.FK__UserChat__Vendor__74AE54BC" FromRole="UserChat" ToRole="vendor" />
+          <NavigationProperty Name="user" Relationship="Self.FK__UserChat__UserId__787EE5A0" FromRole="UserChat" ToRole="users" />
+          <NavigationProperty Name="vendor" Relationship="Self.FK__UserChat__Vendor__797309D9" FromRole="UserChat" ToRole="vendor" />
         </EntityType>
         <EntityType Name="UserItemCard">
           <Key>
@@ -817,8 +821,8 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="UserMessageRecipients" Relationship="Self.FK__UserMessa__Messa__00200768" FromRole="UserMessage" ToRole="UserMessageRecipient" />
-          <NavigationProperty Name="user" Relationship="Self.FK__UserMessa__UserI__7C4F7684" FromRole="UserMessage" ToRole="users" />
+          <NavigationProperty Name="UserMessageRecipients" Relationship="Self.FK__UserMessa__Messa__04E4BC85" FromRole="UserMessage" ToRole="UserMessageRecipient" />
+          <NavigationProperty Name="user" Relationship="Self.FK__UserMessa__UserI__01142BA1" FromRole="UserMessage" ToRole="users" />
         </EntityType>
         <EntityType Name="UserMessageRecipient">
           <Key>
@@ -834,8 +838,8 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="UserMessage" Relationship="Self.FK__UserMessa__Messa__00200768" FromRole="UserMessageRecipient" ToRole="UserMessage" />
-          <NavigationProperty Name="user" Relationship="Self.FK__UserMessa__UserI__7F2BE32F" FromRole="UserMessageRecipient" ToRole="users" />
+          <NavigationProperty Name="UserMessage" Relationship="Self.FK__UserMessa__Messa__04E4BC85" FromRole="UserMessageRecipient" ToRole="UserMessage" />
+          <NavigationProperty Name="user" Relationship="Self.FK__UserMessa__UserI__03F0984C" FromRole="UserMessageRecipient" ToRole="users" />
         </EntityType>
         <EntityType Name="UserRating">
           <Key>
@@ -878,14 +882,15 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="LocationId" Type="Int32" />
+          <NavigationProperty Name="Location1" Relationship="Self.FK_users_Location" FromRole="users" ToRole="Location" />
           <NavigationProperty Name="Role" Relationship="Self.FK__users__RoleID__3B75D760" FromRole="users" ToRole="Role" />
           <NavigationProperty Name="Trackings" Relationship="Self.FK__Tracking__to__5535A963" FromRole="users" ToRole="Tracking" />
-          <NavigationProperty Name="UserChats" Relationship="Self.FK__UserChat__UserId__73BA3083" FromRole="users" ToRole="UserChat" />
+          <NavigationProperty Name="UserChats" Relationship="Self.FK__UserChat__UserId__787EE5A0" FromRole="users" ToRole="UserChat" />
           <NavigationProperty Name="UserItemCards" Relationship="Self.FK__UserItemC__UesrI__5AEE82B9" FromRole="users" ToRole="UserItemCard" />
-          <NavigationProperty Name="UserMessages" Relationship="Self.FK__UserMessa__UserI__7C4F7684" FromRole="users" ToRole="UserMessage" />
-          <NavigationProperty Name="UserMessageRecipients" Relationship="Self.FK__UserMessa__UserI__7F2BE32F" FromRole="users" ToRole="UserMessageRecipient" />
+          <NavigationProperty Name="UserMessages" Relationship="Self.FK__UserMessa__UserI__01142BA1" FromRole="users" ToRole="UserMessage" />
+          <NavigationProperty Name="UserMessageRecipients" Relationship="Self.FK__UserMessa__UserI__03F0984C" FromRole="users" ToRole="UserMessageRecipient" />
           <NavigationProperty Name="UserRatings" Relationship="Self.FK__UserRatin__UserI__4D94879B" FromRole="users" ToRole="UserRating" />
-          <NavigationProperty Name="UserGroups" Relationship="Self.FK__UserGroup__UserI__787EE5A0" FromRole="users" ToRole="UserGroup" />
+          <NavigationProperty Name="UserGroups" Relationship="Self.FK__UserGroup__UserI__7D439ABD" FromRole="users" ToRole="UserGroup" />
           <NavigationProperty Name="vendors" Relationship="Self.FK__vendor__UserId__3E52440B" FromRole="users" ToRole="vendor" />
         </EntityType>
         <EntityType Name="vendor">
@@ -901,16 +906,16 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="BankDepositBankName" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="BankDepositBranchName" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="BankDepositAccountNumber" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="CashPickUp" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="EcoCashMobileNumber" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentType" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Shops" Relationship="Self.FK__Shops__vendorid__440B1D61" FromRole="vendor" ToRole="Shops" />
           <NavigationProperty Name="Trackings" Relationship="Self.FK__Tracking__from__5629CD9C" FromRole="vendor" ToRole="Tracking" />
-          <NavigationProperty Name="UserChats" Relationship="Self.FK__UserChat__Vendor__74AE54BC" FromRole="vendor" ToRole="UserChat" />
+          <NavigationProperty Name="UserChats" Relationship="Self.FK__UserChat__Vendor__797309D9" FromRole="vendor" ToRole="UserChat" />
           <NavigationProperty Name="user" Relationship="Self.FK__vendor__UserId__3E52440B" FromRole="vendor" ToRole="users" />
-          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BankDepositBankName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BankDepositBranchName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BankDepositAccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CashPickUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EcoCashMobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="UserGroup">
           <Key>
@@ -924,8 +929,8 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Group" Relationship="Self.FK__UserGroup__Group__797309D9" FromRole="UserGroup" ToRole="Group" />
-          <NavigationProperty Name="user" Relationship="Self.FK__UserGroup__UserI__787EE5A0" FromRole="UserGroup" ToRole="users" />
+          <NavigationProperty Name="Group" Relationship="Self.FK__UserGroup__Group__7E37BEF6" FromRole="UserGroup" ToRole="Group" />
+          <NavigationProperty Name="user" Relationship="Self.FK__UserGroup__UserI__7D439ABD" FromRole="UserGroup" ToRole="users" />
         </EntityType>
         <Association Name="FK__Shops__CategoryI__44FF419A">
           <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
@@ -939,7 +944,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserGroup__Group__797309D9">
+        <Association Name="FK__UserGroup__Group__7E37BEF6">
           <End Role="Group" Type="Self.Group" Multiplicity="0..1" />
           <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
           <ReferentialConstraint>
@@ -984,6 +989,18 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Principal>
             <Dependent Role="UserItemCard">
               <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_users_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="users" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationId" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="LocationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1059,7 +1076,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserChat__UserId__73BA3083">
+        <Association Name="FK__UserChat__UserId__787EE5A0">
           <End Role="users" Type="Self.user" Multiplicity="0..1" />
           <End Role="UserChat" Type="Self.UserChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1071,7 +1088,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserChat__Vendor__74AE54BC">
+        <Association Name="FK__UserChat__Vendor__797309D9">
           <End Role="vendor" Type="Self.vendor" Multiplicity="0..1" />
           <End Role="UserChat" Type="Self.UserChat" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1095,7 +1112,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserMessa__Messa__00200768">
+        <Association Name="FK__UserMessa__Messa__04E4BC85">
           <End Role="UserMessage" Type="Self.UserMessage" Multiplicity="0..1" />
           <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1107,7 +1124,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserMessa__UserI__7C4F7684">
+        <Association Name="FK__UserMessa__UserI__01142BA1">
           <End Role="users" Type="Self.user" Multiplicity="0..1" />
           <End Role="UserMessage" Type="Self.UserMessage" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1119,7 +1136,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserMessa__UserI__7F2BE32F">
+        <Association Name="FK__UserMessa__UserI__03F0984C">
           <End Role="users" Type="Self.user" Multiplicity="0..1" />
           <End Role="UserMessageRecipient" Type="Self.UserMessageRecipient" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1143,7 +1160,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__UserGroup__UserI__787EE5A0">
+        <Association Name="FK__UserGroup__UserI__7D439ABD">
           <End Role="users" Type="Self.user" Multiplicity="0..1" />
           <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1188,7 +1205,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Shops" EntitySet="Shops" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserGroup__Group__797309D9" Association="Self.FK__UserGroup__Group__797309D9">
+          <AssociationSet Name="FK__UserGroup__Group__7E37BEF6" Association="Self.FK__UserGroup__Group__7E37BEF6">
             <End Role="Group" EntitySet="Groups" />
             <End Role="UserGroup" EntitySet="UserGroups" />
           </AssociationSet>
@@ -1203,6 +1220,10 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <AssociationSet Name="FK__UserItemC__ItemI__5BE2A6F2" Association="Self.FK__UserItemC__ItemI__5BE2A6F2">
             <End Role="items" EntitySet="items" />
             <End Role="UserItemCard" EntitySet="UserItemCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK_users_Location" Association="Self.FK_users_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="users" EntitySet="users" />
           </AssociationSet>
           <AssociationSet Name="FK__users__RoleID__3B75D760" Association="Self.FK__users__RoleID__3B75D760">
             <End Role="Role" EntitySet="Roles" />
@@ -1228,11 +1249,11 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             <End Role="users" EntitySet="users" />
             <End Role="Tracking" EntitySet="Trackings" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserChat__UserId__73BA3083" Association="Self.FK__UserChat__UserId__73BA3083">
+          <AssociationSet Name="FK__UserChat__UserId__787EE5A0" Association="Self.FK__UserChat__UserId__787EE5A0">
             <End Role="users" EntitySet="users" />
             <End Role="UserChat" EntitySet="UserChats" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserChat__Vendor__74AE54BC" Association="Self.FK__UserChat__Vendor__74AE54BC">
+          <AssociationSet Name="FK__UserChat__Vendor__797309D9" Association="Self.FK__UserChat__Vendor__797309D9">
             <End Role="vendor" EntitySet="vendors" />
             <End Role="UserChat" EntitySet="UserChats" />
           </AssociationSet>
@@ -1240,15 +1261,15 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             <End Role="users" EntitySet="users" />
             <End Role="UserItemCard" EntitySet="UserItemCards" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserMessa__Messa__00200768" Association="Self.FK__UserMessa__Messa__00200768">
+          <AssociationSet Name="FK__UserMessa__Messa__04E4BC85" Association="Self.FK__UserMessa__Messa__04E4BC85">
             <End Role="UserMessage" EntitySet="UserMessages" />
             <End Role="UserMessageRecipient" EntitySet="UserMessageRecipients" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserMessa__UserI__7C4F7684" Association="Self.FK__UserMessa__UserI__7C4F7684">
+          <AssociationSet Name="FK__UserMessa__UserI__01142BA1" Association="Self.FK__UserMessa__UserI__01142BA1">
             <End Role="users" EntitySet="users" />
             <End Role="UserMessage" EntitySet="UserMessages" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserMessa__UserI__7F2BE32F" Association="Self.FK__UserMessa__UserI__7F2BE32F">
+          <AssociationSet Name="FK__UserMessa__UserI__03F0984C" Association="Self.FK__UserMessa__UserI__03F0984C">
             <End Role="users" EntitySet="users" />
             <End Role="UserMessageRecipient" EntitySet="UserMessageRecipients" />
           </AssociationSet>
@@ -1256,7 +1277,7 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
             <End Role="users" EntitySet="users" />
             <End Role="UserRating" EntitySet="UserRatings" />
           </AssociationSet>
-          <AssociationSet Name="FK__UserGroup__UserI__787EE5A0" Association="Self.FK__UserGroup__UserI__787EE5A0">
+          <AssociationSet Name="FK__UserGroup__UserI__7D439ABD" Association="Self.FK__UserGroup__UserI__7D439ABD">
             <End Role="users" EntitySet="users" />
             <End Role="UserGroup" EntitySet="UserGroups" />
           </AssociationSet>
@@ -1580,12 +1601,6 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
           <EntitySetMapping Name="vendors">
             <EntityTypeMapping TypeName="sabiShopModel.vendor">
               <MappingFragment StoreEntitySet="vendor">
-                <ScalarProperty Name="EcoCashMobileNumber" ColumnName="EcoCashMobileNumber" />
-                <ScalarProperty Name="CashPickUp" ColumnName="CashPickUp" />
-                <ScalarProperty Name="BankDepositAccountNumber" ColumnName="BankDepositAccountNumber" />
-                <ScalarProperty Name="BankDepositBranchName" ColumnName="BankDepositBranchName" />
-                <ScalarProperty Name="BankDepositBankName" ColumnName="BankDepositBankName" />
-                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="vendorid" ColumnName="vendorid" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="vIDSocial" ColumnName="vIDSocial" />
@@ -1595,6 +1610,12 @@ warning 6002: The table/view 'sabiShop.dbo.UserGroup' does not have a primary ke
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="BankDepositBankName" ColumnName="BankDepositBankName" />
+                <ScalarProperty Name="BankDepositBranchName" ColumnName="BankDepositBranchName" />
+                <ScalarProperty Name="BankDepositAccountNumber" ColumnName="BankDepositAccountNumber" />
+                <ScalarProperty Name="CashPickUp" ColumnName="CashPickUp" />
+                <ScalarProperty Name="EcoCashMobileNumber" ColumnName="EcoCashMobileNumber" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
