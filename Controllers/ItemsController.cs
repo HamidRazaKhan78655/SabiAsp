@@ -351,6 +351,9 @@ namespace SabiAsp.Controllers
             try {
                 Db.UserItemCards.Add(cartitem);
                 Db.SaveChanges();
+
+                var count = Db.UserItemCards.Where(x => x.user.UserId == userId).Count();
+                Session["CartCount"] = count;
                 return JsonConvert.SerializeObject("ok");
             }
             catch {

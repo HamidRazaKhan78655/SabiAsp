@@ -284,6 +284,7 @@ function AddToCart(itemId) {
                        showConfirmButton: false,
                        timer: 1500
                    });
+                   location.reload();
                } else {
 
                    
