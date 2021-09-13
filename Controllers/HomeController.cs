@@ -22,7 +22,7 @@ namespace SabiAsp.Controllers
                 Session["Location"] = type == "" ? "HRE" : type;
                 int logedinUserId = Convert.ToInt32(Session["UserId"]);
                 Session["UserId"] = logedinUserId;
-                var count = Db.UserItemCards.Where(x => x.user.UserId == logedinUserId).Count() ;
+                var count = Db.UserItemCards.Where(x => x.user.UserId == logedinUserId && x.isDeleted!="true").Count() ;
                 Session["CartCount"] = count;
                 if (logedinUserId == 0)
                 {

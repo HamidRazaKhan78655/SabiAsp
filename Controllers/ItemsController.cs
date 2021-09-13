@@ -326,6 +326,8 @@ namespace SabiAsp.Controllers
                     var itemselect = Db.items.Where(x=>x.ItemId == item.ItemId).FirstOrDefault();
                     var subCatelect = Db.SubCategories.Where(x => x.SubCategorieId == itemselect.SubCategorieId).FirstOrDefault();
                     var shopSelect = Db.Shops.Where(x => x.Shopid == subCatelect.Shopid).FirstOrDefault();
+                    var count = Db.UserItemCards.Where(x => x.user.UserId == Userid && x.isDeleted != "true").Count();
+                    Session["CartCount"] = count;
                     crt.itemDetails = itemselect;
                     crt.Shop = shopSelect;
                     crt.SubCat = subCatelect;
@@ -352,7 +354,7 @@ namespace SabiAsp.Controllers
                 Db.UserItemCards.Add(cartitem);
                 Db.SaveChanges();
 
-                var count = Db.UserItemCards.Where(x => x.user.UserId == userId).Count();
+                var count = Db.UserItemCards.Where(x => x.user.UserId == userId && x.isDeleted!="true").Count();
                 Session["CartCount"] = count;
                 return JsonConvert.SerializeObject("ok");
             }
@@ -452,6 +454,57 @@ namespace SabiAsp.Controllers
 
             return PartialView("SearchItemBySubCategories", itemList);
         }
+
+        [HttpPost]
+        public ActionResult DeleteItemFormCard(int UserItemId1,int ItemId1,int UesrId1)
+        {
+            var data = Db.UserItemCards.Where(e => e.UserItemId == UserItemId1 && e.ItemId == ItemId1 && e.UesrId == UesrId1).FirstOrDefault();    
+            if (data!=null)
+            {
+                data.isDeleted = "true";
+                data.ModifiedDate = DateTime.Now;
+                Db.SaveChanges();
+            }
+            return RedirectToAction("BuyItemView","Items", new { Userid = UesrId1 });
+        }
+
+        [HttpPost]
+        public ActionResult AddQuntity(int UserItemId1,int ItemId1,int UesrId1,string type1)
+        {
+
+            var data = Db.UserItemCards.Where(e => e.UserItemId == UserItemId1 && e.ItemId == ItemId1 && e.UesrId == UesrId1).FirstOrDefault();
+            int qty =int.Parse(data.quantity.ToString());
+            if (data != null)
+            {
+                if (type1 == "minus")
+                {
+                    if (qty <= 1)
+                    {
+
+                    }
+                    else
+                    {
+                        qty--;
+                        data.quantity=qty;
+                        data.ModifiedDate = DateTime.Now;
+                        Db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    if (qty >= 1)
+                    {
+                        qty++;
+                        data.quantity = qty;
+                        data.ModifiedDate = DateTime.Now;
+                        Db.SaveChanges();
+                    }
+                }
+            }
+            return RedirectToAction("BuyItemView", "Items", new { Userid = UesrId1 });
+            
+        }
+
 
     }
 }

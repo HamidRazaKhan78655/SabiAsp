@@ -13,8 +13,7 @@
             @foreach (var item in Model)
             {
 
-                <div class="row" style="  margin: 0px 0px 10px 0px;
-">
+                <div class="row" style="  margin: 0px 0px 10px 0px;">
                     <div class="col" 2>
                         <img style="max-width: 25px; height: 25px; border-radius: 50%;" src="~/CompanyImages/@item.itemDetails.image" />
                     </div>
@@ -23,10 +22,12 @@
                         <span style="display: block; font-size: 12px; color: #666666; line-height: 2px;">@item.itemDetails.Price $</span>
                     </div>
                     <div class="col-4">
-                        <div style="display:none; box-shadow: 0 -1px 7px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%); float: right; border-radius: 5px; padding: 1px 8px 1px 8px;">
-                            <i class="far fa-trash-alt" style="margin:5px"></i>
+                        <div style="display:flex;box-shadow: 0 -1px 7px rgb(0 0 0 / 19%), 0 6px 6px rgb(0 0 0 / 23%); float: right; border-radius: 5px; padding: 1px 8px 1px 8px;">
+
+                            <i class="fas fa-minus" style="margin:5px;cursor:pointer;" onclick="addQuntity(@item.cartDetail.UserItemId,@item.itemDetails.ItemId,@item.cartDetail.UesrId,'minus')"></i>
                             @item.cartDetail.quantity
-                            <i class="fas fa-plus" style="margin:5px"></i>
+                            <i class="fas fa-plus" style="margin:5px;cursor:pointer;" onclick="addQuntity(@item.cartDetail.UserItemId,@item.itemDetails.ItemId,@item.cartDetail.UesrId,'plus')"></i>
+                            <i class="far fa-trash-alt" style="margin:5px;color:red;cursor:pointer;" onclick="deleteItemformlist(@item.cartDetail.UserItemId,@item.itemDetails.ItemId,@item.cartDetail.UesrId)"></i>
                         </div>
                     </div>
                 </div>
@@ -107,6 +108,54 @@
             });
         }
           //This function displays Smart Payment Buttons on your web page.
+
+
+        // This funcation  delete item from card
+
+        function deleteItemformlist(UserItemId,ItemId,UesrId)
+        {
+            $.ajax({
+                url: '/Items/DeleteItemFormCard/',
+                type: 'POST',
+                data: {
+                    UserItemId1: UserItemId,
+                    ItemId1: ItemId,
+                    UesrId1: UesrId
+                },
+                success: function (data) {
+                    debugger;
+
+                },
+                error: function () {
+                    debugger;
+                    alert("Error");
+                }
+            });
+            $('#LoadCartData').html('');
+        }
+
+        function addQuntity(UserItemId,ItemId,UesrId,type)
+        {
+            $.ajax({
+                url: '/Items/AddQuntity/',
+                type: 'POST',
+                data: {
+                    UserItemId1: UserItemId,
+                    ItemId1: ItemId,
+                    UesrId1: UesrId,
+                    type1: type,
+                },
+                success: function (data) {
+                    debugger;
+
+                },
+                error: function () {
+                    debugger;
+                    alert("Error");
+                }
+            });
+            $('#LoadCartData').html('');
+        }
     </script>
 
 </div>
