@@ -254,12 +254,12 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="BankDepositBankName" Type="nvarchar" MaxLength="1" />
-          <Property Name="BankDepositBranchName" Type="nvarchar" MaxLength="1" />
-          <Property Name="BankDepositAccountNumber" Type="nvarchar" MaxLength="1" />
-          <Property Name="CashPickUp" Type="nvarchar" MaxLength="1" />
-          <Property Name="EcoCashMobileNumber" Type="nvarchar" MaxLength="1" />
-          <Property Name="PaymentType" Type="nvarchar" MaxLength="1" />
+          <Property Name="BankDepositBankName" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankDepositBranchName" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankDepositAccountNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="CashPickUp" Type="nvarchar" MaxLength="50" />
+          <Property Name="EcoCashMobileNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentType" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK__items__SubCatego__4AB81AF0">
           <End Role="SubCategories" Type="Self.SubCategories" Multiplicity="0..1" />
@@ -906,12 +906,12 @@
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="BankDepositBankName" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="BankDepositBranchName" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="BankDepositAccountNumber" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="CashPickUp" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="EcoCashMobileNumber" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="PaymentType" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="BankDepositBankName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankDepositBranchName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankDepositAccountNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CashPickUp" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EcoCashMobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Shops" Relationship="Self.FK__Shops__vendorid__440B1D61" FromRole="vendor" ToRole="Shops" />
           <NavigationProperty Name="Trackings" Relationship="Self.FK__Tracking__from__5629CD9C" FromRole="vendor" ToRole="Tracking" />
           <NavigationProperty Name="UserChats" Relationship="Self.FK__UserChat__Vendor__797309D9" FromRole="vendor" ToRole="UserChat" />

@@ -147,11 +147,15 @@ namespace SabiAsp.Controllers
                 string roleType = fm["RoleType"].ToString();
                 int roleId = int.Parse(roleType);
                 int logedinUserId = Convert.ToInt32(Session["UserId"]);
-                string PaymentType = fm["MoneyDeposit"].ToString();
-               
+                string PaymentType = "";
+                if (fm["MoneyDeposit"]==null)
+                {
 
-
-                    
+                }
+                else
+                {
+                    PaymentType = fm["MoneyDeposit"].ToString();
+                }    
                 var User = Db.users.Where(x => x.username.ToLower() == username.ToLower() && x.EmailAddress == emailAddress.ToLower() && x.isDeleted != "true").FirstOrDefault();
                 if (User == null)
                 {
@@ -186,11 +190,11 @@ namespace SabiAsp.Controllers
                     if (roleId == 3)
                     {
                         vendor v = new vendor();
-                        v.UserId = u.UserId;
+                        v.UserId =Int32.Parse(u.UserId.ToString());
                         v.isDeleted = "false";
-                        v.CreatedBy = u.UserId;
+                        v.CreatedBy = Int32.Parse(u.UserId.ToString());
                         v.CreatedDate = DateTime.Now;
-                        v.PaymentType = PaymentType;
+                        v.PaymentType = PaymentType.ToString().Trim();
                         switch (PaymentType)
                         {
                             case "BankDeposit":
@@ -203,7 +207,7 @@ namespace SabiAsp.Controllers
                                 v.CashPickUp = "true";
                                 break;
                             case "MobileMoneyTransfer":
-                                v.EcoCashMobileNumber = fm["MobileMoneyTransferEcoCashMobileNumber"].ToString(); ;
+                                v.EcoCashMobileNumber = fm["MobileMoneyTransferEcoCashMobileNumber"].ToString().Trim();
                                 break;
                             default:
                                 break;
