@@ -2,12 +2,46 @@
 @{
     Layout = null;
 }
+<script>
+    function vendorSortData(sel) {
+        var ddvalue = sel.value;
 
-
+        if (ddvalue == "In Progress") {
+            $('#comp').hide();
+            $('#rforcol').hide();
+            $('#all').hide();
+            $('#inpro').show();
+        } else if (ddvalue == "Ready for Collection") {
+            $('#comp').hide();
+            $('#rforcol').show();
+            $('#inpro').hide();
+            $('#all').hide();
+        } else if (ddvalue == "Completed") {
+            $('#comp').show();
+            $('#rforcol').hide();
+            $('#inpro').hide();
+            $('#all').hide();
+        } else {
+            $('#all').show();
+            $('#comp').hide();
+            $('#rforcol').hide();
+            $('#inpro').hide();
+        }
+    }
+</script>
 <h3 class="OrderTopHeading">Your Orders</h3>
+<div class="form-floating" style="padding: 10px;">
+    <select class="form-select form-control" id="floatingSelect" aria-label="Floating label select example" onchange="vendorSortData(this);">
+        <option selected>Change Status</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Ready for Collection">Ready for Collection</option>
+        <option value="Completed">Completed</option>
+    </select>
+</div>
+
 @foreach (var item in Model)
 {
-    <div class="container-fluid containerForOrders">
+    <div class="container-fluid containerForOrders" id="all">
         <div class="row">
             <div class="col-3">
                 <div class="row">
@@ -64,4 +98,190 @@
     </div>
 
 }
+
+
+
+@foreach (var item in Model.Where(x => x.state.Equals("Completed")).OrderBy(x => x.isModified))
+{
+    <div class="container-fluid containerForOrders" id="comp">
+        <div class="row">
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadings"> Order Date</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadingsValues">@Html.DisplayFor(modelItem => item.isCreated)</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadings">Order Number</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadingsValues"> @Html.DisplayFor(modelItem => item.ordernumber)</h3></div>
+                </div>
+            </div>
+
+            <div class="col-3" style="padding:10px">
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadings">Status</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12">  <h2 style="font-size:22px" class="OrderHeadingsValues">@Html.DisplayFor(modelItem => item.state)</h2> </div>
+                </div>
+            </div>
+            <div class="col-3" style="padding:12px">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="OrderHeadings" style="color: #F6B6DA">
+                            @Html.DisplayFor(modelItem => item.step1)
+                        </h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="OrderHeadings" style="color: #F6B6DA">
+                            @Html.DisplayFor(modelItem => item.step2)
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="ViewOrderButtonextended">
+                            <a data-target="#TrackingActions" data-toggle="modal" onclick="vendorActions(@item.trackingId)">Change Status</a>
+                        </div>
+                        <div class="ViewOrderButtonextended">
+                            <a data-target="#ViewOrderModal" data-toggle="modal" onclick="ViewOrder(@item.ordernumber)">View Order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+@foreach (var item in Model.Where(x => x.state.Equals("In Progress")).OrderBy(x => x.isModified))
+{
+    <div class="container-fluid containerForOrders" id="inpro" style="display:none">
+        <div class="row">
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadings"> Order Date</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadingsValues">@Html.DisplayFor(modelItem => item.isCreated)</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadings">Order Number</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadingsValues"> @Html.DisplayFor(modelItem => item.ordernumber)</h3></div>
+                </div>
+            </div>
+
+            <div class="col-3" style="padding:10px">
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadings">Status</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12">  <h2 style="font-size:22px" class="OrderHeadingsValues">@Html.DisplayFor(modelItem => item.state)</h2> </div>
+                </div>
+            </div>
+            <div class="col-3" style="padding:12px">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="OrderHeadings" style="color: #F6B6DA">
+                            @Html.DisplayFor(modelItem => item.step1)
+                        </h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="OrderHeadings" style="color: #F6B6DA">
+                            @Html.DisplayFor(modelItem => item.step2)
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="ViewOrderButtonextended">
+                            <a data-target="#TrackingActions" data-toggle="modal" onclick="vendorActions(@item.trackingId)">Change Status</a>
+                        </div>
+                        <div class="ViewOrderButtonextended">
+                            <a data-target="#ViewOrderModal" data-toggle="modal" onclick="ViewOrder(@item.ordernumber)">View Order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@foreach (var item in Model.Where(x => x.state.Equals("Ready for Collection")).OrderBy(x => x.isModified))
+{
+    <div class="container-fluid containerForOrders" id="rforcol" style="display:none">
+        <div class="row">
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadings"> Order Date</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadingsValues">@Html.DisplayFor(modelItem => item.isCreated)</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadings">Order Number</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadingsValues"> @Html.DisplayFor(modelItem => item.ordernumber)</h3></div>
+                </div>
+            </div>
+
+            <div class="col-3" style="padding:10px">
+                <div class="row">
+                    <div class="col-12"><h3 class="OrderHeadings">Status</h3></div>
+                </div>
+                <div class="row">
+                    <div class="col-12">  <h2 style="font-size:22px" class="OrderHeadingsValues">@Html.DisplayFor(modelItem => item.state)</h2> </div>
+                </div>
+            </div>
+            <div class="col-3" style="padding:12px">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="OrderHeadings" style="color: #F6B6DA">
+                            @Html.DisplayFor(modelItem => item.step1)
+                        </h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="OrderHeadings" style="color: #F6B6DA">
+                            @Html.DisplayFor(modelItem => item.step2)
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="row">
+                    <div class="col-12 ">
+                        <div class="ViewOrderButtonextended">
+                            <a data-target="#TrackingActions" data-toggle="modal" onclick="vendorActions(@item.trackingId)">Change Status</a>
+                        </div>
+                        <div class="ViewOrderButtonextended">
+                            <a data-target="#ViewOrderModal" data-toggle="modal" onclick="ViewOrder(@item.ordernumber)">View Order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+
 
