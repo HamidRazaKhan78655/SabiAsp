@@ -211,14 +211,15 @@ button {
      padding-bottom: 90px;
 }
 
-.header_section{
-	width: 100%;
-	float: left;
-	background-image: url(../images/banner.png);
-	height: auto;
-	padding: 20px 0px;
-	background-size: 100%;
-	background-repeat: no-repeat;
+.header_section {
+    width: 100%;
+    float: left;
+    background-image: url(../images/banner.png);
+    /*height: auto;*/
+    height: 100vh;
+    padding: 20px 0px;
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
 .padding_0{ width: 100%; float: left; }
@@ -867,3 +868,6 @@ a:hover {
     background-position: center;
 }
 /*Loader End*/
+
+
+
