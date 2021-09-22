@@ -452,14 +452,3 @@ body {
     .ViewOrderButtonextended a {
         color: white !important;
     }
-
-
-@media only screen and (max-width: 1416px) {
-    .container1 {
-        height: calc(100% - 80vh) !important;
-    }
-}@media only screen and (max-width: 1024px) {
-    #myCarousel{
-        display:none !important;
-    }
-}

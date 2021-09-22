@@ -215,9 +215,9 @@ button {
     width: 100%;
     float: left;
     background-image: url(../images/banner.png);
-    /*height: auto;*/
-    height: 100vh;
-    padding: 20px 0px;
+    height: auto;
+    /*height: 100vh;*/
+    padding: 20px 0px 0px 0px;
     background-size: 100%;
     background-repeat: no-repeat;
 }
@@ -426,7 +426,7 @@ body{
     
 }
 
-.collection_section{ /*width: 100%;*/ float: left; padding-bottom: 0px; }
+.collection_section{ width: 100%; float: left; padding-bottom: 0px; }
 .new_text{
 	width: 100%;
 	float: left;
@@ -868,6 +868,28 @@ a:hover {
     background-position: center;
 }
 /*Loader End*/
+.py-20{
+    padding:20px 0px 20px 0px !important;
+}
+
+@media only screen and (max-width: 1340px) 
+{
+    .container1 {
+        max-width:100% !important;
+    }
+    .shoes_img {
+        height: 230px!important;
+    }
+    .Indicators
+    {
+        top:60px !important;
+    }
+}
+@media only screen and (max-width: 770px) {
+    .banner_section{
+        display:none!important;
+    }
+}
 
 
 
