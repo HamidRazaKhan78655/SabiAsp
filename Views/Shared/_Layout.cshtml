@@ -350,7 +350,13 @@
 
     </div>
     @*customalert*@
-
+    <style>
+        #TrackingValue::-webkit-outer-spin-button,
+        #TrackingValue::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
     <input id="ItemViewTrigger" type="hidden" data-target="#ItemView" data-toggle="modal" />
 
     <div class="modal fade " id="TrackPackage">
